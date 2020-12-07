@@ -17,6 +17,11 @@ class _$AuthCheckEventTearOff {
   _AuthCheckRequested authCheckRequested() {
     return const _AuthCheckRequested();
   }
+
+// ignore: unused_element
+  _SignOutPressed signOutPressed() {
+    return const _SignOutPressed();
+  }
 }
 
 /// @nodoc
@@ -28,19 +33,23 @@ mixin _$AuthCheckEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object>({
     @required TResult authCheckRequested(),
+    @required TResult signOutPressed(),
   });
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object>({
     TResult authCheckRequested(),
+    TResult signOutPressed(),
     @required TResult orElse(),
   });
   @optionalTypeArgs
   TResult map<TResult extends Object>({
     @required TResult authCheckRequested(_AuthCheckRequested value),
+    @required TResult signOutPressed(_SignOutPressed value),
   });
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object>({
     TResult authCheckRequested(_AuthCheckRequested value),
+    TResult signOutPressed(_SignOutPressed value),
     @required TResult orElse(),
   });
 }
@@ -102,8 +111,10 @@ class _$_AuthCheckRequested implements _AuthCheckRequested {
   @optionalTypeArgs
   TResult when<TResult extends Object>({
     @required TResult authCheckRequested(),
+    @required TResult signOutPressed(),
   }) {
     assert(authCheckRequested != null);
+    assert(signOutPressed != null);
     return authCheckRequested();
   }
 
@@ -111,6 +122,7 @@ class _$_AuthCheckRequested implements _AuthCheckRequested {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object>({
     TResult authCheckRequested(),
+    TResult signOutPressed(),
     @required TResult orElse(),
   }) {
     assert(orElse != null);
@@ -124,8 +136,10 @@ class _$_AuthCheckRequested implements _AuthCheckRequested {
   @optionalTypeArgs
   TResult map<TResult extends Object>({
     @required TResult authCheckRequested(_AuthCheckRequested value),
+    @required TResult signOutPressed(_SignOutPressed value),
   }) {
     assert(authCheckRequested != null);
+    assert(signOutPressed != null);
     return authCheckRequested(this);
   }
 
@@ -133,6 +147,7 @@ class _$_AuthCheckRequested implements _AuthCheckRequested {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object>({
     TResult authCheckRequested(_AuthCheckRequested value),
+    TResult signOutPressed(_SignOutPressed value),
     @required TResult orElse(),
   }) {
     assert(orElse != null);
@@ -145,6 +160,97 @@ class _$_AuthCheckRequested implements _AuthCheckRequested {
 
 abstract class _AuthCheckRequested implements AuthCheckEvent {
   const factory _AuthCheckRequested() = _$_AuthCheckRequested;
+}
+
+/// @nodoc
+abstract class _$SignOutPressedCopyWith<$Res> {
+  factory _$SignOutPressedCopyWith(
+          _SignOutPressed value, $Res Function(_SignOutPressed) then) =
+      __$SignOutPressedCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$SignOutPressedCopyWithImpl<$Res>
+    extends _$AuthCheckEventCopyWithImpl<$Res>
+    implements _$SignOutPressedCopyWith<$Res> {
+  __$SignOutPressedCopyWithImpl(
+      _SignOutPressed _value, $Res Function(_SignOutPressed) _then)
+      : super(_value, (v) => _then(v as _SignOutPressed));
+
+  @override
+  _SignOutPressed get _value => super._value as _SignOutPressed;
+}
+
+/// @nodoc
+class _$_SignOutPressed implements _SignOutPressed {
+  const _$_SignOutPressed();
+
+  @override
+  String toString() {
+    return 'AuthCheckEvent.signOutPressed()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) || (other is _SignOutPressed);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object>({
+    @required TResult authCheckRequested(),
+    @required TResult signOutPressed(),
+  }) {
+    assert(authCheckRequested != null);
+    assert(signOutPressed != null);
+    return signOutPressed();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object>({
+    TResult authCheckRequested(),
+    TResult signOutPressed(),
+    @required TResult orElse(),
+  }) {
+    assert(orElse != null);
+    if (signOutPressed != null) {
+      return signOutPressed();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object>({
+    @required TResult authCheckRequested(_AuthCheckRequested value),
+    @required TResult signOutPressed(_SignOutPressed value),
+  }) {
+    assert(authCheckRequested != null);
+    assert(signOutPressed != null);
+    return signOutPressed(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object>({
+    TResult authCheckRequested(_AuthCheckRequested value),
+    TResult signOutPressed(_SignOutPressed value),
+    @required TResult orElse(),
+  }) {
+    assert(orElse != null);
+    if (signOutPressed != null) {
+      return signOutPressed(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _SignOutPressed implements AuthCheckEvent {
+  const factory _SignOutPressed() = _$_SignOutPressed;
 }
 
 /// @nodoc

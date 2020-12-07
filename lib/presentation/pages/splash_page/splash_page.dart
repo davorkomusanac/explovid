@@ -1,4 +1,4 @@
-import 'package:explovid/application/auth_check/auth_check_bloc.dart';
+import 'package:explovid/application/auth/auth_check/auth_check_bloc.dart';
 import 'package:explovid/presentation/pages/home_page/home_page.dart';
 import 'package:explovid/presentation/pages/welcome_page/welcome_page.dart';
 import 'package:flutter/material.dart';
