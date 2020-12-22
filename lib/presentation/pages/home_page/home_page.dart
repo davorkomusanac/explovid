@@ -3,6 +3,7 @@ import 'package:explovid/presentation/pages/home_page/four.dart';
 import 'package:explovid/presentation/pages/home_page/one.dart';
 import 'package:explovid/presentation/pages/home_page/three.dart';
 import 'package:explovid/presentation/pages/home_page/two.dart';
+import 'package:explovid/presentation/pages/search_page/search_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -42,14 +43,15 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Explovid"),
-        backgroundColor: Colors.red[700],
-      ),
+      // appBar: AppBar(
+      //   title: Text("Explovid"),
+      //   backgroundColor: Colors.red[700],
+      // ),
       body: PageView(
         children: [
+          //Temp order za lakse testiranje
+          SearchPage(),
           OnePage(),
-          TwoPage(),
           ThreePage(),
           FourPage(),
           FivePage(),
