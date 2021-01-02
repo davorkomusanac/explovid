@@ -13,68 +13,128 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  PageController pageController;
-  int getPageIndex = 0;
+  final List<GlobalKey<NavigatorState>> tabNavKeys = [
+    GlobalKey<NavigatorState>(),
+    GlobalKey<NavigatorState>(),
+    GlobalKey<NavigatorState>(),
+    GlobalKey<NavigatorState>(),
+    GlobalKey<NavigatorState>(),
+  ];
+  CupertinoTabController _tabController;
+  int currentIndex = 0;
 
   @override
   void initState() {
+    // TODO: implement initState
     super.initState();
-    pageController = PageController();
+    _tabController = CupertinoTabController();
   }
 
   @override
   void dispose() {
-    pageController.dispose();
+    // TODO: implement dispose
+    _tabController.dispose();
     super.dispose();
-  }
-
-  void whenPageChanges(int pageIndex) {
-    setState(() {
-      this.getPageIndex = pageIndex;
-    });
-  }
-
-  void onTapChangePage(int pageIndex) {
-    pageController.jumpToPage(pageIndex);
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      // appBar: AppBar(
-      //   title: Text("Explovid"),
-      //   backgroundColor: Colors.red[700],
-      // ),
-      body: PageView(
-        children: [
-          //Temp order za lakse testiranje
-          SearchPage(),
-          OnePage(),
-          ThreePage(),
-          FourPage(),
-          FivePage(),
-        ],
-        controller: pageController,
-        onPageChanged: (pageIndex) {
-          whenPageChanges(pageIndex);
+    return WillPopScope(
+      onWillPop: () async {
+        return !await tabNavKeys[_tabController.index].currentState.maybePop();
+      },
+      child: CupertinoTabScaffold(
+        controller: _tabController,
+        tabBar: CupertinoTabBar(
+          items: const <BottomNavigationBarItem>[
+            BottomNavigationBarItem(icon: Icon(Icons.home)),
+            BottomNavigationBarItem(icon: Icon(Icons.search)),
+            BottomNavigationBarItem(icon: Icon(Icons.photo_camera, size: 37.0)),
+            BottomNavigationBarItem(icon: Icon(Icons.favorite)),
+            BottomNavigationBarItem(icon: Icon(Icons.person)),
+          ],
+          onTap: (index) {
+            if (currentIndex == index) {
+              switch (index) {
+                case 0:
+                  tabNavKeys[0].currentState.popUntil((route) => route.isFirst);
+                  break;
+                case 1:
+                  tabNavKeys[1].currentState.popUntil((route) => route.isFirst);
+                  break;
+                case 2:
+                  tabNavKeys[2].currentState.popUntil((route) => route.isFirst);
+                  break;
+                case 3:
+                  tabNavKeys[3].currentState.popUntil((route) => route.isFirst);
+                  break;
+                case 4:
+                  tabNavKeys[4].currentState.popUntil((route) => route.isFirst);
+                  break;
+                default:
+              }
+            }
+            currentIndex = index;
+          },
+        ),
+        tabBuilder: (context, index) {
+          switch (index) {
+            case 0:
+              return CupertinoTabView(
+                navigatorKey: tabNavKeys[0],
+                builder: (context) {
+                  return CupertinoPageScaffold(
+                    child: SearchPage(),
+                  );
+                },
+              );
+            case 1:
+              return CupertinoTabView(
+                navigatorKey: tabNavKeys[1],
+                builder: (context) {
+                  return CupertinoPageScaffold(
+                    child: OnePage(),
+                  );
+                },
+              );
+            case 2:
+              return CupertinoTabView(
+                navigatorKey: tabNavKeys[2],
+                builder: (context) {
+                  return CupertinoPageScaffold(
+                    child: ThreePage(),
+                  );
+                },
+              );
+            case 3:
+              return CupertinoTabView(
+                navigatorKey: tabNavKeys[3],
+                builder: (context) {
+                  return CupertinoPageScaffold(
+                    child: FourPage(),
+                  );
+                },
+              );
+            case 4:
+              return CupertinoTabView(
+                navigatorKey: tabNavKeys[4],
+                builder: (context) {
+                  return CupertinoPageScaffold(
+                    child: FivePage(),
+                  );
+                },
+              );
+            default:
+              return CupertinoTabView(
+                navigatorKey: tabNavKeys[0],
+                builder: (context) {
+                  return CupertinoPageScaffold(
+                    child: SearchPage(),
+                  );
+                },
+              );
+          }
         },
-        physics: NeverScrollableScrollPhysics(),
-      ),
-      bottomNavigationBar: CupertinoTabBar(
-        currentIndex: getPageIndex,
-        onTap: (pageIndex) {
-          onTapChangePage(pageIndex);
-        },
-        activeColor: Colors.white,
-        inactiveColor: Colors.blueGrey,
-        backgroundColor: Colors.red[700],
-        items: [
-          BottomNavigationBarItem(icon: Icon(Icons.home)),
-          BottomNavigationBarItem(icon: Icon(Icons.search)),
-          BottomNavigationBarItem(icon: Icon(Icons.photo_camera, size: 37.0)),
-          BottomNavigationBarItem(icon: Icon(Icons.favorite)),
-          BottomNavigationBarItem(icon: Icon(Icons.person)),
-        ],
       ),
     );
   }

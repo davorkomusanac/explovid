@@ -14,9 +14,16 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Center(
-        //child: Text("Movie Details Page Here"),
-        child: Text(user.uid),
+      child: Scaffold(
+        body: Column(
+          children: [
+            BackButton(),
+            Center(
+              //child: Text("Movie Details Page Here"),
+              child: Text(user.uid),
+            ),
+          ],
+        ),
       ),
     );
   }

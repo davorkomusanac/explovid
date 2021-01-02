@@ -101,8 +101,7 @@ class SearchPage extends StatelessWidget {
       padding: const EdgeInsets.all(12.0),
       child: InkWell(
         onTap: () {
-          Navigator.push(
-            context,
+          Navigator.of(context, rootNavigator: false).push(
             MaterialPageRoute(
               builder: (context) => MovieDetailsPage(),
             ),
