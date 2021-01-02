@@ -35,7 +35,7 @@ class MovieSearchResults {
         MovieSummary(
           posterPath: result['poster_path'] as String ?? '',
           overview: result['overview'] as String ?? '',
-          releaseDate: result['release_date'] as String ?? '',
+          releaseDate: result['release_date'] as String ?? 'Release date unknown',
           genreIds: result['genre_ids']?.cast<num>(),
           id: result['id'] as int,
           title: result['title'] as String ?? '',

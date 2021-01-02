@@ -35,8 +35,6 @@ class _HomePageState extends State<HomePage> {
   }
 
   void onTapChangePage(int pageIndex) {
-//    pageController.animateToPage(pageIndex,
-//        duration: Duration(milliseconds: 400), curve: Curves.bounceInOut);
     pageController.jumpToPage(pageIndex);
   }
 
