@@ -1,7 +1,6 @@
 import 'package:explovid/domain/models/movie_search/movie_summary.dart';
 
 class MovieSearchResults {
-  final String title;
   final int page;
   final int totalResults;
   final int totalPages;
@@ -9,7 +8,6 @@ class MovieSearchResults {
   final String errorMessage;
 
   MovieSearchResults({
-    this.title,
     this.page,
     this.totalResults,
     this.totalPages,
@@ -17,11 +15,10 @@ class MovieSearchResults {
     this.errorMessage,
   });
 
-  factory MovieSearchResults.fromJson(String title, Map<String, dynamic> json, int page) {
+  factory MovieSearchResults.fromJson(Map<String, dynamic> json, int page) {
     if ((json['total_results'] ??= 0) == 0) {
       return MovieSearchResults(
         totalResults: 0,
-        title: title,
         page: page,
         movieSummaries: [],
         errorMessage: "No results found.",
@@ -46,7 +43,6 @@ class MovieSearchResults {
     }
 
     return MovieSearchResults(
-      title: title,
       page: page,
       totalResults: json['total_results'] as int,
       totalPages: json['total_pages'] as int,
@@ -54,4 +50,11 @@ class MovieSearchResults {
       errorMessage: "",
     );
   }
+  Map<String, dynamic> toJson() => {
+        "page": page,
+        "results": List<dynamic>.from(movieSummaries.map((x) => x.toJson())),
+        "total_pages": totalPages,
+        "total_results": totalResults,
+        "errorMessage": errorMessage,
+      };
 }
