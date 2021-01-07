@@ -1,4 +1,6 @@
+import 'package:explovid/application/movie_search/movie_details/movie_details_bloc.dart';
 import 'package:explovid/application/movie_search/movie_search_bloc.dart';
+import 'package:explovid/domain/models/movie_details/movie_details.dart';
 import 'package:explovid/presentation/pages/home_page/one.dart';
 import 'package:explovid/presentation/pages/movie_details_page/movie_details_page.dart';
 import 'package:flutter/cupertino.dart';
@@ -40,54 +42,50 @@ class SearchPage extends StatelessWidget {
                     ],
                   ),
                 ),
-                !state.isSearching && state.errorMessage.isEmpty && !state.isSearchCompleted
-
-                    ///Show here popular movies? Or trending, or recommendations? Also the same for TV shows tabs?
-                    ? const Text("Hello")
-                    : const Divider(height: 1),
-                state.isSearching
-                    ? Expanded(
-                        child: const Padding(
-                          padding: EdgeInsets.all(8.0),
-                          child: Center(
-                            child: CircularProgressIndicator(),
+                if (!state.isSearching && state.errorMessage.isEmpty && !state.isSearchCompleted)
+                  //Show here popular movies? Or trending, or recommendations? Also the same for TV shows tabs?
+                  const Text("Hello"),
+                if (state.isSearching)
+                  Expanded(
+                    child: const Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: Center(
+                        child: CircularProgressIndicator(),
+                      ),
+                    ),
+                  ),
+                if (state.isSearchCompleted)
+                  Expanded(
+                    child: ListView.builder(
+                      keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+                      itemCount: state.movieSearchResults.movieSummaries.length,
+                      itemBuilder: (context, index) {
+                        return buildMovieCard(context, state, index);
+                      },
+                    ),
+                  ),
+                if (state.errorMessage.isNotEmpty)
+                  Expanded(
+                    child: Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Text(
+                            "☹",
+                            style: TextStyle(fontSize: 50),
                           ),
-                        ),
-                      )
-                    : const Divider(height: 1),
-                state.isSearchCompleted
-                    ? Expanded(
-                        child: ListView.builder(
-                          itemCount: state.movieSearchResults.movieSummaries.length,
-                          itemBuilder: (context, index) {
-                            return buildMovieCard(context, state, index);
-                          },
-                        ),
-                      )
-                    : const Divider(height: 1),
-                state.errorMessage.isNotEmpty
-                    ? Expanded(
-                        child: Center(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              const Text(
-                                "☹",
-                                style: TextStyle(fontSize: 50),
-                              ),
-                              Text(
-                                state.errorMessage,
-                                style: TextStyle(fontSize: 20),
-                              ),
-                              const Text(
-                                "Try again.",
-                                style: TextStyle(fontSize: 20),
-                              ),
-                            ],
+                          Text(
+                            state.errorMessage,
+                            style: TextStyle(fontSize: 20),
                           ),
-                        ),
-                      )
-                    : const Divider(height: 1),
+                          const Text(
+                            "Try again.",
+                            style: TextStyle(fontSize: 20),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
               ],
             );
           },
@@ -103,7 +101,7 @@ class SearchPage extends StatelessWidget {
         onTap: () {
           Navigator.of(context, rootNavigator: false).push(
             MaterialPageRoute(
-              builder: (context) => MovieDetailsPage(),
+              builder: (context) => MovieDetailsPage(state.movieSearchResults.movieSummaries[index].id),
             ),
           );
         },
@@ -112,41 +110,48 @@ class SearchPage extends StatelessWidget {
           children: [
             Expanded(
               flex: 1,
-              child: Container(
-                height: 190,
-                width: 132,
-                child: Image.network(
-                  "https://image.tmdb.org/t/p/w342/${state.movieSearchResults.movieSummaries[index].posterPath}",
-                  fit: BoxFit.cover,
-                  loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent loadingProgress) {
-                    if (loadingProgress == null) return child;
-                    return Container(
-                      height: 190,
-                      color: Colors.green,
-                      width: 132,
-                      child: Center(
-                        child: CircularProgressIndicator(
-                          value: loadingProgress.expectedTotalBytes != null
-                              ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes
-                              : null,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(8.0),
+                child: Container(
+                  height: 190,
+                  width: 132,
+                  child: Image.network(
+                    "https://image.tmdb.org/t/p/w342/${state.movieSearchResults.movieSummaries[index].posterPath}",
+                    fit: BoxFit.cover,
+                    loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent loadingProgress) {
+                      if (loadingProgress == null) return child;
+                      return Container(
+                        height: 190,
+                        color: Colors.green,
+                        width: 132,
+                        child: Center(
+                          child: CircularProgressIndicator(
+                            value: loadingProgress.expectedTotalBytes != null
+                                ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes
+                                : null,
+                          ),
                         ),
-                      ),
-                    );
-                  },
-                  errorBuilder: (BuildContext context, Object exception, StackTrace stackTrace) {
-                    return Container(
-                      height: 190,
-                      width: 132,
-                      color: Colors.yellow,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Text('😢'),
-                          const Text('No image available'),
-                        ],
-                      ),
-                    );
-                  },
+                      );
+                    },
+                    errorBuilder: (BuildContext context, Object exception, StackTrace stackTrace) {
+                      return Container(
+                        height: 190,
+                        width: 132,
+                        color: Colors.yellow[400],
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Text('😢'),
+                            const SizedBox(height: 5),
+                            const Text(
+                              'No image available',
+                              textAlign: TextAlign.center,
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                  ),
                 ),
               ),
             ),
@@ -168,7 +173,9 @@ class SearchPage extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 15.0),
                     child: Text(
-                      state.movieSearchResults.movieSummaries[index].overview,
+                      state.movieSearchResults.movieSummaries[index].overview.isEmpty
+                          ? "Plot unknown"
+                          : state.movieSearchResults.movieSummaries[index].overview,
                       maxLines: 5,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
@@ -179,7 +186,7 @@ class SearchPage extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
-                      state.movieSearchResults.movieSummaries[index].releaseDate,
+                      convertReleaseDate(state.movieSearchResults.movieSummaries[index].releaseDate),
                       style: TextStyle(
                         fontWeight: FontWeight.w700,
                         fontSize: 18,
