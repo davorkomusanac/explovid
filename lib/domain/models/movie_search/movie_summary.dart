@@ -18,4 +18,14 @@ class MovieSummary {
     this.backdropPath,
     this.popularity,
   });
+  Map<String, dynamic> toJson() => {
+        "backdrop_path": backdropPath,
+        "genre_ids": List<dynamic>.from(genreIds.map((x) => x)),
+        "id": id,
+        "overview": overview,
+        "poster_path": posterPath,
+        "release_date": releaseDate,
+        "title": title,
+        "popularity": popularity,
+      };
 }
