@@ -1,5 +1,6 @@
 import 'package:explovid/application/auth/auth_check/auth_check_bloc.dart';
 import 'package:explovid/application/auth/sign_in_form/sign_in_form_bloc.dart';
+import 'package:explovid/application/movie_search/movie_details/movie_details_bloc.dart';
 import 'package:explovid/application/movie_search/movie_search_bloc.dart';
 import 'package:explovid/domain/auth/auth_repository.dart';
 import 'package:explovid/domain/movie_db/movie_repository.dart';
@@ -53,12 +54,19 @@ class _MyAppState extends State<MyApp> {
             _movieRepository,
           ),
         ),
+        BlocProvider(
+          create: (context) => MovieDetailsBloc(
+            _movieRepository,
+          ),
+        ),
       ],
       child: MaterialApp(
         title: 'Explovid',
         debugShowCheckedModeBanner: false,
-        theme: ThemeData.light().copyWith(
-          scaffoldBackgroundColor: Color.fromRGBO(255, 241, 238, 1),
+        theme: ThemeData.dark().copyWith(
+          //scaffoldBackgroundColor: Color.fromRGBO(20, 24, 28, 1),
+          scaffoldBackgroundColor: Colors.blueGrey[900],
+
           inputDecorationTheme: InputDecorationTheme(
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(25),
