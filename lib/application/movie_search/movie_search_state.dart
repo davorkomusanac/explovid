@@ -9,6 +9,7 @@ abstract class MovieSearchState with _$MovieSearchState {
     @required bool isSearchCompleted,
     @required MovieSearchResults movieSearchResults,
     @required bool isControllerEmpty,
+    @required int searchPageNum,
   }) = _MovieSearchState;
 
   factory MovieSearchState.initial() => MovieSearchState(
@@ -18,5 +19,6 @@ abstract class MovieSearchState with _$MovieSearchState {
         isSearchCompleted: false,
         movieSearchResults: MovieSearchResults(totalResults: 0),
         isControllerEmpty: false,
+        searchPageNum: 1,
       );
 }

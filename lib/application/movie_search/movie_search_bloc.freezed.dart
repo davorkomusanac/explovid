@@ -24,6 +24,11 @@ class _$MovieSearchEventTearOff {
   _DeleteSearchPressed deleteSearchPressed() {
     return const _DeleteSearchPressed();
   }
+
+// ignore: unused_element
+  _NextResultPageCalled nextResultPageCalled() {
+    return const _NextResultPageCalled();
+  }
 }
 
 /// @nodoc
@@ -36,22 +41,26 @@ mixin _$MovieSearchEvent {
   TResult when<TResult extends Object>({
     @required TResult searchTitleChanged(String title),
     @required TResult deleteSearchPressed(),
+    @required TResult nextResultPageCalled(),
   });
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object>({
     TResult searchTitleChanged(String title),
     TResult deleteSearchPressed(),
+    TResult nextResultPageCalled(),
     @required TResult orElse(),
   });
   @optionalTypeArgs
   TResult map<TResult extends Object>({
     @required TResult searchTitleChanged(_SearchTitleChanged value),
     @required TResult deleteSearchPressed(_DeleteSearchPressed value),
+    @required TResult nextResultPageCalled(_NextResultPageCalled value),
   });
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object>({
     TResult searchTitleChanged(_SearchTitleChanged value),
     TResult deleteSearchPressed(_DeleteSearchPressed value),
+    TResult nextResultPageCalled(_NextResultPageCalled value),
     @required TResult orElse(),
   });
 }
@@ -135,9 +144,11 @@ class _$_SearchTitleChanged implements _SearchTitleChanged {
   TResult when<TResult extends Object>({
     @required TResult searchTitleChanged(String title),
     @required TResult deleteSearchPressed(),
+    @required TResult nextResultPageCalled(),
   }) {
     assert(searchTitleChanged != null);
     assert(deleteSearchPressed != null);
+    assert(nextResultPageCalled != null);
     return searchTitleChanged(title);
   }
 
@@ -146,6 +157,7 @@ class _$_SearchTitleChanged implements _SearchTitleChanged {
   TResult maybeWhen<TResult extends Object>({
     TResult searchTitleChanged(String title),
     TResult deleteSearchPressed(),
+    TResult nextResultPageCalled(),
     @required TResult orElse(),
   }) {
     assert(orElse != null);
@@ -160,9 +172,11 @@ class _$_SearchTitleChanged implements _SearchTitleChanged {
   TResult map<TResult extends Object>({
     @required TResult searchTitleChanged(_SearchTitleChanged value),
     @required TResult deleteSearchPressed(_DeleteSearchPressed value),
+    @required TResult nextResultPageCalled(_NextResultPageCalled value),
   }) {
     assert(searchTitleChanged != null);
     assert(deleteSearchPressed != null);
+    assert(nextResultPageCalled != null);
     return searchTitleChanged(this);
   }
 
@@ -171,6 +185,7 @@ class _$_SearchTitleChanged implements _SearchTitleChanged {
   TResult maybeMap<TResult extends Object>({
     TResult searchTitleChanged(_SearchTitleChanged value),
     TResult deleteSearchPressed(_DeleteSearchPressed value),
+    TResult nextResultPageCalled(_NextResultPageCalled value),
     @required TResult orElse(),
   }) {
     assert(orElse != null);
@@ -229,9 +244,11 @@ class _$_DeleteSearchPressed implements _DeleteSearchPressed {
   TResult when<TResult extends Object>({
     @required TResult searchTitleChanged(String title),
     @required TResult deleteSearchPressed(),
+    @required TResult nextResultPageCalled(),
   }) {
     assert(searchTitleChanged != null);
     assert(deleteSearchPressed != null);
+    assert(nextResultPageCalled != null);
     return deleteSearchPressed();
   }
 
@@ -240,6 +257,7 @@ class _$_DeleteSearchPressed implements _DeleteSearchPressed {
   TResult maybeWhen<TResult extends Object>({
     TResult searchTitleChanged(String title),
     TResult deleteSearchPressed(),
+    TResult nextResultPageCalled(),
     @required TResult orElse(),
   }) {
     assert(orElse != null);
@@ -254,9 +272,11 @@ class _$_DeleteSearchPressed implements _DeleteSearchPressed {
   TResult map<TResult extends Object>({
     @required TResult searchTitleChanged(_SearchTitleChanged value),
     @required TResult deleteSearchPressed(_DeleteSearchPressed value),
+    @required TResult nextResultPageCalled(_NextResultPageCalled value),
   }) {
     assert(searchTitleChanged != null);
     assert(deleteSearchPressed != null);
+    assert(nextResultPageCalled != null);
     return deleteSearchPressed(this);
   }
 
@@ -265,6 +285,7 @@ class _$_DeleteSearchPressed implements _DeleteSearchPressed {
   TResult maybeMap<TResult extends Object>({
     TResult searchTitleChanged(_SearchTitleChanged value),
     TResult deleteSearchPressed(_DeleteSearchPressed value),
+    TResult nextResultPageCalled(_NextResultPageCalled value),
     @required TResult orElse(),
   }) {
     assert(orElse != null);
@@ -280,6 +301,103 @@ abstract class _DeleteSearchPressed implements MovieSearchEvent {
 }
 
 /// @nodoc
+abstract class _$NextResultPageCalledCopyWith<$Res> {
+  factory _$NextResultPageCalledCopyWith(_NextResultPageCalled value,
+          $Res Function(_NextResultPageCalled) then) =
+      __$NextResultPageCalledCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$NextResultPageCalledCopyWithImpl<$Res>
+    extends _$MovieSearchEventCopyWithImpl<$Res>
+    implements _$NextResultPageCalledCopyWith<$Res> {
+  __$NextResultPageCalledCopyWithImpl(
+      _NextResultPageCalled _value, $Res Function(_NextResultPageCalled) _then)
+      : super(_value, (v) => _then(v as _NextResultPageCalled));
+
+  @override
+  _NextResultPageCalled get _value => super._value as _NextResultPageCalled;
+}
+
+/// @nodoc
+class _$_NextResultPageCalled implements _NextResultPageCalled {
+  const _$_NextResultPageCalled();
+
+  @override
+  String toString() {
+    return 'MovieSearchEvent.nextResultPageCalled()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) || (other is _NextResultPageCalled);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object>({
+    @required TResult searchTitleChanged(String title),
+    @required TResult deleteSearchPressed(),
+    @required TResult nextResultPageCalled(),
+  }) {
+    assert(searchTitleChanged != null);
+    assert(deleteSearchPressed != null);
+    assert(nextResultPageCalled != null);
+    return nextResultPageCalled();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object>({
+    TResult searchTitleChanged(String title),
+    TResult deleteSearchPressed(),
+    TResult nextResultPageCalled(),
+    @required TResult orElse(),
+  }) {
+    assert(orElse != null);
+    if (nextResultPageCalled != null) {
+      return nextResultPageCalled();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object>({
+    @required TResult searchTitleChanged(_SearchTitleChanged value),
+    @required TResult deleteSearchPressed(_DeleteSearchPressed value),
+    @required TResult nextResultPageCalled(_NextResultPageCalled value),
+  }) {
+    assert(searchTitleChanged != null);
+    assert(deleteSearchPressed != null);
+    assert(nextResultPageCalled != null);
+    return nextResultPageCalled(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object>({
+    TResult searchTitleChanged(_SearchTitleChanged value),
+    TResult deleteSearchPressed(_DeleteSearchPressed value),
+    TResult nextResultPageCalled(_NextResultPageCalled value),
+    @required TResult orElse(),
+  }) {
+    assert(orElse != null);
+    if (nextResultPageCalled != null) {
+      return nextResultPageCalled(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _NextResultPageCalled implements MovieSearchEvent {
+  const factory _NextResultPageCalled() = _$_NextResultPageCalled;
+}
+
+/// @nodoc
 class _$MovieSearchStateTearOff {
   const _$MovieSearchStateTearOff();
 
@@ -290,7 +408,8 @@ class _$MovieSearchStateTearOff {
       @required bool isSearching,
       @required bool isSearchCompleted,
       @required MovieSearchResults movieSearchResults,
-      @required bool isControllerEmpty}) {
+      @required bool isControllerEmpty,
+      @required int searchPageNum}) {
     return _MovieSearchState(
       title: title,
       errorMessage: errorMessage,
@@ -298,6 +417,7 @@ class _$MovieSearchStateTearOff {
       isSearchCompleted: isSearchCompleted,
       movieSearchResults: movieSearchResults,
       isControllerEmpty: isControllerEmpty,
+      searchPageNum: searchPageNum,
     );
   }
 }
@@ -314,6 +434,7 @@ mixin _$MovieSearchState {
   bool get isSearchCompleted;
   MovieSearchResults get movieSearchResults;
   bool get isControllerEmpty;
+  int get searchPageNum;
 
   $MovieSearchStateCopyWith<MovieSearchState> get copyWith;
 }
@@ -329,7 +450,8 @@ abstract class $MovieSearchStateCopyWith<$Res> {
       bool isSearching,
       bool isSearchCompleted,
       MovieSearchResults movieSearchResults,
-      bool isControllerEmpty});
+      bool isControllerEmpty,
+      int searchPageNum});
 }
 
 /// @nodoc
@@ -349,6 +471,7 @@ class _$MovieSearchStateCopyWithImpl<$Res>
     Object isSearchCompleted = freezed,
     Object movieSearchResults = freezed,
     Object isControllerEmpty = freezed,
+    Object searchPageNum = freezed,
   }) {
     return _then(_value.copyWith(
       title: title == freezed ? _value.title : title as String,
@@ -366,6 +489,9 @@ class _$MovieSearchStateCopyWithImpl<$Res>
       isControllerEmpty: isControllerEmpty == freezed
           ? _value.isControllerEmpty
           : isControllerEmpty as bool,
+      searchPageNum: searchPageNum == freezed
+          ? _value.searchPageNum
+          : searchPageNum as int,
     ));
   }
 }
@@ -383,7 +509,8 @@ abstract class _$MovieSearchStateCopyWith<$Res>
       bool isSearching,
       bool isSearchCompleted,
       MovieSearchResults movieSearchResults,
-      bool isControllerEmpty});
+      bool isControllerEmpty,
+      int searchPageNum});
 }
 
 /// @nodoc
@@ -405,6 +532,7 @@ class __$MovieSearchStateCopyWithImpl<$Res>
     Object isSearchCompleted = freezed,
     Object movieSearchResults = freezed,
     Object isControllerEmpty = freezed,
+    Object searchPageNum = freezed,
   }) {
     return _then(_MovieSearchState(
       title: title == freezed ? _value.title : title as String,
@@ -422,6 +550,9 @@ class __$MovieSearchStateCopyWithImpl<$Res>
       isControllerEmpty: isControllerEmpty == freezed
           ? _value.isControllerEmpty
           : isControllerEmpty as bool,
+      searchPageNum: searchPageNum == freezed
+          ? _value.searchPageNum
+          : searchPageNum as int,
     ));
   }
 }
@@ -434,13 +565,15 @@ class _$_MovieSearchState implements _MovieSearchState {
       @required this.isSearching,
       @required this.isSearchCompleted,
       @required this.movieSearchResults,
-      @required this.isControllerEmpty})
+      @required this.isControllerEmpty,
+      @required this.searchPageNum})
       : assert(title != null),
         assert(errorMessage != null),
         assert(isSearching != null),
         assert(isSearchCompleted != null),
         assert(movieSearchResults != null),
-        assert(isControllerEmpty != null);
+        assert(isControllerEmpty != null),
+        assert(searchPageNum != null);
 
   @override
   final String title;
@@ -454,10 +587,12 @@ class _$_MovieSearchState implements _MovieSearchState {
   final MovieSearchResults movieSearchResults;
   @override
   final bool isControllerEmpty;
+  @override
+  final int searchPageNum;
 
   @override
   String toString() {
-    return 'MovieSearchState(title: $title, errorMessage: $errorMessage, isSearching: $isSearching, isSearchCompleted: $isSearchCompleted, movieSearchResults: $movieSearchResults, isControllerEmpty: $isControllerEmpty)';
+    return 'MovieSearchState(title: $title, errorMessage: $errorMessage, isSearching: $isSearching, isSearchCompleted: $isSearchCompleted, movieSearchResults: $movieSearchResults, isControllerEmpty: $isControllerEmpty, searchPageNum: $searchPageNum)';
   }
 
   @override
@@ -480,7 +615,10 @@ class _$_MovieSearchState implements _MovieSearchState {
                     .equals(other.movieSearchResults, movieSearchResults)) &&
             (identical(other.isControllerEmpty, isControllerEmpty) ||
                 const DeepCollectionEquality()
-                    .equals(other.isControllerEmpty, isControllerEmpty)));
+                    .equals(other.isControllerEmpty, isControllerEmpty)) &&
+            (identical(other.searchPageNum, searchPageNum) ||
+                const DeepCollectionEquality()
+                    .equals(other.searchPageNum, searchPageNum)));
   }
 
   @override
@@ -491,7 +629,8 @@ class _$_MovieSearchState implements _MovieSearchState {
       const DeepCollectionEquality().hash(isSearching) ^
       const DeepCollectionEquality().hash(isSearchCompleted) ^
       const DeepCollectionEquality().hash(movieSearchResults) ^
-      const DeepCollectionEquality().hash(isControllerEmpty);
+      const DeepCollectionEquality().hash(isControllerEmpty) ^
+      const DeepCollectionEquality().hash(searchPageNum);
 
   @override
   _$MovieSearchStateCopyWith<_MovieSearchState> get copyWith =>
@@ -505,7 +644,8 @@ abstract class _MovieSearchState implements MovieSearchState {
       @required bool isSearching,
       @required bool isSearchCompleted,
       @required MovieSearchResults movieSearchResults,
-      @required bool isControllerEmpty}) = _$_MovieSearchState;
+      @required bool isControllerEmpty,
+      @required int searchPageNum}) = _$_MovieSearchState;
 
   @override
   String get title;
@@ -519,6 +659,8 @@ abstract class _MovieSearchState implements MovieSearchState {
   MovieSearchResults get movieSearchResults;
   @override
   bool get isControllerEmpty;
+  @override
+  int get searchPageNum;
   @override
   _$MovieSearchStateCopyWith<_MovieSearchState> get copyWith;
 }

@@ -4,4 +4,5 @@ part of 'movie_search_bloc.dart';
 abstract class MovieSearchEvent with _$MovieSearchEvent {
   const factory MovieSearchEvent.searchTitleChanged(String title) = _SearchTitleChanged;
   const factory MovieSearchEvent.deleteSearchPressed() = _DeleteSearchPressed;
+  const factory MovieSearchEvent.nextResultPageCalled() = _NextResultPageCalled;
 }

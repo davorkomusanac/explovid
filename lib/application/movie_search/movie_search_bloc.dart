@@ -15,6 +15,7 @@ part 'movie_search_bloc.freezed.dart';
 
 class MovieSearchBloc extends Bloc<MovieSearchEvent, MovieSearchState> {
   final MovieRepository movieRepository;
+  MovieSearchResults results;
 
   MovieSearchBloc(this.movieRepository) : super(MovieSearchState.initial());
 
@@ -30,9 +31,10 @@ class MovieSearchBloc extends Bloc<MovieSearchEvent, MovieSearchState> {
           isSearching: e.title.trim().isEmpty ? false : true,
           isSearchCompleted: false,
           isControllerEmpty: false,
+          searchPageNum: 1,
         );
         if (e.title.trim().isNotEmpty) {
-          var results = await movieRepository.searchMovie(e.title.trim());
+          results = await movieRepository.searchMovie(e.title.trim());
           if (results.errorMessage == "No results found.") {
             yield state.copyWith(
               errorMessage: "No results found.",
@@ -65,10 +67,21 @@ class MovieSearchBloc extends Bloc<MovieSearchEvent, MovieSearchState> {
           isSearchCompleted: false,
           movieSearchResults: MovieSearchResults(totalResults: 0),
           isControllerEmpty: true,
+          searchPageNum: 1,
         );
       },
-
-      ///Add event for scrollController, when at end of Listview, increase pageNumber for search title?
+      nextResultPageCalled: (e) async* {
+        if (state.searchPageNum < results.totalPages) {
+          //increase SearchPageNum
+          var newMovieResults = await movieRepository.searchMovie(state.title, state.searchPageNum + 1);
+          for (var movie in newMovieResults.movieSummaries) {
+            results.movieSummaries.add(movie);
+          }
+          yield state.copyWith(
+            searchPageNum: state.searchPageNum + 1,
+          );
+        }
+      },
     );
   }
 }

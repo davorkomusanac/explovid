@@ -52,6 +52,37 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
           builder: (context, state) {
             return Column(
               children: [
+                if (state.isSearching)
+                  Expanded(
+                    child: const Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: Center(
+                        child: CircularProgressIndicator(),
+                      ),
+                    ),
+                  ),
+                if (state.errorMessage.isNotEmpty)
+                  Expanded(
+                    child: Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Text(
+                            "☹",
+                            style: TextStyle(fontSize: 50),
+                          ),
+                          Text(
+                            state.errorMessage,
+                            style: TextStyle(fontSize: 20),
+                          ),
+                          const Text(
+                            "Try again.",
+                            style: TextStyle(fontSize: 20),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
                 if (state.errorMessage.isEmpty && !state.isSearching)
                   Expanded(
                     child: MediaQuery.removePadding(
@@ -486,37 +517,6 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
                                 );
                               },
                             ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                if (state.isSearching)
-                  Expanded(
-                    child: const Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Center(
-                        child: CircularProgressIndicator(),
-                      ),
-                    ),
-                  ),
-                if (state.errorMessage.isNotEmpty)
-                  Expanded(
-                    child: Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Text(
-                            "☹",
-                            style: TextStyle(fontSize: 50),
-                          ),
-                          Text(
-                            state.errorMessage,
-                            style: TextStyle(fontSize: 20),
-                          ),
-                          const Text(
-                            "Try again.",
-                            style: TextStyle(fontSize: 20),
                           ),
                         ],
                       ),

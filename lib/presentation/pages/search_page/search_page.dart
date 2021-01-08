@@ -14,19 +14,31 @@ class SearchPage extends StatefulWidget {
 
 class _SearchPageState extends State<SearchPage> {
   TextEditingController searchController;
+  ScrollController scrollController;
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     searchController = TextEditingController();
+    scrollController = ScrollController();
   }
 
   @override
   void dispose() {
-    // TODO: implement dispose
     searchController.dispose();
+    scrollController.dispose();
     super.dispose();
+  }
+
+  //If at end of the Listview, search for more Results
+  bool _handleScrollNotification(ScrollNotification notification) {
+    if (notification is ScrollEndNotification && scrollController.position.extentAfter == 0) {
+      print("Calling FETCH NEXT PAGE");
+      context.read<MovieSearchBloc>().add(
+            MovieSearchEvent.nextResultPageCalled(),
+          );
+    }
+    return false;
   }
 
   @override
@@ -61,7 +73,9 @@ class _SearchPageState extends State<SearchPage> {
                                     icon: const Icon(Icons.clear),
                                     onPressed: () {
                                       searchController.clear();
-                                      context.read<MovieSearchBloc>().add(MovieSearchEvent.deleteSearchPressed());
+                                      context.read<MovieSearchBloc>().add(
+                                            MovieSearchEvent.deleteSearchPressed(),
+                                          );
                                     },
                                   )
                                 : null,
@@ -90,12 +104,18 @@ class _SearchPageState extends State<SearchPage> {
                   ),
                 if (state.isSearchCompleted)
                   Expanded(
-                    child: ListView.builder(
-                      keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
-                      itemCount: state.movieSearchResults.movieSummaries.length,
-                      itemBuilder: (context, index) {
-                        return buildMovieCard(context, state, index);
-                      },
+                    child: NotificationListener<ScrollNotification>(
+                      onNotification: _handleScrollNotification,
+                      child: ListView.builder(
+                        controller: scrollController,
+                        keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+                        itemCount: _calculateListItemCount(state),
+                        itemBuilder: (context, index) {
+                          return index >= state.movieSearchResults.movieSummaries.length
+                              ? buildLoaderNextPage()
+                              : buildMovieCard(context, state, index);
+                        },
+                      ),
                     ),
                   ),
                 if (state.errorMessage.isNotEmpty)
@@ -124,6 +144,23 @@ class _SearchPageState extends State<SearchPage> {
             );
           },
         ),
+      ),
+    );
+  }
+
+  int _calculateListItemCount(MovieSearchState state) {
+    if (state.searchPageNum < state.movieSearchResults.totalPages) {
+      return state.movieSearchResults.movieSummaries.length + 1;
+    } else {
+      return state.movieSearchResults.movieSummaries.length;
+    }
+  }
+
+  Widget buildLoaderNextPage() {
+    return Padding(
+      padding: const EdgeInsets.all(12.0),
+      child: Center(
+        child: CircularProgressIndicator(),
       ),
     );
   }
