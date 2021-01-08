@@ -1,3 +1,4 @@
+import 'package:explovid/application/movie_search/movie_search_bloc.dart';
 import 'package:explovid/presentation/pages/home_page/five.dart';
 import 'package:explovid/presentation/pages/home_page/four.dart';
 import 'package:explovid/presentation/pages/home_page/one.dart';
@@ -6,6 +7,7 @@ import 'package:explovid/presentation/pages/home_page/two.dart';
 import 'package:explovid/presentation/pages/search_page/search_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -57,6 +59,7 @@ class _HomePageState extends State<HomePage> {
             if (currentIndex == index) {
               switch (index) {
                 case 0:
+                  BlocProvider.of<MovieSearchBloc>(context, listen: false).add(MovieSearchEvent.deleteSearchPressed());
                   tabNavKeys[0].currentState.popUntil((route) => route.isFirst);
                   break;
                 case 1:

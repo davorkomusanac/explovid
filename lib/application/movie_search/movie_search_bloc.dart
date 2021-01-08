@@ -4,6 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:explovid/domain/models/movie_search/movie_search_results.dart';
 import 'package:explovid/domain/models/movie_search/movie_summary.dart';
 import 'package:explovid/domain/movie_db/movie_repository.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:meta/meta.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -28,6 +29,7 @@ class MovieSearchBloc extends Bloc<MovieSearchEvent, MovieSearchState> {
           errorMessage: '',
           isSearching: e.title.trim().isEmpty ? false : true,
           isSearchCompleted: false,
+          isControllerEmpty: false,
         );
         if (e.title.trim().isNotEmpty) {
           var results = await movieRepository.searchMovie(e.title.trim());
@@ -54,6 +56,16 @@ class MovieSearchBloc extends Bloc<MovieSearchEvent, MovieSearchState> {
             );
           }
         }
+      },
+      deleteSearchPressed: (e) async* {
+        yield state.copyWith(
+          title: '',
+          errorMessage: '',
+          isSearching: false,
+          isSearchCompleted: false,
+          movieSearchResults: MovieSearchResults(totalResults: 0),
+          isControllerEmpty: true,
+        );
       },
 
       ///Add event for scrollController, when at end of Listview, increase pageNumber for search title?

@@ -7,12 +7,36 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class SearchPage extends StatelessWidget {
+class SearchPage extends StatefulWidget {
+  @override
+  _SearchPageState createState() => _SearchPageState();
+}
+
+class _SearchPageState extends State<SearchPage> {
+  TextEditingController searchController;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    searchController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    searchController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        body: BlocBuilder<MovieSearchBloc, MovieSearchState>(
+        body: BlocConsumer<MovieSearchBloc, MovieSearchState>(
+          listener: (context, state) {
+            if (state.isControllerEmpty) searchController.clear();
+          },
           builder: (context, state) {
             return Column(
               children: [
@@ -22,15 +46,25 @@ class SearchPage extends StatelessWidget {
                     children: [
                       Expanded(
                         child: TextFormField(
+                          controller: searchController,
                           maxLength: 100,
                           autocorrect: false,
-                          decoration: const InputDecoration(
+                          decoration: InputDecoration(
                             counterText: "",
                             prefixIcon: const Icon(
                               Icons.search,
                               color: Colors.grey,
                             ),
                             labelText: 'Search',
+                            suffixIcon: searchController.text.isNotEmpty
+                                ? IconButton(
+                                    icon: const Icon(Icons.clear),
+                                    onPressed: () {
+                                      searchController.clear();
+                                      context.read<MovieSearchBloc>().add(MovieSearchEvent.deleteSearchPressed());
+                                    },
+                                  )
+                                : null,
                           ),
                           onChanged: (value) {
                             context.read<MovieSearchBloc>().add(

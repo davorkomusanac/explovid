@@ -19,6 +19,11 @@ class _$MovieSearchEventTearOff {
       title,
     );
   }
+
+// ignore: unused_element
+  _DeleteSearchPressed deleteSearchPressed() {
+    return const _DeleteSearchPressed();
+  }
 }
 
 /// @nodoc
@@ -27,28 +32,28 @@ const $MovieSearchEvent = _$MovieSearchEventTearOff();
 
 /// @nodoc
 mixin _$MovieSearchEvent {
-  String get title;
-
   @optionalTypeArgs
   TResult when<TResult extends Object>({
     @required TResult searchTitleChanged(String title),
+    @required TResult deleteSearchPressed(),
   });
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object>({
     TResult searchTitleChanged(String title),
+    TResult deleteSearchPressed(),
     @required TResult orElse(),
   });
   @optionalTypeArgs
   TResult map<TResult extends Object>({
     @required TResult searchTitleChanged(_SearchTitleChanged value),
+    @required TResult deleteSearchPressed(_DeleteSearchPressed value),
   });
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object>({
     TResult searchTitleChanged(_SearchTitleChanged value),
+    TResult deleteSearchPressed(_DeleteSearchPressed value),
     @required TResult orElse(),
   });
-
-  $MovieSearchEventCopyWith<MovieSearchEvent> get copyWith;
 }
 
 /// @nodoc
@@ -56,7 +61,6 @@ abstract class $MovieSearchEventCopyWith<$Res> {
   factory $MovieSearchEventCopyWith(
           MovieSearchEvent value, $Res Function(MovieSearchEvent) then) =
       _$MovieSearchEventCopyWithImpl<$Res>;
-  $Res call({String title});
 }
 
 /// @nodoc
@@ -67,24 +71,13 @@ class _$MovieSearchEventCopyWithImpl<$Res>
   final MovieSearchEvent _value;
   // ignore: unused_field
   final $Res Function(MovieSearchEvent) _then;
-
-  @override
-  $Res call({
-    Object title = freezed,
-  }) {
-    return _then(_value.copyWith(
-      title: title == freezed ? _value.title : title as String,
-    ));
-  }
 }
 
 /// @nodoc
-abstract class _$SearchTitleChangedCopyWith<$Res>
-    implements $MovieSearchEventCopyWith<$Res> {
+abstract class _$SearchTitleChangedCopyWith<$Res> {
   factory _$SearchTitleChangedCopyWith(
           _SearchTitleChanged value, $Res Function(_SearchTitleChanged) then) =
       __$SearchTitleChangedCopyWithImpl<$Res>;
-  @override
   $Res call({String title});
 }
 
@@ -141,8 +134,10 @@ class _$_SearchTitleChanged implements _SearchTitleChanged {
   @optionalTypeArgs
   TResult when<TResult extends Object>({
     @required TResult searchTitleChanged(String title),
+    @required TResult deleteSearchPressed(),
   }) {
     assert(searchTitleChanged != null);
+    assert(deleteSearchPressed != null);
     return searchTitleChanged(title);
   }
 
@@ -150,6 +145,7 @@ class _$_SearchTitleChanged implements _SearchTitleChanged {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object>({
     TResult searchTitleChanged(String title),
+    TResult deleteSearchPressed(),
     @required TResult orElse(),
   }) {
     assert(orElse != null);
@@ -163,8 +159,10 @@ class _$_SearchTitleChanged implements _SearchTitleChanged {
   @optionalTypeArgs
   TResult map<TResult extends Object>({
     @required TResult searchTitleChanged(_SearchTitleChanged value),
+    @required TResult deleteSearchPressed(_DeleteSearchPressed value),
   }) {
     assert(searchTitleChanged != null);
+    assert(deleteSearchPressed != null);
     return searchTitleChanged(this);
   }
 
@@ -172,6 +170,7 @@ class _$_SearchTitleChanged implements _SearchTitleChanged {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object>({
     TResult searchTitleChanged(_SearchTitleChanged value),
+    TResult deleteSearchPressed(_DeleteSearchPressed value),
     @required TResult orElse(),
   }) {
     assert(orElse != null);
@@ -185,10 +184,99 @@ class _$_SearchTitleChanged implements _SearchTitleChanged {
 abstract class _SearchTitleChanged implements MovieSearchEvent {
   const factory _SearchTitleChanged(String title) = _$_SearchTitleChanged;
 
-  @override
   String get title;
-  @override
   _$SearchTitleChangedCopyWith<_SearchTitleChanged> get copyWith;
+}
+
+/// @nodoc
+abstract class _$DeleteSearchPressedCopyWith<$Res> {
+  factory _$DeleteSearchPressedCopyWith(_DeleteSearchPressed value,
+          $Res Function(_DeleteSearchPressed) then) =
+      __$DeleteSearchPressedCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$DeleteSearchPressedCopyWithImpl<$Res>
+    extends _$MovieSearchEventCopyWithImpl<$Res>
+    implements _$DeleteSearchPressedCopyWith<$Res> {
+  __$DeleteSearchPressedCopyWithImpl(
+      _DeleteSearchPressed _value, $Res Function(_DeleteSearchPressed) _then)
+      : super(_value, (v) => _then(v as _DeleteSearchPressed));
+
+  @override
+  _DeleteSearchPressed get _value => super._value as _DeleteSearchPressed;
+}
+
+/// @nodoc
+class _$_DeleteSearchPressed implements _DeleteSearchPressed {
+  const _$_DeleteSearchPressed();
+
+  @override
+  String toString() {
+    return 'MovieSearchEvent.deleteSearchPressed()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) || (other is _DeleteSearchPressed);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object>({
+    @required TResult searchTitleChanged(String title),
+    @required TResult deleteSearchPressed(),
+  }) {
+    assert(searchTitleChanged != null);
+    assert(deleteSearchPressed != null);
+    return deleteSearchPressed();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object>({
+    TResult searchTitleChanged(String title),
+    TResult deleteSearchPressed(),
+    @required TResult orElse(),
+  }) {
+    assert(orElse != null);
+    if (deleteSearchPressed != null) {
+      return deleteSearchPressed();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object>({
+    @required TResult searchTitleChanged(_SearchTitleChanged value),
+    @required TResult deleteSearchPressed(_DeleteSearchPressed value),
+  }) {
+    assert(searchTitleChanged != null);
+    assert(deleteSearchPressed != null);
+    return deleteSearchPressed(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object>({
+    TResult searchTitleChanged(_SearchTitleChanged value),
+    TResult deleteSearchPressed(_DeleteSearchPressed value),
+    @required TResult orElse(),
+  }) {
+    assert(orElse != null);
+    if (deleteSearchPressed != null) {
+      return deleteSearchPressed(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _DeleteSearchPressed implements MovieSearchEvent {
+  const factory _DeleteSearchPressed() = _$_DeleteSearchPressed;
 }
 
 /// @nodoc
@@ -201,13 +289,15 @@ class _$MovieSearchStateTearOff {
       @required String errorMessage,
       @required bool isSearching,
       @required bool isSearchCompleted,
-      @required MovieSearchResults movieSearchResults}) {
+      @required MovieSearchResults movieSearchResults,
+      @required bool isControllerEmpty}) {
     return _MovieSearchState(
       title: title,
       errorMessage: errorMessage,
       isSearching: isSearching,
       isSearchCompleted: isSearchCompleted,
       movieSearchResults: movieSearchResults,
+      isControllerEmpty: isControllerEmpty,
     );
   }
 }
@@ -223,6 +313,7 @@ mixin _$MovieSearchState {
   bool get isSearching;
   bool get isSearchCompleted;
   MovieSearchResults get movieSearchResults;
+  bool get isControllerEmpty;
 
   $MovieSearchStateCopyWith<MovieSearchState> get copyWith;
 }
@@ -237,7 +328,8 @@ abstract class $MovieSearchStateCopyWith<$Res> {
       String errorMessage,
       bool isSearching,
       bool isSearchCompleted,
-      MovieSearchResults movieSearchResults});
+      MovieSearchResults movieSearchResults,
+      bool isControllerEmpty});
 }
 
 /// @nodoc
@@ -256,6 +348,7 @@ class _$MovieSearchStateCopyWithImpl<$Res>
     Object isSearching = freezed,
     Object isSearchCompleted = freezed,
     Object movieSearchResults = freezed,
+    Object isControllerEmpty = freezed,
   }) {
     return _then(_value.copyWith(
       title: title == freezed ? _value.title : title as String,
@@ -270,6 +363,9 @@ class _$MovieSearchStateCopyWithImpl<$Res>
       movieSearchResults: movieSearchResults == freezed
           ? _value.movieSearchResults
           : movieSearchResults as MovieSearchResults,
+      isControllerEmpty: isControllerEmpty == freezed
+          ? _value.isControllerEmpty
+          : isControllerEmpty as bool,
     ));
   }
 }
@@ -286,7 +382,8 @@ abstract class _$MovieSearchStateCopyWith<$Res>
       String errorMessage,
       bool isSearching,
       bool isSearchCompleted,
-      MovieSearchResults movieSearchResults});
+      MovieSearchResults movieSearchResults,
+      bool isControllerEmpty});
 }
 
 /// @nodoc
@@ -307,6 +404,7 @@ class __$MovieSearchStateCopyWithImpl<$Res>
     Object isSearching = freezed,
     Object isSearchCompleted = freezed,
     Object movieSearchResults = freezed,
+    Object isControllerEmpty = freezed,
   }) {
     return _then(_MovieSearchState(
       title: title == freezed ? _value.title : title as String,
@@ -321,6 +419,9 @@ class __$MovieSearchStateCopyWithImpl<$Res>
       movieSearchResults: movieSearchResults == freezed
           ? _value.movieSearchResults
           : movieSearchResults as MovieSearchResults,
+      isControllerEmpty: isControllerEmpty == freezed
+          ? _value.isControllerEmpty
+          : isControllerEmpty as bool,
     ));
   }
 }
@@ -332,12 +433,14 @@ class _$_MovieSearchState implements _MovieSearchState {
       @required this.errorMessage,
       @required this.isSearching,
       @required this.isSearchCompleted,
-      @required this.movieSearchResults})
+      @required this.movieSearchResults,
+      @required this.isControllerEmpty})
       : assert(title != null),
         assert(errorMessage != null),
         assert(isSearching != null),
         assert(isSearchCompleted != null),
-        assert(movieSearchResults != null);
+        assert(movieSearchResults != null),
+        assert(isControllerEmpty != null);
 
   @override
   final String title;
@@ -349,10 +452,12 @@ class _$_MovieSearchState implements _MovieSearchState {
   final bool isSearchCompleted;
   @override
   final MovieSearchResults movieSearchResults;
+  @override
+  final bool isControllerEmpty;
 
   @override
   String toString() {
-    return 'MovieSearchState(title: $title, errorMessage: $errorMessage, isSearching: $isSearching, isSearchCompleted: $isSearchCompleted, movieSearchResults: $movieSearchResults)';
+    return 'MovieSearchState(title: $title, errorMessage: $errorMessage, isSearching: $isSearching, isSearchCompleted: $isSearchCompleted, movieSearchResults: $movieSearchResults, isControllerEmpty: $isControllerEmpty)';
   }
 
   @override
@@ -372,7 +477,10 @@ class _$_MovieSearchState implements _MovieSearchState {
                     .equals(other.isSearchCompleted, isSearchCompleted)) &&
             (identical(other.movieSearchResults, movieSearchResults) ||
                 const DeepCollectionEquality()
-                    .equals(other.movieSearchResults, movieSearchResults)));
+                    .equals(other.movieSearchResults, movieSearchResults)) &&
+            (identical(other.isControllerEmpty, isControllerEmpty) ||
+                const DeepCollectionEquality()
+                    .equals(other.isControllerEmpty, isControllerEmpty)));
   }
 
   @override
@@ -382,7 +490,8 @@ class _$_MovieSearchState implements _MovieSearchState {
       const DeepCollectionEquality().hash(errorMessage) ^
       const DeepCollectionEquality().hash(isSearching) ^
       const DeepCollectionEquality().hash(isSearchCompleted) ^
-      const DeepCollectionEquality().hash(movieSearchResults);
+      const DeepCollectionEquality().hash(movieSearchResults) ^
+      const DeepCollectionEquality().hash(isControllerEmpty);
 
   @override
   _$MovieSearchStateCopyWith<_MovieSearchState> get copyWith =>
@@ -395,7 +504,8 @@ abstract class _MovieSearchState implements MovieSearchState {
       @required String errorMessage,
       @required bool isSearching,
       @required bool isSearchCompleted,
-      @required MovieSearchResults movieSearchResults}) = _$_MovieSearchState;
+      @required MovieSearchResults movieSearchResults,
+      @required bool isControllerEmpty}) = _$_MovieSearchState;
 
   @override
   String get title;
@@ -407,6 +517,8 @@ abstract class _MovieSearchState implements MovieSearchState {
   bool get isSearchCompleted;
   @override
   MovieSearchResults get movieSearchResults;
+  @override
+  bool get isControllerEmpty;
   @override
   _$MovieSearchStateCopyWith<_MovieSearchState> get copyWith;
 }

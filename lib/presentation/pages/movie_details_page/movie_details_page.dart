@@ -20,11 +20,15 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
     context.read<MovieDetailsBloc>().add(
           MovieDetailsEvent.movieDetailsPressed(widget.movieId),
         );
+    super.didChangeDependencies();
   }
 
   //Method to call, when Navigator.pop is called, to update the movieDetails page
