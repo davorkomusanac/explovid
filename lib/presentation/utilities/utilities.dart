@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 Widget buildLoaderNextPage() {
@@ -69,5 +71,21 @@ String convertRuntime(int runtimeInMin) {
     return hour.toString() + "h " + minutes.toString() + "m";
   } else {
     return minutes.toString() + "m";
+  }
+}
+
+//Debouncer to stop making unnecessary network calls
+class Debouncer {
+  final int milliseconds;
+  VoidCallback action;
+  Timer _timer;
+
+  Debouncer({this.milliseconds});
+
+  run(VoidCallback action) {
+    if (null != _timer) {
+      _timer.cancel();
+    }
+    _timer = Timer(Duration(milliseconds: milliseconds), action);
   }
 }

@@ -21,6 +21,7 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
     const Tab(text: "Actors"),
     const Tab(text: "Users"),
   ];
+  final _debouncer = Debouncer(milliseconds: 500);
 
   @override
   void initState() {
@@ -154,28 +155,32 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
                           onChanged: (value) {
                             //Calling this setState so that the _searchController gets updated, the deleteSearch button doesn't show in other tabs from the start
                             setState(() {});
-                            switch (_tabController.index) {
-                              case (0):
-                                context.read<MovieSearchBloc>().add(
-                                      MovieSearchEvent.searchTitleChanged(value),
-                                    );
-                                break;
-                              case (1):
-                                context.read<TvShowSearchBloc>().add(
-                                      TvShowSearchEvent.searchNameChanged(value),
-                                    );
-                                break;
-                              case (2):
-                                print("Actor");
-                                context.read<MovieSearchBloc>().add(
-                                      MovieSearchEvent.searchTitleChanged(value),
-                                    );
-                                break;
-                              case (3):
-                                print("User");
-                                break;
-                              default:
-                            }
+                            //Debouncer, so that the search gets initiated when the user stops typing (for 500 milliseconds)
+                            _debouncer.run(() {
+                              print(value);
+                              switch (_tabController.index) {
+                                case (0):
+                                  context.read<MovieSearchBloc>().add(
+                                        MovieSearchEvent.searchTitleChanged(value),
+                                      );
+                                  break;
+                                case (1):
+                                  context.read<TvShowSearchBloc>().add(
+                                        TvShowSearchEvent.searchNameChanged(value),
+                                      );
+                                  break;
+                                case (2):
+                                  print("Actor");
+                                  context.read<MovieSearchBloc>().add(
+                                        MovieSearchEvent.searchTitleChanged(value),
+                                      );
+                                  break;
+                                case (3):
+                                  print("User");
+                                  break;
+                                default:
+                              }
+                            });
                           },
                           onFieldSubmitted: (value) {
                             switch (_tabController.index) {
