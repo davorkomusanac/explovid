@@ -2,8 +2,10 @@ import 'package:explovid/application/auth/auth_check/auth_check_bloc.dart';
 import 'package:explovid/application/auth/sign_in_form/sign_in_form_bloc.dart';
 import 'package:explovid/application/movie_search/movie_details/movie_details_bloc.dart';
 import 'package:explovid/application/movie_search/movie_search_bloc.dart';
+import 'package:explovid/application/tv_show_search/tv_show_search_bloc.dart';
 import 'package:explovid/domain/auth/auth_repository.dart';
 import 'package:explovid/domain/movie_db/movie_repository.dart';
+import 'package:explovid/domain/tv_show_db/tv_show_repository.dart';
 import 'package:explovid/presentation/pages/splash_page/splash_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -24,13 +26,17 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   AuthRepository _authRepository;
   MovieRepository _movieRepository;
+  TvShowRepository _tvShowRepository;
+  http.Client client;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    client = http.Client();
     _authRepository = AuthRepository();
-    _movieRepository = MovieRepository(http.Client());
+    _movieRepository = MovieRepository(client);
+    _tvShowRepository = TvShowRepository(client);
   }
 
   @override
@@ -57,6 +63,11 @@ class _MyAppState extends State<MyApp> {
         BlocProvider(
           create: (context) => MovieDetailsBloc(
             _movieRepository,
+          ),
+        ),
+        BlocProvider(
+          create: (context) => TvShowSearchBloc(
+            _tvShowRepository,
           ),
         ),
       ],

@@ -1,8 +1,6 @@
 import 'dart:async';
-
 import 'package:bloc/bloc.dart';
 import 'package:explovid/domain/models/movie_search/movie_search_results.dart';
-import 'package:explovid/domain/models/movie_search/movie_summary.dart';
 import 'package:explovid/domain/movie_db/movie_repository.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:meta/meta.dart';
@@ -14,10 +12,10 @@ part 'movie_search_state.dart';
 part 'movie_search_bloc.freezed.dart';
 
 class MovieSearchBloc extends Bloc<MovieSearchEvent, MovieSearchState> {
-  final MovieRepository movieRepository;
-  MovieSearchResults results;
+  final MovieRepository _movieRepository;
+  MovieSearchResults _results;
 
-  MovieSearchBloc(this.movieRepository) : super(MovieSearchState.initial());
+  MovieSearchBloc(this._movieRepository) : super(MovieSearchState.initial());
 
   @override
   Stream<MovieSearchState> mapEventToState(
@@ -30,31 +28,30 @@ class MovieSearchBloc extends Bloc<MovieSearchEvent, MovieSearchState> {
           errorMessage: '',
           isSearching: e.title.trim().isEmpty ? false : true,
           isSearchCompleted: false,
-          isControllerEmpty: false,
           searchPageNum: 1,
         );
         if (e.title.trim().isNotEmpty) {
-          results = await movieRepository.searchMovie(e.title.trim());
-          if (results.errorMessage == "No results found.") {
+          _results = await _movieRepository.searchMovie(e.title.trim());
+          if (_results.errorMessage == "No results found.") {
             yield state.copyWith(
               errorMessage: "No results found.",
               isSearching: false,
               isSearchCompleted: false,
             );
-          } else if (results.errorMessage.isEmpty) {
+          } else if (_results.errorMessage.isEmpty) {
             yield state.copyWith(
               title: e.title.trim(),
               errorMessage: '',
               isSearching: false,
               isSearchCompleted: true,
-              movieSearchResults: results,
+              movieSearchResults: _results,
             );
           } else {
             yield state.copyWith(
               title: e.title.trim(),
               isSearching: false,
               isSearchCompleted: false,
-              errorMessage: results.errorMessage,
+              errorMessage: _results.errorMessage,
             );
           }
         }
@@ -66,16 +63,31 @@ class MovieSearchBloc extends Bloc<MovieSearchEvent, MovieSearchState> {
           isSearching: false,
           isSearchCompleted: false,
           movieSearchResults: MovieSearchResults(totalResults: 0),
-          isControllerEmpty: true,
           searchPageNum: 1,
         );
       },
+      changeIsSearchPageDoublePressed: (e) async* {
+        yield state.copyWith(
+          isSearchPageDoublePressed: false,
+        );
+      },
+      searchPageDoublePressed: (e) async* {
+        yield state.copyWith(
+          title: '',
+          errorMessage: '',
+          isSearching: false,
+          isSearchCompleted: false,
+          movieSearchResults: MovieSearchResults(totalResults: 0),
+          searchPageNum: 1,
+          isSearchPageDoublePressed: true,
+        );
+      },
       nextResultPageCalled: (e) async* {
-        if (state.searchPageNum < results.totalPages) {
+        if (state.searchPageNum < _results.totalPages) {
           //increase SearchPageNum
-          var newMovieResults = await movieRepository.searchMovie(state.title, state.searchPageNum + 1);
+          var newMovieResults = await _movieRepository.searchMovie(state.title, state.searchPageNum + 1);
           for (var movie in newMovieResults.movieSummaries) {
-            results.movieSummaries.add(movie);
+            _results.movieSummaries.add(movie);
           }
           yield state.copyWith(
             searchPageNum: state.searchPageNum + 1,

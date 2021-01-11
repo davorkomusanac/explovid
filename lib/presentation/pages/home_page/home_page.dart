@@ -3,7 +3,6 @@ import 'package:explovid/presentation/pages/home_page/five.dart';
 import 'package:explovid/presentation/pages/home_page/four.dart';
 import 'package:explovid/presentation/pages/home_page/one.dart';
 import 'package:explovid/presentation/pages/home_page/three.dart';
-import 'package:explovid/presentation/pages/home_page/two.dart';
 import 'package:explovid/presentation/pages/search_page/search_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -57,7 +56,7 @@ class _HomePageState extends State<HomePage> {
             if (currentIndex == index) {
               switch (index) {
                 case 0:
-                  BlocProvider.of<MovieSearchBloc>(context, listen: false).add(MovieSearchEvent.deleteSearchPressed());
+                  BlocProvider.of<MovieSearchBloc>(context, listen: false).add(MovieSearchEvent.searchPageDoublePressed());
                   tabNavKeys[0].currentState.popUntil((route) => route.isFirst);
                   break;
                 case 1:

@@ -4,8 +4,8 @@ import 'package:explovid/domain/models/movie_search/movie_search_results.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-const String baseSearchMovieUrl = "https://api.themoviedb.org/3/search/movie?api_key=$API_KEY&language=en-US&query=";
-const String baseMovieDetailsUrl = "https://api.themoviedb.org/3/movie/";
+const String _baseSearchMovieUrl = "https://api.themoviedb.org/3/search/movie?api_key=$API_KEY&language=en-US&query=";
+const String _baseMovieDetailsUrl = "https://api.themoviedb.org/3/movie/";
 
 class MovieRepository {
   final http.Client client;
@@ -34,7 +34,7 @@ class MovieRepository {
   }
 
   String _buildSearchUrl(String title, int page) {
-    String returnString = baseSearchMovieUrl;
+    String returnString = _baseSearchMovieUrl;
     List<String> queryWords = title.split(" ");
 
     for (int i = 0; i < queryWords.length; i++) {
@@ -72,7 +72,7 @@ class MovieRepository {
 
   String _buildMovieDetailsUrl(int id) {
     String returnString =
-        baseMovieDetailsUrl + id.toString() + "?api_key=$API_KEY" + "&append_to_response=credits,recommendations";
+        _baseMovieDetailsUrl + id.toString() + "?api_key=$API_KEY" + "&append_to_response=credits,recommendations";
     return returnString;
   }
 }

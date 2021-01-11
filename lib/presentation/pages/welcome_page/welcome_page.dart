@@ -2,7 +2,6 @@ import 'package:explovid/application/auth/auth_check/auth_check_bloc.dart';
 import 'package:explovid/application/auth/sign_in_form/sign_in_form_bloc.dart';
 import 'package:explovid/presentation/pages/home_page/home_page.dart';
 import 'package:explovid/presentation/pages/sign_up_page/sign_up_page.dart';
-import 'package:explovid/presentation/pages/splash_page/splash_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

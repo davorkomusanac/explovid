@@ -1,8 +1,6 @@
-import 'package:explovid/application/auth/auth_check/auth_check_bloc.dart';
 import 'package:explovid/application/movie_search/movie_details/movie_details_bloc.dart';
-import 'package:explovid/domain/models/movie_details/movie_details.dart';
 import 'package:explovid/presentation/pages/actor_details_page/actor_details_page.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:explovid/presentation/utilities/utilities.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -196,8 +194,8 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
                                     bottom: 8.0,
                                     right: 8.0,
                                   ),
-                                  child: const Text(
-                                    "TRAILER",
+                                  child: Text(
+                                    "⭐" + state.movieDetails.voteAverage.toString() + "/10",
                                     style: TextStyle(
                                       fontSize: 18,
                                       fontWeight: FontWeight.w500,
@@ -528,68 +526,5 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
         ),
       ),
     );
-  }
-}
-
-String convertReleaseDate(String text) {
-  String returnString = text;
-  if (text.isEmpty) return "Release date unknown";
-  if (text != 'Release date unknown' && text.isNotEmpty) {
-    var time = DateTime.parse(text);
-    String month = "";
-    switch (time.month) {
-      case (1):
-        month = "Jan";
-        break;
-      case (2):
-        month = "Feb";
-        break;
-      case (3):
-        month = "Mar";
-        break;
-      case (4):
-        month = "Apr";
-        break;
-      case (5):
-        month = "May";
-        break;
-      case (6):
-        month = "June";
-        break;
-      case (7):
-        month = "Jul";
-        break;
-      case (8):
-        month = "Aug";
-        break;
-      case (9):
-        month = "Sep";
-        break;
-      case (10):
-        month = "Oct";
-        break;
-      case (11):
-        month = "Nov";
-        break;
-      case (12):
-        month = "Dec";
-        break;
-      default:
-    }
-    returnString = month + " " + time.day.toString() + ", " + time.year.toString();
-  }
-  return returnString;
-}
-
-String convertRuntime(int runtimeInMin) {
-  if (runtimeInMin < 1) {
-    return "Unknown length";
-  }
-  int hour = runtimeInMin ~/ 60;
-  int minutes = runtimeInMin % 60;
-  if (hour > 0) {
-    return hour.toString() + "h " + minutes.toString() + "m";
-  } else {
-    return minutes.toString() + "m";
   }
 }
