@@ -33,19 +33,19 @@ class MovieSearchResults {
           posterPath: result['poster_path'] as String ?? '',
           overview: result['overview'] as String ?? '',
           releaseDate: result['release_date'] as String ?? 'Release date unknown',
-          genreIds: result['genre_ids']?.cast<num>(),
-          id: result['id'] as int,
+          genreIds: result['genre_ids']?.cast<num>() ?? <num>[],
+          id: result['id'] as int ?? 0,
           title: result['title'] as String ?? '',
           backdropPath: result['backdrop_path'] as String ?? '',
-          popularity: result['popularity'] as num,
+          popularity: result['popularity'] as num ?? 0,
         ),
       );
     }
 
     return MovieSearchResults(
       page: page,
-      totalResults: json['total_results'] as int,
-      totalPages: json['total_pages'] as int,
+      totalResults: json['total_results'] as int ?? 0,
+      totalPages: json['total_pages'] as int ?? 0,
       movieSummaries: movies,
       errorMessage: "",
     );

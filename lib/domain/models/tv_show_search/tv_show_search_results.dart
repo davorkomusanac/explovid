@@ -31,12 +31,12 @@ class TvShowSearchResults {
       tvShows.add(
         TvShowSummary(
           posterPath: result['poster_path'] as String ?? '',
-          popularity: result['popularity'] as num,
-          id: result['id'] as int,
+          popularity: result['popularity'] as num ?? 0,
+          id: result['id'] as int ?? 0,
           backdropPath: result['backdrop_path'] as String ?? '',
           overview: result['overview'] as String ?? '',
           firstAirDate: result['first_air_date'] as String ?? 'Air Date unknown',
-          genreIds: result['genre_ids']?.cast<num>(),
+          genreIds: result['genre_ids']?.cast<num>() ?? <num>[],
           name: result['name'] as String ?? '',
         ),
       );
@@ -44,8 +44,8 @@ class TvShowSearchResults {
 
     return TvShowSearchResults(
       page: page,
-      totalResults: json['total_results'] as int,
-      totalPages: json['total_pages'] as int,
+      totalResults: json['total_results'] as int ?? 0,
+      totalPages: json['total_pages'] as int ?? 0,
       tvShowSummaries: tvShows,
       errorMessage: "",
     );

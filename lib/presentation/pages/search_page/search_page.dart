@@ -152,6 +152,8 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
                                 : null,
                           ),
                           onChanged: (value) {
+                            //Calling this setState so that the _searchController gets updated, the deleteSearch button doesn't show in other tabs from the start
+                            setState(() {});
                             switch (_tabController.index) {
                               case (0):
                                 context.read<MovieSearchBloc>().add(

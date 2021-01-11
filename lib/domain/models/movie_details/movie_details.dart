@@ -10,7 +10,7 @@ class MovieDetails {
     this.homepage,
     this.id,
     this.imdbId,
-    this.originalLanguage,
+    //this.originalLanguage,
     this.originalTitle,
     this.overview,
     this.popularity,
@@ -42,7 +42,7 @@ class MovieDetails {
   final String homepage;
   final int id;
   final String imdbId;
-  final OriginalLanguage originalLanguage;
+  //final OriginalLanguage originalLanguage;
   final String originalTitle;
   final String overview;
   final double popularity;
@@ -66,36 +66,46 @@ class MovieDetails {
   final String errorMessage;
 
   factory MovieDetails.fromJson(Map<String, dynamic> json) => MovieDetails(
-        adult: json["adult"],
+        adult: json["adult"] as bool ?? false,
         backdropPath: json["backdrop_path"] as String ?? '',
         //if the movie is not belonging to a Collection, then set it to an empty collection
         belongsToCollection: json["belongs_to_collection"] != null
             ? BelongsToCollection.fromJson(json["belongs_to_collection"])
             : BelongsToCollection(name: ""),
-        budget: json["budget"],
-        genres: List<Genre>.from(json["genres"].map((x) => Genre.fromJson(x))),
+        budget: json["budget"] as int ?? 0,
+        genres: json["genres"] != null
+            ? List<Genre>.from(
+                json["genres"].map((x) => Genre.fromJson(x)),
+              )
+            : <Genre>[],
         homepage: json["homepage"] as String ?? '',
-        id: json["id"],
+        id: json["id"] as int ?? 0,
         imdbId: json["imdb_id"] as String ?? '',
-        originalLanguage: originalLanguageValues.map[json["original_language"]],
-        originalTitle: json["original_title"],
+        //originalLanguage: originalLanguageValues.map[json["original_language"]],
+        originalTitle: json["original_title"] as String ?? '',
         overview: json["overview"] as String ?? 'Plot unknown',
-        popularity: json["popularity"].toDouble(),
+        popularity: json["popularity"].toDouble() ?? 0.0,
         posterPath: json["poster_path"] as String ?? '',
-        productionCompanies: List<ProductionCompany>.from(json["production_companies"].map((x) => ProductionCompany.fromJson(x))),
-        productionCountries: List<ProductionCountry>.from(json["production_countries"].map((x) => ProductionCountry.fromJson(x))),
+        productionCompanies:
+            List<ProductionCompany>.from(json["production_companies"].map((x) => ProductionCompany.fromJson(x))) ??
+                <ProductionCompany>[],
+        productionCountries:
+            List<ProductionCountry>.from(json["production_countries"].map((x) => ProductionCountry.fromJson(x))) ??
+                <ProductionCountry>[],
         releaseDate: json["release_date"] as String ?? 'Release date unknown',
-        revenue: json["revenue"],
+        revenue: json["revenue"] as int ?? 0,
         runtime: json["runtime"] as int ?? 0,
-        spokenLanguages: List<SpokenLanguage>.from(json["spoken_languages"].map((x) => SpokenLanguage.fromJson(x))),
-        status: json["status"],
+        spokenLanguages:
+            List<SpokenLanguage>.from(json["spoken_languages"].map((x) => SpokenLanguage.fromJson(x))) ?? <SpokenLanguage>[],
+        status: json["status"] as String ?? '',
         tagline: json["tagline"] as String ?? '',
-        title: json["title"],
-        video: json["video"],
-        voteAverage: json["vote_average"].toDouble(),
-        voteCount: json["vote_count"],
-        credits: Credits.fromJson(json["credits"]),
-        movieSearchResults: MovieSearchResults.fromJson(json["recommendations"], 1),
+        title: json["title"] as String ?? '',
+        video: json["video"] as bool ?? false,
+        voteAverage: json["vote_average"].toDouble() ?? 0.0,
+        voteCount: json["vote_count"] as int ?? 0,
+        credits: Credits.fromJson(json["credits"]) ?? Credits(cast: <Cast>[], crew: <Cast>[]),
+        movieSearchResults: MovieSearchResults.fromJson(json["recommendations"], 1) ??
+            MovieSearchResults(totalResults: 0, page: 1, movieSummaries: [], errorMessage: "No results found."),
         errorMessage: "",
       );
 
@@ -108,7 +118,7 @@ class MovieDetails {
         "homepage": homepage,
         "id": id,
         "imdb_id": imdbId,
-        "original_language": originalLanguageValues.reverse[originalLanguage],
+        // "original_language": originalLanguageValues.reverse[originalLanguage],
         "original_title": originalTitle,
         "overview": overview,
         "popularity": popularity,
@@ -144,10 +154,10 @@ class BelongsToCollection {
   final String backdropPath;
 
   factory BelongsToCollection.fromJson(Map<String, dynamic> json) => BelongsToCollection(
-        id: json["id"],
-        name: json["name"],
-        posterPath: json["poster_path"],
-        backdropPath: json["backdrop_path"],
+        id: json["id"] as int ?? 0,
+        name: json["name"] as String ?? '',
+        posterPath: json["poster_path"] as String ?? '',
+        backdropPath: json["backdrop_path"] as String ?? '',
       );
 
   Map<String, dynamic> toJson() => {
@@ -168,8 +178,8 @@ class Credits {
   final List<Cast> crew;
 
   factory Credits.fromJson(Map<String, dynamic> json) => Credits(
-        cast: List<Cast>.from(json["cast"].map((x) => Cast.fromJson(x))),
-        crew: List<Cast>.from(json["crew"].map((x) => Cast.fromJson(x))),
+        cast: List<Cast>.from(json["cast"].map((x) => Cast.fromJson(x))) ?? <Cast>[],
+        crew: List<Cast>.from(json["crew"].map((x) => Cast.fromJson(x))) ?? <Cast>[],
       );
 
   Map<String, dynamic> toJson() => {
@@ -212,20 +222,20 @@ class Cast {
   final String job;
 
   factory Cast.fromJson(Map<String, dynamic> json) => Cast(
-        adult: json["adult"],
-        gender: json["gender"],
-        id: json["id"],
-        knownForDepartment: departmentValues.map[json["known_for_department"]],
-        name: json["name"],
-        originalName: json["original_name"],
-        popularity: json["popularity"].toDouble(),
-        profilePath: json["profile_path"] == null ? null : json["profile_path"],
-        castId: json["cast_id"] == null ? null : json["cast_id"],
-        character: json["character"] == null ? null : json["character"],
-        creditId: json["credit_id"],
-        order: json["order"] == null ? null : json["order"],
-        department: json["department"] == null ? null : departmentValues.map[json["department"]],
-        job: json["job"] == null ? null : json["job"],
+        adult: json["adult"] as bool ?? false,
+        gender: json["gender"] as int ?? 0,
+        id: json["id"] as int ?? 0,
+        knownForDepartment: departmentValues.map[json["known_for_department"] ?? "Unknown"],
+        name: json["name"] as String ?? '',
+        originalName: json["original_name"] as String ?? '',
+        popularity: json["popularity"].toDouble() ?? 0.0,
+        profilePath: json["profile_path"] as String ?? '',
+        castId: json["cast_id"] as int ?? 0,
+        character: json["character"] as String ?? '',
+        creditId: json["credit_id"] as String ?? '',
+        order: json["order"] as int ?? 0,
+        department: json["department"] != null ? departmentValues.map[json["department"] ?? "Unknown"] : Department.UNKNOWN,
+        job: json["job"] as String ?? '',
       );
 
   Map<String, dynamic> toJson() => {
@@ -258,7 +268,9 @@ enum Department {
   ART,
   VISUAL_EFFECTS,
   CAMERA,
-  LIGHTING
+  LIGHTING,
+  //Added Unknown if data is missing
+  UNKNOWN,
 }
 
 final departmentValues = EnumValues({
@@ -273,7 +285,8 @@ final departmentValues = EnumValues({
   "Production": Department.PRODUCTION,
   "Sound": Department.SOUND,
   "Visual Effects": Department.VISUAL_EFFECTS,
-  "Writing": Department.WRITING
+  "Writing": Department.WRITING,
+  "Unknown": Department.UNKNOWN,
 });
 
 class Genre {
@@ -286,8 +299,8 @@ class Genre {
   final String name;
 
   factory Genre.fromJson(Map<String, dynamic> json) => Genre(
-        id: json["id"],
-        name: json["name"],
+        id: json["id"] as int ?? 0,
+        name: json["name"] as String ?? '',
       );
 
   Map<String, dynamic> toJson() => {
@@ -296,9 +309,10 @@ class Genre {
       };
 }
 
-enum OriginalLanguage { EN }
-
-final originalLanguageValues = EnumValues({"en": OriginalLanguage.EN});
+///Currently removed originalLanguage property from the model, if needed, will be added back
+// enum OriginalLanguage { EN }
+//
+// final originalLanguageValues = EnumValues({"en": OriginalLanguage.EN});
 
 class ProductionCompany {
   ProductionCompany({
@@ -314,10 +328,10 @@ class ProductionCompany {
   final String originCountry;
 
   factory ProductionCompany.fromJson(Map<String, dynamic> json) => ProductionCompany(
-        id: json["id"],
-        logoPath: json["logo_path"] == null ? null : json["logo_path"],
-        name: json["name"],
-        originCountry: json["origin_country"],
+        id: json["id"] as int ?? 0,
+        logoPath: json["logo_path"] as String ?? '',
+        name: json["name"] as String ?? '',
+        originCountry: json["origin_country"] as String ?? '',
       );
 
   Map<String, dynamic> toJson() => {
@@ -338,8 +352,8 @@ class ProductionCountry {
   final String name;
 
   factory ProductionCountry.fromJson(Map<String, dynamic> json) => ProductionCountry(
-        iso31661: json["iso_3166_1"],
-        name: json["name"],
+        iso31661: json["iso_3166_1"] as String ?? '',
+        name: json["name"] as String ?? '',
       );
 
   Map<String, dynamic> toJson() => {
@@ -351,23 +365,23 @@ class ProductionCountry {
 class SpokenLanguage {
   SpokenLanguage({
     this.englishName,
-    this.iso6391,
+    //  this.iso6391,
     this.name,
   });
 
   final String englishName;
-  final OriginalLanguage iso6391;
+  //final OriginalLanguage iso6391;
   final String name;
 
   factory SpokenLanguage.fromJson(Map<String, dynamic> json) => SpokenLanguage(
-        englishName: json["english_name"],
-        iso6391: originalLanguageValues.map[json["iso_639_1"]],
-        name: json["name"],
+        englishName: json["english_name"] as String ?? '',
+        //iso6391: originalLanguageValues.map[json["iso_639_1"]],
+        name: json["name"] as String ?? '',
       );
 
   Map<String, dynamic> toJson() => {
         "english_name": englishName,
-        "iso_639_1": originalLanguageValues.reverse[iso6391],
+        //"iso_639_1": originalLanguageValues.reverse[iso6391],
         "name": name,
       };
 }
