@@ -2,6 +2,7 @@ import 'package:explovid/application/auth/auth_check/auth_check_bloc.dart';
 import 'package:explovid/application/auth/sign_in_form/sign_in_form_bloc.dart';
 import 'package:explovid/application/movie_search/movie_details/movie_details_bloc.dart';
 import 'package:explovid/application/movie_search/movie_search_bloc.dart';
+import 'package:explovid/application/tv_show_search/tv_show_details/tv_show_details_bloc.dart';
 import 'package:explovid/application/tv_show_search/tv_show_search_bloc.dart';
 import 'package:explovid/domain/auth/auth_repository.dart';
 import 'package:explovid/domain/movie_db/movie_repository.dart';
@@ -31,7 +32,6 @@ class _MyAppState extends State<MyApp> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     client = http.Client();
     _authRepository = AuthRepository();
@@ -67,6 +67,11 @@ class _MyAppState extends State<MyApp> {
         ),
         BlocProvider(
           create: (context) => TvShowSearchBloc(
+            _tvShowRepository,
+          ),
+        ),
+        BlocProvider(
+          create: (context) => TvShowDetailsBloc(
             _tvShowRepository,
           ),
         ),
