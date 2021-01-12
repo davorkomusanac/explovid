@@ -1,6 +1,7 @@
 import 'package:explovid/application/movie_search/movie_search_bloc.dart';
 import 'package:explovid/application/tv_show_search/tv_show_search_bloc.dart';
 import 'package:explovid/presentation/pages/movie_details_page/movie_details_page.dart';
+import 'package:explovid/presentation/pages/tv_show_details_page/tv_show_details_page.dart';
 import 'package:explovid/presentation/utilities/utilities.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -66,9 +67,9 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
     return false;
   }
 
-  List<Widget> _tabViews(BuildContext context, MovieSearchState state) {
+  List<Widget> _tabViews(BuildContext context) {
     List<Widget> views = <Widget>[
-      _buildSearchMovieTabView(context, state),
+      _buildSearchMovieTabView(context),
       _buildSearchTvShowTabView(context),
       Container(
         height: 150,
@@ -88,101 +89,77 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        body: BlocConsumer<MovieSearchBloc, MovieSearchState>(
+        body: BlocListener<MovieSearchBloc, MovieSearchState>(
           listener: (context, state) {
             if (state.isSearchPageDoublePressed) {
-              _searchController.clear();
+              setState(() {
+                _searchController.clear();
+              });
               _tabController.animateTo(0);
               context.read<MovieSearchBloc>().add(
                     MovieSearchEvent.changeIsSearchPageDoublePressed(),
                   );
             }
           },
-          builder: (context, state) {
-            return Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(
-                    left: 20.0,
-                    right: 20.0,
-                    top: 20.0,
-                    bottom: 5.0,
-                  ),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: TextFormField(
-                          controller: _searchController,
-                          maxLength: 100,
-                          autocorrect: false,
-                          decoration: InputDecoration(
-                            counterText: "",
-                            prefixIcon: const Icon(
-                              Icons.search,
-                              color: Colors.grey,
-                            ),
-                            labelText: 'Search',
-                            suffixIcon: _searchController.text.isNotEmpty
-                                ? IconButton(
-                                    icon: const Icon(Icons.clear),
-                                    onPressed: () {
-                                      setState(() {
-                                        _searchController.clear();
-                                      });
-                                      switch (_tabController.index) {
-                                        case (0):
-                                          context.read<MovieSearchBloc>().add(
-                                                MovieSearchEvent.deleteSearchPressed(),
-                                              );
-                                          break;
-                                        case (1):
-                                          context.read<TvShowSearchBloc>().add(
-                                                TvShowSearchEvent.deleteSearchPressed(),
-                                              );
-                                          break;
-                                        case (2):
-                                          print("Actor");
-                                          break;
-                                        case (3):
-                                          print("User");
-                                          break;
-                                        default:
-                                      }
-                                    },
-                                  )
-                                : null,
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(
+                  left: 20.0,
+                  right: 20.0,
+                  top: 20.0,
+                  bottom: 5.0,
+                ),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: TextFormField(
+                        controller: _searchController,
+                        maxLength: 100,
+                        autocorrect: false,
+                        decoration: InputDecoration(
+                          counterText: "",
+                          prefixIcon: const Icon(
+                            Icons.search,
+                            color: Colors.grey,
                           ),
-                          onChanged: (value) {
-                            //Calling this setState so that the _searchController gets updated, the deleteSearch button doesn't show in other tabs from the start
-                            setState(() {});
-                            //Debouncer, so that the search gets initiated when the user stops typing (for 500 milliseconds)
-                            _debouncer.run(() {
-                              print(value);
-                              switch (_tabController.index) {
-                                case (0):
-                                  context.read<MovieSearchBloc>().add(
-                                        MovieSearchEvent.searchTitleChanged(value),
-                                      );
-                                  break;
-                                case (1):
-                                  context.read<TvShowSearchBloc>().add(
-                                        TvShowSearchEvent.searchNameChanged(value),
-                                      );
-                                  break;
-                                case (2):
-                                  print("Actor");
-                                  context.read<MovieSearchBloc>().add(
-                                        MovieSearchEvent.searchTitleChanged(value),
-                                      );
-                                  break;
-                                case (3):
-                                  print("User");
-                                  break;
-                                default:
-                              }
-                            });
-                          },
-                          onFieldSubmitted: (value) {
+                          labelText: 'Search',
+                          suffixIcon: _searchController.text.isNotEmpty
+                              ? IconButton(
+                                  icon: const Icon(Icons.clear),
+                                  onPressed: () {
+                                    setState(() {
+                                      _searchController.clear();
+                                    });
+                                    switch (_tabController.index) {
+                                      case (0):
+                                        context.read<MovieSearchBloc>().add(
+                                              MovieSearchEvent.deleteSearchPressed(),
+                                            );
+                                        break;
+                                      case (1):
+                                        context.read<TvShowSearchBloc>().add(
+                                              TvShowSearchEvent.deleteSearchPressed(),
+                                            );
+                                        break;
+                                      case (2):
+                                        print("Actor");
+                                        break;
+                                      case (3):
+                                        print("User");
+                                        break;
+                                      default:
+                                    }
+                                  },
+                                )
+                              : null,
+                        ),
+                        onChanged: (value) {
+                          //Calling this setState so that the _searchController gets updated, the deleteSearch button doesn't show in other tabs from the start
+                          setState(() {});
+                          //Debouncer, so that the search gets initiated when the user stops typing (for 500 milliseconds)
+                          _debouncer.run(() {
+                            print(value);
                             switch (_tabController.index) {
                               case (0):
                                 context.read<MovieSearchBloc>().add(
@@ -205,25 +182,49 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
                                 break;
                               default:
                             }
-                          },
-                        ),
+                          });
+                        },
+                        onFieldSubmitted: (value) {
+                          switch (_tabController.index) {
+                            case (0):
+                              context.read<MovieSearchBloc>().add(
+                                    MovieSearchEvent.searchTitleChanged(value),
+                                  );
+                              break;
+                            case (1):
+                              context.read<TvShowSearchBloc>().add(
+                                    TvShowSearchEvent.searchNameChanged(value),
+                                  );
+                              break;
+                            case (2):
+                              print("Actor");
+                              context.read<MovieSearchBloc>().add(
+                                    MovieSearchEvent.searchTitleChanged(value),
+                                  );
+                              break;
+                            case (3):
+                              print("User");
+                              break;
+                            default:
+                          }
+                        },
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-                TabBar(
+              ),
+              TabBar(
+                controller: _tabController,
+                tabs: _myTabs,
+              ),
+              Expanded(
+                child: TabBarView(
                   controller: _tabController,
-                  tabs: _myTabs,
+                  children: _tabViews(context),
                 ),
-                Expanded(
-                  child: TabBarView(
-                    controller: _tabController,
-                    children: _tabViews(context, state),
-                  ),
-                ),
-              ],
-            );
-          },
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -306,12 +307,11 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
       padding: const EdgeInsets.all(12.0),
       child: InkWell(
         onTap: () {
-          print("TV SHOws DETAIL PAGE PRESSED");
-          // Navigator.of(context, rootNavigator: false).push(
-          //   MaterialPageRoute(
-          //     builder: (context) => MovieDetailsPage(state.movieSearchResults.movieSummaries[index].id),
-          //   ),
-          // );
+          Navigator.of(context, rootNavigator: false).push(
+            MaterialPageRoute(
+              builder: (context) => TvShowDetailsPage(state.tvShowSearchResults.tvShowSummaries[index].id),
+            ),
+          );
         },
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -411,62 +411,66 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
   }
 
   ///Build Movie Search Tab View
-  Widget _buildSearchMovieTabView(BuildContext context, MovieSearchState state) {
-    return Column(
-      children: [
-        if (!state.isSearching && state.errorMessage.isEmpty && !state.isSearchCompleted)
-          //Show here popular movies? Or trending, or recommendations? Also the same for TV shows tabs?
-          Center(
-            child: const Text("Popular movies are going to show here..."),
-          ),
-        if (state.isSearching)
-          Expanded(
-            child: const Padding(
-              padding: EdgeInsets.all(8.0),
-              child: Center(
-                child: CircularProgressIndicator(),
+  Widget _buildSearchMovieTabView(BuildContext context) {
+    return BlocBuilder<MovieSearchBloc, MovieSearchState>(
+      builder: (context, state) {
+        return Column(
+          children: [
+            if (!state.isSearching && state.errorMessage.isEmpty && !state.isSearchCompleted)
+              //Show here popular movies? Or trending, or recommendations? Also the same for TV shows tabs?
+              Center(
+                child: const Text("Popular movies are going to show here..."),
               ),
-            ),
-          ),
-        if (state.isSearchCompleted)
-          Expanded(
-            child: NotificationListener<ScrollNotification>(
-              onNotification: _handleScrollNotification,
-              child: ListView.builder(
-                controller: _scrollController,
-                keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
-                itemCount: _calculateMovieListItemCount(state),
-                itemBuilder: (context, index) {
-                  return index >= state.movieSearchResults.movieSummaries.length
-                      ? buildLoaderNextPage()
-                      : _buildMovieCard(context, state, index);
-                },
+            if (state.isSearching)
+              Expanded(
+                child: const Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                ),
               ),
-            ),
-          ),
-        if (state.errorMessage.isNotEmpty)
-          Expanded(
-            child: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Text(
-                    "☹",
-                    style: TextStyle(fontSize: 50),
+            if (state.isSearchCompleted)
+              Expanded(
+                child: NotificationListener<ScrollNotification>(
+                  onNotification: _handleScrollNotification,
+                  child: ListView.builder(
+                    controller: _scrollController,
+                    keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+                    itemCount: _calculateMovieListItemCount(state),
+                    itemBuilder: (context, index) {
+                      return index >= state.movieSearchResults.movieSummaries.length
+                          ? buildLoaderNextPage()
+                          : _buildMovieCard(context, state, index);
+                    },
                   ),
-                  Text(
-                    state.errorMessage,
-                    style: TextStyle(fontSize: 20),
-                  ),
-                  const Text(
-                    "Try again.",
-                    style: TextStyle(fontSize: 20),
-                  ),
-                ],
+                ),
               ),
-            ),
-          ),
-      ],
+            if (state.errorMessage.isNotEmpty)
+              Expanded(
+                child: Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Text(
+                        "☹",
+                        style: TextStyle(fontSize: 50),
+                      ),
+                      Text(
+                        state.errorMessage,
+                        style: TextStyle(fontSize: 20),
+                      ),
+                      const Text(
+                        "Try again.",
+                        style: TextStyle(fontSize: 20),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+          ],
+        );
+      },
     );
   }
 

@@ -12,9 +12,9 @@ part 'movie_details_state.dart';
 part 'movie_details_bloc.freezed.dart';
 
 class MovieDetailsBloc extends Bloc<MovieDetailsEvent, MovieDetailsState> {
-  final MovieRepository movieRepository;
+  final MovieRepository _movieRepository;
 
-  MovieDetailsBloc(this.movieRepository) : super(MovieDetailsState.initial());
+  MovieDetailsBloc(this._movieRepository) : super(MovieDetailsState.initial());
 
   @override
   Stream<MovieDetailsState> mapEventToState(
@@ -26,7 +26,7 @@ class MovieDetailsBloc extends Bloc<MovieDetailsEvent, MovieDetailsState> {
           isSearching: true,
           errorMessage: "",
         );
-        var movieDetailsResult = await movieRepository.getMovieDetails(e.id);
+        var movieDetailsResult = await _movieRepository.getMovieDetails(e.id);
         if (movieDetailsResult.errorMessage.isNotEmpty) {
           yield state.copyWith(
             isSearching: false,

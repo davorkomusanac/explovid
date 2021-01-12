@@ -1,4 +1,5 @@
 import 'package:explovid/api_key.dart';
+import 'package:explovid/domain/models/tv_show_details/tv_show_details.dart';
 import 'package:explovid/domain/models/tv_show_search/tv_show_search_results.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -50,6 +51,28 @@ class TvShowRepository {
       returnString += "&page=1&include_adult=false";
     }
 
+    return returnString;
+  }
+
+  Future<TvShowDetails> getTvShowDetails(int id) async {
+    try {
+      final response = await client.get(_buildTvShowDetailsUrl(id));
+      print(_buildTvShowDetailsUrl(id));
+
+      if (response.statusCode != 200) throw Exception('There was an error getting tv show details');
+
+      return TvShowDetails.fromJson(json.decode(response.body) as Map<String, dynamic>);
+    } catch (e) {
+      print("Tv Show Details ERROR: " + e.toString());
+      return TvShowDetails(
+        errorMessage: e.toString(),
+      );
+    }
+  }
+
+  String _buildTvShowDetailsUrl(int id) {
+    String returnString =
+        _baseTvShowDetailsUrl + id.toString() + "?api_key=$API_KEY" + "&append_to_response=credits,recommendations";
     return returnString;
   }
 }

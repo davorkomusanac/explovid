@@ -1,78 +1,88 @@
-import 'package:explovid/domain/models/movie_search/movie_search_results.dart';
+import 'package:explovid/domain/models/tv_show_search/tv_show_search_results.dart';
 
-class MovieDetails {
-  MovieDetails({
-    this.adult,
+class TvShowDetails {
+  TvShowDetails({
     this.backdropPath,
-    this.belongsToCollection,
-    this.budget,
+    this.createdBy,
+    this.episodeRunTime,
+    this.firstAirDate,
     this.genres,
     this.homepage,
     this.id,
-    this.imdbId,
-    //this.originalLanguage,
-    this.originalTitle,
+    this.inProduction,
+    this.lastAirDate,
+    this.lastEpisodeToAir,
+    this.name,
+    this.networks,
+    this.numberOfEpisodes,
+    this.numberOfSeasons,
+    this.originalName,
     this.overview,
     this.popularity,
     this.posterPath,
     this.productionCompanies,
     this.productionCountries,
-    this.releaseDate,
-    this.revenue,
-    this.runtime,
+    this.seasons,
     this.spokenLanguages,
     this.status,
     this.tagline,
-    this.title,
-    this.video,
+    this.type,
     this.voteAverage,
     this.voteCount,
-    //Appended responses (credits and recommendations (MovieSearchResult is used for Recommendations))
+    //Appended responses (TvShowSearchResult is used for Recommendations property)
     this.credits,
-    this.movieSearchResults,
-    //Adding String errorMessage to know if successful conversion, if the errorMessage is empty, then the operation was a success
+    this.tvShowSearchResults,
+    //added errorMessage to know if successful conversion
     this.errorMessage,
   });
 
-  final bool adult;
   final String backdropPath;
-  final BelongsToCollection belongsToCollection;
-  final int budget;
+  final List<CreatedBy> createdBy;
+  final List<int> episodeRunTime;
+  final String firstAirDate;
   final List<Genre> genres;
   final String homepage;
   final int id;
-  final String imdbId;
-  //final OriginalLanguage originalLanguage;
-  final String originalTitle;
+  final bool inProduction;
+  final String lastAirDate;
+  final LastEpisodeToAir lastEpisodeToAir;
+  final String name;
+  final List<ProductionCompany> networks;
+  final int numberOfEpisodes;
+  final int numberOfSeasons;
+  final String originalName;
   final String overview;
   final double popularity;
   final String posterPath;
+  //Production Company
   final List<ProductionCompany> productionCompanies;
   final List<ProductionCountry> productionCountries;
-  final String releaseDate;
-  final int revenue;
-  final int runtime;
+  final List<Season> seasons;
   final List<SpokenLanguage> spokenLanguages;
   final String status;
   final String tagline;
-  final String title;
-  final bool video;
+  final String type;
   final double voteAverage;
   final int voteCount;
   //Appended responses
   final Credits credits;
-  final MovieSearchResults movieSearchResults;
+  final TvShowSearchResults tvShowSearchResults;
   //Added errorMessage to check for errors
   final String errorMessage;
 
-  factory MovieDetails.fromJson(Map<String, dynamic> json) => MovieDetails(
-        adult: json["adult"] as bool ?? false,
+  factory TvShowDetails.fromJson(Map<String, dynamic> json) => TvShowDetails(
         backdropPath: json["backdrop_path"] as String ?? '',
-        //if the movie is not belonging to a Collection, then set it to an empty collection
-        belongsToCollection: json["belongs_to_collection"] != null
-            ? BelongsToCollection.fromJson(json["belongs_to_collection"])
-            : BelongsToCollection(name: ""),
-        budget: json["budget"] as int ?? 0,
+        createdBy: json["created_by"] != null
+            ? List<CreatedBy>.from(
+                json["created_by"].map((x) => CreatedBy.fromJson(x)),
+              )
+            : CreatedBy(name: '', profilePath: '', id: 0, creditId: '', gender: 0),
+        episodeRunTime: json["episode_run_time"] != null
+            ? List<int>.from(
+                json["episode_run_time"].map((x) => x),
+              )
+            : <int>{0}, //set runTime to 0 minutes if there is no info
+        firstAirDate: json["first_air_date"] as String ?? '',
         genres: json["genres"] != null
             ? List<Genre>.from(
                 json["genres"].map((x) => Genre.fromJson(x)),
@@ -80,10 +90,25 @@ class MovieDetails {
             : <Genre>[],
         homepage: json["homepage"] as String ?? '',
         id: json["id"] as int ?? 0,
-        imdbId: json["imdb_id"] as String ?? '',
-        //originalLanguage: originalLanguageValues.map[json["original_language"]],
-        originalTitle: json["original_title"] as String ?? '',
-        overview: json["overview"] as String ?? 'Plot unknown',
+        inProduction: json["in_production"] as bool ?? false,
+        lastAirDate: json["last_air_date"] as String ?? '',
+        lastEpisodeToAir: json["last_episode_to_air"] != null
+            ? LastEpisodeToAir.fromJson(
+                json["last_episode_to_air"],
+              )
+            : LastEpisodeToAir(
+                airDate: "",
+              ),
+        name: json["name"] as String ?? '',
+        networks: json["networks"] != null
+            ? List<ProductionCompany>.from(
+                json["networks"].map((x) => ProductionCompany.fromJson(x)),
+              )
+            : <ProductionCompany>[],
+        numberOfEpisodes: json["number_of_episodes"] as int ?? 0,
+        numberOfSeasons: json["number_of_seasons"] as int ?? 0,
+        originalName: json["original_name"] as String ?? '',
+        overview: json["overview"] as String ?? '',
         popularity: json["popularity"].toDouble() ?? 0.0,
         posterPath: json["poster_path"] as String ?? '',
         productionCompanies: json["production_companies"] != null
@@ -92,16 +117,17 @@ class MovieDetails {
         productionCountries: json["production_countries"] != null
             ? List<ProductionCountry>.from(json["production_countries"].map((x) => ProductionCountry.fromJson(x)))
             : <ProductionCountry>[],
-        releaseDate: json["release_date"] as String ?? 'Release date unknown',
-        revenue: json["revenue"] as int ?? 0,
-        runtime: json["runtime"] as int ?? 0,
+        seasons: json["seasons"] != null
+            ? List<Season>.from(
+                json["seasons"].map((x) => Season.fromJson(x)),
+              )
+            : <Season>[],
         spokenLanguages: json["spoken_languages"] != null
             ? List<SpokenLanguage>.from(json["spoken_languages"].map((x) => SpokenLanguage.fromJson(x)))
             : <SpokenLanguage>[],
         status: json["status"] as String ?? '',
         tagline: json["tagline"] as String ?? '',
-        title: json["title"] as String ?? '',
-        video: json["video"] as bool ?? false,
+        type: json["type"] as String ?? '',
         voteAverage: json["vote_average"].toDouble() ?? 0.0,
         voteCount: json["vote_count"] as int ?? 0,
         credits: json["credits"] != null
@@ -109,68 +135,74 @@ class MovieDetails {
                 json["credits"],
               )
             : Credits(cast: <Cast>[], crew: <Cast>[]),
-        movieSearchResults: json["recommendations"] != null
-            ? MovieSearchResults.fromJson(json["recommendations"], 1)
-            : MovieSearchResults(totalResults: 0, page: 1, movieSummaries: [], errorMessage: "No results found."),
+        tvShowSearchResults: json["recommendations"] != null
+            ? TvShowSearchResults.fromJson(json["recommendations"], 1)
+            : TvShowSearchResults(totalResults: 0, page: 1, tvShowSummaries: [], errorMessage: "No results found."),
         errorMessage: "",
       );
 
   Map<String, dynamic> toJson() => {
-        "adult": adult,
         "backdrop_path": backdropPath,
-        "belongs_to_collection": belongsToCollection.toJson(),
-        "budget": budget,
+        "created_by": List<dynamic>.from(createdBy.map((x) => x.toJson())),
+        "episode_run_time": List<dynamic>.from(episodeRunTime.map((x) => x)),
+        "first_air_date": firstAirDate,
         "genres": List<dynamic>.from(genres.map((x) => x.toJson())),
         "homepage": homepage,
         "id": id,
-        "imdb_id": imdbId,
-        // "original_language": originalLanguageValues.reverse[originalLanguage],
-        "original_title": originalTitle,
+        "in_production": inProduction,
+        "last_air_date": lastAirDate,
+        "last_episode_to_air": lastEpisodeToAir.toJson(),
+        "name": name,
+        "networks": List<dynamic>.from(networks.map((x) => x.toJson())),
+        "number_of_episodes": numberOfEpisodes,
+        "number_of_seasons": numberOfSeasons,
+        "original_name": originalName,
         "overview": overview,
         "popularity": popularity,
         "poster_path": posterPath,
         "production_companies": List<dynamic>.from(productionCompanies.map((x) => x.toJson())),
         "production_countries": List<dynamic>.from(productionCountries.map((x) => x.toJson())),
-        "release_date": releaseDate,
-        "revenue": revenue,
-        "runtime": runtime,
+        "seasons": List<dynamic>.from(seasons.map((x) => x.toJson())),
         "spoken_languages": List<dynamic>.from(spokenLanguages.map((x) => x.toJson())),
         "status": status,
         "tagline": tagline,
-        "title": title,
-        "video": video,
+        "type": type,
         "vote_average": voteAverage,
         "vote_count": voteCount,
         "credits": credits.toJson(),
-        "movieSearchResults": movieSearchResults.toJson(),
+        "tvShowSearchResults": tvShowSearchResults.toJson(),
       };
 }
 
-class BelongsToCollection {
-  BelongsToCollection({
+class CreatedBy {
+  CreatedBy({
     this.id,
+    this.creditId,
     this.name,
-    this.posterPath,
-    this.backdropPath,
+    this.gender,
+    this.profilePath,
   });
 
   final int id;
+  final String creditId;
   final String name;
-  final String posterPath;
-  final String backdropPath;
+  final int gender;
+  final String profilePath;
 
-  factory BelongsToCollection.fromJson(Map<String, dynamic> json) => BelongsToCollection(
+  factory CreatedBy.fromJson(Map<String, dynamic> json) => CreatedBy(
         id: json["id"] as int ?? 0,
+        creditId: json["credit_id"] as String ?? '',
         name: json["name"] as String ?? '',
-        posterPath: json["poster_path"] as String ?? '',
-        backdropPath: json["backdrop_path"] as String ?? '',
+        gender: json["gender"] as int ?? 0,
+        profilePath: json["profile_path"] as String ?? '',
       );
 
   Map<String, dynamic> toJson() => {
         "id": id,
+        "credit_id": creditId,
         "name": name,
-        "poster_path": posterPath,
-        "backdrop_path": backdropPath,
+        "gender": gender,
+        "profile_path": profilePath,
       };
 }
 
@@ -282,10 +314,57 @@ class Genre {
       };
 }
 
-///Currently removed originalLanguage property from the model, if needed, will be added back
-// enum OriginalLanguage { EN }
-//
-// final originalLanguageValues = EnumValues({"en": OriginalLanguage.EN});
+class LastEpisodeToAir {
+  LastEpisodeToAir({
+    this.airDate,
+    this.episodeNumber,
+    this.id,
+    this.name,
+    this.overview,
+    this.productionCode,
+    this.seasonNumber,
+    this.stillPath,
+    this.voteAverage,
+    this.voteCount,
+  });
+
+  final String airDate;
+  final int episodeNumber;
+  final int id;
+  final String name;
+  final String overview;
+  final String productionCode;
+  final int seasonNumber;
+  final String stillPath;
+  final double voteAverage;
+  final int voteCount;
+
+  factory LastEpisodeToAir.fromJson(Map<String, dynamic> json) => LastEpisodeToAir(
+        airDate: json["air_date"] as String ?? '',
+        episodeNumber: json["episode_number"] as int ?? 0,
+        id: json["id"] as int ?? 0,
+        name: json["name"] as String ?? '',
+        overview: json["overview"] as String ?? '',
+        productionCode: json["production_code"] as String ?? '',
+        seasonNumber: json["season_number"] as int ?? 0,
+        stillPath: json["still_path"] as String ?? '',
+        voteAverage: json["vote_average"].toDouble() ?? 0.0,
+        voteCount: json["vote_count"] as int ?? 0,
+      );
+
+  Map<String, dynamic> toJson() => {
+        "air_date": airDate,
+        "episode_number": episodeNumber,
+        "id": id,
+        "name": name,
+        "overview": overview,
+        "production_code": productionCode,
+        "season_number": seasonNumber,
+        "still_path": stillPath,
+        "vote_average": voteAverage,
+        "vote_count": voteCount,
+      };
+}
 
 class ProductionCompany {
   ProductionCompany({
@@ -335,26 +414,62 @@ class ProductionCountry {
       };
 }
 
+class Season {
+  Season({
+    this.airDate,
+    this.episodeCount,
+    this.id,
+    this.name,
+    this.overview,
+    this.posterPath,
+    this.seasonNumber,
+  });
+
+  final String airDate;
+  final int episodeCount;
+  final int id;
+  final String name;
+  final String overview;
+  final String posterPath;
+  final int seasonNumber;
+
+  factory Season.fromJson(Map<String, dynamic> json) => Season(
+        airDate: json["air_date"] as String ?? '',
+        episodeCount: json["episode_count"] as int ?? 0,
+        id: json["id"] as int ?? 0,
+        name: json["name"] as String ?? '',
+        overview: json["overview"] as String ?? '',
+        posterPath: json["poster_path"] as String ?? '',
+        seasonNumber: json["season_number"] as int ?? 0,
+      );
+
+  Map<String, dynamic> toJson() => {
+        "air_date": airDate,
+        "episode_count": episodeCount,
+        "id": id,
+        "name": name,
+        "overview": overview,
+        "poster_path": posterPath,
+        "season_number": seasonNumber,
+      };
+}
+
 class SpokenLanguage {
   SpokenLanguage({
     this.englishName,
-    //  this.iso6391,
     this.name,
   });
 
   final String englishName;
-  //final OriginalLanguage iso6391;
   final String name;
 
   factory SpokenLanguage.fromJson(Map<String, dynamic> json) => SpokenLanguage(
         englishName: json["english_name"] as String ?? '',
-        //iso6391: originalLanguageValues.map[json["iso_639_1"]],
         name: json["name"] as String ?? '',
       );
 
   Map<String, dynamic> toJson() => {
         "english_name": englishName,
-        //"iso_639_1": originalLanguageValues.reverse[iso6391],
         "name": name,
       };
 }
