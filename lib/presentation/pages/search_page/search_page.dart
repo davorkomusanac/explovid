@@ -1,5 +1,7 @@
+import 'package:explovid/application/actor_search/actor_search_bloc.dart';
 import 'package:explovid/application/movie_search/movie_search_bloc.dart';
 import 'package:explovid/application/tv_show_search/tv_show_search_bloc.dart';
+import 'package:explovid/presentation/pages/actor_details_page/actor_details_page.dart';
 import 'package:explovid/presentation/pages/movie_details_page/movie_details_page.dart';
 import 'package:explovid/presentation/pages/tv_show_details_page/tv_show_details_page.dart';
 import 'package:explovid/presentation/utilities/utilities.dart';
@@ -56,10 +58,12 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
               );
           break;
         case (2):
-          print("Actor");
+          context.read<ActorSearchBloc>().add(
+                ActorSearchEvent.nextResultPageCalled(),
+              );
           break;
         case (3):
-          print("User");
+          print("User SEARCH NEXT PAGE CALLED");
           break;
         default:
       }
@@ -71,11 +75,7 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
     List<Widget> views = <Widget>[
       _buildSearchMovieTabView(context),
       _buildSearchTvShowTabView(context),
-      Container(
-        height: 150,
-        width: 200,
-        child: Text("Third"),
-      ),
+      _buildSearchActorTabView(context),
       Container(
         height: 150,
         width: 200,
@@ -143,7 +143,9 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
                                             );
                                         break;
                                       case (2):
-                                        print("Actor");
+                                        context.read<ActorSearchBloc>().add(
+                                              ActorSearchEvent.deleteSearchPressed(),
+                                            );
                                         break;
                                       case (3):
                                         print("User");
@@ -172,13 +174,12 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
                                     );
                                 break;
                               case (2):
-                                print("Actor");
-                                context.read<MovieSearchBloc>().add(
-                                      MovieSearchEvent.searchTitleChanged(value),
+                                context.read<ActorSearchBloc>().add(
+                                      ActorSearchEvent.searchNameChanged(value),
                                     );
                                 break;
                               case (3):
-                                print("User");
+                                print("User search");
                                 break;
                               default:
                             }
@@ -197,9 +198,8 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
                                   );
                               break;
                             case (2):
-                              print("Actor");
-                              context.read<MovieSearchBloc>().add(
-                                    MovieSearchEvent.searchTitleChanged(value),
+                              context.read<ActorSearchBloc>().add(
+                                    ActorSearchEvent.searchNameChanged(value),
                                   );
                               break;
                             case (3):
@@ -225,6 +225,184 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
               ),
             ],
           ),
+        ),
+      ),
+    );
+  }
+
+  ///BUILD ACTOR SEARCH TAB View
+  Widget _buildSearchActorTabView(BuildContext context) {
+    return BlocBuilder<ActorSearchBloc, ActorSearchState>(
+      builder: (context, state) {
+        return Column(
+          children: [
+            if (!state.isSearching && state.errorMessage.isEmpty && !state.isSearchCompleted)
+              //Show here popular movies? Or trending, or recommendations? Also the same for TV shows tabs?
+              Center(
+                child: const Text("Popular Actors are going to show here..."),
+              ),
+            if (state.isSearching)
+              Expanded(
+                child: const Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                ),
+              ),
+            if (state.isSearchCompleted)
+              Expanded(
+                child: NotificationListener<ScrollNotification>(
+                  onNotification: _handleScrollNotification,
+                  child: ListView.builder(
+                    controller: _scrollController,
+                    keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+                    itemCount: _calculateActorListItemCount(state),
+                    itemBuilder: (context, index) {
+                      return index >= state.actorSearchResults.actorSummaries.length
+                          ? buildLoaderNextPage()
+                          : _buildActorCard(context, state, index);
+                    },
+                  ),
+                ),
+              ),
+            if (state.errorMessage.isNotEmpty)
+              Expanded(
+                child: Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Text(
+                        "☹",
+                        style: TextStyle(fontSize: 50),
+                      ),
+                      Text(
+                        state.errorMessage,
+                        style: TextStyle(fontSize: 20),
+                      ),
+                      const Text(
+                        "Try again.",
+                        style: TextStyle(fontSize: 20),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+          ],
+        );
+      },
+    );
+  }
+
+  int _calculateActorListItemCount(ActorSearchState state) {
+    if (state.searchPageNum < state.actorSearchResults.totalPages) {
+      return state.actorSearchResults.actorSummaries.length + 1;
+    } else {
+      return state.actorSearchResults.actorSummaries.length;
+    }
+  }
+
+  Widget _buildActorCard(BuildContext context, ActorSearchState state, int index) {
+    return Padding(
+      padding: const EdgeInsets.all(12.0),
+      child: InkWell(
+        onTap: () {
+          Navigator.of(context, rootNavigator: false).push(
+            MaterialPageRoute(
+              builder: (context) => ActorDetailsPage(),
+            ),
+          );
+        },
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+              flex: 1,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(8.0),
+                child: Container(
+                  height: 190,
+                  width: 132,
+                  child: Image.network(
+                    "https://image.tmdb.org/t/p/w185/${state.actorSearchResults.actorSummaries[index].profilePath}",
+                    fit: BoxFit.cover,
+                    loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent loadingProgress) {
+                      if (loadingProgress == null) return child;
+                      return Container(
+                        height: 190,
+                        color: Colors.green,
+                        width: 132,
+                        child: Center(
+                          child: CircularProgressIndicator(
+                            value: loadingProgress.expectedTotalBytes != null
+                                ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes
+                                : null,
+                          ),
+                        ),
+                      );
+                    },
+                    errorBuilder: (BuildContext context, Object exception, StackTrace stackTrace) {
+                      return Container(
+                        height: 190,
+                        width: 132,
+                        color: Colors.yellow[400],
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Text('😢'),
+                            const SizedBox(height: 5),
+                            const Text(
+                              'No image available',
+                              textAlign: TextAlign.center,
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                  ),
+                ),
+              ),
+            ),
+            Expanded(
+              flex: 2,
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
+                    child: Text(
+                      state.actorSearchResults.actorSummaries[index].name,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        fontWeight: FontWeight.w700,
+                        fontSize: 18,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 15.0),
+                    child: Text(
+                      state.actorSearchResults.actorSummaries[index].knownForDepartment,
+                      maxLines: 5,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        fontSize: 14,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      state.actorSearchResults.actorSummaries[index].gender == 1 ? "Female" : "Male",
+                      style: TextStyle(
+                        fontWeight: FontWeight.w700,
+                        fontSize: 18,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
         ),
       ),
     );
