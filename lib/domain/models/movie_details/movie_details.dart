@@ -45,7 +45,7 @@ class MovieDetails {
   //final OriginalLanguage originalLanguage;
   final String originalTitle;
   final String overview;
-  final double popularity;
+  final num popularity;
   final String posterPath;
   final List<ProductionCompany> productionCompanies;
   final List<ProductionCountry> productionCountries;
@@ -57,7 +57,7 @@ class MovieDetails {
   final String tagline;
   final String title;
   final bool video;
-  final double voteAverage;
+  final num voteAverage;
   final int voteCount;
   //Appended responses
   final Credits credits;
@@ -84,7 +84,7 @@ class MovieDetails {
         //originalLanguage: originalLanguageValues.map[json["original_language"]],
         originalTitle: json["original_title"] as String ?? '',
         overview: json["overview"] as String ?? 'Plot unknown',
-        popularity: json["popularity"].toDouble() ?? 0.0,
+        popularity: json["popularity"] as num ?? 0.0,
         posterPath: json["poster_path"] as String ?? '',
         productionCompanies: json["production_companies"] != null
             ? List<ProductionCompany>.from(json["production_companies"].map((x) => ProductionCompany.fromJson(x)))
@@ -102,7 +102,7 @@ class MovieDetails {
         tagline: json["tagline"] as String ?? '',
         title: json["title"] as String ?? '',
         video: json["video"] as bool ?? false,
-        voteAverage: json["vote_average"].toDouble() ?? 0.0,
+        voteAverage: json["vote_average"] as num ?? 0.0,
         voteCount: json["vote_count"] as int ?? 0,
         credits: json["credits"] != null
             ? Credits.fromJson(
@@ -218,7 +218,7 @@ class Cast {
   final String knownForDepartment;
   final String name;
   final String originalName;
-  final double popularity;
+  final num popularity;
   final String profilePath;
   final int castId;
   final String character;
@@ -234,7 +234,7 @@ class Cast {
         knownForDepartment: json["known_for_department"] as String ?? '',
         name: json["name"] as String ?? '',
         originalName: json["original_name"] as String ?? '',
-        popularity: json["popularity"].toDouble() ?? 0.0,
+        popularity: json["popularity"] as num ?? 0.0,
         profilePath: json["profile_path"] as String ?? '',
         castId: json["cast_id"] as int ?? 0,
         character: json["character"] as String ?? '',

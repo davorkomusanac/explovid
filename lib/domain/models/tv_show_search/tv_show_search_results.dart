@@ -28,18 +28,7 @@ class TvShowSearchResults {
     final List<TvShowSummary> tvShows = [];
 
     for (final result in json['results']) {
-      tvShows.add(
-        TvShowSummary(
-          posterPath: result['poster_path'] as String ?? '',
-          popularity: result['popularity'] as num ?? 0,
-          id: result['id'] as int ?? 0,
-          backdropPath: result['backdrop_path'] as String ?? '',
-          overview: result['overview'] as String ?? '',
-          firstAirDate: result['first_air_date'] as String ?? 'Air Date unknown',
-          genreIds: result['genre_ids']?.cast<num>() ?? <num>[],
-          name: result['name'] as String ?? '',
-        ),
-      );
+      tvShows.add(TvShowSummary.fromJson(result));
     }
 
     return TvShowSearchResults(

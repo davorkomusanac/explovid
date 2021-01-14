@@ -18,6 +18,20 @@ class MovieSummary {
     this.backdropPath,
     this.popularity,
   });
+
+  factory MovieSummary.fromJson(dynamic result) {
+    return MovieSummary(
+      posterPath: result['poster_path'] as String ?? '',
+      overview: result['overview'] as String ?? '',
+      releaseDate: result['release_date'] as String ?? 'Release date unknown',
+      genreIds: result['genre_ids']?.cast<num>() ?? <num>[],
+      id: result['id'] as int ?? 0,
+      title: result['title'] as String ?? '',
+      backdropPath: result['backdrop_path'] as String ?? '',
+      popularity: result['popularity'] as num ?? 0,
+    );
+  }
+
   Map<String, dynamic> toJson() => {
         "backdrop_path": backdropPath,
         "genre_ids": List<dynamic>.from(genreIds.map((x) => x)),

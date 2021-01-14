@@ -69,9 +69,9 @@ class TvShowSearchBloc extends Bloc<TvShowSearchEvent, TvShowSearchState> {
       nextResultPageCalled: (e) async* {
         if (state.searchPageNum < _results.totalPages) {
           //increase SearchPageNum
-          var newMovieResults = await _tvShowRepository.searchTvShow(state.name, state.searchPageNum + 1);
-          for (var movie in newMovieResults.tvShowSummaries) {
-            _results.tvShowSummaries.add(movie);
+          var newTvShowResults = await _tvShowRepository.searchTvShow(state.name, state.searchPageNum + 1);
+          for (var tvShow in newTvShowResults.tvShowSummaries) {
+            _results.tvShowSummaries.add(tvShow);
           }
           yield state.copyWith(
             searchPageNum: state.searchPageNum + 1,
