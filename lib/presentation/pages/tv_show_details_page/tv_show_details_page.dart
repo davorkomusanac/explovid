@@ -314,7 +314,7 @@ class _TvShowDetailsPageState extends State<TvShowDetailsPage> {
                                     onTap: () {
                                       Navigator.of(context, rootNavigator: false).push(
                                         MaterialPageRoute(
-                                          builder: (context) => ActorDetailsPage(),
+                                          builder: (context) => ActorDetailsPage(state.tvShowDetails.credits.cast[index].id),
                                         ),
                                       );
                                     },
@@ -322,45 +322,51 @@ class _TvShowDetailsPageState extends State<TvShowDetailsPage> {
                                       width: 90,
                                       child: Column(
                                         children: [
-                                          ClipRRect(
-                                            borderRadius: BorderRadius.circular(8.0),
-                                            child: Container(
-                                              width: 90,
-                                              height: 135,
-                                              child: Image.network(
-                                                "https://image.tmdb.org/t/p/w185/${state.tvShowDetails.credits.cast[index].profilePath}",
-                                                loadingBuilder:
-                                                    (BuildContext context, Widget child, ImageChunkEvent loadingProgress) {
-                                                  if (loadingProgress == null) return child;
-                                                  return Container(
-                                                    color: Colors.green,
-                                                    child: Center(
-                                                      child: CircularProgressIndicator(
-                                                        value: loadingProgress.expectedTotalBytes != null
-                                                            ? loadingProgress.cumulativeBytesLoaded /
-                                                                loadingProgress.expectedTotalBytes
-                                                            : null,
-                                                      ),
-                                                    ),
-                                                  );
-                                                },
-                                                errorBuilder: (BuildContext context, Object exception, StackTrace stackTrace) {
-                                                  return Container(
-                                                    color: Colors.black,
-                                                    child: Column(
-                                                      mainAxisAlignment: MainAxisAlignment.center,
-                                                      children: [
-                                                        const Text('😢'),
-                                                        const SizedBox(height: 5),
-                                                        const Text(
-                                                          'No image',
-                                                          textAlign: TextAlign.center,
-                                                          overflow: TextOverflow.ellipsis,
+                                          Material(
+                                            elevation: 10,
+                                            borderRadius: const BorderRadius.all(
+                                              Radius.circular(8.0),
+                                            ),
+                                            child: ClipRRect(
+                                              borderRadius: BorderRadius.circular(8.0),
+                                              child: Container(
+                                                width: 90,
+                                                height: 135,
+                                                child: Image.network(
+                                                  "https://image.tmdb.org/t/p/w185/${state.tvShowDetails.credits.cast[index].profilePath}",
+                                                  loadingBuilder:
+                                                      (BuildContext context, Widget child, ImageChunkEvent loadingProgress) {
+                                                    if (loadingProgress == null) return child;
+                                                    return Container(
+                                                      color: Colors.green,
+                                                      child: Center(
+                                                        child: CircularProgressIndicator(
+                                                          value: loadingProgress.expectedTotalBytes != null
+                                                              ? loadingProgress.cumulativeBytesLoaded /
+                                                                  loadingProgress.expectedTotalBytes
+                                                              : null,
                                                         ),
-                                                      ],
-                                                    ),
-                                                  );
-                                                },
+                                                      ),
+                                                    );
+                                                  },
+                                                  errorBuilder: (BuildContext context, Object exception, StackTrace stackTrace) {
+                                                    return Container(
+                                                      color: Colors.black,
+                                                      child: Column(
+                                                        mainAxisAlignment: MainAxisAlignment.center,
+                                                        children: [
+                                                          const Text('😢'),
+                                                          const SizedBox(height: 5),
+                                                          const Text(
+                                                            'No image',
+                                                            textAlign: TextAlign.center,
+                                                            overflow: TextOverflow.ellipsis,
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    );
+                                                  },
+                                                ),
                                               ),
                                             ),
                                           ),
@@ -455,58 +461,66 @@ class _TvShowDetailsPageState extends State<TvShowDetailsPage> {
                                       width: 90,
                                       child: Column(
                                         children: [
-                                          ClipRRect(
-                                            borderRadius: BorderRadius.circular(8.0),
-                                            child: Container(
-                                              width: 90,
-                                              height: 135,
-                                              child: Image.network(
-                                                "https://image.tmdb.org/t/p/w185/${state.tvShowDetails.tvShowSearchResults.tvShowSummaries[index].posterPath}",
-                                                loadingBuilder:
-                                                    (BuildContext context, Widget child, ImageChunkEvent loadingProgress) {
-                                                  if (loadingProgress == null) return child;
-                                                  return Container(
-                                                    color: Colors.green,
-                                                    child: Center(
-                                                      child: CircularProgressIndicator(
-                                                        value: loadingProgress.expectedTotalBytes != null
-                                                            ? loadingProgress.cumulativeBytesLoaded /
-                                                                loadingProgress.expectedTotalBytes
-                                                            : null,
-                                                      ),
-                                                    ),
-                                                  );
-                                                },
-                                                errorBuilder: (BuildContext context, Object exception, StackTrace stackTrace) {
-                                                  return Container(
-                                                    color: Colors.black,
-                                                    child: Column(
-                                                      mainAxisAlignment: MainAxisAlignment.center,
-                                                      children: [
-                                                        const Text('😢'),
-                                                        const SizedBox(height: 5),
-                                                        const Text(
-                                                          'No image',
-                                                          textAlign: TextAlign.center,
-                                                          overflow: TextOverflow.ellipsis,
+                                          Material(
+                                            elevation: 10,
+                                            borderRadius: const BorderRadius.all(
+                                              Radius.circular(8.0),
+                                            ),
+                                            child: ClipRRect(
+                                              borderRadius: BorderRadius.circular(8.0),
+                                              child: Container(
+                                                width: 90,
+                                                height: 135,
+                                                child: Image.network(
+                                                  "https://image.tmdb.org/t/p/w185/${state.tvShowDetails.tvShowSearchResults.tvShowSummaries[index].posterPath}",
+                                                  loadingBuilder:
+                                                      (BuildContext context, Widget child, ImageChunkEvent loadingProgress) {
+                                                    if (loadingProgress == null) return child;
+                                                    return Container(
+                                                      color: Colors.green,
+                                                      child: Center(
+                                                        child: CircularProgressIndicator(
+                                                          value: loadingProgress.expectedTotalBytes != null
+                                                              ? loadingProgress.cumulativeBytesLoaded /
+                                                                  loadingProgress.expectedTotalBytes
+                                                              : null,
                                                         ),
-                                                      ],
-                                                    ),
-                                                  );
-                                                },
+                                                      ),
+                                                    );
+                                                  },
+                                                  errorBuilder: (BuildContext context, Object exception, StackTrace stackTrace) {
+                                                    return Container(
+                                                      color: Colors.black,
+                                                      child: Column(
+                                                        mainAxisAlignment: MainAxisAlignment.center,
+                                                        children: [
+                                                          const Text('😢'),
+                                                          const SizedBox(height: 5),
+                                                          const Text(
+                                                            'No image',
+                                                            textAlign: TextAlign.center,
+                                                            overflow: TextOverflow.ellipsis,
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    );
+                                                  },
+                                                ),
                                               ),
                                             ),
                                           ),
-                                          Padding(
-                                            padding: const EdgeInsets.only(top: 8.0, bottom: 4.0),
-                                            child: Text(
-                                              state.tvShowDetails.tvShowSearchResults.tvShowSummaries[index].name,
-                                              overflow: TextOverflow.ellipsis,
-                                              textAlign: TextAlign.center,
-                                              maxLines: 2,
-                                              style: TextStyle(
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.w500,
+                                          Expanded(
+                                            child: Padding(
+                                              padding: const EdgeInsets.only(top: 8.0, bottom: 4.0),
+                                              child: Text(
+                                                state.tvShowDetails.tvShowSearchResults.tvShowSummaries[index].name,
+                                                overflow: TextOverflow.ellipsis,
+                                                textAlign: TextAlign.center,
+                                                maxLines: 2,
+                                                style: TextStyle(
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.w500,
+                                                ),
                                               ),
                                             ),
                                           ),

@@ -7,6 +7,8 @@ class TvShowSummary {
   final String firstAirDate;
   final List<num> genreIds;
   final String name;
+  final num voteAverage;
+  final int voteCount;
 
   TvShowSummary({
     this.posterPath,
@@ -17,6 +19,8 @@ class TvShowSummary {
     this.firstAirDate,
     this.genreIds,
     this.name,
+    this.voteAverage,
+    this.voteCount,
   });
 
   factory TvShowSummary.fromJson(dynamic result) {
@@ -29,6 +33,8 @@ class TvShowSummary {
       firstAirDate: result['first_air_date'] as String ?? 'Air Date unknown',
       genreIds: result['genre_ids']?.cast<num>() ?? <num>[],
       name: result['name'] as String ?? '',
+      voteAverage: result['vote_average'] as num ?? 0,
+      voteCount: result['vote_count'] as int ?? 0,
     );
   }
 
@@ -41,5 +47,7 @@ class TvShowSummary {
         "first_air_date": firstAirDate,
         "genre_ids": List<dynamic>.from(genreIds.map((x) => x)),
         "name": name,
+        "vote_average": voteAverage,
+        "vote_count": voteCount,
       };
 }

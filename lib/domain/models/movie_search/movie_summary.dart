@@ -7,6 +7,8 @@ class MovieSummary {
   final String title;
   final String backdropPath;
   final num popularity;
+  final num voteAverage;
+  final int voteCount;
 
   MovieSummary({
     this.posterPath,
@@ -17,6 +19,8 @@ class MovieSummary {
     this.title,
     this.backdropPath,
     this.popularity,
+    this.voteAverage,
+    this.voteCount,
   });
 
   factory MovieSummary.fromJson(dynamic result) {
@@ -29,6 +33,8 @@ class MovieSummary {
       title: result['title'] as String ?? '',
       backdropPath: result['backdrop_path'] as String ?? '',
       popularity: result['popularity'] as num ?? 0,
+      voteAverage: result['vote_average'] as num ?? 0,
+      voteCount: result['vote_count'] as int ?? 0,
     );
   }
 
@@ -41,5 +47,7 @@ class MovieSummary {
         "release_date": releaseDate,
         "title": title,
         "popularity": popularity,
+        "vote_average": voteAverage,
+        "vote_count": voteCount,
       };
 }

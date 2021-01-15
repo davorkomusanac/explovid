@@ -309,7 +309,7 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
         onTap: () {
           Navigator.of(context, rootNavigator: false).push(
             MaterialPageRoute(
-              builder: (context) => ActorDetailsPage(),
+              builder: (context) => ActorDetailsPage(state.actorSearchResults.actorSummaries[index].id),
             ),
           );
         },
@@ -318,47 +318,53 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
           children: [
             Expanded(
               flex: 1,
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(8.0),
-                child: Container(
-                  height: 190,
-                  width: 132,
-                  child: Image.network(
-                    "https://image.tmdb.org/t/p/w185/${state.actorSearchResults.actorSummaries[index].profilePath}",
-                    fit: BoxFit.cover,
-                    loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent loadingProgress) {
-                      if (loadingProgress == null) return child;
-                      return Container(
-                        height: 190,
-                        color: Colors.green,
-                        width: 132,
-                        child: Center(
-                          child: CircularProgressIndicator(
-                            value: loadingProgress.expectedTotalBytes != null
-                                ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes
-                                : null,
-                          ),
-                        ),
-                      );
-                    },
-                    errorBuilder: (BuildContext context, Object exception, StackTrace stackTrace) {
-                      return Container(
-                        height: 190,
-                        width: 132,
-                        color: Colors.yellow[400],
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const Text('😢'),
-                            const SizedBox(height: 5),
-                            const Text(
-                              'No image available',
-                              textAlign: TextAlign.center,
+              child: Material(
+                elevation: 8,
+                borderRadius: const BorderRadius.all(
+                  Radius.circular(8),
+                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(8.0),
+                  child: Container(
+                    height: 190,
+                    width: 132,
+                    child: Image.network(
+                      "https://image.tmdb.org/t/p/w185/${state.actorSearchResults.actorSummaries[index].profilePath}",
+                      fit: BoxFit.cover,
+                      loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent loadingProgress) {
+                        if (loadingProgress == null) return child;
+                        return Container(
+                          height: 190,
+                          color: Colors.green,
+                          width: 132,
+                          child: Center(
+                            child: CircularProgressIndicator(
+                              value: loadingProgress.expectedTotalBytes != null
+                                  ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes
+                                  : null,
                             ),
-                          ],
-                        ),
-                      );
-                    },
+                          ),
+                        );
+                      },
+                      errorBuilder: (BuildContext context, Object exception, StackTrace stackTrace) {
+                        return Container(
+                          height: 190,
+                          width: 132,
+                          color: Colors.yellow[400],
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const Text('😢'),
+                              const SizedBox(height: 5),
+                              const Text(
+                                'No image available',
+                                textAlign: TextAlign.center,
+                              ),
+                            ],
+                          ),
+                        );
+                      },
+                    ),
                   ),
                 ),
               ),
@@ -496,47 +502,53 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
           children: [
             Expanded(
               flex: 1,
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(8.0),
-                child: Container(
-                  height: 190,
-                  width: 132,
-                  child: Image.network(
-                    "https://image.tmdb.org/t/p/w342/${state.tvShowSearchResults.tvShowSummaries[index].posterPath}",
-                    fit: BoxFit.cover,
-                    loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent loadingProgress) {
-                      if (loadingProgress == null) return child;
-                      return Container(
-                        height: 190,
-                        color: Colors.green,
-                        width: 132,
-                        child: Center(
-                          child: CircularProgressIndicator(
-                            value: loadingProgress.expectedTotalBytes != null
-                                ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes
-                                : null,
-                          ),
-                        ),
-                      );
-                    },
-                    errorBuilder: (BuildContext context, Object exception, StackTrace stackTrace) {
-                      return Container(
-                        height: 190,
-                        width: 132,
-                        color: Colors.yellow[400],
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const Text('😢'),
-                            const SizedBox(height: 5),
-                            const Text(
-                              'No image available',
-                              textAlign: TextAlign.center,
+              child: Material(
+                elevation: 8,
+                borderRadius: const BorderRadius.all(
+                  Radius.circular(8),
+                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(8.0),
+                  child: Container(
+                    height: 190,
+                    width: 132,
+                    child: Image.network(
+                      "https://image.tmdb.org/t/p/w342/${state.tvShowSearchResults.tvShowSummaries[index].posterPath}",
+                      fit: BoxFit.cover,
+                      loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent loadingProgress) {
+                        if (loadingProgress == null) return child;
+                        return Container(
+                          height: 190,
+                          color: Colors.green,
+                          width: 132,
+                          child: Center(
+                            child: CircularProgressIndicator(
+                              value: loadingProgress.expectedTotalBytes != null
+                                  ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes
+                                  : null,
                             ),
-                          ],
-                        ),
-                      );
-                    },
+                          ),
+                        );
+                      },
+                      errorBuilder: (BuildContext context, Object exception, StackTrace stackTrace) {
+                        return Container(
+                          height: 190,
+                          width: 132,
+                          color: Colors.yellow[400],
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const Text('😢'),
+                              const SizedBox(height: 5),
+                              const Text(
+                                'No image available',
+                                textAlign: TextAlign.center,
+                              ),
+                            ],
+                          ),
+                        );
+                      },
+                    ),
                   ),
                 ),
               ),
@@ -676,47 +688,53 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
           children: [
             Expanded(
               flex: 1,
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(8.0),
-                child: Container(
-                  height: 190,
-                  width: 132,
-                  child: Image.network(
-                    "https://image.tmdb.org/t/p/w342/${state.movieSearchResults.movieSummaries[index].posterPath}",
-                    fit: BoxFit.cover,
-                    loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent loadingProgress) {
-                      if (loadingProgress == null) return child;
-                      return Container(
-                        height: 190,
-                        color: Colors.green,
-                        width: 132,
-                        child: Center(
-                          child: CircularProgressIndicator(
-                            value: loadingProgress.expectedTotalBytes != null
-                                ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes
-                                : null,
-                          ),
-                        ),
-                      );
-                    },
-                    errorBuilder: (BuildContext context, Object exception, StackTrace stackTrace) {
-                      return Container(
-                        height: 190,
-                        width: 132,
-                        color: Colors.yellow[400],
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const Text('😢'),
-                            const SizedBox(height: 5),
-                            const Text(
-                              'No image available',
-                              textAlign: TextAlign.center,
+              child: Material(
+                elevation: 8,
+                borderRadius: const BorderRadius.all(
+                  Radius.circular(8),
+                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(8.0),
+                  child: Container(
+                    height: 190,
+                    width: 132,
+                    child: Image.network(
+                      "https://image.tmdb.org/t/p/w342/${state.movieSearchResults.movieSummaries[index].posterPath}",
+                      fit: BoxFit.cover,
+                      loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent loadingProgress) {
+                        if (loadingProgress == null) return child;
+                        return Container(
+                          height: 190,
+                          color: Colors.green,
+                          width: 132,
+                          child: Center(
+                            child: CircularProgressIndicator(
+                              value: loadingProgress.expectedTotalBytes != null
+                                  ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes
+                                  : null,
                             ),
-                          ],
-                        ),
-                      );
-                    },
+                          ),
+                        );
+                      },
+                      errorBuilder: (BuildContext context, Object exception, StackTrace stackTrace) {
+                        return Container(
+                          height: 190,
+                          width: 132,
+                          color: Colors.yellow[400],
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const Text('😢'),
+                              const SizedBox(height: 5),
+                              const Text(
+                                'No image available',
+                                textAlign: TextAlign.center,
+                              ),
+                            ],
+                          ),
+                        );
+                      },
+                    ),
                   ),
                 ),
               ),
