@@ -1,9 +1,11 @@
 import 'package:explovid/api_key.dart';
+import 'package:explovid/domain/models/actor_details/actor_details.dart';
 import 'package:explovid/domain/models/actor_search/actor_search_result.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 const String _baseSearchActorUrl = "https://api.themoviedb.org/3/search/person?api_key=$API_KEY&language=en-US&query=";
+const String _baseActorDetailsUrl = "https://api.themoviedb.org/3/person/";
 
 class ActorRepository {
   final http.Client client;
@@ -49,6 +51,28 @@ class ActorRepository {
       returnString += "&page=1&include_adult=false";
     }
 
+    return returnString;
+  }
+
+  Future<ActorDetails> getActorDetails(int id) async {
+    try {
+      final response = await client.get(_buildActorDetailsUrl(id));
+      print(_buildActorDetailsUrl(id));
+
+      if (response.statusCode != 200) throw Exception('There was an error searching');
+
+      return ActorDetails.fromJson(json.decode(response.body) as Map<String, dynamic>);
+    } catch (e) {
+      print("Actor Details ERROR: " + e.toString());
+      return ActorDetails(
+        errorMessage: e.toString(),
+      );
+    }
+  }
+
+  String _buildActorDetailsUrl(int id) {
+    String returnString =
+        _baseActorDetailsUrl + id.toString() + "?api_key=$API_KEY" + "&append_to_response=movie_credits,tv_credits";
     return returnString;
   }
 }

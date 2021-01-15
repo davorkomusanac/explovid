@@ -1,3 +1,4 @@
+import 'package:explovid/application/actor_search/actor_details/actor_details_bloc.dart';
 import 'package:explovid/application/actor_search/actor_search_bloc.dart';
 import 'package:explovid/application/auth/auth_check/auth_check_bloc.dart';
 import 'package:explovid/application/auth/sign_in_form/sign_in_form_bloc.dart';
@@ -81,6 +82,11 @@ class _MyAppState extends State<MyApp> {
         ),
         BlocProvider(
           create: (context) => ActorSearchBloc(
+            _actorRepository,
+          ),
+        ),
+        BlocProvider(
+          create: (context) => ActorDetailsBloc(
             _actorRepository,
           ),
         ),
