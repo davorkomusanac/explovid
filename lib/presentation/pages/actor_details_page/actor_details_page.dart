@@ -46,37 +46,8 @@ class _ActorDetailsPageState extends State<ActorDetailsPage> {
             ),
             body: Column(
               children: [
-                if (state.isSearching)
-                  Expanded(
-                    child: const Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Center(
-                        child: CircularProgressIndicator(),
-                      ),
-                    ),
-                  ),
-                if (state.errorMessage.isNotEmpty)
-                  Expanded(
-                    child: Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Text(
-                            "☹",
-                            style: TextStyle(fontSize: 50),
-                          ),
-                          Text(
-                            state.errorMessage,
-                            style: TextStyle(fontSize: 20),
-                          ),
-                          const Text(
-                            "Try again.",
-                            style: TextStyle(fontSize: 20),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
+                if (state.isSearching) BuildSearchProgressIndicator(),
+                if (state.errorMessage.isNotEmpty) BuildSearchErrorMessage(state.errorMessage),
                 if (state.errorMessage.isEmpty && !state.isSearching)
                   Expanded(
                     child: MediaQuery.removePadding(
@@ -90,56 +61,7 @@ class _ActorDetailsPageState extends State<ActorDetailsPage> {
                             Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Material(
-                                  elevation: 10,
-                                  borderRadius: const BorderRadius.all(
-                                    Radius.circular(20),
-                                  ),
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(20.0),
-                                    child: Container(
-                                      height: 190,
-                                      width: 132,
-                                      child: Image.network(
-                                        "https://image.tmdb.org/t/p/w185/${state.actorDetails.profilePath}",
-                                        fit: BoxFit.cover,
-                                        loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent loadingProgress) {
-                                          if (loadingProgress == null) return child;
-                                          return Container(
-                                            height: 190,
-                                            color: Colors.green,
-                                            width: 132,
-                                            child: Center(
-                                              child: CircularProgressIndicator(
-                                                value: loadingProgress.expectedTotalBytes != null
-                                                    ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes
-                                                    : null,
-                                              ),
-                                            ),
-                                          );
-                                        },
-                                        errorBuilder: (BuildContext context, Object exception, StackTrace stackTrace) {
-                                          return Container(
-                                            height: 190,
-                                            width: 132,
-                                            color: Colors.yellow[400],
-                                            child: Column(
-                                              mainAxisAlignment: MainAxisAlignment.center,
-                                              children: [
-                                                const Text('😢'),
-                                                const SizedBox(height: 5),
-                                                const Text(
-                                                  'No image available',
-                                                  textAlign: TextAlign.center,
-                                                ),
-                                              ],
-                                            ),
-                                          );
-                                        },
-                                      ),
-                                    ),
-                                  ),
-                                ),
+                                BuildPosterImage(height: 190, width: 132, imagePath: state.actorDetails.profilePath),
                                 Expanded(
                                   child: Padding(
                                     padding: const EdgeInsets.only(
@@ -189,7 +111,7 @@ class _ActorDetailsPageState extends State<ActorDetailsPage> {
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text(
+                                  const Text(
                                     "Movies",
                                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
                                   ),
@@ -205,8 +127,8 @@ class _ActorDetailsPageState extends State<ActorDetailsPage> {
                               ),
                             ),
                             if (state.actorDetails.movieCredits.cast.isNotEmpty)
-                              Padding(
-                                padding: const EdgeInsets.only(bottom: 8.0),
+                              const Padding(
+                                padding: EdgeInsets.only(bottom: 8.0),
                                 child: Text(
                                   "Cast",
                                   style: TextStyle(fontWeight: FontWeight.w300),
@@ -215,12 +137,7 @@ class _ActorDetailsPageState extends State<ActorDetailsPage> {
                             if (state.actorDetails.movieCredits.cast.isNotEmpty)
                               Container(
                                 height: 190,
-                                padding: const EdgeInsets.only(
-                                  left: 0.0,
-                                  top: 0.0,
-                                  bottom: 0.0,
-                                  right: 8.0,
-                                ),
+                                padding: const EdgeInsets.only(right: 8.0),
                                 child: ListView.builder(
                                   shrinkWrap: true,
                                   scrollDirection: Axis.horizontal,
@@ -229,9 +146,7 @@ class _ActorDetailsPageState extends State<ActorDetailsPage> {
                                     return Padding(
                                       padding: EdgeInsets.only(
                                         left: index > 0 ? 8.0 : 0.0,
-                                        top: 0.0,
                                         bottom: 8.0,
-                                        right: 8.0,
                                       ),
                                       child: InkWell(
                                         onTap: () {
@@ -256,54 +171,10 @@ class _ActorDetailsPageState extends State<ActorDetailsPage> {
                                           width: 90,
                                           child: Column(
                                             children: [
-                                              Material(
-                                                elevation: 10,
-                                                borderRadius: const BorderRadius.all(
-                                                  Radius.circular(8.0),
-                                                ),
-                                                child: ClipRRect(
-                                                  borderRadius: BorderRadius.circular(8.0),
-                                                  child: Container(
-                                                    width: 90,
-                                                    height: 135,
-                                                    child: Image.network(
-                                                      "https://image.tmdb.org/t/p/w185/${state.actorDetails.movieCredits.cast[index].movieSummary.posterPath}",
-                                                      loadingBuilder:
-                                                          (BuildContext context, Widget child, ImageChunkEvent loadingProgress) {
-                                                        if (loadingProgress == null) return child;
-                                                        return Container(
-                                                          color: Colors.green,
-                                                          child: Center(
-                                                            child: CircularProgressIndicator(
-                                                              value: loadingProgress.expectedTotalBytes != null
-                                                                  ? loadingProgress.cumulativeBytesLoaded /
-                                                                      loadingProgress.expectedTotalBytes
-                                                                  : null,
-                                                            ),
-                                                          ),
-                                                        );
-                                                      },
-                                                      errorBuilder:
-                                                          (BuildContext context, Object exception, StackTrace stackTrace) {
-                                                        return Container(
-                                                          color: Colors.black,
-                                                          child: Column(
-                                                            mainAxisAlignment: MainAxisAlignment.center,
-                                                            children: [
-                                                              const Text('😢'),
-                                                              const SizedBox(height: 5),
-                                                              const Text(
-                                                                'No image',
-                                                                textAlign: TextAlign.center,
-                                                                overflow: TextOverflow.ellipsis,
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        );
-                                                      },
-                                                    ),
-                                                  ),
-                                                ),
+                                              BuildPosterImage(
+                                                height: 135,
+                                                width: 90,
+                                                imagePath: state.actorDetails.movieCredits.cast[index].movieSummary.posterPath,
                                               ),
                                               Expanded(
                                                 child: Padding(
@@ -326,8 +197,8 @@ class _ActorDetailsPageState extends State<ActorDetailsPage> {
                               ),
 
                             if (state.actorDetails.movieCredits.crew.isNotEmpty)
-                              Padding(
-                                padding: const EdgeInsets.only(bottom: 8.0),
+                              const Padding(
+                                padding: EdgeInsets.only(bottom: 8.0),
                                 child: Text(
                                   "Crew",
                                   style: TextStyle(fontWeight: FontWeight.w300),
@@ -336,12 +207,7 @@ class _ActorDetailsPageState extends State<ActorDetailsPage> {
                             if (state.actorDetails.movieCredits.crew.isNotEmpty)
                               Container(
                                 height: 190,
-                                padding: const EdgeInsets.only(
-                                  left: 0.0,
-                                  top: 0.0,
-                                  bottom: 0.0,
-                                  right: 8.0,
-                                ),
+                                padding: const EdgeInsets.only(right: 8.0),
                                 child: ListView.builder(
                                   shrinkWrap: true,
                                   scrollDirection: Axis.horizontal,
@@ -350,7 +216,6 @@ class _ActorDetailsPageState extends State<ActorDetailsPage> {
                                     return Padding(
                                       padding: EdgeInsets.only(
                                         left: index > 0 ? 8.0 : 0.0,
-                                        top: 0.0,
                                         bottom: 8.0,
                                         right: 8.0,
                                       ),
@@ -377,54 +242,10 @@ class _ActorDetailsPageState extends State<ActorDetailsPage> {
                                           width: 90,
                                           child: Column(
                                             children: [
-                                              Material(
-                                                elevation: 10,
-                                                borderRadius: const BorderRadius.all(
-                                                  Radius.circular(8.0),
-                                                ),
-                                                child: ClipRRect(
-                                                  borderRadius: BorderRadius.circular(8.0),
-                                                  child: Container(
-                                                    width: 90,
-                                                    height: 135,
-                                                    child: Image.network(
-                                                      "https://image.tmdb.org/t/p/w185/${state.actorDetails.movieCredits.crew[index].movieSummary.posterPath}",
-                                                      loadingBuilder:
-                                                          (BuildContext context, Widget child, ImageChunkEvent loadingProgress) {
-                                                        if (loadingProgress == null) return child;
-                                                        return Container(
-                                                          color: Colors.green,
-                                                          child: Center(
-                                                            child: CircularProgressIndicator(
-                                                              value: loadingProgress.expectedTotalBytes != null
-                                                                  ? loadingProgress.cumulativeBytesLoaded /
-                                                                      loadingProgress.expectedTotalBytes
-                                                                  : null,
-                                                            ),
-                                                          ),
-                                                        );
-                                                      },
-                                                      errorBuilder:
-                                                          (BuildContext context, Object exception, StackTrace stackTrace) {
-                                                        return Container(
-                                                          color: Colors.black,
-                                                          child: Column(
-                                                            mainAxisAlignment: MainAxisAlignment.center,
-                                                            children: [
-                                                              const Text('😢'),
-                                                              const SizedBox(height: 5),
-                                                              const Text(
-                                                                'No image',
-                                                                textAlign: TextAlign.center,
-                                                                overflow: TextOverflow.ellipsis,
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        );
-                                                      },
-                                                    ),
-                                                  ),
-                                                ),
+                                              BuildPosterImage(
+                                                height: 135,
+                                                width: 90,
+                                                imagePath: state.actorDetails.movieCredits.crew[index].movieSummary.posterPath,
                                               ),
                                               Expanded(
                                                 child: Padding(
@@ -452,7 +273,7 @@ class _ActorDetailsPageState extends State<ActorDetailsPage> {
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text(
+                                  const Text(
                                     "TV Shows",
                                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
                                   ),
@@ -468,8 +289,8 @@ class _ActorDetailsPageState extends State<ActorDetailsPage> {
                               ),
                             ),
                             if (state.actorDetails.tvCredits.cast.isNotEmpty)
-                              Padding(
-                                padding: const EdgeInsets.only(bottom: 8.0),
+                              const Padding(
+                                padding: EdgeInsets.only(bottom: 8.0),
                                 child: Text(
                                   "Cast",
                                   style: TextStyle(fontWeight: FontWeight.w300),
@@ -478,12 +299,7 @@ class _ActorDetailsPageState extends State<ActorDetailsPage> {
                             if (state.actorDetails.tvCredits.cast.isNotEmpty)
                               Container(
                                 height: 190,
-                                padding: const EdgeInsets.only(
-                                  left: 0.0,
-                                  top: 0.0,
-                                  bottom: 0.0,
-                                  right: 8.0,
-                                ),
+                                padding: const EdgeInsets.only(right: 8.0),
                                 child: ListView.builder(
                                   shrinkWrap: true,
                                   scrollDirection: Axis.horizontal,
@@ -492,7 +308,6 @@ class _ActorDetailsPageState extends State<ActorDetailsPage> {
                                     return Padding(
                                       padding: EdgeInsets.only(
                                         left: index > 0 ? 8.0 : 0.0,
-                                        top: 0.0,
                                         bottom: 8.0,
                                         right: 8.0,
                                       ),
@@ -519,54 +334,10 @@ class _ActorDetailsPageState extends State<ActorDetailsPage> {
                                           width: 90,
                                           child: Column(
                                             children: [
-                                              Material(
-                                                elevation: 10,
-                                                borderRadius: const BorderRadius.all(
-                                                  Radius.circular(8.0),
-                                                ),
-                                                child: ClipRRect(
-                                                  borderRadius: BorderRadius.circular(8.0),
-                                                  child: Container(
-                                                    width: 90,
-                                                    height: 135,
-                                                    child: Image.network(
-                                                      "https://image.tmdb.org/t/p/w185/${state.actorDetails.tvCredits.cast[index].tvShowSummary.posterPath}",
-                                                      loadingBuilder:
-                                                          (BuildContext context, Widget child, ImageChunkEvent loadingProgress) {
-                                                        if (loadingProgress == null) return child;
-                                                        return Container(
-                                                          color: Colors.green,
-                                                          child: Center(
-                                                            child: CircularProgressIndicator(
-                                                              value: loadingProgress.expectedTotalBytes != null
-                                                                  ? loadingProgress.cumulativeBytesLoaded /
-                                                                      loadingProgress.expectedTotalBytes
-                                                                  : null,
-                                                            ),
-                                                          ),
-                                                        );
-                                                      },
-                                                      errorBuilder:
-                                                          (BuildContext context, Object exception, StackTrace stackTrace) {
-                                                        return Container(
-                                                          color: Colors.black,
-                                                          child: Column(
-                                                            mainAxisAlignment: MainAxisAlignment.center,
-                                                            children: [
-                                                              const Text('😢'),
-                                                              const SizedBox(height: 5),
-                                                              const Text(
-                                                                'No image',
-                                                                textAlign: TextAlign.center,
-                                                                overflow: TextOverflow.ellipsis,
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        );
-                                                      },
-                                                    ),
-                                                  ),
-                                                ),
+                                              BuildPosterImage(
+                                                height: 135,
+                                                width: 90,
+                                                imagePath: state.actorDetails.tvCredits.cast[index].tvShowSummary.posterPath,
                                               ),
                                               Expanded(
                                                 child: Padding(
@@ -588,8 +359,8 @@ class _ActorDetailsPageState extends State<ActorDetailsPage> {
                                 ),
                               ),
                             if (state.actorDetails.tvCredits.crew.isNotEmpty)
-                              Padding(
-                                padding: const EdgeInsets.only(bottom: 8.0),
+                              const Padding(
+                                padding: EdgeInsets.only(bottom: 8.0),
                                 child: Text(
                                   "Crew",
                                   style: TextStyle(fontWeight: FontWeight.w300),
@@ -598,12 +369,7 @@ class _ActorDetailsPageState extends State<ActorDetailsPage> {
                             if (state.actorDetails.tvCredits.crew.isNotEmpty)
                               Container(
                                 height: 190,
-                                padding: const EdgeInsets.only(
-                                  left: 0.0,
-                                  top: 0.0,
-                                  bottom: 0.0,
-                                  right: 8.0,
-                                ),
+                                padding: const EdgeInsets.only(right: 8.0),
                                 child: ListView.builder(
                                   shrinkWrap: true,
                                   scrollDirection: Axis.horizontal,
@@ -612,7 +378,6 @@ class _ActorDetailsPageState extends State<ActorDetailsPage> {
                                     return Padding(
                                       padding: EdgeInsets.only(
                                         left: index > 0 ? 8.0 : 0.0,
-                                        top: 0.0,
                                         bottom: 8.0,
                                         right: 8.0,
                                       ),
@@ -639,54 +404,10 @@ class _ActorDetailsPageState extends State<ActorDetailsPage> {
                                           width: 90,
                                           child: Column(
                                             children: [
-                                              Material(
-                                                elevation: 10,
-                                                borderRadius: const BorderRadius.all(
-                                                  Radius.circular(8.0),
-                                                ),
-                                                child: ClipRRect(
-                                                  borderRadius: BorderRadius.circular(8.0),
-                                                  child: Container(
-                                                    width: 90,
-                                                    height: 135,
-                                                    child: Image.network(
-                                                      "https://image.tmdb.org/t/p/w185/${state.actorDetails.tvCredits.crew[index].tvShowSummary.posterPath}",
-                                                      loadingBuilder:
-                                                          (BuildContext context, Widget child, ImageChunkEvent loadingProgress) {
-                                                        if (loadingProgress == null) return child;
-                                                        return Container(
-                                                          color: Colors.green,
-                                                          child: Center(
-                                                            child: CircularProgressIndicator(
-                                                              value: loadingProgress.expectedTotalBytes != null
-                                                                  ? loadingProgress.cumulativeBytesLoaded /
-                                                                      loadingProgress.expectedTotalBytes
-                                                                  : null,
-                                                            ),
-                                                          ),
-                                                        );
-                                                      },
-                                                      errorBuilder:
-                                                          (BuildContext context, Object exception, StackTrace stackTrace) {
-                                                        return Container(
-                                                          color: Colors.black,
-                                                          child: Column(
-                                                            mainAxisAlignment: MainAxisAlignment.center,
-                                                            children: [
-                                                              const Text('😢'),
-                                                              const SizedBox(height: 5),
-                                                              const Text(
-                                                                'No image',
-                                                                textAlign: TextAlign.center,
-                                                                overflow: TextOverflow.ellipsis,
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        );
-                                                      },
-                                                    ),
-                                                  ),
-                                                ),
+                                              BuildPosterImage(
+                                                height: 135,
+                                                width: 90,
+                                                imagePath: state.actorDetails.tvCredits.crew[index].tvShowSummary.posterPath,
                                               ),
                                               Expanded(
                                                 child: Padding(

@@ -2,15 +2,6 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
-Widget buildLoaderNextPage() {
-  return const Padding(
-    padding: EdgeInsets.all(12.0),
-    child: Center(
-      child: CircularProgressIndicator(),
-    ),
-  );
-}
-
 String convertReleaseDate(String text) {
   String returnString = text;
   if (text.isEmpty) return "Release date unknown";
@@ -87,5 +78,124 @@ class Debouncer {
       _timer.cancel();
     }
     _timer = Timer(Duration(milliseconds: milliseconds), action);
+  }
+}
+
+class BuildLoaderNextPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return const Padding(
+      padding: EdgeInsets.all(12.0),
+      child: Center(
+        child: CircularProgressIndicator(),
+      ),
+    );
+  }
+}
+
+class BuildSearchProgressIndicator extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return const Expanded(
+      child: Padding(
+        padding: EdgeInsets.all(8.0),
+        child: Center(
+          child: CircularProgressIndicator(),
+        ),
+      ),
+    );
+  }
+}
+
+class BuildSearchErrorMessage extends StatelessWidget {
+  final String errorMessage;
+
+  BuildSearchErrorMessage(this.errorMessage);
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Text(
+              "☹",
+              style: TextStyle(fontSize: 50),
+            ),
+            Text(
+              errorMessage,
+              style: TextStyle(fontSize: 20),
+            ),
+            const Text(
+              "Try again.",
+              style: TextStyle(fontSize: 20),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class BuildPosterImage extends StatelessWidget {
+  final String imagePath;
+  final double height;
+  final double width;
+
+  BuildPosterImage({this.imagePath, this.height, this.width});
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      elevation: 10,
+      borderRadius: const BorderRadius.all(
+        Radius.circular(10.0),
+      ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(10.0),
+        child: Container(
+          height: height,
+          width: width,
+          child: Image.network(
+            "https://image.tmdb.org/t/p/w185/$imagePath",
+            fit: BoxFit.cover,
+            loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent loadingProgress) {
+              if (loadingProgress == null) return child;
+              return Container(
+                height: height,
+                color: Colors.green,
+                width: width,
+                child: Center(
+                  child: CircularProgressIndicator(
+                    value: loadingProgress.expectedTotalBytes != null
+                        ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes
+                        : null,
+                  ),
+                ),
+              );
+            },
+            errorBuilder: (BuildContext context, Object exception, StackTrace stackTrace) {
+              return Container(
+                height: height,
+                width: width,
+                color: Colors.yellow[400],
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text('😢'),
+                    const SizedBox(height: 5),
+                    const Text(
+                      'No image available',
+                      textAlign: TextAlign.center,
+                    ),
+                  ],
+                ),
+              );
+            },
+          ),
+        ),
+      ),
+    );
   }
 }

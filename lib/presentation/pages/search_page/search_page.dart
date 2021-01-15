@@ -241,15 +241,7 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
               Center(
                 child: const Text("Popular Actors are going to show here..."),
               ),
-            if (state.isSearching)
-              Expanded(
-                child: const Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: Center(
-                    child: CircularProgressIndicator(),
-                  ),
-                ),
-              ),
+            if (state.isSearching) BuildSearchProgressIndicator(),
             if (state.isSearchCompleted)
               Expanded(
                 child: NotificationListener<ScrollNotification>(
@@ -260,34 +252,13 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
                     itemCount: _calculateActorListItemCount(state),
                     itemBuilder: (context, index) {
                       return index >= state.actorSearchResults.actorSummaries.length
-                          ? buildLoaderNextPage()
+                          ? BuildLoaderNextPage()
                           : _buildActorCard(context, state, index);
                     },
                   ),
                 ),
               ),
-            if (state.errorMessage.isNotEmpty)
-              Expanded(
-                child: Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Text(
-                        "☹",
-                        style: TextStyle(fontSize: 50),
-                      ),
-                      Text(
-                        state.errorMessage,
-                        style: TextStyle(fontSize: 20),
-                      ),
-                      const Text(
-                        "Try again.",
-                        style: TextStyle(fontSize: 20),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
+            if (state.errorMessage.isNotEmpty) BuildSearchErrorMessage(state.errorMessage),
           ],
         );
       },
@@ -318,55 +289,10 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
           children: [
             Expanded(
               flex: 1,
-              child: Material(
-                elevation: 8,
-                borderRadius: const BorderRadius.all(
-                  Radius.circular(8),
-                ),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(8.0),
-                  child: Container(
-                    height: 190,
-                    width: 132,
-                    child: Image.network(
-                      "https://image.tmdb.org/t/p/w185/${state.actorSearchResults.actorSummaries[index].profilePath}",
-                      fit: BoxFit.cover,
-                      loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent loadingProgress) {
-                        if (loadingProgress == null) return child;
-                        return Container(
-                          height: 190,
-                          color: Colors.green,
-                          width: 132,
-                          child: Center(
-                            child: CircularProgressIndicator(
-                              value: loadingProgress.expectedTotalBytes != null
-                                  ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes
-                                  : null,
-                            ),
-                          ),
-                        );
-                      },
-                      errorBuilder: (BuildContext context, Object exception, StackTrace stackTrace) {
-                        return Container(
-                          height: 190,
-                          width: 132,
-                          color: Colors.yellow[400],
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              const Text('😢'),
-                              const SizedBox(height: 5),
-                              const Text(
-                                'No image available',
-                                textAlign: TextAlign.center,
-                              ),
-                            ],
-                          ),
-                        );
-                      },
-                    ),
-                  ),
-                ),
+              child: BuildPosterImage(
+                height: 190,
+                width: 132,
+                imagePath: state.actorSearchResults.actorSummaries[index].profilePath,
               ),
             ),
             Expanded(
@@ -425,15 +351,7 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
               Center(
                 child: const Text("Popular Tv Shows are going to show here..."),
               ),
-            if (state.isSearching)
-              Expanded(
-                child: const Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: Center(
-                    child: CircularProgressIndicator(),
-                  ),
-                ),
-              ),
+            if (state.isSearching) BuildSearchProgressIndicator(),
             if (state.isSearchCompleted)
               Expanded(
                 child: NotificationListener<ScrollNotification>(
@@ -444,34 +362,13 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
                     itemCount: _calculateTvShowListItemCount(state),
                     itemBuilder: (context, index) {
                       return index >= state.tvShowSearchResults.tvShowSummaries.length
-                          ? buildLoaderNextPage()
+                          ? BuildLoaderNextPage()
                           : _buildTvShowCard(context, state, index);
                     },
                   ),
                 ),
               ),
-            if (state.errorMessage.isNotEmpty)
-              Expanded(
-                child: Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Text(
-                        "☹",
-                        style: TextStyle(fontSize: 50),
-                      ),
-                      Text(
-                        state.errorMessage,
-                        style: TextStyle(fontSize: 20),
-                      ),
-                      const Text(
-                        "Try again.",
-                        style: TextStyle(fontSize: 20),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
+            if (state.errorMessage.isNotEmpty) BuildSearchErrorMessage(state.errorMessage),
           ],
         );
       },
@@ -502,55 +399,10 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
           children: [
             Expanded(
               flex: 1,
-              child: Material(
-                elevation: 8,
-                borderRadius: const BorderRadius.all(
-                  Radius.circular(8),
-                ),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(8.0),
-                  child: Container(
-                    height: 190,
-                    width: 132,
-                    child: Image.network(
-                      "https://image.tmdb.org/t/p/w342/${state.tvShowSearchResults.tvShowSummaries[index].posterPath}",
-                      fit: BoxFit.cover,
-                      loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent loadingProgress) {
-                        if (loadingProgress == null) return child;
-                        return Container(
-                          height: 190,
-                          color: Colors.green,
-                          width: 132,
-                          child: Center(
-                            child: CircularProgressIndicator(
-                              value: loadingProgress.expectedTotalBytes != null
-                                  ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes
-                                  : null,
-                            ),
-                          ),
-                        );
-                      },
-                      errorBuilder: (BuildContext context, Object exception, StackTrace stackTrace) {
-                        return Container(
-                          height: 190,
-                          width: 132,
-                          color: Colors.yellow[400],
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              const Text('😢'),
-                              const SizedBox(height: 5),
-                              const Text(
-                                'No image available',
-                                textAlign: TextAlign.center,
-                              ),
-                            ],
-                          ),
-                        );
-                      },
-                    ),
-                  ),
-                ),
+              child: BuildPosterImage(
+                height: 190,
+                width: 132,
+                imagePath: state.tvShowSearchResults.tvShowSummaries[index].posterPath,
               ),
             ),
             Expanded(
@@ -611,15 +463,7 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
               Center(
                 child: const Text("Popular movies are going to show here..."),
               ),
-            if (state.isSearching)
-              Expanded(
-                child: const Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: Center(
-                    child: CircularProgressIndicator(),
-                  ),
-                ),
-              ),
+            if (state.isSearching) BuildSearchProgressIndicator(),
             if (state.isSearchCompleted)
               Expanded(
                 child: NotificationListener<ScrollNotification>(
@@ -630,34 +474,13 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
                     itemCount: _calculateMovieListItemCount(state),
                     itemBuilder: (context, index) {
                       return index >= state.movieSearchResults.movieSummaries.length
-                          ? buildLoaderNextPage()
+                          ? BuildLoaderNextPage()
                           : _buildMovieCard(context, state, index);
                     },
                   ),
                 ),
               ),
-            if (state.errorMessage.isNotEmpty)
-              Expanded(
-                child: Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Text(
-                        "☹",
-                        style: TextStyle(fontSize: 50),
-                      ),
-                      Text(
-                        state.errorMessage,
-                        style: TextStyle(fontSize: 20),
-                      ),
-                      const Text(
-                        "Try again.",
-                        style: TextStyle(fontSize: 20),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
+            if (state.errorMessage.isNotEmpty) BuildSearchErrorMessage(state.errorMessage),
           ],
         );
       },
@@ -688,55 +511,10 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
           children: [
             Expanded(
               flex: 1,
-              child: Material(
-                elevation: 8,
-                borderRadius: const BorderRadius.all(
-                  Radius.circular(8),
-                ),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(8.0),
-                  child: Container(
-                    height: 190,
-                    width: 132,
-                    child: Image.network(
-                      "https://image.tmdb.org/t/p/w342/${state.movieSearchResults.movieSummaries[index].posterPath}",
-                      fit: BoxFit.cover,
-                      loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent loadingProgress) {
-                        if (loadingProgress == null) return child;
-                        return Container(
-                          height: 190,
-                          color: Colors.green,
-                          width: 132,
-                          child: Center(
-                            child: CircularProgressIndicator(
-                              value: loadingProgress.expectedTotalBytes != null
-                                  ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes
-                                  : null,
-                            ),
-                          ),
-                        );
-                      },
-                      errorBuilder: (BuildContext context, Object exception, StackTrace stackTrace) {
-                        return Container(
-                          height: 190,
-                          width: 132,
-                          color: Colors.yellow[400],
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              const Text('😢'),
-                              const SizedBox(height: 5),
-                              const Text(
-                                'No image available',
-                                textAlign: TextAlign.center,
-                              ),
-                            ],
-                          ),
-                        );
-                      },
-                    ),
-                  ),
-                ),
+              child: BuildPosterImage(
+                height: 190,
+                width: 132,
+                imagePath: state.movieSearchResults.movieSummaries[index].posterPath,
               ),
             ),
             Expanded(

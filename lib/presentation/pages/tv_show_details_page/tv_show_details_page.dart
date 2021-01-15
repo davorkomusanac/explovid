@@ -50,37 +50,8 @@ class _TvShowDetailsPageState extends State<TvShowDetailsPage> {
           builder: (context, state) {
             return Column(
               children: [
-                if (state.isSearching)
-                  Expanded(
-                    child: const Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Center(
-                        child: CircularProgressIndicator(),
-                      ),
-                    ),
-                  ),
-                if (state.errorMessage.isNotEmpty)
-                  Expanded(
-                    child: Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Text(
-                            "☹",
-                            style: TextStyle(fontSize: 50),
-                          ),
-                          Text(
-                            state.errorMessage,
-                            style: TextStyle(fontSize: 20),
-                          ),
-                          const Text(
-                            "Try again.",
-                            style: TextStyle(fontSize: 20),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
+                if (state.isSearching) BuildSearchProgressIndicator(),
+                if (state.errorMessage.isNotEmpty) BuildSearchErrorMessage(state.errorMessage),
                 if (state.errorMessage.isEmpty && !state.isSearching)
                   Expanded(
                     child: MediaQuery.removePadding(
@@ -166,7 +137,12 @@ class _TvShowDetailsPageState extends State<TvShowDetailsPage> {
                             children: [
                               Expanded(
                                 child: Padding(
-                                  padding: const EdgeInsets.only(left: 16.0, top: 8.0, right: 8.0, bottom: 8.0),
+                                  padding: const EdgeInsets.only(
+                                    left: 16.0,
+                                    top: 8.0,
+                                    right: 8.0,
+                                    bottom: 8.0,
+                                  ),
                                   child: Text(
                                     convertReleaseDate(state.tvShowDetails.firstAirDate),
                                     style: TextStyle(
@@ -191,7 +167,6 @@ class _TvShowDetailsPageState extends State<TvShowDetailsPage> {
                               Expanded(
                                 child: Padding(
                                   padding: const EdgeInsets.only(
-                                    left: 0.0,
                                     top: 8.0,
                                     bottom: 8.0,
                                     right: 8.0,
@@ -294,8 +269,6 @@ class _TvShowDetailsPageState extends State<TvShowDetailsPage> {
                             height: 230,
                             padding: const EdgeInsets.only(
                               left: 8.0,
-                              top: 0.0,
-                              bottom: 0.0,
                               right: 8.0,
                             ),
                             child: ListView.builder(
@@ -306,8 +279,6 @@ class _TvShowDetailsPageState extends State<TvShowDetailsPage> {
                                 return Padding(
                                   padding: const EdgeInsets.only(
                                     left: 8.0,
-                                    top: 0.0,
-                                    bottom: 0.0,
                                     right: 8.0,
                                   ),
                                   child: InkWell(
@@ -322,53 +293,10 @@ class _TvShowDetailsPageState extends State<TvShowDetailsPage> {
                                       width: 90,
                                       child: Column(
                                         children: [
-                                          Material(
-                                            elevation: 10,
-                                            borderRadius: const BorderRadius.all(
-                                              Radius.circular(8.0),
-                                            ),
-                                            child: ClipRRect(
-                                              borderRadius: BorderRadius.circular(8.0),
-                                              child: Container(
-                                                width: 90,
-                                                height: 135,
-                                                child: Image.network(
-                                                  "https://image.tmdb.org/t/p/w185/${state.tvShowDetails.credits.cast[index].profilePath}",
-                                                  loadingBuilder:
-                                                      (BuildContext context, Widget child, ImageChunkEvent loadingProgress) {
-                                                    if (loadingProgress == null) return child;
-                                                    return Container(
-                                                      color: Colors.green,
-                                                      child: Center(
-                                                        child: CircularProgressIndicator(
-                                                          value: loadingProgress.expectedTotalBytes != null
-                                                              ? loadingProgress.cumulativeBytesLoaded /
-                                                                  loadingProgress.expectedTotalBytes
-                                                              : null,
-                                                        ),
-                                                      ),
-                                                    );
-                                                  },
-                                                  errorBuilder: (BuildContext context, Object exception, StackTrace stackTrace) {
-                                                    return Container(
-                                                      color: Colors.black,
-                                                      child: Column(
-                                                        mainAxisAlignment: MainAxisAlignment.center,
-                                                        children: [
-                                                          const Text('😢'),
-                                                          const SizedBox(height: 5),
-                                                          const Text(
-                                                            'No image',
-                                                            textAlign: TextAlign.center,
-                                                            overflow: TextOverflow.ellipsis,
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    );
-                                                  },
-                                                ),
-                                              ),
-                                            ),
+                                          BuildPosterImage(
+                                            height: 135,
+                                            width: 90,
+                                            imagePath: state.tvShowDetails.credits.cast[index].profilePath,
                                           ),
                                           Padding(
                                             padding: const EdgeInsets.only(top: 8.0, bottom: 4.0),
@@ -406,7 +334,6 @@ class _TvShowDetailsPageState extends State<TvShowDetailsPage> {
                           Padding(
                             padding: const EdgeInsets.only(
                               left: 16.0,
-                              top: 0.0,
                               bottom: 8.0,
                               right: 8.0,
                             ),
@@ -422,7 +349,6 @@ class _TvShowDetailsPageState extends State<TvShowDetailsPage> {
                             height: 220,
                             padding: const EdgeInsets.only(
                               left: 8.0,
-                              top: 0.0,
                               bottom: 8.0,
                               right: 8.0,
                             ),
@@ -461,57 +387,17 @@ class _TvShowDetailsPageState extends State<TvShowDetailsPage> {
                                       width: 90,
                                       child: Column(
                                         children: [
-                                          Material(
-                                            elevation: 10,
-                                            borderRadius: const BorderRadius.all(
-                                              Radius.circular(8.0),
-                                            ),
-                                            child: ClipRRect(
-                                              borderRadius: BorderRadius.circular(8.0),
-                                              child: Container(
-                                                width: 90,
-                                                height: 135,
-                                                child: Image.network(
-                                                  "https://image.tmdb.org/t/p/w185/${state.tvShowDetails.tvShowSearchResults.tvShowSummaries[index].posterPath}",
-                                                  loadingBuilder:
-                                                      (BuildContext context, Widget child, ImageChunkEvent loadingProgress) {
-                                                    if (loadingProgress == null) return child;
-                                                    return Container(
-                                                      color: Colors.green,
-                                                      child: Center(
-                                                        child: CircularProgressIndicator(
-                                                          value: loadingProgress.expectedTotalBytes != null
-                                                              ? loadingProgress.cumulativeBytesLoaded /
-                                                                  loadingProgress.expectedTotalBytes
-                                                              : null,
-                                                        ),
-                                                      ),
-                                                    );
-                                                  },
-                                                  errorBuilder: (BuildContext context, Object exception, StackTrace stackTrace) {
-                                                    return Container(
-                                                      color: Colors.black,
-                                                      child: Column(
-                                                        mainAxisAlignment: MainAxisAlignment.center,
-                                                        children: [
-                                                          const Text('😢'),
-                                                          const SizedBox(height: 5),
-                                                          const Text(
-                                                            'No image',
-                                                            textAlign: TextAlign.center,
-                                                            overflow: TextOverflow.ellipsis,
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    );
-                                                  },
-                                                ),
-                                              ),
-                                            ),
+                                          BuildPosterImage(
+                                            height: 135,
+                                            width: 90,
+                                            imagePath: state.tvShowDetails.tvShowSearchResults.tvShowSummaries[index].posterPath,
                                           ),
                                           Expanded(
                                             child: Padding(
-                                              padding: const EdgeInsets.only(top: 8.0, bottom: 4.0),
+                                              padding: const EdgeInsets.only(
+                                                top: 8.0,
+                                                bottom: 4.0,
+                                              ),
                                               child: Text(
                                                 state.tvShowDetails.tvShowSearchResults.tvShowSummaries[index].name,
                                                 overflow: TextOverflow.ellipsis,
