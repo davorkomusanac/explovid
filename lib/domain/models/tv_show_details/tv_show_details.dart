@@ -30,7 +30,7 @@ class TvShowDetails {
     this.voteAverage,
     this.voteCount,
     //Appended responses (TvShowSearchResult is used for Recommendations property)
-    this.credits,
+    this.aggregateCredits,
     this.tvShowSearchResults,
     //added errorMessage to know if successful conversion
     this.errorMessage,
@@ -65,7 +65,7 @@ class TvShowDetails {
   final num voteAverage;
   final int voteCount;
   //Appended responses
-  final Credits credits;
+  final AggregateCredits aggregateCredits;
   final TvShowSearchResults tvShowSearchResults;
   //Added errorMessage to check for errors
   final String errorMessage;
@@ -130,11 +130,11 @@ class TvShowDetails {
         type: json["type"] as String ?? '',
         voteAverage: json["vote_average"] as num ?? 0.0,
         voteCount: json["vote_count"] as int ?? 0,
-        credits: json["credits"] != null
-            ? Credits.fromJson(
-                json["credits"],
+        aggregateCredits: json["aggregate_credits"] != null
+            ? AggregateCredits.fromJson(
+                json["aggregate_credits"],
               )
-            : Credits(cast: <Cast>[], crew: <Cast>[]),
+            : AggregateCredits(cast: <Cast>[], crew: <Cast>[]),
         tvShowSearchResults: json["recommendations"] != null
             ? TvShowSearchResults.fromJson(json["recommendations"], 1)
             : TvShowSearchResults(totalResults: 0, page: 1, tvShowSummaries: [], errorMessage: "No results found."),
@@ -169,7 +169,7 @@ class TvShowDetails {
         "type": type,
         "vote_average": voteAverage,
         "vote_count": voteCount,
-        "credits": credits.toJson(),
+        "aggregate_credits": aggregateCredits.toJson(),
         "tvShowSearchResults": tvShowSearchResults.toJson(),
       };
 }
@@ -206,8 +206,8 @@ class CreatedBy {
       };
 }
 
-class Credits {
-  Credits({
+class AggregateCredits {
+  AggregateCredits({
     this.cast,
     this.crew,
   });
@@ -215,7 +215,7 @@ class Credits {
   final List<Cast> cast;
   final List<Cast> crew;
 
-  factory Credits.fromJson(Map<String, dynamic> json) => Credits(
+  factory AggregateCredits.fromJson(Map<String, dynamic> json) => AggregateCredits(
         cast: List<Cast>.from(json["cast"].map((x) => Cast.fromJson(x))) ?? <Cast>[],
         crew: List<Cast>.from(json["crew"].map((x) => Cast.fromJson(x))) ?? <Cast>[],
       );
@@ -236,12 +236,10 @@ class Cast {
     this.originalName,
     this.popularity,
     this.profilePath,
-    this.castId,
-    this.character,
-    this.creditId,
     this.order,
     this.department,
-    this.job,
+    this.roles,
+    this.jobs,
   });
 
   final bool adult;
@@ -252,12 +250,10 @@ class Cast {
   final String originalName;
   final num popularity;
   final String profilePath;
-  final int castId;
-  final String character;
-  final String creditId;
   final int order;
   final String department;
-  final String job;
+  final List<Role> roles;
+  final List<Job> jobs;
 
   factory Cast.fromJson(Map<String, dynamic> json) => Cast(
         adult: json["adult"] as bool ?? false,
@@ -268,12 +264,18 @@ class Cast {
         originalName: json["original_name"] as String ?? '',
         popularity: json["popularity"] as num ?? 0.0,
         profilePath: json["profile_path"] as String ?? '',
-        castId: json["cast_id"] as int ?? 0,
-        character: json["character"] as String ?? '',
-        creditId: json["credit_id"] as String ?? '',
         order: json["order"] as int ?? 0,
         department: json["department"] as String ?? '',
-        job: json["job"] as String ?? '',
+        roles: json["roles"] != null
+            ? List<Role>.from(
+                json["roles"].map((x) => Role.fromJson(x)),
+              )
+            : <Role>[],
+        jobs: json["jobs"] != null
+            ? List<Job>.from(
+                json["jobs"].map((x) => Job.fromJson(x)),
+              )
+            : <Job>[],
       );
 
   Map<String, dynamic> toJson() => {
@@ -285,12 +287,58 @@ class Cast {
         "original_name": originalName,
         "popularity": popularity,
         "profile_path": profilePath,
-        "cast_id": castId,
-        "character": character,
-        "credit_id": creditId,
         "order": order,
         "department": department,
-        "job": job
+        "roles": List<dynamic>.from(roles.map((x) => x.toJson())),
+        "jobs": List<dynamic>.from(jobs.map((x) => x.toJson())),
+      };
+}
+
+class Role {
+  final String creditId;
+  final String character;
+  final int episodeCount;
+
+  Role({
+    this.creditId,
+    this.character,
+    this.episodeCount,
+  });
+
+  factory Role.fromJson(Map<String, dynamic> json) => Role(
+        creditId: json["credit_id"] as String ?? '',
+        character: json["character"] as String ?? '',
+        episodeCount: json["episode_count"] as int ?? 0,
+      );
+
+  Map<String, dynamic> toJson() => {
+        "credit_id": creditId,
+        "character": character,
+        "episode_count": episodeCount,
+      };
+}
+
+class Job {
+  final String creditId;
+  final String job;
+  final int episodeCount;
+
+  Job({
+    this.creditId,
+    this.job,
+    this.episodeCount,
+  });
+
+  factory Job.fromJson(Map<String, dynamic> json) => Job(
+        creditId: json["credit_id"] as String ?? '',
+        job: json["job"] as String ?? '',
+        episodeCount: json["episode_count"] as int ?? 0,
+      );
+
+  Map<String, dynamic> toJson() => {
+        "credit_id": creditId,
+        "job": job,
+        "episode_count": episodeCount,
       };
 }
 

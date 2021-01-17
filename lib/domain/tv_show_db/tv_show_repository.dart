@@ -72,7 +72,7 @@ class TvShowRepository {
 
   String _buildTvShowDetailsUrl(int id) {
     String returnString =
-        _baseTvShowDetailsUrl + id.toString() + "?api_key=$API_KEY" + "&append_to_response=credits,recommendations";
+        _baseTvShowDetailsUrl + id.toString() + "?api_key=$API_KEY" + "&append_to_response=aggregate_credits,recommendations";
     return returnString;
   }
 }
