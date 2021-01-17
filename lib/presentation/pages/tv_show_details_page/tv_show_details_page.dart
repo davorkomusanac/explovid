@@ -1,5 +1,6 @@
 import 'package:explovid/application/tv_show_search/tv_show_details/tv_show_details_bloc.dart';
 import 'package:explovid/presentation/pages/actor_details_page/actor_details_page.dart';
+import 'package:explovid/presentation/pages/tv_show_details_page/full_tv_show_cast_page.dart';
 import 'package:explovid/presentation/utilities/utilities.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -108,6 +109,7 @@ class _TvShowDetailsPageState extends State<TvShowDetailsPage> {
                             ),
                           ),
                           Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               Expanded(
@@ -131,11 +133,25 @@ class _TvShowDetailsPageState extends State<TvShowDetailsPage> {
                                   ),
                                 ),
                               ),
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                  top: 10.0,
+                                  right: 20.0,
+                                ),
+                                child: TextButton(
+                                  style: TextButton.styleFrom(
+                                    primary: Colors.tealAccent[200],
+                                  ),
+                                  onPressed: () {},
+                                  child: Text("TRAILER"),
+                                ),
+                              ),
                             ],
                           ),
                           Row(
                             children: [
                               Expanded(
+                                flex: 2,
                                 child: Padding(
                                   padding: const EdgeInsets.only(
                                     left: 16.0,
@@ -144,7 +160,11 @@ class _TvShowDetailsPageState extends State<TvShowDetailsPage> {
                                     bottom: 8.0,
                                   ),
                                   child: Text(
-                                    convertReleaseDate(state.tvShowDetails.firstAirDate),
+                                    state.tvShowDetails.status == "Returning Series"
+                                        ? convertReleaseDate(state.tvShowDetails.firstAirDate) + "—"
+                                        : convertReleaseDate(state.tvShowDetails.firstAirDate) +
+                                            "—" +
+                                            convertToReleaseYear(state.tvShowDetails.lastAirDate),
                                     style: TextStyle(
                                       fontSize: 16,
                                     ),
@@ -152,19 +172,7 @@ class _TvShowDetailsPageState extends State<TvShowDetailsPage> {
                                 ),
                               ),
                               Expanded(
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Text(
-                                    state.tvShowDetails.episodeRunTime.isNotEmpty
-                                        ? convertRuntime(state.tvShowDetails.episodeRunTime.first)
-                                        : "Unknown",
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              Expanded(
+                                flex: 1,
                                 child: Padding(
                                   padding: const EdgeInsets.only(
                                     top: 8.0,
@@ -172,7 +180,9 @@ class _TvShowDetailsPageState extends State<TvShowDetailsPage> {
                                     right: 8.0,
                                   ),
                                   child: Text(
-                                    "⭐" + state.tvShowDetails.voteAverage.toString() + "/10",
+                                    state.tvShowDetails.voteAverage != 0 && state.tvShowDetails.voteCount > 100
+                                        ? "⭐ " + state.tvShowDetails.voteAverage.toString() + " / 10"
+                                        : "⭐ No rating",
                                     style: TextStyle(
                                       fontSize: 18,
                                       fontWeight: FontWeight.w500,
@@ -188,6 +198,12 @@ class _TvShowDetailsPageState extends State<TvShowDetailsPage> {
                                 child: Padding(
                                   padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
                                   child: ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      primary: Colors.tealAccent[700],
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                    ),
                                     onPressed: () {},
                                     child: const Text("Add to Watchlist"),
                                   ),
@@ -197,6 +213,12 @@ class _TvShowDetailsPageState extends State<TvShowDetailsPage> {
                                 child: Padding(
                                   padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
                                   child: ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      primary: Colors.tealAccent[700],
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                    ),
                                     onPressed: () {},
                                     child: const Text("I Watched It"),
                                   ),
@@ -250,20 +272,55 @@ class _TvShowDetailsPageState extends State<TvShowDetailsPage> {
                               ),
                             ],
                           ),
-                          Padding(
-                            padding: const EdgeInsets.only(
-                              left: 16.0,
-                              top: 8.0,
-                              bottom: 8.0,
-                              right: 8.0,
-                            ),
-                            child: const Text(
-                              "Cast & Crew",
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.w500,
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                  left: 16.0,
+                                  top: 8.0,
+                                  bottom: 8.0,
+                                  right: 8.0,
+                                ),
+                                child: const Text(
+                                  "Cast & Crew",
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
                               ),
-                            ),
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                  // top: 10.0,
+                                  right: 8.0,
+                                ),
+                                child: TextButton(
+                                  style: TextButton.styleFrom(
+                                    primary: Colors.tealAccent[200],
+                                  ),
+                                  onPressed: () {
+                                    Navigator.of(context, rootNavigator: false)
+                                        .push(
+                                          MaterialPageRoute(
+                                            builder: (context) => FullTvShowCastPage(
+                                              credits: state.tvShowDetails.aggregateCredits,
+                                              name: state.tvShowDetails.name,
+                                            ),
+                                          ),
+                                        )
+                                        .then(
+                                          (value) => setState(
+                                            () {
+                                              sendEvent();
+                                            },
+                                          ),
+                                        );
+                                  },
+                                  child: Text("SEE ALL"),
+                                ),
+                              ),
+                            ],
                           ),
                           Container(
                             height: 230,
@@ -274,7 +331,7 @@ class _TvShowDetailsPageState extends State<TvShowDetailsPage> {
                             child: ListView.builder(
                               shrinkWrap: true,
                               scrollDirection: Axis.horizontal,
-                              itemCount: state.tvShowDetails.credits.cast.length,
+                              itemCount: state.tvShowDetails.aggregateCredits.cast.length,
                               itemBuilder: (context, index) {
                                 return Padding(
                                   padding: const EdgeInsets.only(
@@ -283,11 +340,21 @@ class _TvShowDetailsPageState extends State<TvShowDetailsPage> {
                                   ),
                                   child: InkWell(
                                     onTap: () {
-                                      Navigator.of(context, rootNavigator: false).push(
-                                        MaterialPageRoute(
-                                          builder: (context) => ActorDetailsPage(state.tvShowDetails.credits.cast[index].id),
-                                        ),
-                                      );
+                                      Navigator.of(context, rootNavigator: false)
+                                          .push(
+                                            MaterialPageRoute(
+                                              builder: (context) => ActorDetailsPage(
+                                                state.tvShowDetails.aggregateCredits.cast[index].id,
+                                              ),
+                                            ),
+                                          )
+                                          .then(
+                                            (value) => setState(
+                                              () {
+                                                sendEvent();
+                                              },
+                                            ),
+                                          );
                                     },
                                     child: Container(
                                       width: 90,
@@ -296,12 +363,12 @@ class _TvShowDetailsPageState extends State<TvShowDetailsPage> {
                                           BuildPosterImage(
                                             height: 135,
                                             width: 90,
-                                            imagePath: state.tvShowDetails.credits.cast[index].profilePath,
+                                            imagePath: state.tvShowDetails.aggregateCredits.cast[index].profilePath,
                                           ),
                                           Padding(
                                             padding: const EdgeInsets.only(top: 8.0, bottom: 4.0),
                                             child: Text(
-                                              state.tvShowDetails.credits.cast[index].name,
+                                              state.tvShowDetails.aggregateCredits.cast[index].name,
                                               overflow: TextOverflow.ellipsis,
                                               textAlign: TextAlign.center,
                                               maxLines: 2,
@@ -313,7 +380,9 @@ class _TvShowDetailsPageState extends State<TvShowDetailsPage> {
                                           ),
                                           Expanded(
                                             child: Text(
-                                              state.tvShowDetails.credits.cast[index].character,
+                                              state.tvShowDetails.aggregateCredits.cast[index].roles.isNotEmpty
+                                                  ? state.tvShowDetails.aggregateCredits.cast[index].roles[0].character
+                                                  : "",
                                               overflow: TextOverflow.ellipsis,
                                               textAlign: TextAlign.center,
                                               maxLines: 2,
@@ -360,7 +429,6 @@ class _TvShowDetailsPageState extends State<TvShowDetailsPage> {
                                 return Padding(
                                   padding: const EdgeInsets.only(
                                     left: 8.0,
-                                    top: 0.0,
                                     bottom: 8.0,
                                     right: 8.0,
                                   ),
@@ -399,7 +467,15 @@ class _TvShowDetailsPageState extends State<TvShowDetailsPage> {
                                                 bottom: 4.0,
                                               ),
                                               child: Text(
-                                                state.tvShowDetails.tvShowSearchResults.tvShowSummaries[index].name,
+                                                state.tvShowDetails.tvShowSearchResults.tvShowSummaries[index].voteAverage != 0 &&
+                                                        state.tvShowDetails.tvShowSearchResults.tvShowSummaries[index].voteCount >
+                                                            100
+                                                    ? "⭐" +
+                                                        state.tvShowDetails.tvShowSearchResults.tvShowSummaries[index].voteAverage
+                                                            .toString() +
+                                                        " " +
+                                                        state.tvShowDetails.tvShowSearchResults.tvShowSummaries[index].name
+                                                    : state.tvShowDetails.tvShowSearchResults.tvShowSummaries[index].name,
                                                 overflow: TextOverflow.ellipsis,
                                                 textAlign: TextAlign.center,
                                                 maxLines: 2,

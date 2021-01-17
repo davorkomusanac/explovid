@@ -1,5 +1,6 @@
 import 'package:explovid/application/movie_search/movie_details/movie_details_bloc.dart';
 import 'package:explovid/presentation/pages/actor_details_page/actor_details_page.dart';
+import 'package:explovid/presentation/pages/movie_details_page/full_movie_cast_page.dart';
 import 'package:explovid/presentation/utilities/utilities.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -108,6 +109,7 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
                             ),
                           ),
                           Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               Expanded(
@@ -131,13 +133,31 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
                                   ),
                                 ),
                               ),
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                  top: 10.0,
+                                  right: 20.0,
+                                ),
+                                child: TextButton(
+                                  style: TextButton.styleFrom(
+                                    primary: Colors.tealAccent[200],
+                                  ),
+                                  onPressed: () {},
+                                  child: Text("TRAILER"),
+                                ),
+                              ),
                             ],
                           ),
                           Row(
                             children: [
                               Expanded(
                                 child: Padding(
-                                  padding: const EdgeInsets.only(left: 16.0, top: 8.0, right: 8.0, bottom: 8.0),
+                                  padding: const EdgeInsets.only(
+                                    left: 16.0,
+                                    top: 8.0,
+                                    right: 8.0,
+                                    bottom: 8.0,
+                                  ),
                                   child: Text(
                                     convertReleaseDate(state.movieDetails.releaseDate),
                                     style: TextStyle(
@@ -157,6 +177,7 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
                                   ),
                                 ),
                               ),
+                              //if (state.movieDetails.voteAverage != 0)
                               Expanded(
                                 child: Padding(
                                   padding: const EdgeInsets.only(
@@ -165,7 +186,9 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
                                     right: 8.0,
                                   ),
                                   child: Text(
-                                    "⭐" + state.movieDetails.voteAverage.toString() + "/10",
+                                    state.movieDetails.voteAverage != 0 && state.movieDetails.voteCount > 100
+                                        ? "⭐ " + state.movieDetails.voteAverage.toString() + " / 10"
+                                        : "⭐ No rating",
                                     style: TextStyle(
                                       fontSize: 18,
                                       fontWeight: FontWeight.w500,
@@ -181,6 +204,12 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
                                 child: Padding(
                                   padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
                                   child: ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      primary: Colors.tealAccent[700],
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                    ),
                                     onPressed: () {},
                                     child: const Text("Add to Watchlist"),
                                   ),
@@ -190,6 +219,12 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
                                 child: Padding(
                                   padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
                                   child: ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      primary: Colors.tealAccent[700],
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                    ),
                                     onPressed: () {},
                                     child: const Text("I Watched It"),
                                   ),
@@ -243,20 +278,55 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
                               ),
                             ],
                           ),
-                          Padding(
-                            padding: const EdgeInsets.only(
-                              left: 16.0,
-                              top: 8.0,
-                              bottom: 8.0,
-                              right: 8.0,
-                            ),
-                            child: const Text(
-                              "Cast & Crew",
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.w500,
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                  left: 16.0,
+                                  top: 8.0,
+                                  bottom: 8.0,
+                                  right: 8.0,
+                                ),
+                                child: const Text(
+                                  "Cast & Crew",
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
                               ),
-                            ),
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                  // top: 10.0,
+                                  right: 8.0,
+                                ),
+                                child: TextButton(
+                                  style: TextButton.styleFrom(
+                                    primary: Colors.tealAccent[200],
+                                  ),
+                                  onPressed: () {
+                                    Navigator.of(context, rootNavigator: false)
+                                        .push(
+                                          MaterialPageRoute(
+                                            builder: (context) => FullMovieCastPage(
+                                              credits: state.movieDetails.credits,
+                                              title: state.movieDetails.title,
+                                            ),
+                                          ),
+                                        )
+                                        .then(
+                                          (value) => setState(
+                                            () {
+                                              sendEvent();
+                                            },
+                                          ),
+                                        );
+                                  },
+                                  child: Text("SEE ALL"),
+                                ),
+                              ),
+                            ],
                           ),
                           Container(
                             height: 230,
@@ -276,11 +346,23 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
                                   ),
                                   child: InkWell(
                                     onTap: () {
-                                      Navigator.of(context, rootNavigator: false).push(
-                                        MaterialPageRoute(
-                                          builder: (context) => ActorDetailsPage(state.movieDetails.credits.cast[index].id),
-                                        ),
-                                      );
+                                      //Had to add .then and call setState, so that the first page is refreshed if it is popped back, from the second page where the Navigator
+                                      //is going to push right now (otherwise each page will have the identical MovieDetails)
+                                      Navigator.of(context, rootNavigator: false)
+                                          .push(
+                                            MaterialPageRoute(
+                                              builder: (context) => ActorDetailsPage(
+                                                state.movieDetails.credits.cast[index].id,
+                                              ),
+                                            ),
+                                          )
+                                          .then(
+                                            (value) => setState(
+                                              () {
+                                                sendEvent();
+                                              },
+                                            ),
+                                          );
                                     },
                                     child: Container(
                                       width: 90,
@@ -391,7 +473,15 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
                                                 bottom: 4.0,
                                               ),
                                               child: Text(
-                                                state.movieDetails.movieSearchResults.movieSummaries[index].title,
+                                                state.movieDetails.movieSearchResults.movieSummaries[index].voteAverage != 0 &&
+                                                        state.movieDetails.movieSearchResults.movieSummaries[index].voteCount >
+                                                            100
+                                                    ? "⭐" +
+                                                        state.movieDetails.movieSearchResults.movieSummaries[index].voteAverage
+                                                            .toString() +
+                                                        " " +
+                                                        state.movieDetails.movieSearchResults.movieSummaries[index].title
+                                                    : state.movieDetails.movieSearchResults.movieSummaries[index].title,
                                                 overflow: TextOverflow.ellipsis,
                                                 textAlign: TextAlign.center,
                                                 maxLines: 2,
