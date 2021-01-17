@@ -88,14 +88,14 @@ class _ActorDetailsPageState extends State<ActorDetailsPage> {
                                         ),
                                         Padding(
                                           padding: const EdgeInsets.only(top: 20.0),
-                                          child: Text("Born: " + convertReleaseDate(state.actorDetails.birthday)),
+                                          child: Text("Born: " + convertBirthDeathDate(state.actorDetails.birthday)),
                                         ),
                                         Padding(
                                           padding: const EdgeInsets.only(top: 4.0),
                                           child: Text(
                                             state.actorDetails.deathday.isEmpty
                                                 ? ""
-                                                : "Died: " + convertReleaseDate(state.actorDetails.deathday),
+                                                : "Died: " + convertBirthDeathDate(state.actorDetails.deathday),
                                           ),
                                         ),
                                       ],
@@ -115,7 +115,7 @@ class _ActorDetailsPageState extends State<ActorDetailsPage> {
                                     "Movies",
                                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
                                   ),
-                                  FlatButton(
+                                  TextButton(
                                       onPressed: () {
                                         //state.actorDetails.movieCredits.
                                       },
@@ -147,6 +147,7 @@ class _ActorDetailsPageState extends State<ActorDetailsPage> {
                                       padding: EdgeInsets.only(
                                         left: index > 0 ? 8.0 : 0.0,
                                         bottom: 8.0,
+                                        right: 8.0,
                                       ),
                                       child: InkWell(
                                         onTap: () {
@@ -277,7 +278,7 @@ class _ActorDetailsPageState extends State<ActorDetailsPage> {
                                     "TV Shows",
                                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
                                   ),
-                                  FlatButton(
+                                  TextButton(
                                       onPressed: () {
                                         //state.actorDetails.movieCredits.
                                       },

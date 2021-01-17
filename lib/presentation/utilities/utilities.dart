@@ -2,9 +2,69 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
+String convertToReleaseYear(String text) {
+  String returnString = text;
+  if (text.isEmpty) return "Date unknown";
+  if (text != 'Release date unknown' && text != 'Air Date unknown' && text.isNotEmpty) {
+    var time = DateTime.parse(text);
+    returnString = time.year.toString();
+  }
+  return returnString;
+}
+
 String convertReleaseDate(String text) {
   String returnString = text;
   if (text.isEmpty) return "Release date unknown";
+  if (text != 'Release date unknown' && text != 'Air Date unknown' && text.isNotEmpty) {
+    var time = DateTime.parse(text);
+    String month = "";
+    switch (time.month) {
+      case (1):
+        month = "Jan";
+        break;
+      case (2):
+        month = "Feb";
+        break;
+      case (3):
+        month = "Mar";
+        break;
+      case (4):
+        month = "Apr";
+        break;
+      case (5):
+        month = "May";
+        break;
+      case (6):
+        month = "June";
+        break;
+      case (7):
+        month = "Jul";
+        break;
+      case (8):
+        month = "Aug";
+        break;
+      case (9):
+        month = "Sep";
+        break;
+      case (10):
+        month = "Oct";
+        break;
+      case (11):
+        month = "Nov";
+        break;
+      case (12):
+        month = "Dec";
+        break;
+      default:
+    }
+    returnString = month + " " + time.day.toString() + ", " + time.year.toString();
+  }
+  return returnString;
+}
+
+String convertBirthDeathDate(String text) {
+  String returnString = text;
+  if (text.isEmpty) return "No information";
   if (text != 'Release date unknown' && text != 'Air Date unknown' && text.isNotEmpty) {
     var time = DateTime.parse(text);
     String month = "";
@@ -179,7 +239,7 @@ class BuildPosterImage extends StatelessWidget {
               return Container(
                 height: height,
                 width: width,
-                color: Colors.yellow[400],
+                color: Colors.black,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [

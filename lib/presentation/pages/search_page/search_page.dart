@@ -300,7 +300,7 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
               child: Column(
                 children: [
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
+                    padding: const EdgeInsets.only(left: 12.0, right: 12.0, top: 45.0),
                     child: Text(
                       state.actorSearchResults.actorSummaries[index].name,
                       overflow: TextOverflow.ellipsis,
@@ -311,23 +311,13 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 15.0),
+                    padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 20.0),
                     child: Text(
-                      state.actorSearchResults.actorSummaries[index].knownForDepartment,
+                      "Known for: " + state.actorSearchResults.actorSummaries[index].knownForDepartment,
                       maxLines: 5,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
                         fontSize: 14,
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      state.actorSearchResults.actorSummaries[index].gender == 1 ? "Female" : "Male",
-                      style: TextStyle(
-                        fontWeight: FontWeight.w700,
-                        fontSize: 18,
                       ),
                     ),
                   ),

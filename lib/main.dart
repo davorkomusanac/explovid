@@ -97,7 +97,6 @@ class _MyAppState extends State<MyApp> {
         theme: ThemeData.dark().copyWith(
           //scaffoldBackgroundColor: Color.fromRGBO(20, 24, 28, 1),
           scaffoldBackgroundColor: Colors.blueGrey[900],
-
           inputDecorationTheme: InputDecorationTheme(
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(25),
