@@ -1,4 +1,6 @@
 import 'package:explovid/application/actor_search/actor_details/actor_details_bloc.dart';
+import 'package:explovid/presentation/pages/actor_details_page/actor_all_movies_page.dart';
+import 'package:explovid/presentation/pages/actor_details_page/actor_all_tv_shows_page.dart';
 import 'package:explovid/presentation/pages/actor_details_page/actor_biography_page.dart';
 import 'package:explovid/presentation/pages/movie_details_page/movie_details_page.dart';
 import 'package:explovid/presentation/pages/tv_show_details_page/tv_show_details_page.dart';
@@ -116,13 +118,30 @@ class _ActorDetailsPageState extends State<ActorDetailsPage> {
                                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
                                   ),
                                   TextButton(
+                                      style: TextButton.styleFrom(
+                                        primary: Colors.tealAccent[200],
+                                      ),
                                       onPressed: () {
-                                        //state.actorDetails.movieCredits.
+                                        //Had to add .then and call setState, so that the first page is refreshed if it is popped back, from the second page where the Navigator
+                                        //is going to push right now (otherwise each page will have the identical MovieDetails)
+                                        Navigator.of(context, rootNavigator: false)
+                                            .push(
+                                              MaterialPageRoute(
+                                                builder: (context) => ActorAllMoviesPage(
+                                                  actorName: state.actorDetails.name,
+                                                  movieCredits: state.actorDetails.movieCredits,
+                                                ),
+                                              ),
+                                            )
+                                            .then(
+                                              (value) => setState(
+                                                () {
+                                                  sendEvent();
+                                                },
+                                              ),
+                                            );
                                       },
-                                      child: Text(
-                                        "SEE ALL",
-                                        style: TextStyle(color: Colors.blue),
-                                      )),
+                                      child: Text("SEE ALL")),
                                 ],
                               ),
                             ),
@@ -279,13 +298,30 @@ class _ActorDetailsPageState extends State<ActorDetailsPage> {
                                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
                                   ),
                                   TextButton(
+                                      style: TextButton.styleFrom(
+                                        primary: Colors.tealAccent[200],
+                                      ),
                                       onPressed: () {
-                                        //state.actorDetails.movieCredits.
+                                        //Had to add .then and call setState, so that the first page is refreshed if it is popped back, from the second page where the Navigator
+                                        //is going to push right now (otherwise each page will have the identical MovieDetails)
+                                        Navigator.of(context, rootNavigator: false)
+                                            .push(
+                                              MaterialPageRoute(
+                                                builder: (context) => ActorAllTvShowsPage(
+                                                  actorName: state.actorDetails.name,
+                                                  tvCredits: state.actorDetails.tvCredits,
+                                                ),
+                                              ),
+                                            )
+                                            .then(
+                                              (value) => setState(
+                                                () {
+                                                  sendEvent();
+                                                },
+                                              ),
+                                            );
                                       },
-                                      child: Text(
-                                        "SEE ALL",
-                                        style: TextStyle(color: Colors.blue),
-                                      )),
+                                      child: Text("SEE ALL")),
                                 ],
                               ),
                             ),
