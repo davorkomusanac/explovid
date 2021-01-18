@@ -1,9 +1,11 @@
 import 'package:explovid/application/tv_show_search/tv_show_details/tv_show_details_bloc.dart';
+import 'package:explovid/domain/models/tv_show_details/tv_show_details.dart';
 import 'package:explovid/presentation/pages/actor_details_page/actor_details_page.dart';
 import 'package:explovid/presentation/pages/tv_show_details_page/full_tv_show_cast_page.dart';
 import 'package:explovid/presentation/utilities/utilities.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class TvShowDetailsPage extends StatefulWidget {
   final int tvShowId;
@@ -35,6 +37,32 @@ class _TvShowDetailsPageState extends State<TvShowDetailsPage> {
     context.read<TvShowDetailsBloc>().add(
           TvShowDetailsEvent.tvShowDetailsPressed(widget.tvShowId),
         );
+  }
+
+  void _launchTrailer(BuildContext context, TvVideos videos) async {
+    String trailerKey = '';
+    for (var video in videos.results)
+      if (video.type == "Trailer") {
+        trailerKey = video.key;
+        break;
+      }
+    String videoUrl = "https://www.youtube.com/watch?v=" + trailerKey;
+    try {
+      if (await canLaunch(videoUrl)) {
+        await launch(videoUrl);
+      } else {
+        throw 'Could not launch trailer link';
+      }
+    } catch (e) {
+      Scaffold.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            e.toString(),
+          ),
+          duration: Duration(seconds: 1),
+        ),
+      );
+    }
   }
 
   @override
@@ -142,8 +170,14 @@ class _TvShowDetailsPageState extends State<TvShowDetailsPage> {
                                   style: TextButton.styleFrom(
                                     primary: Colors.tealAccent[200],
                                   ),
-                                  onPressed: () {},
-                                  child: Text("TRAILER"),
+                                  onPressed: state.isTrailerAvailable
+                                      ? () {
+                                          _launchTrailer(context, state.tvShowDetails.videos);
+                                        }
+                                      : null,
+                                  child: Text(
+                                    state.isTrailerAvailable ? "TRAILER" : "NO TRAILER",
+                                  ),
                                 ),
                               ),
                             ],

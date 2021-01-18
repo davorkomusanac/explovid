@@ -25,6 +25,7 @@ class MovieDetailsBloc extends Bloc<MovieDetailsEvent, MovieDetailsState> {
         yield state.copyWith(
           isSearching: true,
           errorMessage: "",
+          isTrailerAvailable: false,
         );
         var movieDetailsResult = await _movieRepository.getMovieDetails(e.id);
         if (movieDetailsResult.errorMessage.isNotEmpty) {
@@ -37,9 +38,18 @@ class MovieDetailsBloc extends Bloc<MovieDetailsEvent, MovieDetailsState> {
             isSearching: false,
             errorMessage: "",
             movieDetails: movieDetailsResult,
+            isTrailerAvailable: _isTrailerAvailable(movieDetailsResult),
           );
         }
       },
     );
+  }
+
+  bool _isTrailerAvailable(MovieDetails movieDetails) {
+    bool returnValue = false;
+    if (movieDetails.videos.results.isNotEmpty) {
+      for (var video in movieDetails.videos.results) if (video.type == "Trailer") returnValue = true;
+    }
+    return returnValue;
   }
 }

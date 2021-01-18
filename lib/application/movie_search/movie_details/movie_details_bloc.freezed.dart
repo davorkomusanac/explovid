@@ -48,6 +48,7 @@ mixin _$MovieDetailsEvent {
     @required TResult orElse(),
   });
 
+  @JsonKey(ignore: true)
   $MovieDetailsEventCopyWith<MovieDetailsEvent> get copyWith;
 }
 
@@ -133,6 +134,7 @@ class _$_MovieDetailsPressed implements _MovieDetailsPressed {
   int get hashCode =>
       runtimeType.hashCode ^ const DeepCollectionEquality().hash(id);
 
+  @JsonKey(ignore: true)
   @override
   _$MovieDetailsPressedCopyWith<_MovieDetailsPressed> get copyWith =>
       __$MovieDetailsPressedCopyWithImpl<_MovieDetailsPressed>(
@@ -189,6 +191,7 @@ abstract class _MovieDetailsPressed implements MovieDetailsEvent {
   @override
   int get id;
   @override
+  @JsonKey(ignore: true)
   _$MovieDetailsPressedCopyWith<_MovieDetailsPressed> get copyWith;
 }
 
@@ -200,11 +203,13 @@ class _$MovieDetailsStateTearOff {
   _MovieDetailsState call(
       {@required String errorMessage,
       @required bool isSearching,
-      @required MovieDetails movieDetails}) {
+      @required MovieDetails movieDetails,
+      @required bool isTrailerAvailable}) {
     return _MovieDetailsState(
       errorMessage: errorMessage,
       isSearching: isSearching,
       movieDetails: movieDetails,
+      isTrailerAvailable: isTrailerAvailable,
     );
   }
 }
@@ -218,7 +223,9 @@ mixin _$MovieDetailsState {
   String get errorMessage;
   bool get isSearching;
   MovieDetails get movieDetails;
+  bool get isTrailerAvailable;
 
+  @JsonKey(ignore: true)
   $MovieDetailsStateCopyWith<MovieDetailsState> get copyWith;
 }
 
@@ -227,7 +234,11 @@ abstract class $MovieDetailsStateCopyWith<$Res> {
   factory $MovieDetailsStateCopyWith(
           MovieDetailsState value, $Res Function(MovieDetailsState) then) =
       _$MovieDetailsStateCopyWithImpl<$Res>;
-  $Res call({String errorMessage, bool isSearching, MovieDetails movieDetails});
+  $Res call(
+      {String errorMessage,
+      bool isSearching,
+      MovieDetails movieDetails,
+      bool isTrailerAvailable});
 }
 
 /// @nodoc
@@ -244,6 +255,7 @@ class _$MovieDetailsStateCopyWithImpl<$Res>
     Object errorMessage = freezed,
     Object isSearching = freezed,
     Object movieDetails = freezed,
+    Object isTrailerAvailable = freezed,
   }) {
     return _then(_value.copyWith(
       errorMessage: errorMessage == freezed
@@ -254,6 +266,9 @@ class _$MovieDetailsStateCopyWithImpl<$Res>
       movieDetails: movieDetails == freezed
           ? _value.movieDetails
           : movieDetails as MovieDetails,
+      isTrailerAvailable: isTrailerAvailable == freezed
+          ? _value.isTrailerAvailable
+          : isTrailerAvailable as bool,
     ));
   }
 }
@@ -265,7 +280,11 @@ abstract class _$MovieDetailsStateCopyWith<$Res>
           _MovieDetailsState value, $Res Function(_MovieDetailsState) then) =
       __$MovieDetailsStateCopyWithImpl<$Res>;
   @override
-  $Res call({String errorMessage, bool isSearching, MovieDetails movieDetails});
+  $Res call(
+      {String errorMessage,
+      bool isSearching,
+      MovieDetails movieDetails,
+      bool isTrailerAvailable});
 }
 
 /// @nodoc
@@ -284,6 +303,7 @@ class __$MovieDetailsStateCopyWithImpl<$Res>
     Object errorMessage = freezed,
     Object isSearching = freezed,
     Object movieDetails = freezed,
+    Object isTrailerAvailable = freezed,
   }) {
     return _then(_MovieDetailsState(
       errorMessage: errorMessage == freezed
@@ -294,6 +314,9 @@ class __$MovieDetailsStateCopyWithImpl<$Res>
       movieDetails: movieDetails == freezed
           ? _value.movieDetails
           : movieDetails as MovieDetails,
+      isTrailerAvailable: isTrailerAvailable == freezed
+          ? _value.isTrailerAvailable
+          : isTrailerAvailable as bool,
     ));
   }
 }
@@ -303,10 +326,12 @@ class _$_MovieDetailsState implements _MovieDetailsState {
   const _$_MovieDetailsState(
       {@required this.errorMessage,
       @required this.isSearching,
-      @required this.movieDetails})
+      @required this.movieDetails,
+      @required this.isTrailerAvailable})
       : assert(errorMessage != null),
         assert(isSearching != null),
-        assert(movieDetails != null);
+        assert(movieDetails != null),
+        assert(isTrailerAvailable != null);
 
   @override
   final String errorMessage;
@@ -314,10 +339,12 @@ class _$_MovieDetailsState implements _MovieDetailsState {
   final bool isSearching;
   @override
   final MovieDetails movieDetails;
+  @override
+  final bool isTrailerAvailable;
 
   @override
   String toString() {
-    return 'MovieDetailsState(errorMessage: $errorMessage, isSearching: $isSearching, movieDetails: $movieDetails)';
+    return 'MovieDetailsState(errorMessage: $errorMessage, isSearching: $isSearching, movieDetails: $movieDetails, isTrailerAvailable: $isTrailerAvailable)';
   }
 
   @override
@@ -332,7 +359,10 @@ class _$_MovieDetailsState implements _MovieDetailsState {
                     .equals(other.isSearching, isSearching)) &&
             (identical(other.movieDetails, movieDetails) ||
                 const DeepCollectionEquality()
-                    .equals(other.movieDetails, movieDetails)));
+                    .equals(other.movieDetails, movieDetails)) &&
+            (identical(other.isTrailerAvailable, isTrailerAvailable) ||
+                const DeepCollectionEquality()
+                    .equals(other.isTrailerAvailable, isTrailerAvailable)));
   }
 
   @override
@@ -340,8 +370,10 @@ class _$_MovieDetailsState implements _MovieDetailsState {
       runtimeType.hashCode ^
       const DeepCollectionEquality().hash(errorMessage) ^
       const DeepCollectionEquality().hash(isSearching) ^
-      const DeepCollectionEquality().hash(movieDetails);
+      const DeepCollectionEquality().hash(movieDetails) ^
+      const DeepCollectionEquality().hash(isTrailerAvailable);
 
+  @JsonKey(ignore: true)
   @override
   _$MovieDetailsStateCopyWith<_MovieDetailsState> get copyWith =>
       __$MovieDetailsStateCopyWithImpl<_MovieDetailsState>(this, _$identity);
@@ -351,7 +383,8 @@ abstract class _MovieDetailsState implements MovieDetailsState {
   const factory _MovieDetailsState(
       {@required String errorMessage,
       @required bool isSearching,
-      @required MovieDetails movieDetails}) = _$_MovieDetailsState;
+      @required MovieDetails movieDetails,
+      @required bool isTrailerAvailable}) = _$_MovieDetailsState;
 
   @override
   String get errorMessage;
@@ -360,5 +393,8 @@ abstract class _MovieDetailsState implements MovieDetailsState {
   @override
   MovieDetails get movieDetails;
   @override
+  bool get isTrailerAvailable;
+  @override
+  @JsonKey(ignore: true)
   _$MovieDetailsStateCopyWith<_MovieDetailsState> get copyWith;
 }

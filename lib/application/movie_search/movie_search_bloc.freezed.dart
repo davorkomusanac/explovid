@@ -156,6 +156,7 @@ class _$_SearchTitleChanged implements _SearchTitleChanged {
   int get hashCode =>
       runtimeType.hashCode ^ const DeepCollectionEquality().hash(title);
 
+  @JsonKey(ignore: true)
   @override
   _$SearchTitleChangedCopyWith<_SearchTitleChanged> get copyWith =>
       __$SearchTitleChangedCopyWithImpl<_SearchTitleChanged>(this, _$identity);
@@ -236,6 +237,7 @@ abstract class _SearchTitleChanged implements MovieSearchEvent {
   const factory _SearchTitleChanged(String title) = _$_SearchTitleChanged;
 
   String get title;
+  @JsonKey(ignore: true)
   _$SearchTitleChangedCopyWith<_SearchTitleChanged> get copyWith;
 }
 
@@ -733,6 +735,7 @@ mixin _$MovieSearchState {
   int get searchPageNum;
   bool get isSearchPageDoublePressed;
 
+  @JsonKey(ignore: true)
   $MovieSearchStateCopyWith<MovieSearchState> get copyWith;
 }
 
@@ -931,6 +934,7 @@ class _$_MovieSearchState implements _MovieSearchState {
       const DeepCollectionEquality().hash(searchPageNum) ^
       const DeepCollectionEquality().hash(isSearchPageDoublePressed);
 
+  @JsonKey(ignore: true)
   @override
   _$MovieSearchStateCopyWith<_MovieSearchState> get copyWith =>
       __$MovieSearchStateCopyWithImpl<_MovieSearchState>(this, _$identity);
@@ -961,5 +965,6 @@ abstract class _MovieSearchState implements MovieSearchState {
   @override
   bool get isSearchPageDoublePressed;
   @override
+  @JsonKey(ignore: true)
   _$MovieSearchStateCopyWith<_MovieSearchState> get copyWith;
 }

@@ -1,9 +1,11 @@
 import 'package:explovid/application/movie_search/movie_details/movie_details_bloc.dart';
+import 'package:explovid/domain/models/movie_details/movie_details.dart';
 import 'package:explovid/presentation/pages/actor_details_page/actor_details_page.dart';
 import 'package:explovid/presentation/pages/movie_details_page/full_movie_cast_page.dart';
 import 'package:explovid/presentation/utilities/utilities.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class MovieDetailsPage extends StatefulWidget {
   final int movieId;
@@ -35,6 +37,32 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
     context.read<MovieDetailsBloc>().add(
           MovieDetailsEvent.movieDetailsPressed(widget.movieId),
         );
+  }
+
+  void _launchTrailer(BuildContext context, MovieVideos videos) async {
+    String trailerKey = '';
+    for (var video in videos.results)
+      if (video.type == "Trailer") {
+        trailerKey = video.key;
+        break;
+      }
+    String videoUrl = "https://www.youtube.com/watch?v=" + trailerKey;
+    try {
+      if (await canLaunch(videoUrl)) {
+        await launch(videoUrl);
+      } else {
+        throw 'Could not launch trailer link';
+      }
+    } catch (e) {
+      Scaffold.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            e.toString(),
+          ),
+          duration: Duration(seconds: 1),
+        ),
+      );
+    }
   }
 
   @override
@@ -142,8 +170,15 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
                                   style: TextButton.styleFrom(
                                     primary: Colors.tealAccent[200],
                                   ),
-                                  onPressed: () {},
-                                  child: Text("TRAILER"),
+                                  //Check for trailer availability
+                                  onPressed: state.isTrailerAvailable
+                                      ? () {
+                                          _launchTrailer(context, state.movieDetails.videos);
+                                        }
+                                      : null,
+                                  child: Text(
+                                    state.isTrailerAvailable ? "TRAILER" : "NO TRAILER",
+                                  ),
                                 ),
                               ),
                             ],

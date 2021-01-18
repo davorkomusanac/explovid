@@ -24,6 +24,7 @@ class TvShowDetailsBloc extends Bloc<TvShowDetailsEvent, TvShowDetailsState> {
         yield state.copyWith(
           isSearching: true,
           errorMessage: "",
+          isTrailerAvailable: false,
         );
         var tvShowDetailsResult = await _tvShowRepository.getTvShowDetails(e.id);
         if (tvShowDetailsResult.errorMessage.isNotEmpty) {
@@ -36,9 +37,18 @@ class TvShowDetailsBloc extends Bloc<TvShowDetailsEvent, TvShowDetailsState> {
             isSearching: false,
             errorMessage: "",
             tvShowDetails: tvShowDetailsResult,
+            isTrailerAvailable: _isTrailerAvailable(tvShowDetailsResult),
           );
         }
       },
     );
+  }
+
+  bool _isTrailerAvailable(TvShowDetails tvShowDetails) {
+    bool returnValue = false;
+    if (tvShowDetails.videos.results.isNotEmpty) {
+      for (var video in tvShowDetails.videos.results) if (video.type == "Trailer") returnValue = true;
+    }
+    return returnValue;
   }
 }

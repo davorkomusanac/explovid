@@ -135,6 +135,7 @@ class _$_SearchNameChanged implements _SearchNameChanged {
   int get hashCode =>
       runtimeType.hashCode ^ const DeepCollectionEquality().hash(name);
 
+  @JsonKey(ignore: true)
   @override
   _$SearchNameChangedCopyWith<_SearchNameChanged> get copyWith =>
       __$SearchNameChangedCopyWithImpl<_SearchNameChanged>(this, _$identity);
@@ -200,6 +201,7 @@ abstract class _SearchNameChanged implements TvShowSearchEvent {
   const factory _SearchNameChanged(String name) = _$_SearchNameChanged;
 
   String get name;
+  @JsonKey(ignore: true)
   _$SearchNameChangedCopyWith<_SearchNameChanged> get copyWith;
 }
 
@@ -433,6 +435,7 @@ mixin _$TvShowSearchState {
   TvShowSearchResults get tvShowSearchResults;
   int get searchPageNum;
 
+  @JsonKey(ignore: true)
   $TvShowSearchStateCopyWith<TvShowSearchState> get copyWith;
 }
 
@@ -611,6 +614,7 @@ class _$_TvShowSearchState implements _TvShowSearchState {
       const DeepCollectionEquality().hash(tvShowSearchResults) ^
       const DeepCollectionEquality().hash(searchPageNum);
 
+  @JsonKey(ignore: true)
   @override
   _$TvShowSearchStateCopyWith<_TvShowSearchState> get copyWith =>
       __$TvShowSearchStateCopyWithImpl<_TvShowSearchState>(this, _$identity);
@@ -638,5 +642,6 @@ abstract class _TvShowSearchState implements TvShowSearchState {
   @override
   int get searchPageNum;
   @override
+  @JsonKey(ignore: true)
   _$TvShowSearchStateCopyWith<_TvShowSearchState> get copyWith;
 }

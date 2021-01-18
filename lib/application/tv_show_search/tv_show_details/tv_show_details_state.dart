@@ -6,11 +6,13 @@ abstract class TvShowDetailsState with _$TvShowDetailsState {
     @required String errorMessage,
     @required bool isSearching,
     @required TvShowDetails tvShowDetails,
+    @required bool isTrailerAvailable,
   }) = _TvShowDetailsState;
 
   factory TvShowDetailsState.initial() => TvShowDetailsState(
         errorMessage: '',
         isSearching: true,
         tvShowDetails: TvShowDetails(),
+        isTrailerAvailable: false,
       );
 }

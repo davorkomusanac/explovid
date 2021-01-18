@@ -32,6 +32,7 @@ class MovieDetails {
     this.movieSearchResults,
     //Adding String errorMessage to know if successful conversion, if the errorMessage is empty, then the operation was a success
     this.errorMessage,
+    this.videos,
   });
 
   final bool adult;
@@ -64,6 +65,8 @@ class MovieDetails {
   final MovieSearchResults movieSearchResults;
   //Added errorMessage to check for errors
   final String errorMessage;
+  //Appended video for trailers
+  final MovieVideos videos;
 
   factory MovieDetails.fromJson(Map<String, dynamic> json) => MovieDetails(
         adult: json["adult"] as bool ?? false,
@@ -112,6 +115,11 @@ class MovieDetails {
         movieSearchResults: json["recommendations"] != null
             ? MovieSearchResults.fromJson(json["recommendations"], 1)
             : MovieSearchResults(totalResults: 0, page: 1, movieSummaries: [], errorMessage: "No results found."),
+        videos: json["videos"] != null
+            ? MovieVideos.fromJson(
+                json["videos"],
+              )
+            : MovieVideos(results: <VideosResult>[]),
         errorMessage: "",
       );
 
@@ -143,6 +151,7 @@ class MovieDetails {
         "vote_count": voteCount,
         "credits": credits.toJson(),
         "movieSearchResults": movieSearchResults.toJson(),
+        "videos": videos.toJson(),
       };
 }
 
@@ -371,4 +380,64 @@ class EnumValues<T> {
     }
     return reverseMap;
   }
+}
+
+class MovieVideos {
+  MovieVideos({
+    this.results,
+  });
+
+  final List<VideosResult> results;
+
+  factory MovieVideos.fromJson(Map<String, dynamic> json) => MovieVideos(
+        results: List<VideosResult>.from(json["results"].map((x) => VideosResult.fromJson(x))) ?? <VideosResult>[],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "results": List<dynamic>.from(results.map((x) => x.toJson())),
+      };
+}
+
+class VideosResult {
+  VideosResult({
+    this.id,
+    this.iso6391,
+    this.iso31661,
+    this.key,
+    this.name,
+    this.site,
+    this.size,
+    this.type,
+  });
+
+  final String id;
+  final String iso6391;
+  final String iso31661;
+  final String key;
+  final String name;
+  final String site;
+  final int size;
+  final String type;
+
+  factory VideosResult.fromJson(Map<String, dynamic> json) => VideosResult(
+        id: json["id"] as String ?? '',
+        iso6391: json["iso_639_1"] as String ?? '',
+        iso31661: json["iso_3166_1"] as String ?? '',
+        key: json["key"] as String ?? '',
+        name: json["name"] as String ?? '',
+        site: json["site"] as String ?? '',
+        size: json["size"] as int ?? 0,
+        type: json["type"] as String ?? '',
+      );
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "iso_639_1": iso6391,
+        "iso_3166_1": iso31661,
+        "key": key,
+        "name": name,
+        "site": site,
+        "size": size,
+        "type": type,
+      };
 }

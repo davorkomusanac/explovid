@@ -48,6 +48,7 @@ mixin _$TvShowDetailsEvent {
     @required TResult orElse(),
   });
 
+  @JsonKey(ignore: true)
   $TvShowDetailsEventCopyWith<TvShowDetailsEvent> get copyWith;
 }
 
@@ -133,6 +134,7 @@ class _$_TvShowDetailsPressed implements _TvShowDetailsPressed {
   int get hashCode =>
       runtimeType.hashCode ^ const DeepCollectionEquality().hash(id);
 
+  @JsonKey(ignore: true)
   @override
   _$TvShowDetailsPressedCopyWith<_TvShowDetailsPressed> get copyWith =>
       __$TvShowDetailsPressedCopyWithImpl<_TvShowDetailsPressed>(
@@ -189,6 +191,7 @@ abstract class _TvShowDetailsPressed implements TvShowDetailsEvent {
   @override
   int get id;
   @override
+  @JsonKey(ignore: true)
   _$TvShowDetailsPressedCopyWith<_TvShowDetailsPressed> get copyWith;
 }
 
@@ -200,11 +203,13 @@ class _$TvShowDetailsStateTearOff {
   _TvShowDetailsState call(
       {@required String errorMessage,
       @required bool isSearching,
-      @required TvShowDetails tvShowDetails}) {
+      @required TvShowDetails tvShowDetails,
+      @required bool isTrailerAvailable}) {
     return _TvShowDetailsState(
       errorMessage: errorMessage,
       isSearching: isSearching,
       tvShowDetails: tvShowDetails,
+      isTrailerAvailable: isTrailerAvailable,
     );
   }
 }
@@ -218,7 +223,9 @@ mixin _$TvShowDetailsState {
   String get errorMessage;
   bool get isSearching;
   TvShowDetails get tvShowDetails;
+  bool get isTrailerAvailable;
 
+  @JsonKey(ignore: true)
   $TvShowDetailsStateCopyWith<TvShowDetailsState> get copyWith;
 }
 
@@ -228,7 +235,10 @@ abstract class $TvShowDetailsStateCopyWith<$Res> {
           TvShowDetailsState value, $Res Function(TvShowDetailsState) then) =
       _$TvShowDetailsStateCopyWithImpl<$Res>;
   $Res call(
-      {String errorMessage, bool isSearching, TvShowDetails tvShowDetails});
+      {String errorMessage,
+      bool isSearching,
+      TvShowDetails tvShowDetails,
+      bool isTrailerAvailable});
 }
 
 /// @nodoc
@@ -245,6 +255,7 @@ class _$TvShowDetailsStateCopyWithImpl<$Res>
     Object errorMessage = freezed,
     Object isSearching = freezed,
     Object tvShowDetails = freezed,
+    Object isTrailerAvailable = freezed,
   }) {
     return _then(_value.copyWith(
       errorMessage: errorMessage == freezed
@@ -255,6 +266,9 @@ class _$TvShowDetailsStateCopyWithImpl<$Res>
       tvShowDetails: tvShowDetails == freezed
           ? _value.tvShowDetails
           : tvShowDetails as TvShowDetails,
+      isTrailerAvailable: isTrailerAvailable == freezed
+          ? _value.isTrailerAvailable
+          : isTrailerAvailable as bool,
     ));
   }
 }
@@ -267,7 +281,10 @@ abstract class _$TvShowDetailsStateCopyWith<$Res>
       __$TvShowDetailsStateCopyWithImpl<$Res>;
   @override
   $Res call(
-      {String errorMessage, bool isSearching, TvShowDetails tvShowDetails});
+      {String errorMessage,
+      bool isSearching,
+      TvShowDetails tvShowDetails,
+      bool isTrailerAvailable});
 }
 
 /// @nodoc
@@ -286,6 +303,7 @@ class __$TvShowDetailsStateCopyWithImpl<$Res>
     Object errorMessage = freezed,
     Object isSearching = freezed,
     Object tvShowDetails = freezed,
+    Object isTrailerAvailable = freezed,
   }) {
     return _then(_TvShowDetailsState(
       errorMessage: errorMessage == freezed
@@ -296,6 +314,9 @@ class __$TvShowDetailsStateCopyWithImpl<$Res>
       tvShowDetails: tvShowDetails == freezed
           ? _value.tvShowDetails
           : tvShowDetails as TvShowDetails,
+      isTrailerAvailable: isTrailerAvailable == freezed
+          ? _value.isTrailerAvailable
+          : isTrailerAvailable as bool,
     ));
   }
 }
@@ -305,10 +326,12 @@ class _$_TvShowDetailsState implements _TvShowDetailsState {
   const _$_TvShowDetailsState(
       {@required this.errorMessage,
       @required this.isSearching,
-      @required this.tvShowDetails})
+      @required this.tvShowDetails,
+      @required this.isTrailerAvailable})
       : assert(errorMessage != null),
         assert(isSearching != null),
-        assert(tvShowDetails != null);
+        assert(tvShowDetails != null),
+        assert(isTrailerAvailable != null);
 
   @override
   final String errorMessage;
@@ -316,10 +339,12 @@ class _$_TvShowDetailsState implements _TvShowDetailsState {
   final bool isSearching;
   @override
   final TvShowDetails tvShowDetails;
+  @override
+  final bool isTrailerAvailable;
 
   @override
   String toString() {
-    return 'TvShowDetailsState(errorMessage: $errorMessage, isSearching: $isSearching, tvShowDetails: $tvShowDetails)';
+    return 'TvShowDetailsState(errorMessage: $errorMessage, isSearching: $isSearching, tvShowDetails: $tvShowDetails, isTrailerAvailable: $isTrailerAvailable)';
   }
 
   @override
@@ -334,7 +359,10 @@ class _$_TvShowDetailsState implements _TvShowDetailsState {
                     .equals(other.isSearching, isSearching)) &&
             (identical(other.tvShowDetails, tvShowDetails) ||
                 const DeepCollectionEquality()
-                    .equals(other.tvShowDetails, tvShowDetails)));
+                    .equals(other.tvShowDetails, tvShowDetails)) &&
+            (identical(other.isTrailerAvailable, isTrailerAvailable) ||
+                const DeepCollectionEquality()
+                    .equals(other.isTrailerAvailable, isTrailerAvailable)));
   }
 
   @override
@@ -342,8 +370,10 @@ class _$_TvShowDetailsState implements _TvShowDetailsState {
       runtimeType.hashCode ^
       const DeepCollectionEquality().hash(errorMessage) ^
       const DeepCollectionEquality().hash(isSearching) ^
-      const DeepCollectionEquality().hash(tvShowDetails);
+      const DeepCollectionEquality().hash(tvShowDetails) ^
+      const DeepCollectionEquality().hash(isTrailerAvailable);
 
+  @JsonKey(ignore: true)
   @override
   _$TvShowDetailsStateCopyWith<_TvShowDetailsState> get copyWith =>
       __$TvShowDetailsStateCopyWithImpl<_TvShowDetailsState>(this, _$identity);
@@ -353,7 +383,8 @@ abstract class _TvShowDetailsState implements TvShowDetailsState {
   const factory _TvShowDetailsState(
       {@required String errorMessage,
       @required bool isSearching,
-      @required TvShowDetails tvShowDetails}) = _$_TvShowDetailsState;
+      @required TvShowDetails tvShowDetails,
+      @required bool isTrailerAvailable}) = _$_TvShowDetailsState;
 
   @override
   String get errorMessage;
@@ -362,5 +393,8 @@ abstract class _TvShowDetailsState implements TvShowDetailsState {
   @override
   TvShowDetails get tvShowDetails;
   @override
+  bool get isTrailerAvailable;
+  @override
+  @JsonKey(ignore: true)
   _$TvShowDetailsStateCopyWith<_TvShowDetailsState> get copyWith;
 }

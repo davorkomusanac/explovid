@@ -6,11 +6,13 @@ abstract class MovieDetailsState with _$MovieDetailsState {
     @required String errorMessage,
     @required bool isSearching,
     @required MovieDetails movieDetails,
+    @required bool isTrailerAvailable,
   }) = _MovieDetailsState;
 
   factory MovieDetailsState.initial() => MovieDetailsState(
         errorMessage: '',
         isSearching: true,
         movieDetails: MovieDetails(),
+        isTrailerAvailable: false,
       );
 }
