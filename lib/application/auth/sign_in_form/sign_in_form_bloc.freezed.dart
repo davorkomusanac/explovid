@@ -191,6 +191,7 @@ class _$_EmailChanged implements _EmailChanged {
   int get hashCode =>
       runtimeType.hashCode ^ const DeepCollectionEquality().hash(email);
 
+  @JsonKey(ignore: true)
   @override
   _$EmailChangedCopyWith<_EmailChanged> get copyWith =>
       __$EmailChangedCopyWithImpl<_EmailChanged>(this, _$identity);
@@ -290,6 +291,7 @@ abstract class _EmailChanged implements SignInFormEvent {
   const factory _EmailChanged(String email) = _$_EmailChanged;
 
   String get email;
+  @JsonKey(ignore: true)
   _$EmailChangedCopyWith<_EmailChanged> get copyWith;
 }
 
@@ -347,6 +349,7 @@ class _$_PasswordChanged implements _PasswordChanged {
   int get hashCode =>
       runtimeType.hashCode ^ const DeepCollectionEquality().hash(password);
 
+  @JsonKey(ignore: true)
   @override
   _$PasswordChangedCopyWith<_PasswordChanged> get copyWith =>
       __$PasswordChangedCopyWithImpl<_PasswordChanged>(this, _$identity);
@@ -446,6 +449,7 @@ abstract class _PasswordChanged implements SignInFormEvent {
   const factory _PasswordChanged(String password) = _$_PasswordChanged;
 
   String get password;
+  @JsonKey(ignore: true)
   _$PasswordChangedCopyWith<_PasswordChanged> get copyWith;
 }
 
@@ -510,6 +514,7 @@ class _$_PasswordConfirmationChanged implements _PasswordConfirmationChanged {
       runtimeType.hashCode ^
       const DeepCollectionEquality().hash(passwordConfirmation);
 
+  @JsonKey(ignore: true)
   @override
   _$PasswordConfirmationChangedCopyWith<_PasswordConfirmationChanged>
       get copyWith => __$PasswordConfirmationChangedCopyWithImpl<
@@ -611,6 +616,7 @@ abstract class _PasswordConfirmationChanged implements SignInFormEvent {
       _$_PasswordConfirmationChanged;
 
   String get passwordConfirmation;
+  @JsonKey(ignore: true)
   _$PasswordConfirmationChangedCopyWith<_PasswordConfirmationChanged>
       get copyWith;
 }
@@ -669,6 +675,7 @@ class _$_FullNameChanged implements _FullNameChanged {
   int get hashCode =>
       runtimeType.hashCode ^ const DeepCollectionEquality().hash(fullName);
 
+  @JsonKey(ignore: true)
   @override
   _$FullNameChangedCopyWith<_FullNameChanged> get copyWith =>
       __$FullNameChangedCopyWithImpl<_FullNameChanged>(this, _$identity);
@@ -768,6 +775,7 @@ abstract class _FullNameChanged implements SignInFormEvent {
   const factory _FullNameChanged(String fullName) = _$_FullNameChanged;
 
   String get fullName;
+  @JsonKey(ignore: true)
   _$FullNameChangedCopyWith<_FullNameChanged> get copyWith;
 }
 
@@ -1341,6 +1349,7 @@ mixin _$SignInFormState {
   bool get isAuthStateChanged;
   bool get isSubmitting;
 
+  @JsonKey(ignore: true)
   $SignInFormStateCopyWith<SignInFormState> get copyWith;
 }
 
@@ -1534,6 +1543,7 @@ class _$_SignInFormState implements _SignInFormState {
       const DeepCollectionEquality().hash(isAuthStateChanged) ^
       const DeepCollectionEquality().hash(isSubmitting);
 
+  @JsonKey(ignore: true)
   @override
   _$SignInFormStateCopyWith<_SignInFormState> get copyWith =>
       __$SignInFormStateCopyWithImpl<_SignInFormState>(this, _$identity);
@@ -1564,5 +1574,6 @@ abstract class _SignInFormState implements SignInFormState {
   @override
   bool get isSubmitting;
   @override
+  @JsonKey(ignore: true)
   _$SignInFormStateCopyWith<_SignInFormState> get copyWith;
 }

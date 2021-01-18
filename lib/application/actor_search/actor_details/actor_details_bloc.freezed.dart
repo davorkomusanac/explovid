@@ -48,6 +48,7 @@ mixin _$ActorDetailsEvent {
     @required TResult orElse(),
   });
 
+  @JsonKey(ignore: true)
   $ActorDetailsEventCopyWith<ActorDetailsEvent> get copyWith;
 }
 
@@ -133,6 +134,7 @@ class _$_ActorDetailsPressed implements _ActorDetailsPressed {
   int get hashCode =>
       runtimeType.hashCode ^ const DeepCollectionEquality().hash(id);
 
+  @JsonKey(ignore: true)
   @override
   _$ActorDetailsPressedCopyWith<_ActorDetailsPressed> get copyWith =>
       __$ActorDetailsPressedCopyWithImpl<_ActorDetailsPressed>(
@@ -189,6 +191,7 @@ abstract class _ActorDetailsPressed implements ActorDetailsEvent {
   @override
   int get id;
   @override
+  @JsonKey(ignore: true)
   _$ActorDetailsPressedCopyWith<_ActorDetailsPressed> get copyWith;
 }
 
@@ -219,6 +222,7 @@ mixin _$ActorDetailsState {
   bool get isSearching;
   ActorDetails get actorDetails;
 
+  @JsonKey(ignore: true)
   $ActorDetailsStateCopyWith<ActorDetailsState> get copyWith;
 }
 
@@ -342,6 +346,7 @@ class _$_ActorDetailsState implements _ActorDetailsState {
       const DeepCollectionEquality().hash(isSearching) ^
       const DeepCollectionEquality().hash(actorDetails);
 
+  @JsonKey(ignore: true)
   @override
   _$ActorDetailsStateCopyWith<_ActorDetailsState> get copyWith =>
       __$ActorDetailsStateCopyWithImpl<_ActorDetailsState>(this, _$identity);
@@ -360,5 +365,6 @@ abstract class _ActorDetailsState implements ActorDetailsState {
   @override
   ActorDetails get actorDetails;
   @override
+  @JsonKey(ignore: true)
   _$ActorDetailsStateCopyWith<_ActorDetailsState> get copyWith;
 }

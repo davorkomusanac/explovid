@@ -135,6 +135,7 @@ class _$_SearchNameChanged implements _SearchNameChanged {
   int get hashCode =>
       runtimeType.hashCode ^ const DeepCollectionEquality().hash(name);
 
+  @JsonKey(ignore: true)
   @override
   _$SearchNameChangedCopyWith<_SearchNameChanged> get copyWith =>
       __$SearchNameChangedCopyWithImpl<_SearchNameChanged>(this, _$identity);
@@ -200,6 +201,7 @@ abstract class _SearchNameChanged implements ActorSearchEvent {
   const factory _SearchNameChanged(String name) = _$_SearchNameChanged;
 
   String get name;
+  @JsonKey(ignore: true)
   _$SearchNameChangedCopyWith<_SearchNameChanged> get copyWith;
 }
 
@@ -433,6 +435,7 @@ mixin _$ActorSearchState {
   ActorSearchResults get actorSearchResults;
   int get searchPageNum;
 
+  @JsonKey(ignore: true)
   $ActorSearchStateCopyWith<ActorSearchState> get copyWith;
 }
 
@@ -611,6 +614,7 @@ class _$_ActorSearchState implements _ActorSearchState {
       const DeepCollectionEquality().hash(actorSearchResults) ^
       const DeepCollectionEquality().hash(searchPageNum);
 
+  @JsonKey(ignore: true)
   @override
   _$ActorSearchStateCopyWith<_ActorSearchState> get copyWith =>
       __$ActorSearchStateCopyWithImpl<_ActorSearchState>(this, _$identity);
@@ -638,5 +642,6 @@ abstract class _ActorSearchState implements ActorSearchState {
   @override
   int get searchPageNum;
   @override
+  @JsonKey(ignore: true)
   _$ActorSearchStateCopyWith<_ActorSearchState> get copyWith;
 }
