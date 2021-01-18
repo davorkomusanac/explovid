@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:explovid/api_key.dart';
 import 'package:explovid/domain/models/actor_details/actor_details.dart';
 import 'package:explovid/domain/models/actor_search/actor_search_result.dart';
@@ -22,6 +24,13 @@ class ActorRepository {
       return ActorSearchResults.fromJson(
         json.decode(response.body) as Map<String, dynamic>,
         page,
+      );
+    } on SocketException {
+      print("Actor Search ERROR: " + "No internet connection found / SocketException");
+      return ActorSearchResults(
+        totalResults: 0,
+        errorMessage: "Network issues, check your internet connection.",
+        actorSummaries: [],
       );
     } catch (e) {
       print("Actor Search ERROR: " + e.toString());
@@ -62,6 +71,11 @@ class ActorRepository {
       if (response.statusCode != 200) throw Exception('There was an error searching');
 
       return ActorDetails.fromJson(json.decode(response.body) as Map<String, dynamic>);
+    } on SocketException {
+      print("Actor Details ERROR: " + "No internet connection found / SocketException");
+      return ActorDetails(
+        errorMessage: "Network issues, check your internet connection.",
+      );
     } catch (e) {
       print("Actor Details ERROR: " + e.toString());
       return ActorDetails(

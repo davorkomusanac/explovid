@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:explovid/api_key.dart';
 import 'package:explovid/domain/models/tv_show_details/tv_show_details.dart';
 import 'package:explovid/domain/models/tv_show_search/tv_show_search_results.dart';
@@ -22,6 +24,13 @@ class TvShowRepository {
       return TvShowSearchResults.fromJson(
         json.decode(response.body) as Map<String, dynamic>,
         page,
+      );
+    } on SocketException {
+      print("Tv Show Search ERROR: " + "No internet connection found / SocketException");
+      return TvShowSearchResults(
+        totalResults: 0,
+        errorMessage: "Network issues, check your internet connection.",
+        tvShowSummaries: [],
       );
     } catch (e) {
       print("Tv Show Search ERROR: " + e.toString());
@@ -62,6 +71,11 @@ class TvShowRepository {
       if (response.statusCode != 200) throw Exception('There was an error getting tv show details');
 
       return TvShowDetails.fromJson(json.decode(response.body) as Map<String, dynamic>);
+    } on SocketException {
+      print("Tv Show Details ERROR: " + "No internet connection found / SocketException");
+      return TvShowDetails(
+        errorMessage: "Network issues, check your internet connection.",
+      );
     } catch (e) {
       print("Tv Show Details ERROR: " + e.toString());
       return TvShowDetails(
@@ -71,8 +85,10 @@ class TvShowRepository {
   }
 
   String _buildTvShowDetailsUrl(int id) {
-    String returnString =
-        _baseTvShowDetailsUrl + id.toString() + "?api_key=$API_KEY" + "&append_to_response=aggregate_credits,recommendations";
+    String returnString = _baseTvShowDetailsUrl +
+        id.toString() +
+        "?api_key=$API_KEY" +
+        "&append_to_response=aggregate_credits,recommendations,videos";
     return returnString;
   }
 }

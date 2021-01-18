@@ -185,6 +185,7 @@ class BuildSearchErrorMessage extends StatelessWidget {
             ),
             Text(
               errorMessage,
+              textAlign: TextAlign.center,
               style: TextStyle(fontSize: 20),
             ),
             const Text(

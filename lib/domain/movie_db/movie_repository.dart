@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:explovid/api_key.dart';
 import 'package:explovid/domain/models/movie_details/movie_details.dart';
 import 'package:explovid/domain/models/movie_search/movie_search_results.dart';
@@ -22,6 +24,13 @@ class MovieRepository {
       return MovieSearchResults.fromJson(
         json.decode(response.body) as Map<String, dynamic>,
         page,
+      );
+    } on SocketException {
+      print("Movie Search ERROR: " + "No internet connection found / SocketException");
+      return MovieSearchResults(
+        totalResults: 0,
+        errorMessage: "Network issues, check your internet connection.",
+        movieSummaries: [],
       );
     } catch (e) {
       print("Movie Search ERROR: " + e.toString());
@@ -62,6 +71,11 @@ class MovieRepository {
       if (response.statusCode != 200) throw Exception('There was an error getting movie details');
 
       return MovieDetails.fromJson(json.decode(response.body) as Map<String, dynamic>);
+    } on SocketException {
+      print("Movie Details ERROR: " + "No internet connection found / SocketException");
+      return MovieDetails(
+        errorMessage: "Network issues, check your internet connection.",
+      );
     } catch (e) {
       print("Movie Details ERROR: " + e.toString());
       return MovieDetails(
@@ -72,7 +86,7 @@ class MovieRepository {
 
   String _buildMovieDetailsUrl(int id) {
     String returnString =
-        _baseMovieDetailsUrl + id.toString() + "?api_key=$API_KEY" + "&append_to_response=credits,recommendations";
+        _baseMovieDetailsUrl + id.toString() + "?api_key=$API_KEY" + "&append_to_response=credits,recommendations,videos";
     return returnString;
   }
 }
