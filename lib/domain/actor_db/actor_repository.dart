@@ -8,6 +8,7 @@ import 'dart:convert';
 
 const String _baseSearchActorUrl = "https://api.themoviedb.org/3/search/person?api_key=$API_KEY&language=en-US&query=";
 const String _baseActorDetailsUrl = "https://api.themoviedb.org/3/person/";
+const String _basePopularActorsUrl = "https://api.themoviedb.org/3/person/popular?api_key=$API_KEY&language=en-US&page=";
 
 class ActorRepository {
   final http.Client client;
@@ -88,5 +89,33 @@ class ActorRepository {
     String returnString =
         _baseActorDetailsUrl + id.toString() + "?api_key=$API_KEY" + "&append_to_response=movie_credits,tv_credits";
     return returnString;
+  }
+
+  Future<ActorSearchResults> getPopularActors([int page = 1]) async {
+    try {
+      final response = await client.get(_basePopularActorsUrl + page.toString());
+      print(_basePopularActorsUrl + page.toString());
+
+      if (response.statusCode != 200) throw Exception('There was an error searching');
+
+      return ActorSearchResults.fromJson(
+        json.decode(response.body) as Map<String, dynamic>,
+        page,
+      );
+    } on SocketException {
+      print("Popular Actor Search ERROR: " + "No internet connection found / SocketException");
+      return ActorSearchResults(
+        totalResults: 0,
+        errorMessage: "Network issues, check your internet connection.",
+        actorSummaries: [],
+      );
+    } catch (e) {
+      print("Popular Actor Search ERROR: " + e.toString());
+      return ActorSearchResults(
+        totalResults: 0,
+        errorMessage: e.toString(),
+        actorSummaries: [],
+      );
+    }
   }
 }

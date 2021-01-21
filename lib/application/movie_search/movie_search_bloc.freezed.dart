@@ -39,6 +39,16 @@ class _$MovieSearchEventTearOff {
   _NextResultPageCalled nextResultPageCalled() {
     return const _NextResultPageCalled();
   }
+
+// ignore: unused_element
+  _GetPopularMoviesCalled getPopularMoviesCalled() {
+    return const _GetPopularMoviesCalled();
+  }
+
+// ignore: unused_element
+  _NextPopularMoviesPageCalled nextPopularMoviesPageCalled() {
+    return const _NextPopularMoviesPageCalled();
+  }
 }
 
 /// @nodoc
@@ -54,6 +64,8 @@ mixin _$MovieSearchEvent {
     @required TResult searchPageDoublePressed(),
     @required TResult changeIsSearchPageDoublePressed(),
     @required TResult nextResultPageCalled(),
+    @required TResult getPopularMoviesCalled(),
+    @required TResult nextPopularMoviesPageCalled(),
   });
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object>({
@@ -62,6 +74,8 @@ mixin _$MovieSearchEvent {
     TResult searchPageDoublePressed(),
     TResult changeIsSearchPageDoublePressed(),
     TResult nextResultPageCalled(),
+    TResult getPopularMoviesCalled(),
+    TResult nextPopularMoviesPageCalled(),
     @required TResult orElse(),
   });
   @optionalTypeArgs
@@ -73,6 +87,9 @@ mixin _$MovieSearchEvent {
         TResult changeIsSearchPageDoublePressed(
             _ChangeIsSearchPageDoublePressed value),
     @required TResult nextResultPageCalled(_NextResultPageCalled value),
+    @required TResult getPopularMoviesCalled(_GetPopularMoviesCalled value),
+    @required
+        TResult nextPopularMoviesPageCalled(_NextPopularMoviesPageCalled value),
   });
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object>({
@@ -82,6 +99,8 @@ mixin _$MovieSearchEvent {
     TResult changeIsSearchPageDoublePressed(
         _ChangeIsSearchPageDoublePressed value),
     TResult nextResultPageCalled(_NextResultPageCalled value),
+    TResult getPopularMoviesCalled(_GetPopularMoviesCalled value),
+    TResult nextPopularMoviesPageCalled(_NextPopularMoviesPageCalled value),
     @required TResult orElse(),
   });
 }
@@ -169,12 +188,16 @@ class _$_SearchTitleChanged implements _SearchTitleChanged {
     @required TResult searchPageDoublePressed(),
     @required TResult changeIsSearchPageDoublePressed(),
     @required TResult nextResultPageCalled(),
+    @required TResult getPopularMoviesCalled(),
+    @required TResult nextPopularMoviesPageCalled(),
   }) {
     assert(searchTitleChanged != null);
     assert(deleteSearchPressed != null);
     assert(searchPageDoublePressed != null);
     assert(changeIsSearchPageDoublePressed != null);
     assert(nextResultPageCalled != null);
+    assert(getPopularMoviesCalled != null);
+    assert(nextPopularMoviesPageCalled != null);
     return searchTitleChanged(title);
   }
 
@@ -186,6 +209,8 @@ class _$_SearchTitleChanged implements _SearchTitleChanged {
     TResult searchPageDoublePressed(),
     TResult changeIsSearchPageDoublePressed(),
     TResult nextResultPageCalled(),
+    TResult getPopularMoviesCalled(),
+    TResult nextPopularMoviesPageCalled(),
     @required TResult orElse(),
   }) {
     assert(orElse != null);
@@ -205,12 +230,17 @@ class _$_SearchTitleChanged implements _SearchTitleChanged {
         TResult changeIsSearchPageDoublePressed(
             _ChangeIsSearchPageDoublePressed value),
     @required TResult nextResultPageCalled(_NextResultPageCalled value),
+    @required TResult getPopularMoviesCalled(_GetPopularMoviesCalled value),
+    @required
+        TResult nextPopularMoviesPageCalled(_NextPopularMoviesPageCalled value),
   }) {
     assert(searchTitleChanged != null);
     assert(deleteSearchPressed != null);
     assert(searchPageDoublePressed != null);
     assert(changeIsSearchPageDoublePressed != null);
     assert(nextResultPageCalled != null);
+    assert(getPopularMoviesCalled != null);
+    assert(nextPopularMoviesPageCalled != null);
     return searchTitleChanged(this);
   }
 
@@ -223,6 +253,8 @@ class _$_SearchTitleChanged implements _SearchTitleChanged {
     TResult changeIsSearchPageDoublePressed(
         _ChangeIsSearchPageDoublePressed value),
     TResult nextResultPageCalled(_NextResultPageCalled value),
+    TResult getPopularMoviesCalled(_GetPopularMoviesCalled value),
+    TResult nextPopularMoviesPageCalled(_NextPopularMoviesPageCalled value),
     @required TResult orElse(),
   }) {
     assert(orElse != null);
@@ -285,12 +317,16 @@ class _$_DeleteSearchPressed implements _DeleteSearchPressed {
     @required TResult searchPageDoublePressed(),
     @required TResult changeIsSearchPageDoublePressed(),
     @required TResult nextResultPageCalled(),
+    @required TResult getPopularMoviesCalled(),
+    @required TResult nextPopularMoviesPageCalled(),
   }) {
     assert(searchTitleChanged != null);
     assert(deleteSearchPressed != null);
     assert(searchPageDoublePressed != null);
     assert(changeIsSearchPageDoublePressed != null);
     assert(nextResultPageCalled != null);
+    assert(getPopularMoviesCalled != null);
+    assert(nextPopularMoviesPageCalled != null);
     return deleteSearchPressed();
   }
 
@@ -302,6 +338,8 @@ class _$_DeleteSearchPressed implements _DeleteSearchPressed {
     TResult searchPageDoublePressed(),
     TResult changeIsSearchPageDoublePressed(),
     TResult nextResultPageCalled(),
+    TResult getPopularMoviesCalled(),
+    TResult nextPopularMoviesPageCalled(),
     @required TResult orElse(),
   }) {
     assert(orElse != null);
@@ -321,12 +359,17 @@ class _$_DeleteSearchPressed implements _DeleteSearchPressed {
         TResult changeIsSearchPageDoublePressed(
             _ChangeIsSearchPageDoublePressed value),
     @required TResult nextResultPageCalled(_NextResultPageCalled value),
+    @required TResult getPopularMoviesCalled(_GetPopularMoviesCalled value),
+    @required
+        TResult nextPopularMoviesPageCalled(_NextPopularMoviesPageCalled value),
   }) {
     assert(searchTitleChanged != null);
     assert(deleteSearchPressed != null);
     assert(searchPageDoublePressed != null);
     assert(changeIsSearchPageDoublePressed != null);
     assert(nextResultPageCalled != null);
+    assert(getPopularMoviesCalled != null);
+    assert(nextPopularMoviesPageCalled != null);
     return deleteSearchPressed(this);
   }
 
@@ -339,6 +382,8 @@ class _$_DeleteSearchPressed implements _DeleteSearchPressed {
     TResult changeIsSearchPageDoublePressed(
         _ChangeIsSearchPageDoublePressed value),
     TResult nextResultPageCalled(_NextResultPageCalled value),
+    TResult getPopularMoviesCalled(_GetPopularMoviesCalled value),
+    TResult nextPopularMoviesPageCalled(_NextPopularMoviesPageCalled value),
     @required TResult orElse(),
   }) {
     assert(orElse != null);
@@ -398,12 +443,16 @@ class _$_SearchPageDoublePressed implements _SearchPageDoublePressed {
     @required TResult searchPageDoublePressed(),
     @required TResult changeIsSearchPageDoublePressed(),
     @required TResult nextResultPageCalled(),
+    @required TResult getPopularMoviesCalled(),
+    @required TResult nextPopularMoviesPageCalled(),
   }) {
     assert(searchTitleChanged != null);
     assert(deleteSearchPressed != null);
     assert(searchPageDoublePressed != null);
     assert(changeIsSearchPageDoublePressed != null);
     assert(nextResultPageCalled != null);
+    assert(getPopularMoviesCalled != null);
+    assert(nextPopularMoviesPageCalled != null);
     return searchPageDoublePressed();
   }
 
@@ -415,6 +464,8 @@ class _$_SearchPageDoublePressed implements _SearchPageDoublePressed {
     TResult searchPageDoublePressed(),
     TResult changeIsSearchPageDoublePressed(),
     TResult nextResultPageCalled(),
+    TResult getPopularMoviesCalled(),
+    TResult nextPopularMoviesPageCalled(),
     @required TResult orElse(),
   }) {
     assert(orElse != null);
@@ -434,12 +485,17 @@ class _$_SearchPageDoublePressed implements _SearchPageDoublePressed {
         TResult changeIsSearchPageDoublePressed(
             _ChangeIsSearchPageDoublePressed value),
     @required TResult nextResultPageCalled(_NextResultPageCalled value),
+    @required TResult getPopularMoviesCalled(_GetPopularMoviesCalled value),
+    @required
+        TResult nextPopularMoviesPageCalled(_NextPopularMoviesPageCalled value),
   }) {
     assert(searchTitleChanged != null);
     assert(deleteSearchPressed != null);
     assert(searchPageDoublePressed != null);
     assert(changeIsSearchPageDoublePressed != null);
     assert(nextResultPageCalled != null);
+    assert(getPopularMoviesCalled != null);
+    assert(nextPopularMoviesPageCalled != null);
     return searchPageDoublePressed(this);
   }
 
@@ -452,6 +508,8 @@ class _$_SearchPageDoublePressed implements _SearchPageDoublePressed {
     TResult changeIsSearchPageDoublePressed(
         _ChangeIsSearchPageDoublePressed value),
     TResult nextResultPageCalled(_NextResultPageCalled value),
+    TResult getPopularMoviesCalled(_GetPopularMoviesCalled value),
+    TResult nextPopularMoviesPageCalled(_NextPopularMoviesPageCalled value),
     @required TResult orElse(),
   }) {
     assert(orElse != null);
@@ -515,12 +573,16 @@ class _$_ChangeIsSearchPageDoublePressed
     @required TResult searchPageDoublePressed(),
     @required TResult changeIsSearchPageDoublePressed(),
     @required TResult nextResultPageCalled(),
+    @required TResult getPopularMoviesCalled(),
+    @required TResult nextPopularMoviesPageCalled(),
   }) {
     assert(searchTitleChanged != null);
     assert(deleteSearchPressed != null);
     assert(searchPageDoublePressed != null);
     assert(changeIsSearchPageDoublePressed != null);
     assert(nextResultPageCalled != null);
+    assert(getPopularMoviesCalled != null);
+    assert(nextPopularMoviesPageCalled != null);
     return changeIsSearchPageDoublePressed();
   }
 
@@ -532,6 +594,8 @@ class _$_ChangeIsSearchPageDoublePressed
     TResult searchPageDoublePressed(),
     TResult changeIsSearchPageDoublePressed(),
     TResult nextResultPageCalled(),
+    TResult getPopularMoviesCalled(),
+    TResult nextPopularMoviesPageCalled(),
     @required TResult orElse(),
   }) {
     assert(orElse != null);
@@ -551,12 +615,17 @@ class _$_ChangeIsSearchPageDoublePressed
         TResult changeIsSearchPageDoublePressed(
             _ChangeIsSearchPageDoublePressed value),
     @required TResult nextResultPageCalled(_NextResultPageCalled value),
+    @required TResult getPopularMoviesCalled(_GetPopularMoviesCalled value),
+    @required
+        TResult nextPopularMoviesPageCalled(_NextPopularMoviesPageCalled value),
   }) {
     assert(searchTitleChanged != null);
     assert(deleteSearchPressed != null);
     assert(searchPageDoublePressed != null);
     assert(changeIsSearchPageDoublePressed != null);
     assert(nextResultPageCalled != null);
+    assert(getPopularMoviesCalled != null);
+    assert(nextPopularMoviesPageCalled != null);
     return changeIsSearchPageDoublePressed(this);
   }
 
@@ -569,6 +638,8 @@ class _$_ChangeIsSearchPageDoublePressed
     TResult changeIsSearchPageDoublePressed(
         _ChangeIsSearchPageDoublePressed value),
     TResult nextResultPageCalled(_NextResultPageCalled value),
+    TResult getPopularMoviesCalled(_GetPopularMoviesCalled value),
+    TResult nextPopularMoviesPageCalled(_NextPopularMoviesPageCalled value),
     @required TResult orElse(),
   }) {
     assert(orElse != null);
@@ -628,12 +699,16 @@ class _$_NextResultPageCalled implements _NextResultPageCalled {
     @required TResult searchPageDoublePressed(),
     @required TResult changeIsSearchPageDoublePressed(),
     @required TResult nextResultPageCalled(),
+    @required TResult getPopularMoviesCalled(),
+    @required TResult nextPopularMoviesPageCalled(),
   }) {
     assert(searchTitleChanged != null);
     assert(deleteSearchPressed != null);
     assert(searchPageDoublePressed != null);
     assert(changeIsSearchPageDoublePressed != null);
     assert(nextResultPageCalled != null);
+    assert(getPopularMoviesCalled != null);
+    assert(nextPopularMoviesPageCalled != null);
     return nextResultPageCalled();
   }
 
@@ -645,6 +720,8 @@ class _$_NextResultPageCalled implements _NextResultPageCalled {
     TResult searchPageDoublePressed(),
     TResult changeIsSearchPageDoublePressed(),
     TResult nextResultPageCalled(),
+    TResult getPopularMoviesCalled(),
+    TResult nextPopularMoviesPageCalled(),
     @required TResult orElse(),
   }) {
     assert(orElse != null);
@@ -664,12 +741,17 @@ class _$_NextResultPageCalled implements _NextResultPageCalled {
         TResult changeIsSearchPageDoublePressed(
             _ChangeIsSearchPageDoublePressed value),
     @required TResult nextResultPageCalled(_NextResultPageCalled value),
+    @required TResult getPopularMoviesCalled(_GetPopularMoviesCalled value),
+    @required
+        TResult nextPopularMoviesPageCalled(_NextPopularMoviesPageCalled value),
   }) {
     assert(searchTitleChanged != null);
     assert(deleteSearchPressed != null);
     assert(searchPageDoublePressed != null);
     assert(changeIsSearchPageDoublePressed != null);
     assert(nextResultPageCalled != null);
+    assert(getPopularMoviesCalled != null);
+    assert(nextPopularMoviesPageCalled != null);
     return nextResultPageCalled(this);
   }
 
@@ -682,6 +764,8 @@ class _$_NextResultPageCalled implements _NextResultPageCalled {
     TResult changeIsSearchPageDoublePressed(
         _ChangeIsSearchPageDoublePressed value),
     TResult nextResultPageCalled(_NextResultPageCalled value),
+    TResult getPopularMoviesCalled(_GetPopularMoviesCalled value),
+    TResult nextPopularMoviesPageCalled(_NextPopularMoviesPageCalled value),
     @required TResult orElse(),
   }) {
     assert(orElse != null);
@@ -697,6 +781,259 @@ abstract class _NextResultPageCalled implements MovieSearchEvent {
 }
 
 /// @nodoc
+abstract class _$GetPopularMoviesCalledCopyWith<$Res> {
+  factory _$GetPopularMoviesCalledCopyWith(_GetPopularMoviesCalled value,
+          $Res Function(_GetPopularMoviesCalled) then) =
+      __$GetPopularMoviesCalledCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$GetPopularMoviesCalledCopyWithImpl<$Res>
+    extends _$MovieSearchEventCopyWithImpl<$Res>
+    implements _$GetPopularMoviesCalledCopyWith<$Res> {
+  __$GetPopularMoviesCalledCopyWithImpl(_GetPopularMoviesCalled _value,
+      $Res Function(_GetPopularMoviesCalled) _then)
+      : super(_value, (v) => _then(v as _GetPopularMoviesCalled));
+
+  @override
+  _GetPopularMoviesCalled get _value => super._value as _GetPopularMoviesCalled;
+}
+
+/// @nodoc
+class _$_GetPopularMoviesCalled implements _GetPopularMoviesCalled {
+  const _$_GetPopularMoviesCalled();
+
+  @override
+  String toString() {
+    return 'MovieSearchEvent.getPopularMoviesCalled()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) || (other is _GetPopularMoviesCalled);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object>({
+    @required TResult searchTitleChanged(String title),
+    @required TResult deleteSearchPressed(),
+    @required TResult searchPageDoublePressed(),
+    @required TResult changeIsSearchPageDoublePressed(),
+    @required TResult nextResultPageCalled(),
+    @required TResult getPopularMoviesCalled(),
+    @required TResult nextPopularMoviesPageCalled(),
+  }) {
+    assert(searchTitleChanged != null);
+    assert(deleteSearchPressed != null);
+    assert(searchPageDoublePressed != null);
+    assert(changeIsSearchPageDoublePressed != null);
+    assert(nextResultPageCalled != null);
+    assert(getPopularMoviesCalled != null);
+    assert(nextPopularMoviesPageCalled != null);
+    return getPopularMoviesCalled();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object>({
+    TResult searchTitleChanged(String title),
+    TResult deleteSearchPressed(),
+    TResult searchPageDoublePressed(),
+    TResult changeIsSearchPageDoublePressed(),
+    TResult nextResultPageCalled(),
+    TResult getPopularMoviesCalled(),
+    TResult nextPopularMoviesPageCalled(),
+    @required TResult orElse(),
+  }) {
+    assert(orElse != null);
+    if (getPopularMoviesCalled != null) {
+      return getPopularMoviesCalled();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object>({
+    @required TResult searchTitleChanged(_SearchTitleChanged value),
+    @required TResult deleteSearchPressed(_DeleteSearchPressed value),
+    @required TResult searchPageDoublePressed(_SearchPageDoublePressed value),
+    @required
+        TResult changeIsSearchPageDoublePressed(
+            _ChangeIsSearchPageDoublePressed value),
+    @required TResult nextResultPageCalled(_NextResultPageCalled value),
+    @required TResult getPopularMoviesCalled(_GetPopularMoviesCalled value),
+    @required
+        TResult nextPopularMoviesPageCalled(_NextPopularMoviesPageCalled value),
+  }) {
+    assert(searchTitleChanged != null);
+    assert(deleteSearchPressed != null);
+    assert(searchPageDoublePressed != null);
+    assert(changeIsSearchPageDoublePressed != null);
+    assert(nextResultPageCalled != null);
+    assert(getPopularMoviesCalled != null);
+    assert(nextPopularMoviesPageCalled != null);
+    return getPopularMoviesCalled(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object>({
+    TResult searchTitleChanged(_SearchTitleChanged value),
+    TResult deleteSearchPressed(_DeleteSearchPressed value),
+    TResult searchPageDoublePressed(_SearchPageDoublePressed value),
+    TResult changeIsSearchPageDoublePressed(
+        _ChangeIsSearchPageDoublePressed value),
+    TResult nextResultPageCalled(_NextResultPageCalled value),
+    TResult getPopularMoviesCalled(_GetPopularMoviesCalled value),
+    TResult nextPopularMoviesPageCalled(_NextPopularMoviesPageCalled value),
+    @required TResult orElse(),
+  }) {
+    assert(orElse != null);
+    if (getPopularMoviesCalled != null) {
+      return getPopularMoviesCalled(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _GetPopularMoviesCalled implements MovieSearchEvent {
+  const factory _GetPopularMoviesCalled() = _$_GetPopularMoviesCalled;
+}
+
+/// @nodoc
+abstract class _$NextPopularMoviesPageCalledCopyWith<$Res> {
+  factory _$NextPopularMoviesPageCalledCopyWith(
+          _NextPopularMoviesPageCalled value,
+          $Res Function(_NextPopularMoviesPageCalled) then) =
+      __$NextPopularMoviesPageCalledCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$NextPopularMoviesPageCalledCopyWithImpl<$Res>
+    extends _$MovieSearchEventCopyWithImpl<$Res>
+    implements _$NextPopularMoviesPageCalledCopyWith<$Res> {
+  __$NextPopularMoviesPageCalledCopyWithImpl(
+      _NextPopularMoviesPageCalled _value,
+      $Res Function(_NextPopularMoviesPageCalled) _then)
+      : super(_value, (v) => _then(v as _NextPopularMoviesPageCalled));
+
+  @override
+  _NextPopularMoviesPageCalled get _value =>
+      super._value as _NextPopularMoviesPageCalled;
+}
+
+/// @nodoc
+class _$_NextPopularMoviesPageCalled implements _NextPopularMoviesPageCalled {
+  const _$_NextPopularMoviesPageCalled();
+
+  @override
+  String toString() {
+    return 'MovieSearchEvent.nextPopularMoviesPageCalled()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) || (other is _NextPopularMoviesPageCalled);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object>({
+    @required TResult searchTitleChanged(String title),
+    @required TResult deleteSearchPressed(),
+    @required TResult searchPageDoublePressed(),
+    @required TResult changeIsSearchPageDoublePressed(),
+    @required TResult nextResultPageCalled(),
+    @required TResult getPopularMoviesCalled(),
+    @required TResult nextPopularMoviesPageCalled(),
+  }) {
+    assert(searchTitleChanged != null);
+    assert(deleteSearchPressed != null);
+    assert(searchPageDoublePressed != null);
+    assert(changeIsSearchPageDoublePressed != null);
+    assert(nextResultPageCalled != null);
+    assert(getPopularMoviesCalled != null);
+    assert(nextPopularMoviesPageCalled != null);
+    return nextPopularMoviesPageCalled();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object>({
+    TResult searchTitleChanged(String title),
+    TResult deleteSearchPressed(),
+    TResult searchPageDoublePressed(),
+    TResult changeIsSearchPageDoublePressed(),
+    TResult nextResultPageCalled(),
+    TResult getPopularMoviesCalled(),
+    TResult nextPopularMoviesPageCalled(),
+    @required TResult orElse(),
+  }) {
+    assert(orElse != null);
+    if (nextPopularMoviesPageCalled != null) {
+      return nextPopularMoviesPageCalled();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object>({
+    @required TResult searchTitleChanged(_SearchTitleChanged value),
+    @required TResult deleteSearchPressed(_DeleteSearchPressed value),
+    @required TResult searchPageDoublePressed(_SearchPageDoublePressed value),
+    @required
+        TResult changeIsSearchPageDoublePressed(
+            _ChangeIsSearchPageDoublePressed value),
+    @required TResult nextResultPageCalled(_NextResultPageCalled value),
+    @required TResult getPopularMoviesCalled(_GetPopularMoviesCalled value),
+    @required
+        TResult nextPopularMoviesPageCalled(_NextPopularMoviesPageCalled value),
+  }) {
+    assert(searchTitleChanged != null);
+    assert(deleteSearchPressed != null);
+    assert(searchPageDoublePressed != null);
+    assert(changeIsSearchPageDoublePressed != null);
+    assert(nextResultPageCalled != null);
+    assert(getPopularMoviesCalled != null);
+    assert(nextPopularMoviesPageCalled != null);
+    return nextPopularMoviesPageCalled(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object>({
+    TResult searchTitleChanged(_SearchTitleChanged value),
+    TResult deleteSearchPressed(_DeleteSearchPressed value),
+    TResult searchPageDoublePressed(_SearchPageDoublePressed value),
+    TResult changeIsSearchPageDoublePressed(
+        _ChangeIsSearchPageDoublePressed value),
+    TResult nextResultPageCalled(_NextResultPageCalled value),
+    TResult getPopularMoviesCalled(_GetPopularMoviesCalled value),
+    TResult nextPopularMoviesPageCalled(_NextPopularMoviesPageCalled value),
+    @required TResult orElse(),
+  }) {
+    assert(orElse != null);
+    if (nextPopularMoviesPageCalled != null) {
+      return nextPopularMoviesPageCalled(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _NextPopularMoviesPageCalled implements MovieSearchEvent {
+  const factory _NextPopularMoviesPageCalled() = _$_NextPopularMoviesPageCalled;
+}
+
+/// @nodoc
 class _$MovieSearchStateTearOff {
   const _$MovieSearchStateTearOff();
 
@@ -708,7 +1045,9 @@ class _$MovieSearchStateTearOff {
       @required bool isSearchCompleted,
       @required MovieSearchResults movieSearchResults,
       @required int searchPageNum,
-      @required bool isSearchPageDoublePressed}) {
+      @required bool isSearchPageDoublePressed,
+      @required MovieSearchResults popularMovies,
+      @required int popularPageNum}) {
     return _MovieSearchState(
       title: title,
       errorMessage: errorMessage,
@@ -717,6 +1056,8 @@ class _$MovieSearchStateTearOff {
       movieSearchResults: movieSearchResults,
       searchPageNum: searchPageNum,
       isSearchPageDoublePressed: isSearchPageDoublePressed,
+      popularMovies: popularMovies,
+      popularPageNum: popularPageNum,
     );
   }
 }
@@ -734,6 +1075,8 @@ mixin _$MovieSearchState {
   MovieSearchResults get movieSearchResults;
   int get searchPageNum;
   bool get isSearchPageDoublePressed;
+  MovieSearchResults get popularMovies;
+  int get popularPageNum;
 
   @JsonKey(ignore: true)
   $MovieSearchStateCopyWith<MovieSearchState> get copyWith;
@@ -751,7 +1094,9 @@ abstract class $MovieSearchStateCopyWith<$Res> {
       bool isSearchCompleted,
       MovieSearchResults movieSearchResults,
       int searchPageNum,
-      bool isSearchPageDoublePressed});
+      bool isSearchPageDoublePressed,
+      MovieSearchResults popularMovies,
+      int popularPageNum});
 }
 
 /// @nodoc
@@ -772,6 +1117,8 @@ class _$MovieSearchStateCopyWithImpl<$Res>
     Object movieSearchResults = freezed,
     Object searchPageNum = freezed,
     Object isSearchPageDoublePressed = freezed,
+    Object popularMovies = freezed,
+    Object popularPageNum = freezed,
   }) {
     return _then(_value.copyWith(
       title: title == freezed ? _value.title : title as String,
@@ -792,6 +1139,12 @@ class _$MovieSearchStateCopyWithImpl<$Res>
       isSearchPageDoublePressed: isSearchPageDoublePressed == freezed
           ? _value.isSearchPageDoublePressed
           : isSearchPageDoublePressed as bool,
+      popularMovies: popularMovies == freezed
+          ? _value.popularMovies
+          : popularMovies as MovieSearchResults,
+      popularPageNum: popularPageNum == freezed
+          ? _value.popularPageNum
+          : popularPageNum as int,
     ));
   }
 }
@@ -810,7 +1163,9 @@ abstract class _$MovieSearchStateCopyWith<$Res>
       bool isSearchCompleted,
       MovieSearchResults movieSearchResults,
       int searchPageNum,
-      bool isSearchPageDoublePressed});
+      bool isSearchPageDoublePressed,
+      MovieSearchResults popularMovies,
+      int popularPageNum});
 }
 
 /// @nodoc
@@ -833,6 +1188,8 @@ class __$MovieSearchStateCopyWithImpl<$Res>
     Object movieSearchResults = freezed,
     Object searchPageNum = freezed,
     Object isSearchPageDoublePressed = freezed,
+    Object popularMovies = freezed,
+    Object popularPageNum = freezed,
   }) {
     return _then(_MovieSearchState(
       title: title == freezed ? _value.title : title as String,
@@ -853,6 +1210,12 @@ class __$MovieSearchStateCopyWithImpl<$Res>
       isSearchPageDoublePressed: isSearchPageDoublePressed == freezed
           ? _value.isSearchPageDoublePressed
           : isSearchPageDoublePressed as bool,
+      popularMovies: popularMovies == freezed
+          ? _value.popularMovies
+          : popularMovies as MovieSearchResults,
+      popularPageNum: popularPageNum == freezed
+          ? _value.popularPageNum
+          : popularPageNum as int,
     ));
   }
 }
@@ -866,14 +1229,18 @@ class _$_MovieSearchState implements _MovieSearchState {
       @required this.isSearchCompleted,
       @required this.movieSearchResults,
       @required this.searchPageNum,
-      @required this.isSearchPageDoublePressed})
+      @required this.isSearchPageDoublePressed,
+      @required this.popularMovies,
+      @required this.popularPageNum})
       : assert(title != null),
         assert(errorMessage != null),
         assert(isSearching != null),
         assert(isSearchCompleted != null),
         assert(movieSearchResults != null),
         assert(searchPageNum != null),
-        assert(isSearchPageDoublePressed != null);
+        assert(isSearchPageDoublePressed != null),
+        assert(popularMovies != null),
+        assert(popularPageNum != null);
 
   @override
   final String title;
@@ -889,10 +1256,14 @@ class _$_MovieSearchState implements _MovieSearchState {
   final int searchPageNum;
   @override
   final bool isSearchPageDoublePressed;
+  @override
+  final MovieSearchResults popularMovies;
+  @override
+  final int popularPageNum;
 
   @override
   String toString() {
-    return 'MovieSearchState(title: $title, errorMessage: $errorMessage, isSearching: $isSearching, isSearchCompleted: $isSearchCompleted, movieSearchResults: $movieSearchResults, searchPageNum: $searchPageNum, isSearchPageDoublePressed: $isSearchPageDoublePressed)';
+    return 'MovieSearchState(title: $title, errorMessage: $errorMessage, isSearching: $isSearching, isSearchCompleted: $isSearchCompleted, movieSearchResults: $movieSearchResults, searchPageNum: $searchPageNum, isSearchPageDoublePressed: $isSearchPageDoublePressed, popularMovies: $popularMovies, popularPageNum: $popularPageNum)';
   }
 
   @override
@@ -920,7 +1291,13 @@ class _$_MovieSearchState implements _MovieSearchState {
                     isSearchPageDoublePressed) ||
                 const DeepCollectionEquality().equals(
                     other.isSearchPageDoublePressed,
-                    isSearchPageDoublePressed)));
+                    isSearchPageDoublePressed)) &&
+            (identical(other.popularMovies, popularMovies) ||
+                const DeepCollectionEquality()
+                    .equals(other.popularMovies, popularMovies)) &&
+            (identical(other.popularPageNum, popularPageNum) ||
+                const DeepCollectionEquality()
+                    .equals(other.popularPageNum, popularPageNum)));
   }
 
   @override
@@ -932,7 +1309,9 @@ class _$_MovieSearchState implements _MovieSearchState {
       const DeepCollectionEquality().hash(isSearchCompleted) ^
       const DeepCollectionEquality().hash(movieSearchResults) ^
       const DeepCollectionEquality().hash(searchPageNum) ^
-      const DeepCollectionEquality().hash(isSearchPageDoublePressed);
+      const DeepCollectionEquality().hash(isSearchPageDoublePressed) ^
+      const DeepCollectionEquality().hash(popularMovies) ^
+      const DeepCollectionEquality().hash(popularPageNum);
 
   @JsonKey(ignore: true)
   @override
@@ -948,7 +1327,9 @@ abstract class _MovieSearchState implements MovieSearchState {
       @required bool isSearchCompleted,
       @required MovieSearchResults movieSearchResults,
       @required int searchPageNum,
-      @required bool isSearchPageDoublePressed}) = _$_MovieSearchState;
+      @required bool isSearchPageDoublePressed,
+      @required MovieSearchResults popularMovies,
+      @required int popularPageNum}) = _$_MovieSearchState;
 
   @override
   String get title;
@@ -964,6 +1345,10 @@ abstract class _MovieSearchState implements MovieSearchState {
   int get searchPageNum;
   @override
   bool get isSearchPageDoublePressed;
+  @override
+  MovieSearchResults get popularMovies;
+  @override
+  int get popularPageNum;
   @override
   @JsonKey(ignore: true)
   _$MovieSearchStateCopyWith<_MovieSearchState> get copyWith;

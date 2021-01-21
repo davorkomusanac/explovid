@@ -29,6 +29,16 @@ class _$ActorSearchEventTearOff {
   _NextResultPageCalled nextResultPageCalled() {
     return const _NextResultPageCalled();
   }
+
+// ignore: unused_element
+  _GetPopularActorsCalled getPopularActorsCalled() {
+    return const _GetPopularActorsCalled();
+  }
+
+// ignore: unused_element
+  _NextPopularActorsPageCalled nextPopularActorsPageCalled() {
+    return const _NextPopularActorsPageCalled();
+  }
 }
 
 /// @nodoc
@@ -42,12 +52,16 @@ mixin _$ActorSearchEvent {
     @required TResult searchNameChanged(String name),
     @required TResult deleteSearchPressed(),
     @required TResult nextResultPageCalled(),
+    @required TResult getPopularActorsCalled(),
+    @required TResult nextPopularActorsPageCalled(),
   });
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object>({
     TResult searchNameChanged(String name),
     TResult deleteSearchPressed(),
     TResult nextResultPageCalled(),
+    TResult getPopularActorsCalled(),
+    TResult nextPopularActorsPageCalled(),
     @required TResult orElse(),
   });
   @optionalTypeArgs
@@ -55,12 +69,17 @@ mixin _$ActorSearchEvent {
     @required TResult searchNameChanged(_SearchNameChanged value),
     @required TResult deleteSearchPressed(_DeleteSearchPressed value),
     @required TResult nextResultPageCalled(_NextResultPageCalled value),
+    @required TResult getPopularActorsCalled(_GetPopularActorsCalled value),
+    @required
+        TResult nextPopularActorsPageCalled(_NextPopularActorsPageCalled value),
   });
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object>({
     TResult searchNameChanged(_SearchNameChanged value),
     TResult deleteSearchPressed(_DeleteSearchPressed value),
     TResult nextResultPageCalled(_NextResultPageCalled value),
+    TResult getPopularActorsCalled(_GetPopularActorsCalled value),
+    TResult nextPopularActorsPageCalled(_NextPopularActorsPageCalled value),
     @required TResult orElse(),
   });
 }
@@ -146,10 +165,14 @@ class _$_SearchNameChanged implements _SearchNameChanged {
     @required TResult searchNameChanged(String name),
     @required TResult deleteSearchPressed(),
     @required TResult nextResultPageCalled(),
+    @required TResult getPopularActorsCalled(),
+    @required TResult nextPopularActorsPageCalled(),
   }) {
     assert(searchNameChanged != null);
     assert(deleteSearchPressed != null);
     assert(nextResultPageCalled != null);
+    assert(getPopularActorsCalled != null);
+    assert(nextPopularActorsPageCalled != null);
     return searchNameChanged(name);
   }
 
@@ -159,6 +182,8 @@ class _$_SearchNameChanged implements _SearchNameChanged {
     TResult searchNameChanged(String name),
     TResult deleteSearchPressed(),
     TResult nextResultPageCalled(),
+    TResult getPopularActorsCalled(),
+    TResult nextPopularActorsPageCalled(),
     @required TResult orElse(),
   }) {
     assert(orElse != null);
@@ -174,10 +199,15 @@ class _$_SearchNameChanged implements _SearchNameChanged {
     @required TResult searchNameChanged(_SearchNameChanged value),
     @required TResult deleteSearchPressed(_DeleteSearchPressed value),
     @required TResult nextResultPageCalled(_NextResultPageCalled value),
+    @required TResult getPopularActorsCalled(_GetPopularActorsCalled value),
+    @required
+        TResult nextPopularActorsPageCalled(_NextPopularActorsPageCalled value),
   }) {
     assert(searchNameChanged != null);
     assert(deleteSearchPressed != null);
     assert(nextResultPageCalled != null);
+    assert(getPopularActorsCalled != null);
+    assert(nextPopularActorsPageCalled != null);
     return searchNameChanged(this);
   }
 
@@ -187,6 +217,8 @@ class _$_SearchNameChanged implements _SearchNameChanged {
     TResult searchNameChanged(_SearchNameChanged value),
     TResult deleteSearchPressed(_DeleteSearchPressed value),
     TResult nextResultPageCalled(_NextResultPageCalled value),
+    TResult getPopularActorsCalled(_GetPopularActorsCalled value),
+    TResult nextPopularActorsPageCalled(_NextPopularActorsPageCalled value),
     @required TResult orElse(),
   }) {
     assert(orElse != null);
@@ -247,10 +279,14 @@ class _$_DeleteSearchPressed implements _DeleteSearchPressed {
     @required TResult searchNameChanged(String name),
     @required TResult deleteSearchPressed(),
     @required TResult nextResultPageCalled(),
+    @required TResult getPopularActorsCalled(),
+    @required TResult nextPopularActorsPageCalled(),
   }) {
     assert(searchNameChanged != null);
     assert(deleteSearchPressed != null);
     assert(nextResultPageCalled != null);
+    assert(getPopularActorsCalled != null);
+    assert(nextPopularActorsPageCalled != null);
     return deleteSearchPressed();
   }
 
@@ -260,6 +296,8 @@ class _$_DeleteSearchPressed implements _DeleteSearchPressed {
     TResult searchNameChanged(String name),
     TResult deleteSearchPressed(),
     TResult nextResultPageCalled(),
+    TResult getPopularActorsCalled(),
+    TResult nextPopularActorsPageCalled(),
     @required TResult orElse(),
   }) {
     assert(orElse != null);
@@ -275,10 +313,15 @@ class _$_DeleteSearchPressed implements _DeleteSearchPressed {
     @required TResult searchNameChanged(_SearchNameChanged value),
     @required TResult deleteSearchPressed(_DeleteSearchPressed value),
     @required TResult nextResultPageCalled(_NextResultPageCalled value),
+    @required TResult getPopularActorsCalled(_GetPopularActorsCalled value),
+    @required
+        TResult nextPopularActorsPageCalled(_NextPopularActorsPageCalled value),
   }) {
     assert(searchNameChanged != null);
     assert(deleteSearchPressed != null);
     assert(nextResultPageCalled != null);
+    assert(getPopularActorsCalled != null);
+    assert(nextPopularActorsPageCalled != null);
     return deleteSearchPressed(this);
   }
 
@@ -288,6 +331,8 @@ class _$_DeleteSearchPressed implements _DeleteSearchPressed {
     TResult searchNameChanged(_SearchNameChanged value),
     TResult deleteSearchPressed(_DeleteSearchPressed value),
     TResult nextResultPageCalled(_NextResultPageCalled value),
+    TResult getPopularActorsCalled(_GetPopularActorsCalled value),
+    TResult nextPopularActorsPageCalled(_NextPopularActorsPageCalled value),
     @required TResult orElse(),
   }) {
     assert(orElse != null);
@@ -344,10 +389,14 @@ class _$_NextResultPageCalled implements _NextResultPageCalled {
     @required TResult searchNameChanged(String name),
     @required TResult deleteSearchPressed(),
     @required TResult nextResultPageCalled(),
+    @required TResult getPopularActorsCalled(),
+    @required TResult nextPopularActorsPageCalled(),
   }) {
     assert(searchNameChanged != null);
     assert(deleteSearchPressed != null);
     assert(nextResultPageCalled != null);
+    assert(getPopularActorsCalled != null);
+    assert(nextPopularActorsPageCalled != null);
     return nextResultPageCalled();
   }
 
@@ -357,6 +406,8 @@ class _$_NextResultPageCalled implements _NextResultPageCalled {
     TResult searchNameChanged(String name),
     TResult deleteSearchPressed(),
     TResult nextResultPageCalled(),
+    TResult getPopularActorsCalled(),
+    TResult nextPopularActorsPageCalled(),
     @required TResult orElse(),
   }) {
     assert(orElse != null);
@@ -372,10 +423,15 @@ class _$_NextResultPageCalled implements _NextResultPageCalled {
     @required TResult searchNameChanged(_SearchNameChanged value),
     @required TResult deleteSearchPressed(_DeleteSearchPressed value),
     @required TResult nextResultPageCalled(_NextResultPageCalled value),
+    @required TResult getPopularActorsCalled(_GetPopularActorsCalled value),
+    @required
+        TResult nextPopularActorsPageCalled(_NextPopularActorsPageCalled value),
   }) {
     assert(searchNameChanged != null);
     assert(deleteSearchPressed != null);
     assert(nextResultPageCalled != null);
+    assert(getPopularActorsCalled != null);
+    assert(nextPopularActorsPageCalled != null);
     return nextResultPageCalled(this);
   }
 
@@ -385,6 +441,8 @@ class _$_NextResultPageCalled implements _NextResultPageCalled {
     TResult searchNameChanged(_SearchNameChanged value),
     TResult deleteSearchPressed(_DeleteSearchPressed value),
     TResult nextResultPageCalled(_NextResultPageCalled value),
+    TResult getPopularActorsCalled(_GetPopularActorsCalled value),
+    TResult nextPopularActorsPageCalled(_NextPopularActorsPageCalled value),
     @required TResult orElse(),
   }) {
     assert(orElse != null);
@@ -400,6 +458,229 @@ abstract class _NextResultPageCalled implements ActorSearchEvent {
 }
 
 /// @nodoc
+abstract class _$GetPopularActorsCalledCopyWith<$Res> {
+  factory _$GetPopularActorsCalledCopyWith(_GetPopularActorsCalled value,
+          $Res Function(_GetPopularActorsCalled) then) =
+      __$GetPopularActorsCalledCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$GetPopularActorsCalledCopyWithImpl<$Res>
+    extends _$ActorSearchEventCopyWithImpl<$Res>
+    implements _$GetPopularActorsCalledCopyWith<$Res> {
+  __$GetPopularActorsCalledCopyWithImpl(_GetPopularActorsCalled _value,
+      $Res Function(_GetPopularActorsCalled) _then)
+      : super(_value, (v) => _then(v as _GetPopularActorsCalled));
+
+  @override
+  _GetPopularActorsCalled get _value => super._value as _GetPopularActorsCalled;
+}
+
+/// @nodoc
+class _$_GetPopularActorsCalled implements _GetPopularActorsCalled {
+  const _$_GetPopularActorsCalled();
+
+  @override
+  String toString() {
+    return 'ActorSearchEvent.getPopularActorsCalled()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) || (other is _GetPopularActorsCalled);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object>({
+    @required TResult searchNameChanged(String name),
+    @required TResult deleteSearchPressed(),
+    @required TResult nextResultPageCalled(),
+    @required TResult getPopularActorsCalled(),
+    @required TResult nextPopularActorsPageCalled(),
+  }) {
+    assert(searchNameChanged != null);
+    assert(deleteSearchPressed != null);
+    assert(nextResultPageCalled != null);
+    assert(getPopularActorsCalled != null);
+    assert(nextPopularActorsPageCalled != null);
+    return getPopularActorsCalled();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object>({
+    TResult searchNameChanged(String name),
+    TResult deleteSearchPressed(),
+    TResult nextResultPageCalled(),
+    TResult getPopularActorsCalled(),
+    TResult nextPopularActorsPageCalled(),
+    @required TResult orElse(),
+  }) {
+    assert(orElse != null);
+    if (getPopularActorsCalled != null) {
+      return getPopularActorsCalled();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object>({
+    @required TResult searchNameChanged(_SearchNameChanged value),
+    @required TResult deleteSearchPressed(_DeleteSearchPressed value),
+    @required TResult nextResultPageCalled(_NextResultPageCalled value),
+    @required TResult getPopularActorsCalled(_GetPopularActorsCalled value),
+    @required
+        TResult nextPopularActorsPageCalled(_NextPopularActorsPageCalled value),
+  }) {
+    assert(searchNameChanged != null);
+    assert(deleteSearchPressed != null);
+    assert(nextResultPageCalled != null);
+    assert(getPopularActorsCalled != null);
+    assert(nextPopularActorsPageCalled != null);
+    return getPopularActorsCalled(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object>({
+    TResult searchNameChanged(_SearchNameChanged value),
+    TResult deleteSearchPressed(_DeleteSearchPressed value),
+    TResult nextResultPageCalled(_NextResultPageCalled value),
+    TResult getPopularActorsCalled(_GetPopularActorsCalled value),
+    TResult nextPopularActorsPageCalled(_NextPopularActorsPageCalled value),
+    @required TResult orElse(),
+  }) {
+    assert(orElse != null);
+    if (getPopularActorsCalled != null) {
+      return getPopularActorsCalled(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _GetPopularActorsCalled implements ActorSearchEvent {
+  const factory _GetPopularActorsCalled() = _$_GetPopularActorsCalled;
+}
+
+/// @nodoc
+abstract class _$NextPopularActorsPageCalledCopyWith<$Res> {
+  factory _$NextPopularActorsPageCalledCopyWith(
+          _NextPopularActorsPageCalled value,
+          $Res Function(_NextPopularActorsPageCalled) then) =
+      __$NextPopularActorsPageCalledCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$NextPopularActorsPageCalledCopyWithImpl<$Res>
+    extends _$ActorSearchEventCopyWithImpl<$Res>
+    implements _$NextPopularActorsPageCalledCopyWith<$Res> {
+  __$NextPopularActorsPageCalledCopyWithImpl(
+      _NextPopularActorsPageCalled _value,
+      $Res Function(_NextPopularActorsPageCalled) _then)
+      : super(_value, (v) => _then(v as _NextPopularActorsPageCalled));
+
+  @override
+  _NextPopularActorsPageCalled get _value =>
+      super._value as _NextPopularActorsPageCalled;
+}
+
+/// @nodoc
+class _$_NextPopularActorsPageCalled implements _NextPopularActorsPageCalled {
+  const _$_NextPopularActorsPageCalled();
+
+  @override
+  String toString() {
+    return 'ActorSearchEvent.nextPopularActorsPageCalled()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) || (other is _NextPopularActorsPageCalled);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object>({
+    @required TResult searchNameChanged(String name),
+    @required TResult deleteSearchPressed(),
+    @required TResult nextResultPageCalled(),
+    @required TResult getPopularActorsCalled(),
+    @required TResult nextPopularActorsPageCalled(),
+  }) {
+    assert(searchNameChanged != null);
+    assert(deleteSearchPressed != null);
+    assert(nextResultPageCalled != null);
+    assert(getPopularActorsCalled != null);
+    assert(nextPopularActorsPageCalled != null);
+    return nextPopularActorsPageCalled();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object>({
+    TResult searchNameChanged(String name),
+    TResult deleteSearchPressed(),
+    TResult nextResultPageCalled(),
+    TResult getPopularActorsCalled(),
+    TResult nextPopularActorsPageCalled(),
+    @required TResult orElse(),
+  }) {
+    assert(orElse != null);
+    if (nextPopularActorsPageCalled != null) {
+      return nextPopularActorsPageCalled();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object>({
+    @required TResult searchNameChanged(_SearchNameChanged value),
+    @required TResult deleteSearchPressed(_DeleteSearchPressed value),
+    @required TResult nextResultPageCalled(_NextResultPageCalled value),
+    @required TResult getPopularActorsCalled(_GetPopularActorsCalled value),
+    @required
+        TResult nextPopularActorsPageCalled(_NextPopularActorsPageCalled value),
+  }) {
+    assert(searchNameChanged != null);
+    assert(deleteSearchPressed != null);
+    assert(nextResultPageCalled != null);
+    assert(getPopularActorsCalled != null);
+    assert(nextPopularActorsPageCalled != null);
+    return nextPopularActorsPageCalled(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object>({
+    TResult searchNameChanged(_SearchNameChanged value),
+    TResult deleteSearchPressed(_DeleteSearchPressed value),
+    TResult nextResultPageCalled(_NextResultPageCalled value),
+    TResult getPopularActorsCalled(_GetPopularActorsCalled value),
+    TResult nextPopularActorsPageCalled(_NextPopularActorsPageCalled value),
+    @required TResult orElse(),
+  }) {
+    assert(orElse != null);
+    if (nextPopularActorsPageCalled != null) {
+      return nextPopularActorsPageCalled(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _NextPopularActorsPageCalled implements ActorSearchEvent {
+  const factory _NextPopularActorsPageCalled() = _$_NextPopularActorsPageCalled;
+}
+
+/// @nodoc
 class _$ActorSearchStateTearOff {
   const _$ActorSearchStateTearOff();
 
@@ -410,7 +691,9 @@ class _$ActorSearchStateTearOff {
       @required bool isSearching,
       @required bool isSearchCompleted,
       @required ActorSearchResults actorSearchResults,
-      @required int searchPageNum}) {
+      @required int searchPageNum,
+      @required ActorSearchResults popularActors,
+      @required int popularPageNum}) {
     return _ActorSearchState(
       name: name,
       errorMessage: errorMessage,
@@ -418,6 +701,8 @@ class _$ActorSearchStateTearOff {
       isSearchCompleted: isSearchCompleted,
       actorSearchResults: actorSearchResults,
       searchPageNum: searchPageNum,
+      popularActors: popularActors,
+      popularPageNum: popularPageNum,
     );
   }
 }
@@ -434,6 +719,8 @@ mixin _$ActorSearchState {
   bool get isSearchCompleted;
   ActorSearchResults get actorSearchResults;
   int get searchPageNum;
+  ActorSearchResults get popularActors;
+  int get popularPageNum;
 
   @JsonKey(ignore: true)
   $ActorSearchStateCopyWith<ActorSearchState> get copyWith;
@@ -450,7 +737,9 @@ abstract class $ActorSearchStateCopyWith<$Res> {
       bool isSearching,
       bool isSearchCompleted,
       ActorSearchResults actorSearchResults,
-      int searchPageNum});
+      int searchPageNum,
+      ActorSearchResults popularActors,
+      int popularPageNum});
 }
 
 /// @nodoc
@@ -470,6 +759,8 @@ class _$ActorSearchStateCopyWithImpl<$Res>
     Object isSearchCompleted = freezed,
     Object actorSearchResults = freezed,
     Object searchPageNum = freezed,
+    Object popularActors = freezed,
+    Object popularPageNum = freezed,
   }) {
     return _then(_value.copyWith(
       name: name == freezed ? _value.name : name as String,
@@ -487,6 +778,12 @@ class _$ActorSearchStateCopyWithImpl<$Res>
       searchPageNum: searchPageNum == freezed
           ? _value.searchPageNum
           : searchPageNum as int,
+      popularActors: popularActors == freezed
+          ? _value.popularActors
+          : popularActors as ActorSearchResults,
+      popularPageNum: popularPageNum == freezed
+          ? _value.popularPageNum
+          : popularPageNum as int,
     ));
   }
 }
@@ -504,7 +801,9 @@ abstract class _$ActorSearchStateCopyWith<$Res>
       bool isSearching,
       bool isSearchCompleted,
       ActorSearchResults actorSearchResults,
-      int searchPageNum});
+      int searchPageNum,
+      ActorSearchResults popularActors,
+      int popularPageNum});
 }
 
 /// @nodoc
@@ -526,6 +825,8 @@ class __$ActorSearchStateCopyWithImpl<$Res>
     Object isSearchCompleted = freezed,
     Object actorSearchResults = freezed,
     Object searchPageNum = freezed,
+    Object popularActors = freezed,
+    Object popularPageNum = freezed,
   }) {
     return _then(_ActorSearchState(
       name: name == freezed ? _value.name : name as String,
@@ -543,6 +844,12 @@ class __$ActorSearchStateCopyWithImpl<$Res>
       searchPageNum: searchPageNum == freezed
           ? _value.searchPageNum
           : searchPageNum as int,
+      popularActors: popularActors == freezed
+          ? _value.popularActors
+          : popularActors as ActorSearchResults,
+      popularPageNum: popularPageNum == freezed
+          ? _value.popularPageNum
+          : popularPageNum as int,
     ));
   }
 }
@@ -555,13 +862,17 @@ class _$_ActorSearchState implements _ActorSearchState {
       @required this.isSearching,
       @required this.isSearchCompleted,
       @required this.actorSearchResults,
-      @required this.searchPageNum})
+      @required this.searchPageNum,
+      @required this.popularActors,
+      @required this.popularPageNum})
       : assert(name != null),
         assert(errorMessage != null),
         assert(isSearching != null),
         assert(isSearchCompleted != null),
         assert(actorSearchResults != null),
-        assert(searchPageNum != null);
+        assert(searchPageNum != null),
+        assert(popularActors != null),
+        assert(popularPageNum != null);
 
   @override
   final String name;
@@ -575,10 +886,14 @@ class _$_ActorSearchState implements _ActorSearchState {
   final ActorSearchResults actorSearchResults;
   @override
   final int searchPageNum;
+  @override
+  final ActorSearchResults popularActors;
+  @override
+  final int popularPageNum;
 
   @override
   String toString() {
-    return 'ActorSearchState(name: $name, errorMessage: $errorMessage, isSearching: $isSearching, isSearchCompleted: $isSearchCompleted, actorSearchResults: $actorSearchResults, searchPageNum: $searchPageNum)';
+    return 'ActorSearchState(name: $name, errorMessage: $errorMessage, isSearching: $isSearching, isSearchCompleted: $isSearchCompleted, actorSearchResults: $actorSearchResults, searchPageNum: $searchPageNum, popularActors: $popularActors, popularPageNum: $popularPageNum)';
   }
 
   @override
@@ -601,7 +916,13 @@ class _$_ActorSearchState implements _ActorSearchState {
                     .equals(other.actorSearchResults, actorSearchResults)) &&
             (identical(other.searchPageNum, searchPageNum) ||
                 const DeepCollectionEquality()
-                    .equals(other.searchPageNum, searchPageNum)));
+                    .equals(other.searchPageNum, searchPageNum)) &&
+            (identical(other.popularActors, popularActors) ||
+                const DeepCollectionEquality()
+                    .equals(other.popularActors, popularActors)) &&
+            (identical(other.popularPageNum, popularPageNum) ||
+                const DeepCollectionEquality()
+                    .equals(other.popularPageNum, popularPageNum)));
   }
 
   @override
@@ -612,7 +933,9 @@ class _$_ActorSearchState implements _ActorSearchState {
       const DeepCollectionEquality().hash(isSearching) ^
       const DeepCollectionEquality().hash(isSearchCompleted) ^
       const DeepCollectionEquality().hash(actorSearchResults) ^
-      const DeepCollectionEquality().hash(searchPageNum);
+      const DeepCollectionEquality().hash(searchPageNum) ^
+      const DeepCollectionEquality().hash(popularActors) ^
+      const DeepCollectionEquality().hash(popularPageNum);
 
   @JsonKey(ignore: true)
   @override
@@ -627,7 +950,9 @@ abstract class _ActorSearchState implements ActorSearchState {
       @required bool isSearching,
       @required bool isSearchCompleted,
       @required ActorSearchResults actorSearchResults,
-      @required int searchPageNum}) = _$_ActorSearchState;
+      @required int searchPageNum,
+      @required ActorSearchResults popularActors,
+      @required int popularPageNum}) = _$_ActorSearchState;
 
   @override
   String get name;
@@ -641,6 +966,10 @@ abstract class _ActorSearchState implements ActorSearchState {
   ActorSearchResults get actorSearchResults;
   @override
   int get searchPageNum;
+  @override
+  ActorSearchResults get popularActors;
+  @override
+  int get popularPageNum;
   @override
   @JsonKey(ignore: true)
   _$ActorSearchStateCopyWith<_ActorSearchState> get copyWith;

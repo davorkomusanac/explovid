@@ -9,6 +9,8 @@ abstract class ActorSearchState with _$ActorSearchState {
     @required bool isSearchCompleted,
     @required ActorSearchResults actorSearchResults,
     @required int searchPageNum,
+    @required ActorSearchResults popularActors,
+    @required int popularPageNum,
   }) = _ActorSearchState;
 
   factory ActorSearchState.initial() => ActorSearchState(
@@ -18,5 +20,7 @@ abstract class ActorSearchState with _$ActorSearchState {
         isSearchCompleted: false,
         actorSearchResults: ActorSearchResults(totalResults: 0),
         searchPageNum: 1,
+        popularActors: ActorSearchResults(totalResults: 0),
+        popularPageNum: 1,
       );
 }

@@ -32,6 +32,9 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
     _searchController = TextEditingController();
     _scrollController = ScrollController();
     _tabController = TabController(initialIndex: 0, vsync: this, length: _myTabs.length);
+    context.read<MovieSearchBloc>().add(MovieSearchEvent.getPopularMoviesCalled());
+    context.read<TvShowSearchBloc>().add(TvShowSearchEvent.getPopularTvShowsCalled());
+    context.read<ActorSearchBloc>().add(ActorSearchEvent.getPopularActorsCalled());
   }
 
   @override
@@ -71,6 +74,35 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
     return false;
   }
 
+  //If at end of the GridView (popular movies, tv shows...) search for more Results
+  bool _handlePopularScrollNotification(ScrollNotification notification) {
+    if (notification is ScrollEndNotification && _scrollController.position.extentAfter == 0) {
+      print("Calling FETCH NEXT PAGE");
+      switch (_tabController.index) {
+        case (0):
+          context.read<MovieSearchBloc>().add(
+                MovieSearchEvent.nextPopularMoviesPageCalled(),
+              );
+          break;
+        case (1):
+          context.read<TvShowSearchBloc>().add(
+                TvShowSearchEvent.nextPopularTvShowsPageCalled(),
+              );
+          break;
+        case (2):
+          context.read<ActorSearchBloc>().add(
+                ActorSearchEvent.nextPopularActorsPageCalled(),
+              );
+          break;
+        case (3):
+          print("Popular Users SEARCH NEXT PAGE CALLED");
+          break;
+        default:
+      }
+    }
+    return false;
+  }
+
   List<Widget> _tabViews(BuildContext context) {
     List<Widget> views = <Widget>[
       _buildSearchMovieTabView(context),
@@ -98,6 +130,12 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
               _tabController.animateTo(0);
               context.read<MovieSearchBloc>().add(
                     MovieSearchEvent.changeIsSearchPageDoublePressed(),
+                  );
+              context.read<TvShowSearchBloc>().add(
+                    TvShowSearchEvent.deleteSearchPressed(),
+                  );
+              context.read<ActorSearchBloc>().add(
+                    ActorSearchEvent.deleteSearchPressed(),
                   );
             }
           },
@@ -238,8 +276,67 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
           children: [
             if (!state.isSearching && state.errorMessage.isEmpty && !state.isSearchCompleted)
               //Show here popular movies? Or trending, or recommendations? Also the same for TV shows tabs?
-              Center(
-                child: const Text("Popular Actors are going to show here..."),
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 8.0),
+                  child: NotificationListener<ScrollNotification>(
+                    onNotification: _handlePopularScrollNotification,
+                    child: GridView.builder(
+                      keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+                      controller: _scrollController,
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 3,
+                        childAspectRatio: 0.6,
+                      ),
+                      itemCount: _calculatePopularActorsItemCount(state),
+                      itemBuilder: (context, index) {
+                        return index >= state.popularActors.actorSummaries.length
+                            ? BuildLoaderNextPage()
+                            : Padding(
+                                padding: const EdgeInsets.all(8),
+                                child: InkWell(
+                                  onTap: () {
+                                    Navigator.of(context, rootNavigator: false).push(
+                                      MaterialPageRoute(
+                                        builder: (context) => ActorDetailsPage(
+                                          state.popularActors.actorSummaries[index].id,
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                  child: Column(
+                                    children: [
+                                      AspectRatio(
+                                        aspectRatio: 0.69,
+                                        child: BuildPosterImage(
+                                          height: 135,
+                                          width: 90,
+                                          imagePath: state.popularActors.actorSummaries[index].profilePath,
+                                        ),
+                                      ),
+                                      Expanded(
+                                        child: Padding(
+                                          padding: const EdgeInsets.only(top: 8.0, bottom: 4.0),
+                                          child: Text(
+                                            state.popularActors.actorSummaries[index].name,
+                                            overflow: TextOverflow.ellipsis,
+                                            textAlign: TextAlign.center,
+                                            maxLines: 2,
+                                            style: TextStyle(
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              );
+                      },
+                    ),
+                  ),
+                ),
               ),
             if (state.isSearching) BuildSearchProgressIndicator(),
             if (state.isSearchCompleted)
@@ -263,6 +360,14 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
         );
       },
     );
+  }
+
+  int _calculatePopularActorsItemCount(ActorSearchState state) {
+    if (state.popularPageNum < state.popularActors.totalPages) {
+      return state.popularActors.actorSummaries.length + 1;
+    } else {
+      return state.popularActors.actorSummaries.length;
+    }
   }
 
   int _calculateActorListItemCount(ActorSearchState state) {
@@ -338,8 +443,68 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
           children: [
             if (!state.isSearching && state.errorMessage.isEmpty && !state.isSearchCompleted)
               //Show here popular movies? Or trending, or recommendations? Also the same for TV shows tabs?
-              Center(
-                child: const Text("Popular Tv Shows are going to show here..."),
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 8.0),
+                  child: NotificationListener<ScrollNotification>(
+                    onNotification: _handlePopularScrollNotification,
+                    child: GridView.builder(
+                      keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+                      controller: _scrollController,
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 3,
+                        childAspectRatio: 0.6,
+                      ),
+                      itemCount: _calculatePopularTvShowsItemCount(state),
+                      itemBuilder: (context, index) {
+                        return index >= state.popularTvShows.tvShowSummaries.length
+                            ? BuildLoaderNextPage()
+                            : Padding(
+                                padding: const EdgeInsets.all(8),
+                                child: InkWell(
+                                  onTap: () {
+                                    Navigator.of(context, rootNavigator: false).push(
+                                      MaterialPageRoute(
+                                        builder: (context) => TvShowDetailsPage(
+                                          state.popularTvShows.tvShowSummaries[index].id,
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                  child: Column(
+                                    children: [
+                                      AspectRatio(
+                                        aspectRatio: 0.69,
+                                        child: BuildPosterImage(
+                                          height: 135,
+                                          width: 90,
+                                          imagePath: state.popularTvShows.tvShowSummaries[index].posterPath,
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.only(top: 8.0, bottom: 4.0),
+                                        child: Text(
+                                          state.popularTvShows.tvShowSummaries[index].voteCount > 100 &&
+                                                  state.popularTvShows.tvShowSummaries[index].voteAverage != 0
+                                              ? "⭐ " + state.popularTvShows.tvShowSummaries[index].voteAverage.toString()
+                                              : "⭐ N/A",
+                                          overflow: TextOverflow.ellipsis,
+                                          textAlign: TextAlign.center,
+                                          maxLines: 2,
+                                          style: TextStyle(
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              );
+                      },
+                    ),
+                  ),
+                ),
               ),
             if (state.isSearching) BuildSearchProgressIndicator(),
             if (state.isSearchCompleted)
@@ -363,6 +528,14 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
         );
       },
     );
+  }
+
+  int _calculatePopularTvShowsItemCount(TvShowSearchState state) {
+    if (state.popularPageNum < state.popularTvShows.totalPages) {
+      return state.popularTvShows.tvShowSummaries.length + 1;
+    } else {
+      return state.popularTvShows.tvShowSummaries.length;
+    }
   }
 
   int _calculateTvShowListItemCount(TvShowSearchState state) {
@@ -450,8 +623,68 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
           children: [
             if (!state.isSearching && state.errorMessage.isEmpty && !state.isSearchCompleted)
               //Show here popular movies? Or trending, or recommendations? Also the same for TV shows tabs?
-              Center(
-                child: const Text("Popular movies are going to show here..."),
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 8.0),
+                  child: NotificationListener<ScrollNotification>(
+                    onNotification: _handlePopularScrollNotification,
+                    child: GridView.builder(
+                      keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+                      controller: _scrollController,
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 3,
+                        childAspectRatio: 0.6,
+                      ),
+                      itemCount: _calculatePopularMoviesItemCount(state),
+                      itemBuilder: (context, index) {
+                        return index >= state.popularMovies.movieSummaries.length
+                            ? BuildLoaderNextPage()
+                            : Padding(
+                                padding: const EdgeInsets.all(8),
+                                child: InkWell(
+                                  onTap: () {
+                                    Navigator.of(context, rootNavigator: false).push(
+                                      MaterialPageRoute(
+                                        builder: (context) => MovieDetailsPage(
+                                          state.popularMovies.movieSummaries[index].id,
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                  child: Column(
+                                    children: [
+                                      AspectRatio(
+                                        aspectRatio: 0.69,
+                                        child: BuildPosterImage(
+                                          height: 135,
+                                          width: 90,
+                                          imagePath: state.popularMovies.movieSummaries[index].posterPath,
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.only(top: 8.0, bottom: 4.0),
+                                        child: Text(
+                                          state.popularMovies.movieSummaries[index].voteCount > 100 &&
+                                                  state.popularMovies.movieSummaries[index].voteAverage != 0
+                                              ? "⭐ " + state.popularMovies.movieSummaries[index].voteAverage.toString()
+                                              : "⭐ N/A",
+                                          overflow: TextOverflow.ellipsis,
+                                          textAlign: TextAlign.center,
+                                          maxLines: 2,
+                                          style: TextStyle(
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              );
+                      },
+                    ),
+                  ),
+                ),
               ),
             if (state.isSearching) BuildSearchProgressIndicator(),
             if (state.isSearchCompleted)
@@ -475,6 +708,14 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
         );
       },
     );
+  }
+
+  int _calculatePopularMoviesItemCount(MovieSearchState state) {
+    if (state.popularPageNum < state.popularMovies.totalPages) {
+      return state.popularMovies.movieSummaries.length + 1;
+    } else {
+      return state.popularMovies.movieSummaries.length;
+    }
   }
 
   int _calculateMovieListItemCount(MovieSearchState state) {

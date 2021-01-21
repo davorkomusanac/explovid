@@ -7,4 +7,6 @@ abstract class MovieSearchEvent with _$MovieSearchEvent {
   const factory MovieSearchEvent.searchPageDoublePressed() = _SearchPageDoublePressed;
   const factory MovieSearchEvent.changeIsSearchPageDoublePressed() = _ChangeIsSearchPageDoublePressed;
   const factory MovieSearchEvent.nextResultPageCalled() = _NextResultPageCalled;
+  const factory MovieSearchEvent.getPopularMoviesCalled() = _GetPopularMoviesCalled;
+  const factory MovieSearchEvent.nextPopularMoviesPageCalled() = _NextPopularMoviesPageCalled;
 }

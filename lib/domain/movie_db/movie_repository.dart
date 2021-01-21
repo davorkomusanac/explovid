@@ -8,6 +8,7 @@ import 'dart:convert';
 
 const String _baseSearchMovieUrl = "https://api.themoviedb.org/3/search/movie?api_key=$API_KEY&language=en-US&query=";
 const String _baseMovieDetailsUrl = "https://api.themoviedb.org/3/movie/";
+const String _basePopularMoviesUrl = "https://api.themoviedb.org/3/movie/popular?api_key=$API_KEY&language=en-US&page=";
 
 class MovieRepository {
   final http.Client client;
@@ -88,5 +89,33 @@ class MovieRepository {
     String returnString =
         _baseMovieDetailsUrl + id.toString() + "?api_key=$API_KEY" + "&append_to_response=credits,recommendations,videos";
     return returnString;
+  }
+
+  Future<MovieSearchResults> getPopularMovies([int page = 1]) async {
+    try {
+      final response = await client.get(_basePopularMoviesUrl + page.toString());
+      print(_basePopularMoviesUrl + page.toString());
+
+      if (response.statusCode != 200) throw Exception('There was an error searching');
+
+      return MovieSearchResults.fromJson(
+        json.decode(response.body) as Map<String, dynamic>,
+        page,
+      );
+    } on SocketException {
+      print("Popular Movies Search ERROR: " + "No internet connection found / SocketException");
+      return MovieSearchResults(
+        totalResults: 0,
+        errorMessage: "Network issues, check your internet connection.",
+        movieSummaries: [],
+      );
+    } catch (e) {
+      print("Popular Movies Search ERROR: " + e.toString());
+      return MovieSearchResults(
+        totalResults: 0,
+        errorMessage: e.toString(),
+        movieSummaries: [],
+      );
+    }
   }
 }

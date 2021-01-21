@@ -9,6 +9,8 @@ abstract class TvShowSearchState with _$TvShowSearchState {
     @required bool isSearchCompleted,
     @required TvShowSearchResults tvShowSearchResults,
     @required int searchPageNum,
+    @required TvShowSearchResults popularTvShows,
+    @required int popularPageNum,
   }) = _TvShowSearchState;
 
   factory TvShowSearchState.initial() => TvShowSearchState(
@@ -18,5 +20,7 @@ abstract class TvShowSearchState with _$TvShowSearchState {
         isSearchCompleted: false,
         tvShowSearchResults: TvShowSearchResults(totalResults: 0),
         searchPageNum: 1,
+        popularTvShows: TvShowSearchResults(totalResults: 0),
+        popularPageNum: 1,
       );
 }

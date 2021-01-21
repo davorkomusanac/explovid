@@ -8,6 +8,7 @@ import 'dart:convert';
 
 const String _baseSearchTvShowUrl = "https://api.themoviedb.org/3/search/tv?api_key=$API_KEY&language=en-US&query=";
 const String _baseTvShowDetailsUrl = "https://api.themoviedb.org/3/tv/";
+const String _basePopularTvShowsUrl = "https://api.themoviedb.org/3/tv/popular?api_key=$API_KEY&language=en-US&page=";
 
 class TvShowRepository {
   final http.Client client;
@@ -90,5 +91,33 @@ class TvShowRepository {
         "?api_key=$API_KEY" +
         "&append_to_response=aggregate_credits,recommendations,videos";
     return returnString;
+  }
+
+  Future<TvShowSearchResults> getPopularTvShows([int page = 1]) async {
+    try {
+      final response = await client.get(_basePopularTvShowsUrl + page.toString());
+      print(_basePopularTvShowsUrl + page.toString());
+
+      if (response.statusCode != 200) throw Exception('There was an error searching');
+
+      return TvShowSearchResults.fromJson(
+        json.decode(response.body) as Map<String, dynamic>,
+        page,
+      );
+    } on SocketException {
+      print("Popular Tv Show Search ERROR: " + "No internet connection found / SocketException");
+      return TvShowSearchResults(
+        totalResults: 0,
+        errorMessage: "Network issues, check your internet connection.",
+        tvShowSummaries: [],
+      );
+    } catch (e) {
+      print("Popular Tv Show Search ERROR: " + e.toString());
+      return TvShowSearchResults(
+        totalResults: 0,
+        errorMessage: e.toString(),
+        tvShowSummaries: [],
+      );
+    }
   }
 }

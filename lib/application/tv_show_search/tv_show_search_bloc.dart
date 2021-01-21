@@ -13,7 +13,6 @@ part 'tv_show_search_bloc.freezed.dart';
 
 class TvShowSearchBloc extends Bloc<TvShowSearchEvent, TvShowSearchState> {
   final TvShowRepository _tvShowRepository;
-  TvShowSearchResults _results;
 
   TvShowSearchBloc(this._tvShowRepository) : super(TvShowSearchState.initial());
 
@@ -31,7 +30,7 @@ class TvShowSearchBloc extends Bloc<TvShowSearchEvent, TvShowSearchState> {
           searchPageNum: 1,
         );
         if (e.name.trim().isNotEmpty) {
-          _results = await _tvShowRepository.searchTvShow(e.name.trim());
+          var _results = await _tvShowRepository.searchTvShow(e.name.trim());
           if (_results.errorMessage == "No results found.") {
             yield state.copyWith(
               errorMessage: "No results found.",
@@ -67,14 +66,43 @@ class TvShowSearchBloc extends Bloc<TvShowSearchEvent, TvShowSearchState> {
         );
       },
       nextResultPageCalled: (e) async* {
-        if (state.searchPageNum < _results.totalPages) {
+        if (state.searchPageNum < state.tvShowSearchResults.totalPages) {
           //increase SearchPageNum
           var newTvShowResults = await _tvShowRepository.searchTvShow(state.name, state.searchPageNum + 1);
           for (var tvShow in newTvShowResults.tvShowSummaries) {
-            _results.tvShowSummaries.add(tvShow);
+            state.tvShowSearchResults.tvShowSummaries.add(tvShow);
           }
           yield state.copyWith(
             searchPageNum: state.searchPageNum + 1,
+          );
+        }
+      },
+      getPopularTvShowsCalled: (e) async* {
+        yield state.copyWith(
+          isSearching: true,
+        );
+        var _popularTvShowsResult = await _tvShowRepository.getPopularTvShows();
+        if (_popularTvShowsResult.errorMessage.isNotEmpty) {
+          yield state.copyWith(
+            isSearching: false,
+            errorMessage: _popularTvShowsResult.errorMessage,
+          );
+        } else {
+          yield state.copyWith(
+            isSearching: false,
+            errorMessage: '',
+            popularTvShows: _popularTvShowsResult,
+          );
+        }
+      },
+      nextPopularTvShowsPageCalled: (e) async* {
+        if (state.popularPageNum < state.popularTvShows.totalPages) {
+          var newPopularTvShowPage = await _tvShowRepository.getPopularTvShows(state.popularPageNum + 1);
+          for (var tvShow in newPopularTvShowPage.tvShowSummaries) {
+            state.popularTvShows.tvShowSummaries.add(tvShow);
+          }
+          yield state.copyWith(
+            popularPageNum: state.popularPageNum + 1,
           );
         }
       },

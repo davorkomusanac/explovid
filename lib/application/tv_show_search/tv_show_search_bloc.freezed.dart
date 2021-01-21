@@ -29,6 +29,16 @@ class _$TvShowSearchEventTearOff {
   _NextResultPageCalled nextResultPageCalled() {
     return const _NextResultPageCalled();
   }
+
+// ignore: unused_element
+  _GetPopularTvShowsCalled getPopularTvShowsCalled() {
+    return const _GetPopularTvShowsCalled();
+  }
+
+// ignore: unused_element
+  _NextPopularTvShowsPageCalled nextPopularTvShowsPageCalled() {
+    return const _NextPopularTvShowsPageCalled();
+  }
 }
 
 /// @nodoc
@@ -42,12 +52,16 @@ mixin _$TvShowSearchEvent {
     @required TResult searchNameChanged(String name),
     @required TResult deleteSearchPressed(),
     @required TResult nextResultPageCalled(),
+    @required TResult getPopularTvShowsCalled(),
+    @required TResult nextPopularTvShowsPageCalled(),
   });
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object>({
     TResult searchNameChanged(String name),
     TResult deleteSearchPressed(),
     TResult nextResultPageCalled(),
+    TResult getPopularTvShowsCalled(),
+    TResult nextPopularTvShowsPageCalled(),
     @required TResult orElse(),
   });
   @optionalTypeArgs
@@ -55,12 +69,18 @@ mixin _$TvShowSearchEvent {
     @required TResult searchNameChanged(_SearchNameChanged value),
     @required TResult deleteSearchPressed(_DeleteSearchPressed value),
     @required TResult nextResultPageCalled(_NextResultPageCalled value),
+    @required TResult getPopularTvShowsCalled(_GetPopularTvShowsCalled value),
+    @required
+        TResult nextPopularTvShowsPageCalled(
+            _NextPopularTvShowsPageCalled value),
   });
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object>({
     TResult searchNameChanged(_SearchNameChanged value),
     TResult deleteSearchPressed(_DeleteSearchPressed value),
     TResult nextResultPageCalled(_NextResultPageCalled value),
+    TResult getPopularTvShowsCalled(_GetPopularTvShowsCalled value),
+    TResult nextPopularTvShowsPageCalled(_NextPopularTvShowsPageCalled value),
     @required TResult orElse(),
   });
 }
@@ -146,10 +166,14 @@ class _$_SearchNameChanged implements _SearchNameChanged {
     @required TResult searchNameChanged(String name),
     @required TResult deleteSearchPressed(),
     @required TResult nextResultPageCalled(),
+    @required TResult getPopularTvShowsCalled(),
+    @required TResult nextPopularTvShowsPageCalled(),
   }) {
     assert(searchNameChanged != null);
     assert(deleteSearchPressed != null);
     assert(nextResultPageCalled != null);
+    assert(getPopularTvShowsCalled != null);
+    assert(nextPopularTvShowsPageCalled != null);
     return searchNameChanged(name);
   }
 
@@ -159,6 +183,8 @@ class _$_SearchNameChanged implements _SearchNameChanged {
     TResult searchNameChanged(String name),
     TResult deleteSearchPressed(),
     TResult nextResultPageCalled(),
+    TResult getPopularTvShowsCalled(),
+    TResult nextPopularTvShowsPageCalled(),
     @required TResult orElse(),
   }) {
     assert(orElse != null);
@@ -174,10 +200,16 @@ class _$_SearchNameChanged implements _SearchNameChanged {
     @required TResult searchNameChanged(_SearchNameChanged value),
     @required TResult deleteSearchPressed(_DeleteSearchPressed value),
     @required TResult nextResultPageCalled(_NextResultPageCalled value),
+    @required TResult getPopularTvShowsCalled(_GetPopularTvShowsCalled value),
+    @required
+        TResult nextPopularTvShowsPageCalled(
+            _NextPopularTvShowsPageCalled value),
   }) {
     assert(searchNameChanged != null);
     assert(deleteSearchPressed != null);
     assert(nextResultPageCalled != null);
+    assert(getPopularTvShowsCalled != null);
+    assert(nextPopularTvShowsPageCalled != null);
     return searchNameChanged(this);
   }
 
@@ -187,6 +219,8 @@ class _$_SearchNameChanged implements _SearchNameChanged {
     TResult searchNameChanged(_SearchNameChanged value),
     TResult deleteSearchPressed(_DeleteSearchPressed value),
     TResult nextResultPageCalled(_NextResultPageCalled value),
+    TResult getPopularTvShowsCalled(_GetPopularTvShowsCalled value),
+    TResult nextPopularTvShowsPageCalled(_NextPopularTvShowsPageCalled value),
     @required TResult orElse(),
   }) {
     assert(orElse != null);
@@ -247,10 +281,14 @@ class _$_DeleteSearchPressed implements _DeleteSearchPressed {
     @required TResult searchNameChanged(String name),
     @required TResult deleteSearchPressed(),
     @required TResult nextResultPageCalled(),
+    @required TResult getPopularTvShowsCalled(),
+    @required TResult nextPopularTvShowsPageCalled(),
   }) {
     assert(searchNameChanged != null);
     assert(deleteSearchPressed != null);
     assert(nextResultPageCalled != null);
+    assert(getPopularTvShowsCalled != null);
+    assert(nextPopularTvShowsPageCalled != null);
     return deleteSearchPressed();
   }
 
@@ -260,6 +298,8 @@ class _$_DeleteSearchPressed implements _DeleteSearchPressed {
     TResult searchNameChanged(String name),
     TResult deleteSearchPressed(),
     TResult nextResultPageCalled(),
+    TResult getPopularTvShowsCalled(),
+    TResult nextPopularTvShowsPageCalled(),
     @required TResult orElse(),
   }) {
     assert(orElse != null);
@@ -275,10 +315,16 @@ class _$_DeleteSearchPressed implements _DeleteSearchPressed {
     @required TResult searchNameChanged(_SearchNameChanged value),
     @required TResult deleteSearchPressed(_DeleteSearchPressed value),
     @required TResult nextResultPageCalled(_NextResultPageCalled value),
+    @required TResult getPopularTvShowsCalled(_GetPopularTvShowsCalled value),
+    @required
+        TResult nextPopularTvShowsPageCalled(
+            _NextPopularTvShowsPageCalled value),
   }) {
     assert(searchNameChanged != null);
     assert(deleteSearchPressed != null);
     assert(nextResultPageCalled != null);
+    assert(getPopularTvShowsCalled != null);
+    assert(nextPopularTvShowsPageCalled != null);
     return deleteSearchPressed(this);
   }
 
@@ -288,6 +334,8 @@ class _$_DeleteSearchPressed implements _DeleteSearchPressed {
     TResult searchNameChanged(_SearchNameChanged value),
     TResult deleteSearchPressed(_DeleteSearchPressed value),
     TResult nextResultPageCalled(_NextResultPageCalled value),
+    TResult getPopularTvShowsCalled(_GetPopularTvShowsCalled value),
+    TResult nextPopularTvShowsPageCalled(_NextPopularTvShowsPageCalled value),
     @required TResult orElse(),
   }) {
     assert(orElse != null);
@@ -344,10 +392,14 @@ class _$_NextResultPageCalled implements _NextResultPageCalled {
     @required TResult searchNameChanged(String name),
     @required TResult deleteSearchPressed(),
     @required TResult nextResultPageCalled(),
+    @required TResult getPopularTvShowsCalled(),
+    @required TResult nextPopularTvShowsPageCalled(),
   }) {
     assert(searchNameChanged != null);
     assert(deleteSearchPressed != null);
     assert(nextResultPageCalled != null);
+    assert(getPopularTvShowsCalled != null);
+    assert(nextPopularTvShowsPageCalled != null);
     return nextResultPageCalled();
   }
 
@@ -357,6 +409,8 @@ class _$_NextResultPageCalled implements _NextResultPageCalled {
     TResult searchNameChanged(String name),
     TResult deleteSearchPressed(),
     TResult nextResultPageCalled(),
+    TResult getPopularTvShowsCalled(),
+    TResult nextPopularTvShowsPageCalled(),
     @required TResult orElse(),
   }) {
     assert(orElse != null);
@@ -372,10 +426,16 @@ class _$_NextResultPageCalled implements _NextResultPageCalled {
     @required TResult searchNameChanged(_SearchNameChanged value),
     @required TResult deleteSearchPressed(_DeleteSearchPressed value),
     @required TResult nextResultPageCalled(_NextResultPageCalled value),
+    @required TResult getPopularTvShowsCalled(_GetPopularTvShowsCalled value),
+    @required
+        TResult nextPopularTvShowsPageCalled(
+            _NextPopularTvShowsPageCalled value),
   }) {
     assert(searchNameChanged != null);
     assert(deleteSearchPressed != null);
     assert(nextResultPageCalled != null);
+    assert(getPopularTvShowsCalled != null);
+    assert(nextPopularTvShowsPageCalled != null);
     return nextResultPageCalled(this);
   }
 
@@ -385,6 +445,8 @@ class _$_NextResultPageCalled implements _NextResultPageCalled {
     TResult searchNameChanged(_SearchNameChanged value),
     TResult deleteSearchPressed(_DeleteSearchPressed value),
     TResult nextResultPageCalled(_NextResultPageCalled value),
+    TResult getPopularTvShowsCalled(_GetPopularTvShowsCalled value),
+    TResult nextPopularTvShowsPageCalled(_NextPopularTvShowsPageCalled value),
     @required TResult orElse(),
   }) {
     assert(orElse != null);
@@ -400,6 +462,233 @@ abstract class _NextResultPageCalled implements TvShowSearchEvent {
 }
 
 /// @nodoc
+abstract class _$GetPopularTvShowsCalledCopyWith<$Res> {
+  factory _$GetPopularTvShowsCalledCopyWith(_GetPopularTvShowsCalled value,
+          $Res Function(_GetPopularTvShowsCalled) then) =
+      __$GetPopularTvShowsCalledCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$GetPopularTvShowsCalledCopyWithImpl<$Res>
+    extends _$TvShowSearchEventCopyWithImpl<$Res>
+    implements _$GetPopularTvShowsCalledCopyWith<$Res> {
+  __$GetPopularTvShowsCalledCopyWithImpl(_GetPopularTvShowsCalled _value,
+      $Res Function(_GetPopularTvShowsCalled) _then)
+      : super(_value, (v) => _then(v as _GetPopularTvShowsCalled));
+
+  @override
+  _GetPopularTvShowsCalled get _value =>
+      super._value as _GetPopularTvShowsCalled;
+}
+
+/// @nodoc
+class _$_GetPopularTvShowsCalled implements _GetPopularTvShowsCalled {
+  const _$_GetPopularTvShowsCalled();
+
+  @override
+  String toString() {
+    return 'TvShowSearchEvent.getPopularTvShowsCalled()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) || (other is _GetPopularTvShowsCalled);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object>({
+    @required TResult searchNameChanged(String name),
+    @required TResult deleteSearchPressed(),
+    @required TResult nextResultPageCalled(),
+    @required TResult getPopularTvShowsCalled(),
+    @required TResult nextPopularTvShowsPageCalled(),
+  }) {
+    assert(searchNameChanged != null);
+    assert(deleteSearchPressed != null);
+    assert(nextResultPageCalled != null);
+    assert(getPopularTvShowsCalled != null);
+    assert(nextPopularTvShowsPageCalled != null);
+    return getPopularTvShowsCalled();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object>({
+    TResult searchNameChanged(String name),
+    TResult deleteSearchPressed(),
+    TResult nextResultPageCalled(),
+    TResult getPopularTvShowsCalled(),
+    TResult nextPopularTvShowsPageCalled(),
+    @required TResult orElse(),
+  }) {
+    assert(orElse != null);
+    if (getPopularTvShowsCalled != null) {
+      return getPopularTvShowsCalled();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object>({
+    @required TResult searchNameChanged(_SearchNameChanged value),
+    @required TResult deleteSearchPressed(_DeleteSearchPressed value),
+    @required TResult nextResultPageCalled(_NextResultPageCalled value),
+    @required TResult getPopularTvShowsCalled(_GetPopularTvShowsCalled value),
+    @required
+        TResult nextPopularTvShowsPageCalled(
+            _NextPopularTvShowsPageCalled value),
+  }) {
+    assert(searchNameChanged != null);
+    assert(deleteSearchPressed != null);
+    assert(nextResultPageCalled != null);
+    assert(getPopularTvShowsCalled != null);
+    assert(nextPopularTvShowsPageCalled != null);
+    return getPopularTvShowsCalled(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object>({
+    TResult searchNameChanged(_SearchNameChanged value),
+    TResult deleteSearchPressed(_DeleteSearchPressed value),
+    TResult nextResultPageCalled(_NextResultPageCalled value),
+    TResult getPopularTvShowsCalled(_GetPopularTvShowsCalled value),
+    TResult nextPopularTvShowsPageCalled(_NextPopularTvShowsPageCalled value),
+    @required TResult orElse(),
+  }) {
+    assert(orElse != null);
+    if (getPopularTvShowsCalled != null) {
+      return getPopularTvShowsCalled(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _GetPopularTvShowsCalled implements TvShowSearchEvent {
+  const factory _GetPopularTvShowsCalled() = _$_GetPopularTvShowsCalled;
+}
+
+/// @nodoc
+abstract class _$NextPopularTvShowsPageCalledCopyWith<$Res> {
+  factory _$NextPopularTvShowsPageCalledCopyWith(
+          _NextPopularTvShowsPageCalled value,
+          $Res Function(_NextPopularTvShowsPageCalled) then) =
+      __$NextPopularTvShowsPageCalledCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$NextPopularTvShowsPageCalledCopyWithImpl<$Res>
+    extends _$TvShowSearchEventCopyWithImpl<$Res>
+    implements _$NextPopularTvShowsPageCalledCopyWith<$Res> {
+  __$NextPopularTvShowsPageCalledCopyWithImpl(
+      _NextPopularTvShowsPageCalled _value,
+      $Res Function(_NextPopularTvShowsPageCalled) _then)
+      : super(_value, (v) => _then(v as _NextPopularTvShowsPageCalled));
+
+  @override
+  _NextPopularTvShowsPageCalled get _value =>
+      super._value as _NextPopularTvShowsPageCalled;
+}
+
+/// @nodoc
+class _$_NextPopularTvShowsPageCalled implements _NextPopularTvShowsPageCalled {
+  const _$_NextPopularTvShowsPageCalled();
+
+  @override
+  String toString() {
+    return 'TvShowSearchEvent.nextPopularTvShowsPageCalled()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) || (other is _NextPopularTvShowsPageCalled);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object>({
+    @required TResult searchNameChanged(String name),
+    @required TResult deleteSearchPressed(),
+    @required TResult nextResultPageCalled(),
+    @required TResult getPopularTvShowsCalled(),
+    @required TResult nextPopularTvShowsPageCalled(),
+  }) {
+    assert(searchNameChanged != null);
+    assert(deleteSearchPressed != null);
+    assert(nextResultPageCalled != null);
+    assert(getPopularTvShowsCalled != null);
+    assert(nextPopularTvShowsPageCalled != null);
+    return nextPopularTvShowsPageCalled();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object>({
+    TResult searchNameChanged(String name),
+    TResult deleteSearchPressed(),
+    TResult nextResultPageCalled(),
+    TResult getPopularTvShowsCalled(),
+    TResult nextPopularTvShowsPageCalled(),
+    @required TResult orElse(),
+  }) {
+    assert(orElse != null);
+    if (nextPopularTvShowsPageCalled != null) {
+      return nextPopularTvShowsPageCalled();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object>({
+    @required TResult searchNameChanged(_SearchNameChanged value),
+    @required TResult deleteSearchPressed(_DeleteSearchPressed value),
+    @required TResult nextResultPageCalled(_NextResultPageCalled value),
+    @required TResult getPopularTvShowsCalled(_GetPopularTvShowsCalled value),
+    @required
+        TResult nextPopularTvShowsPageCalled(
+            _NextPopularTvShowsPageCalled value),
+  }) {
+    assert(searchNameChanged != null);
+    assert(deleteSearchPressed != null);
+    assert(nextResultPageCalled != null);
+    assert(getPopularTvShowsCalled != null);
+    assert(nextPopularTvShowsPageCalled != null);
+    return nextPopularTvShowsPageCalled(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object>({
+    TResult searchNameChanged(_SearchNameChanged value),
+    TResult deleteSearchPressed(_DeleteSearchPressed value),
+    TResult nextResultPageCalled(_NextResultPageCalled value),
+    TResult getPopularTvShowsCalled(_GetPopularTvShowsCalled value),
+    TResult nextPopularTvShowsPageCalled(_NextPopularTvShowsPageCalled value),
+    @required TResult orElse(),
+  }) {
+    assert(orElse != null);
+    if (nextPopularTvShowsPageCalled != null) {
+      return nextPopularTvShowsPageCalled(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _NextPopularTvShowsPageCalled implements TvShowSearchEvent {
+  const factory _NextPopularTvShowsPageCalled() =
+      _$_NextPopularTvShowsPageCalled;
+}
+
+/// @nodoc
 class _$TvShowSearchStateTearOff {
   const _$TvShowSearchStateTearOff();
 
@@ -410,7 +699,9 @@ class _$TvShowSearchStateTearOff {
       @required bool isSearching,
       @required bool isSearchCompleted,
       @required TvShowSearchResults tvShowSearchResults,
-      @required int searchPageNum}) {
+      @required int searchPageNum,
+      @required TvShowSearchResults popularTvShows,
+      @required int popularPageNum}) {
     return _TvShowSearchState(
       name: name,
       errorMessage: errorMessage,
@@ -418,6 +709,8 @@ class _$TvShowSearchStateTearOff {
       isSearchCompleted: isSearchCompleted,
       tvShowSearchResults: tvShowSearchResults,
       searchPageNum: searchPageNum,
+      popularTvShows: popularTvShows,
+      popularPageNum: popularPageNum,
     );
   }
 }
@@ -434,6 +727,8 @@ mixin _$TvShowSearchState {
   bool get isSearchCompleted;
   TvShowSearchResults get tvShowSearchResults;
   int get searchPageNum;
+  TvShowSearchResults get popularTvShows;
+  int get popularPageNum;
 
   @JsonKey(ignore: true)
   $TvShowSearchStateCopyWith<TvShowSearchState> get copyWith;
@@ -450,7 +745,9 @@ abstract class $TvShowSearchStateCopyWith<$Res> {
       bool isSearching,
       bool isSearchCompleted,
       TvShowSearchResults tvShowSearchResults,
-      int searchPageNum});
+      int searchPageNum,
+      TvShowSearchResults popularTvShows,
+      int popularPageNum});
 }
 
 /// @nodoc
@@ -470,6 +767,8 @@ class _$TvShowSearchStateCopyWithImpl<$Res>
     Object isSearchCompleted = freezed,
     Object tvShowSearchResults = freezed,
     Object searchPageNum = freezed,
+    Object popularTvShows = freezed,
+    Object popularPageNum = freezed,
   }) {
     return _then(_value.copyWith(
       name: name == freezed ? _value.name : name as String,
@@ -487,6 +786,12 @@ class _$TvShowSearchStateCopyWithImpl<$Res>
       searchPageNum: searchPageNum == freezed
           ? _value.searchPageNum
           : searchPageNum as int,
+      popularTvShows: popularTvShows == freezed
+          ? _value.popularTvShows
+          : popularTvShows as TvShowSearchResults,
+      popularPageNum: popularPageNum == freezed
+          ? _value.popularPageNum
+          : popularPageNum as int,
     ));
   }
 }
@@ -504,7 +809,9 @@ abstract class _$TvShowSearchStateCopyWith<$Res>
       bool isSearching,
       bool isSearchCompleted,
       TvShowSearchResults tvShowSearchResults,
-      int searchPageNum});
+      int searchPageNum,
+      TvShowSearchResults popularTvShows,
+      int popularPageNum});
 }
 
 /// @nodoc
@@ -526,6 +833,8 @@ class __$TvShowSearchStateCopyWithImpl<$Res>
     Object isSearchCompleted = freezed,
     Object tvShowSearchResults = freezed,
     Object searchPageNum = freezed,
+    Object popularTvShows = freezed,
+    Object popularPageNum = freezed,
   }) {
     return _then(_TvShowSearchState(
       name: name == freezed ? _value.name : name as String,
@@ -543,6 +852,12 @@ class __$TvShowSearchStateCopyWithImpl<$Res>
       searchPageNum: searchPageNum == freezed
           ? _value.searchPageNum
           : searchPageNum as int,
+      popularTvShows: popularTvShows == freezed
+          ? _value.popularTvShows
+          : popularTvShows as TvShowSearchResults,
+      popularPageNum: popularPageNum == freezed
+          ? _value.popularPageNum
+          : popularPageNum as int,
     ));
   }
 }
@@ -555,13 +870,17 @@ class _$_TvShowSearchState implements _TvShowSearchState {
       @required this.isSearching,
       @required this.isSearchCompleted,
       @required this.tvShowSearchResults,
-      @required this.searchPageNum})
+      @required this.searchPageNum,
+      @required this.popularTvShows,
+      @required this.popularPageNum})
       : assert(name != null),
         assert(errorMessage != null),
         assert(isSearching != null),
         assert(isSearchCompleted != null),
         assert(tvShowSearchResults != null),
-        assert(searchPageNum != null);
+        assert(searchPageNum != null),
+        assert(popularTvShows != null),
+        assert(popularPageNum != null);
 
   @override
   final String name;
@@ -575,10 +894,14 @@ class _$_TvShowSearchState implements _TvShowSearchState {
   final TvShowSearchResults tvShowSearchResults;
   @override
   final int searchPageNum;
+  @override
+  final TvShowSearchResults popularTvShows;
+  @override
+  final int popularPageNum;
 
   @override
   String toString() {
-    return 'TvShowSearchState(name: $name, errorMessage: $errorMessage, isSearching: $isSearching, isSearchCompleted: $isSearchCompleted, tvShowSearchResults: $tvShowSearchResults, searchPageNum: $searchPageNum)';
+    return 'TvShowSearchState(name: $name, errorMessage: $errorMessage, isSearching: $isSearching, isSearchCompleted: $isSearchCompleted, tvShowSearchResults: $tvShowSearchResults, searchPageNum: $searchPageNum, popularTvShows: $popularTvShows, popularPageNum: $popularPageNum)';
   }
 
   @override
@@ -601,7 +924,13 @@ class _$_TvShowSearchState implements _TvShowSearchState {
                     .equals(other.tvShowSearchResults, tvShowSearchResults)) &&
             (identical(other.searchPageNum, searchPageNum) ||
                 const DeepCollectionEquality()
-                    .equals(other.searchPageNum, searchPageNum)));
+                    .equals(other.searchPageNum, searchPageNum)) &&
+            (identical(other.popularTvShows, popularTvShows) ||
+                const DeepCollectionEquality()
+                    .equals(other.popularTvShows, popularTvShows)) &&
+            (identical(other.popularPageNum, popularPageNum) ||
+                const DeepCollectionEquality()
+                    .equals(other.popularPageNum, popularPageNum)));
   }
 
   @override
@@ -612,7 +941,9 @@ class _$_TvShowSearchState implements _TvShowSearchState {
       const DeepCollectionEquality().hash(isSearching) ^
       const DeepCollectionEquality().hash(isSearchCompleted) ^
       const DeepCollectionEquality().hash(tvShowSearchResults) ^
-      const DeepCollectionEquality().hash(searchPageNum);
+      const DeepCollectionEquality().hash(searchPageNum) ^
+      const DeepCollectionEquality().hash(popularTvShows) ^
+      const DeepCollectionEquality().hash(popularPageNum);
 
   @JsonKey(ignore: true)
   @override
@@ -627,7 +958,9 @@ abstract class _TvShowSearchState implements TvShowSearchState {
       @required bool isSearching,
       @required bool isSearchCompleted,
       @required TvShowSearchResults tvShowSearchResults,
-      @required int searchPageNum}) = _$_TvShowSearchState;
+      @required int searchPageNum,
+      @required TvShowSearchResults popularTvShows,
+      @required int popularPageNum}) = _$_TvShowSearchState;
 
   @override
   String get name;
@@ -641,6 +974,10 @@ abstract class _TvShowSearchState implements TvShowSearchState {
   TvShowSearchResults get tvShowSearchResults;
   @override
   int get searchPageNum;
+  @override
+  TvShowSearchResults get popularTvShows;
+  @override
+  int get popularPageNum;
   @override
   @JsonKey(ignore: true)
   _$TvShowSearchStateCopyWith<_TvShowSearchState> get copyWith;

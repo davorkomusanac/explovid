@@ -13,7 +13,6 @@ part 'movie_search_bloc.freezed.dart';
 
 class MovieSearchBloc extends Bloc<MovieSearchEvent, MovieSearchState> {
   final MovieRepository _movieRepository;
-  MovieSearchResults _results;
 
   MovieSearchBloc(this._movieRepository) : super(MovieSearchState.initial());
 
@@ -31,7 +30,7 @@ class MovieSearchBloc extends Bloc<MovieSearchEvent, MovieSearchState> {
           searchPageNum: 1,
         );
         if (e.title.trim().isNotEmpty) {
-          _results = await _movieRepository.searchMovie(e.title.trim());
+          var _results = await _movieRepository.searchMovie(e.title.trim());
           if (_results.errorMessage == "No results found.") {
             yield state.copyWith(
               errorMessage: "No results found.",
@@ -71,6 +70,8 @@ class MovieSearchBloc extends Bloc<MovieSearchEvent, MovieSearchState> {
           isSearchPageDoublePressed: false,
         );
       },
+      //searchPageDoublePressed does the same thing as deleteSearchPressed,
+      //but they are needed to know when to switch tabs (if searchPageIsDoublePressed)
       searchPageDoublePressed: (e) async* {
         yield state.copyWith(
           title: '',
@@ -83,14 +84,44 @@ class MovieSearchBloc extends Bloc<MovieSearchEvent, MovieSearchState> {
         );
       },
       nextResultPageCalled: (e) async* {
-        if (state.searchPageNum < _results.totalPages) {
+        if (state.searchPageNum < state.movieSearchResults.totalPages) {
           //increase SearchPageNum
           var newMovieResults = await _movieRepository.searchMovie(state.title, state.searchPageNum + 1);
           for (var movie in newMovieResults.movieSummaries) {
-            _results.movieSummaries.add(movie);
+            state.movieSearchResults.movieSummaries.add(movie);
           }
           yield state.copyWith(
             searchPageNum: state.searchPageNum + 1,
+          );
+        }
+      },
+      //Show popular movies before searching for movies
+      getPopularMoviesCalled: (e) async* {
+        yield state.copyWith(
+          isSearching: true,
+        );
+        var _popularMoviesResults = await _movieRepository.getPopularMovies();
+        if (_popularMoviesResults.errorMessage.isNotEmpty) {
+          yield state.copyWith(
+            isSearching: false,
+            errorMessage: _popularMoviesResults.errorMessage,
+          );
+        } else {
+          yield state.copyWith(
+            isSearching: false,
+            errorMessage: '',
+            popularMovies: _popularMoviesResults,
+          );
+        }
+      },
+      nextPopularMoviesPageCalled: (e) async* {
+        if (state.popularPageNum < state.popularMovies.totalPages) {
+          var newPopularMoviePage = await _movieRepository.getPopularMovies(state.popularPageNum + 1);
+          for (var movie in newPopularMoviePage.movieSummaries) {
+            state.popularMovies.movieSummaries.add(movie);
+          }
+          yield state.copyWith(
+            popularPageNum: state.popularPageNum + 1,
           );
         }
       },

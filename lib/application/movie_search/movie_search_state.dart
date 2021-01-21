@@ -10,15 +10,19 @@ abstract class MovieSearchState with _$MovieSearchState {
     @required MovieSearchResults movieSearchResults,
     @required int searchPageNum,
     @required bool isSearchPageDoublePressed,
+    @required MovieSearchResults popularMovies,
+    @required int popularPageNum,
   }) = _MovieSearchState;
 
   factory MovieSearchState.initial() => MovieSearchState(
         title: '',
         errorMessage: '',
-        isSearching: false,
+        isSearching: true,
         isSearchCompleted: false,
         movieSearchResults: MovieSearchResults(totalResults: 0),
         searchPageNum: 1,
         isSearchPageDoublePressed: false,
+        popularMovies: MovieSearchResults(totalResults: 0),
+        popularPageNum: 1,
       );
 }
