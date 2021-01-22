@@ -4,23 +4,41 @@ import 'package:explovid/presentation/pages/welcome_page/welcome_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class SplashPage extends StatelessWidget {
+class SplashPage extends StatefulWidget {
+  @override
+  _SplashPageState createState() => _SplashPageState();
+}
+
+class _SplashPageState extends State<SplashPage> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    context.read<AuthCheckBloc>().add(
+          const AuthCheckEvent.authCheckRequested(),
+        );
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocListener<AuthCheckBloc, AuthCheckState>(
       listener: (context, state) {
         state.map(
           initial: (_) {},
-          authenticated: (_) => Navigator.of(context).pushReplacement(
-            MaterialPageRoute(
-              builder: (context) => HomePage(),
-            ),
-          ),
-          unauthenticated: (_) => Navigator.of(context).pushReplacement(
-            MaterialPageRoute(
-              builder: (context) => WelcomePage(),
-            ),
-          ),
+          authenticated: (_) {
+            Navigator.of(context).pushReplacement(
+              MaterialPageRoute(
+                builder: (context) => HomePage(),
+              ),
+            );
+          },
+          unauthenticated: (_) {
+            Navigator.of(context).pushReplacement(
+              MaterialPageRoute(
+                builder: (context) => WelcomePage(),
+              ),
+            );
+          },
         );
       },
       child: SafeArea(

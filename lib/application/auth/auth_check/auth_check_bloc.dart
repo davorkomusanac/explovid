@@ -13,7 +13,7 @@ part 'auth_check_bloc.freezed.dart';
 class AuthCheckBloc extends Bloc<AuthCheckEvent, AuthCheckState> {
   final AuthRepository _authRepository;
 
-  AuthCheckBloc(this._authRepository) : super(const AuthCheckState.initial());
+  AuthCheckBloc(this._authRepository) : super(AuthCheckState.initial());
 
   @override
   Stream<AuthCheckState> mapEventToState(
@@ -21,8 +21,8 @@ class AuthCheckBloc extends Bloc<AuthCheckEvent, AuthCheckState> {
   ) async* {
     yield* event.map(
       authCheckRequested: (e) async* {
-        final bool = _authRepository.isUserSignedIn();
-        if (bool) {
+        final isUserAuth = _authRepository.isUserSignedIn();
+        if (isUserAuth) {
           yield const AuthCheckState.authenticated();
         } else {
           yield const AuthCheckState.unauthenticated();
@@ -31,7 +31,8 @@ class AuthCheckBloc extends Bloc<AuthCheckEvent, AuthCheckState> {
       signOutPressed: (e) async* {
         String returnValue = await _authRepository.signOut();
         if (returnValue == kSuccess) {
-          yield const AuthCheckState.unauthenticated();
+          //Not yielding a state since authCheck is called in initState in SplashPage and it will perform the authentication
+          //yield const AuthCheckState.unauthenticated();
         } else {
           print("There was an error signing out!");
         }

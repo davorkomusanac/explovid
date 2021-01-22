@@ -51,9 +51,7 @@ class _MyAppState extends State<MyApp> {
         BlocProvider(
           create: (context) => AuthCheckBloc(
             _authRepository,
-          )..add(
-              AuthCheckEvent.authCheckRequested(),
-            ),
+          ),
         ),
         BlocProvider(
           create: (context) => SignInFormBloc(

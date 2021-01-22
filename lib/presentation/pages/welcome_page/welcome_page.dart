@@ -2,6 +2,7 @@ import 'package:explovid/application/auth/auth_check/auth_check_bloc.dart';
 import 'package:explovid/application/auth/sign_in_form/sign_in_form_bloc.dart';
 import 'package:explovid/presentation/pages/home_page/home_page.dart';
 import 'package:explovid/presentation/pages/sign_up_page/sign_up_page.dart';
+import 'package:explovid/presentation/pages/splash_page/splash_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -24,25 +25,26 @@ class WelcomePage extends StatelessWidget {
             if (state.isAuthStateChanged) {
               Navigator.of(context).pushReplacement(
                 MaterialPageRoute(
-                  builder: (context) => HomePage(),
+                  builder: (context) => SplashPage(),
                 ),
               );
-              context.read<AuthCheckBloc>().add(
-                    const AuthCheckEvent.authCheckRequested(),
-                  );
             }
           },
           builder: (context, state) {
             return ListView(
-              physics: BouncingScrollPhysics(),
+              //physics: BouncingScrollPhysics(),
               children: [
                 Column(
                   children: [
                     Padding(
-                      padding: const EdgeInsets.only(top: 60.0, bottom: 40),
-                      child: Image.asset(
-                        "assets/logo.PNG",
-                        width: MediaQuery.of(context).size.width * 0.7,
+                      padding: const EdgeInsets.only(top: 50.0, bottom: 20),
+                      child: Text(
+                        "Explovid",
+                        style: TextStyle(
+                          fontSize: 40,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.tealAccent[400],
+                        ),
                       ),
                     ),
                     state.isSubmitting ? LinearProgressIndicator(value: null) : Text(""),
@@ -124,11 +126,11 @@ class WelcomePage extends StatelessWidget {
                       child: Container(
                         padding: const EdgeInsets.all(16),
                         decoration: BoxDecoration(
-                          color: Colors.white,
+                          color: Colors.black,
                           borderRadius: BorderRadius.circular(25.0),
                           boxShadow: [
                             BoxShadow(
-                              color: Colors.grey,
+                              color: Colors.black,
                               blurRadius: 10.0,
                               spreadRadius: 1.0,
                               offset: Offset(
@@ -171,11 +173,11 @@ class WelcomePage extends StatelessWidget {
                       padding: EdgeInsets.all(8.0),
                       width: MediaQuery.of(context).size.width * 0.5,
                       decoration: BoxDecoration(
-                        color: Colors.white,
+                        color: Colors.black,
                         borderRadius: BorderRadius.circular(25.0),
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.grey,
+                            color: Colors.black,
                             blurRadius: 10.0,
                             spreadRadius: 1.0,
                             offset: Offset(
