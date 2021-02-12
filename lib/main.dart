@@ -6,10 +6,12 @@ import 'package:explovid/application/movie_search/movie_details/movie_details_bl
 import 'package:explovid/application/movie_search/movie_search_bloc.dart';
 import 'package:explovid/application/tv_show_search/tv_show_details/tv_show_details_bloc.dart';
 import 'package:explovid/application/tv_show_search/tv_show_search_bloc.dart';
+import 'package:explovid/application/user_profile_watchlist_watched/movie_lists/movie_lists_user_profile_bloc.dart';
 import 'package:explovid/domain/actor_db/actor_repository.dart';
 import 'package:explovid/domain/auth/auth_repository.dart';
 import 'package:explovid/domain/movie_db/movie_repository.dart';
 import 'package:explovid/domain/tv_show_db/tv_show_repository.dart';
+import 'package:explovid/domain/user_profile_db/user_profile_repository.dart';
 import 'package:explovid/presentation/pages/splash_page/splash_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -32,6 +34,7 @@ class _MyAppState extends State<MyApp> {
   MovieRepository _movieRepository;
   TvShowRepository _tvShowRepository;
   ActorRepository _actorRepository;
+  UserProfileRepository _userProfileRepository;
   http.Client client;
 
   @override
@@ -42,6 +45,7 @@ class _MyAppState extends State<MyApp> {
     _movieRepository = MovieRepository(client);
     _tvShowRepository = TvShowRepository(client);
     _actorRepository = ActorRepository(client);
+    _userProfileRepository = UserProfileRepository();
   }
 
   @override
@@ -87,6 +91,13 @@ class _MyAppState extends State<MyApp> {
           create: (context) => ActorDetailsBloc(
             _actorRepository,
           ),
+        ),
+        BlocProvider(
+          create: (context) => MovieListsUserProfileBloc(
+            _userProfileRepository,
+          )..add(
+              MovieListsUserProfileEvent.loadMovieToListInitial(),
+            ),
         ),
       ],
       child: MaterialApp(

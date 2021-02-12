@@ -44,6 +44,5 @@ class MovieSearchResults {
         "results": List<dynamic>.from(movieSummaries.map((x) => x.toJson())),
         "total_pages": totalPages,
         "total_results": totalResults,
-        "errorMessage": errorMessage,
       };
 }

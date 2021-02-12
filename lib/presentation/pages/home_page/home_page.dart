@@ -1,8 +1,8 @@
 import 'package:explovid/application/movie_search/movie_search_bloc.dart';
-import 'package:explovid/presentation/pages/home_page/five.dart';
 import 'package:explovid/presentation/pages/home_page/four.dart';
 import 'package:explovid/presentation/pages/home_page/one.dart';
 import 'package:explovid/presentation/pages/home_page/three.dart';
+import 'package:explovid/presentation/pages/profile_page/profile_page.dart';
 import 'package:explovid/presentation/pages/search_page/search_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -120,7 +120,7 @@ class _HomePageState extends State<HomePage> {
                 navigatorKey: tabNavKeys[4],
                 builder: (context) {
                   return CupertinoPageScaffold(
-                    child: FivePage(),
+                    child: ProfilePage(),
                   );
                 },
               );

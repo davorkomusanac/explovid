@@ -45,6 +45,5 @@ class TvShowSearchResults {
         "results": List<dynamic>.from(tvShowSummaries.map((x) => x.toJson())),
         "total_pages": totalPages,
         "total_results": totalResults,
-        "errorMessage": errorMessage,
       };
 }
