@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:explovid/application/movie_search/movie_details/movie_details_bloc.dart';
+import 'package:explovid/application/user_profile_watchlist_watched/movie_lists/movie_lists_user_profile_bloc.dart';
 import 'package:explovid/domain/models/movie_details/movie_details.dart';
 import 'package:explovid/presentation/pages/actor_details_page/actor_details_page.dart';
 import 'package:explovid/presentation/pages/movie_details_page/full_movie_cast_page.dart';
@@ -233,39 +235,109 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
                               ),
                             ],
                           ),
-                          Row(
-                            children: [
-                              Expanded(
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
-                                  child: ElevatedButton(
-                                    style: ElevatedButton.styleFrom(
-                                      primary: Colors.tealAccent[700],
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(10),
+                          BlocBuilder<MovieListsUserProfileBloc, MovieListsUserProfileState>(
+                            builder: (context, movieListState) {
+                              //Check if movie is watchList so that buttons can be updated correctly
+                              bool isInWatchlist = false;
+                              Timestamp timeStampAdded;
+                              for (var movie in movieListState.movieWatchlist) {
+                                if (movie.id == state.movieDetails.id && movie.title == state.movieDetails.title) {
+                                  isInWatchlist = true;
+                                  timeStampAdded = movie.timestampAddedToFirestore;
+                                }
+                              }
+                              return Row(
+                                children: [
+                                  Expanded(
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+                                      child: ElevatedButton(
+                                        // style: ElevatedButton.styleFrom(
+                                        //   primary: Colors.tealAccent[700],
+                                        //   shape: RoundedRectangleBorder(
+                                        //     borderRadius: BorderRadius.circular(10),
+                                        //   ),
+                                        // ),
+                                        style: isInWatchlist
+                                            ? ElevatedButton.styleFrom(
+                                                primary: Colors.blueGrey[800],
+                                                onPrimary: Colors.tealAccent[700],
+                                                side: BorderSide(
+                                                  width: 3,
+                                                  color: Colors.tealAccent[700],
+                                                ),
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius: BorderRadius.circular(10),
+                                                ),
+                                              )
+                                            : ElevatedButton.styleFrom(
+                                                primary: Colors.tealAccent[700],
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius: BorderRadius.circular(10),
+                                                ),
+                                              ),
+                                        onPressed: () {
+                                          if (isInWatchlist) {
+                                            showDialog(
+                                              context: context,
+                                              builder: (context) {
+                                                return AlertDialog(
+                                                  title: Text("Confirm if you want to remove from Watchlist"),
+                                                  actions: [
+                                                    TextButton(
+                                                      onPressed: () {
+                                                        Navigator.of(context, rootNavigator: true).pop();
+                                                      },
+                                                      style: TextButton.styleFrom(
+                                                        primary: Colors.tealAccent[200],
+                                                      ),
+                                                      child: Text("No"),
+                                                    ),
+                                                    TextButton(
+                                                      onPressed: () {
+                                                        context.read<MovieListsUserProfileBloc>().add(
+                                                              MovieListsUserProfileEvent.removeMovieFromWatchlistPressed(
+                                                                  state.movieDetails, timeStampAdded),
+                                                            );
+                                                        Navigator.of(context, rootNavigator: true).pop();
+                                                      },
+                                                      style: TextButton.styleFrom(
+                                                        primary: Colors.tealAccent[200],
+                                                      ),
+                                                      child: Text("Yes"),
+                                                    ),
+                                                  ],
+                                                );
+                                              },
+                                            );
+                                          } else {
+                                            context.read<MovieListsUserProfileBloc>().add(
+                                                  MovieListsUserProfileEvent.addMovieToWatchlistPressed(state.movieDetails),
+                                                );
+                                          }
+                                        },
+                                        child: Text(isInWatchlist ? "✅ In Watchlist" : "Add to Watchlist"),
                                       ),
                                     ),
-                                    onPressed: () {},
-                                    child: const Text("Add to Watchlist"),
                                   ),
-                                ),
-                              ),
-                              Expanded(
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
-                                  child: ElevatedButton(
-                                    style: ElevatedButton.styleFrom(
-                                      primary: Colors.tealAccent[700],
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(10),
+                                  Expanded(
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+                                      child: ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                          primary: Colors.tealAccent[700],
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(10),
+                                          ),
+                                        ),
+                                        onPressed: () {},
+                                        child: const Text("I Watched It"),
                                       ),
                                     ),
-                                    onPressed: () {},
-                                    child: const Text("I Watched It"),
                                   ),
-                                ),
-                              ),
-                            ],
+                                ],
+                              );
+                            },
                           ),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
