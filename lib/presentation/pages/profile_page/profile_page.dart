@@ -101,18 +101,45 @@ class _ProfilePageState extends State<ProfilePage> {
                   return CircularProgressIndicator();
                 } else {
                   final movies = state.movieWatchlist;
+                  final moviesWatched = state.movieWatched;
                   return Expanded(
-                    child: ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: movies.length,
-                      itemBuilder: (context, index) {
-                        final movie = movies[index];
-                        return Container(
-                          height: 100,
-                          color: Colors.red,
-                          child: Text(movie.title),
-                        );
-                      },
+                    child: Column(
+                      children: [
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: ListView.builder(
+                              shrinkWrap: true,
+                              itemCount: movies.length,
+                              itemBuilder: (context, index) {
+                                final movie = movies[index];
+                                return Container(
+                                  height: 100,
+                                  color: Colors.red,
+                                  child: Text(movie.title),
+                                );
+                              },
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: ListView.builder(
+                              shrinkWrap: true,
+                              itemCount: moviesWatched.length,
+                              itemBuilder: (context, index) {
+                                final movie = moviesWatched[index];
+                                return Container(
+                                  height: 100,
+                                  color: Colors.red,
+                                  child: Text(movie.title),
+                                );
+                              },
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   );
                 }

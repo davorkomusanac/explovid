@@ -239,11 +239,22 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
                             builder: (context, movieListState) {
                               //Check if movie is watchList so that buttons can be updated correctly
                               bool isInWatchlist = false;
+                              bool isInWatched = false;
+                              String review = '';
+                              num rating = 5;
                               Timestamp timeStampAdded;
                               for (var movie in movieListState.movieWatchlist) {
                                 if (movie.id == state.movieDetails.id && movie.title == state.movieDetails.title) {
                                   isInWatchlist = true;
                                   timeStampAdded = movie.timestampAddedToFirestore;
+                                }
+                              }
+                              for (var movie in movieListState.movieWatched) {
+                                if (movie.id == state.movieDetails.id && movie.title == state.movieDetails.title) {
+                                  isInWatched = true;
+                                  timeStampAdded = movie.timestampAddedToFirestore;
+                                  review = movie.review;
+                                  rating = movie.rating;
                                 }
                               }
                               return Row(
@@ -330,7 +341,47 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
                                             borderRadius: BorderRadius.circular(10),
                                           ),
                                         ),
-                                        onPressed: () {},
+                                        onPressed: () {
+                                          if (isInWatched) {
+                                            showDialog(
+                                              context: context,
+                                              builder: (context) {
+                                                return AlertDialog(
+                                                  title: Text("Confirm if you want to remove from Watchlist"),
+                                                  actions: [
+                                                    TextButton(
+                                                      onPressed: () {
+                                                        Navigator.of(context, rootNavigator: true).pop();
+                                                      },
+                                                      style: TextButton.styleFrom(
+                                                        primary: Colors.tealAccent[200],
+                                                      ),
+                                                      child: Text("No"),
+                                                    ),
+                                                    TextButton(
+                                                      onPressed: () {
+                                                        context.read<MovieListsUserProfileBloc>().add(
+                                                              MovieListsUserProfileEvent.removeMovieFromWatchedPressed(
+                                                                  state.movieDetails, review, rating, timeStampAdded),
+                                                            );
+                                                        Navigator.of(context, rootNavigator: true).pop();
+                                                      },
+                                                      style: TextButton.styleFrom(
+                                                        primary: Colors.tealAccent[200],
+                                                      ),
+                                                      child: Text("Yes"),
+                                                    ),
+                                                  ],
+                                                );
+                                              },
+                                            );
+                                          } else {
+                                            context.read<MovieListsUserProfileBloc>().add(
+                                                  MovieListsUserProfileEvent.addMovieToWatchedPressed(
+                                                      state.movieDetails, review, rating),
+                                                );
+                                          }
+                                        },
                                         child: const Text("I Watched It"),
                                       ),
                                     ),

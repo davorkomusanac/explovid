@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class FirestoreMovieDetails {
-  FirestoreMovieDetails({
+class FirestoreMovieWatchedDetails {
+  FirestoreMovieWatchedDetails({
     this.id,
     this.title,
     this.posterPath,
@@ -9,6 +9,8 @@ class FirestoreMovieDetails {
     this.voteAverage,
     this.releaseDate,
     this.timestampAddedToFirestore,
+    this.review,
+    this.rating,
   });
 
   final int id;
@@ -18,9 +20,11 @@ class FirestoreMovieDetails {
   final num voteAverage;
   final String releaseDate;
   final Timestamp timestampAddedToFirestore;
+  final String review;
+  final num rating;
 
 // added fromSnapshot and toDocument methods to add movie info to firestore, but only certain fields, not all
-  factory FirestoreMovieDetails.fromMap(Map<String, dynamic> data) => FirestoreMovieDetails(
+  factory FirestoreMovieWatchedDetails.fromMap(Map<String, dynamic> data) => FirestoreMovieWatchedDetails(
         id: data['id'],
         title: data['title'],
         posterPath: data['posterPath'],
@@ -28,6 +32,8 @@ class FirestoreMovieDetails {
         voteAverage: data['voteAverage'],
         releaseDate: data['releaseDate'],
         timestampAddedToFirestore: data['added_to_list_date'],
+        review: data['review'],
+        rating: data['rating'],
       );
 
   Map<String, dynamic> toDocument() => {
@@ -38,5 +44,7 @@ class FirestoreMovieDetails {
         'vote_average': voteAverage,
         'release_date': releaseDate,
         'added_to_list_date': timestampAddedToFirestore,
+        'review': review,
+        'rating': rating,
       };
 }
