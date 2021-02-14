@@ -36,6 +36,9 @@ class FirestoreMovieWatchedDetails {
         rating: data['rating'],
       );
 
+  factory FirestoreMovieWatchedDetails.fromSnapshot(DocumentSnapshot snapshot) =>
+      FirestoreMovieWatchedDetails.fromMap(snapshot.data());
+
   Map<String, dynamic> toDocument() => {
         'id': id,
         'title': title,

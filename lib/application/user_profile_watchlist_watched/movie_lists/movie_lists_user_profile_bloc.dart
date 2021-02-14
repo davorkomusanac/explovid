@@ -1,7 +1,5 @@
 import 'dart:async';
-
 import 'package:bloc/bloc.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:explovid/domain/models/firestore_models/firestore_movie_watched_details.dart';
 import 'package:explovid/domain/models/firestore_models/firestore_movie_watchlist_details.dart';
 import 'package:explovid/domain/models/movie_details/movie_details.dart';
@@ -59,13 +57,13 @@ class MovieListsUserProfileBloc extends Bloc<MovieListsUserProfileEvent, MovieLi
         _userProfileRepository.addMovieToWatchlist(e.movieDetails);
       },
       removeMovieFromWatchlistPressed: (e) async* {
-        _userProfileRepository.removeMovieFromWatchlist(e.movieDetails, e.timestamp);
+        _userProfileRepository.removeMovieFromWatchlist(e.movieDetails);
       },
       addMovieToWatchedPressed: (e) async* {
         _userProfileRepository.addMovieToWatched(e.movieDetails, e.review, e.rating);
       },
       removeMovieFromWatchedPressed: (e) async* {
-        _userProfileRepository.removeMovieFromWatched(e.movieDetails, e.review, e.rating, e.timestamp);
+        _userProfileRepository.removeMovieFromWatched(e.movieDetails);
       },
     );
   }

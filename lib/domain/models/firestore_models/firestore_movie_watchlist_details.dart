@@ -30,6 +30,9 @@ class FirestoreMovieWatchlistDetails {
         timestampAddedToFirestore: data['added_to_list_date'],
       );
 
+  factory FirestoreMovieWatchlistDetails.fromSnapshot(DocumentSnapshot snapshot) =>
+      FirestoreMovieWatchlistDetails.fromMap(snapshot.data());
+
   Map<String, dynamic> toDocument() => {
         'id': id,
         'title': title,

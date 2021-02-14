@@ -242,19 +242,14 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
                               bool isInWatched = false;
                               String review = '';
                               num rating = 5;
-                              Timestamp timeStampAdded;
                               for (var movie in movieListState.movieWatchlist) {
                                 if (movie.id == state.movieDetails.id && movie.title == state.movieDetails.title) {
                                   isInWatchlist = true;
-                                  timeStampAdded = movie.timestampAddedToFirestore;
                                 }
                               }
                               for (var movie in movieListState.movieWatched) {
                                 if (movie.id == state.movieDetails.id && movie.title == state.movieDetails.title) {
                                   isInWatched = true;
-                                  timeStampAdded = movie.timestampAddedToFirestore;
-                                  review = movie.review;
-                                  rating = movie.rating;
                                 }
                               }
                               return Row(
@@ -308,7 +303,7 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
                                                       onPressed: () {
                                                         context.read<MovieListsUserProfileBloc>().add(
                                                               MovieListsUserProfileEvent.removeMovieFromWatchlistPressed(
-                                                                  state.movieDetails, timeStampAdded),
+                                                                  state.movieDetails),
                                                             );
                                                         Navigator.of(context, rootNavigator: true).pop();
                                                       },
@@ -335,12 +330,24 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
                                     child: Padding(
                                       padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
                                       child: ElevatedButton(
-                                        style: ElevatedButton.styleFrom(
-                                          primary: Colors.tealAccent[700],
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.circular(10),
-                                          ),
-                                        ),
+                                        style: isInWatched
+                                            ? ElevatedButton.styleFrom(
+                                                primary: Colors.blueGrey[800],
+                                                onPrimary: Colors.tealAccent[700],
+                                                side: BorderSide(
+                                                  width: 3,
+                                                  color: Colors.tealAccent[700],
+                                                ),
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius: BorderRadius.circular(10),
+                                                ),
+                                              )
+                                            : ElevatedButton.styleFrom(
+                                                primary: Colors.tealAccent[700],
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius: BorderRadius.circular(10),
+                                                ),
+                                              ),
                                         onPressed: () {
                                           if (isInWatched) {
                                             showDialog(
@@ -362,7 +369,7 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
                                                       onPressed: () {
                                                         context.read<MovieListsUserProfileBloc>().add(
                                                               MovieListsUserProfileEvent.removeMovieFromWatchedPressed(
-                                                                  state.movieDetails, review, rating, timeStampAdded),
+                                                                  state.movieDetails),
                                                             );
                                                         Navigator.of(context, rootNavigator: true).pop();
                                                       },
