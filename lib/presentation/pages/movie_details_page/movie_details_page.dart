@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:explovid/application/movie_search/movie_details/movie_details_bloc.dart';
 import 'package:explovid/application/user_profile_watchlist_watched/movie_lists/movie_lists_user_profile_bloc.dart';
 import 'package:explovid/domain/models/movie_details/movie_details.dart';
@@ -214,7 +213,6 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
                                   ),
                                 ),
                               ),
-                              //if (state.movieDetails.voteAverage != 0)
                               Expanded(
                                 child: Padding(
                                   padding: const EdgeInsets.only(
@@ -240,8 +238,6 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
                               //Check if movie is watchList so that buttons can be updated correctly
                               bool isInWatchlist = false;
                               bool isInWatched = false;
-                              String review = '';
-                              num rating = 5;
                               for (var movie in movieListState.movieWatchlist) {
                                 if (movie.id == state.movieDetails.id && movie.title == state.movieDetails.title) {
                                   isInWatchlist = true;
@@ -258,62 +254,13 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
                                     child: Padding(
                                       padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
                                       child: ElevatedButton(
-                                        // style: ElevatedButton.styleFrom(
-                                        //   primary: Colors.tealAccent[700],
-                                        //   shape: RoundedRectangleBorder(
-                                        //     borderRadius: BorderRadius.circular(10),
-                                        //   ),
-                                        // ),
-                                        style: isInWatchlist
-                                            ? ElevatedButton.styleFrom(
-                                                primary: Colors.blueGrey[800],
-                                                onPrimary: Colors.tealAccent[700],
-                                                side: BorderSide(
-                                                  width: 3,
-                                                  color: Colors.tealAccent[700],
-                                                ),
-                                                shape: RoundedRectangleBorder(
-                                                  borderRadius: BorderRadius.circular(10),
-                                                ),
-                                              )
-                                            : ElevatedButton.styleFrom(
-                                                primary: Colors.tealAccent[700],
-                                                shape: RoundedRectangleBorder(
-                                                  borderRadius: BorderRadius.circular(10),
-                                                ),
-                                              ),
+                                        style: isInWatchlist ? kWatchedButton : kNotWatchedButton,
                                         onPressed: () {
                                           if (isInWatchlist) {
                                             showDialog(
                                               context: context,
                                               builder: (context) {
-                                                return AlertDialog(
-                                                  title: Text("Confirm if you want to remove from Watchlist"),
-                                                  actions: [
-                                                    TextButton(
-                                                      onPressed: () {
-                                                        Navigator.of(context, rootNavigator: true).pop();
-                                                      },
-                                                      style: TextButton.styleFrom(
-                                                        primary: Colors.tealAccent[200],
-                                                      ),
-                                                      child: Text("No"),
-                                                    ),
-                                                    TextButton(
-                                                      onPressed: () {
-                                                        context.read<MovieListsUserProfileBloc>().add(
-                                                              MovieListsUserProfileEvent.removeMovieFromWatchlistPressed(
-                                                                  state.movieDetails),
-                                                            );
-                                                        Navigator.of(context, rootNavigator: true).pop();
-                                                      },
-                                                      style: TextButton.styleFrom(
-                                                        primary: Colors.tealAccent[200],
-                                                      ),
-                                                      child: Text("Yes"),
-                                                    ),
-                                                  ],
-                                                );
+                                                return MovieRemoveWatchlistDialog(movieDetails: state.movieDetails);
                                               },
                                             );
                                           } else {
@@ -330,66 +277,25 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
                                     child: Padding(
                                       padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
                                       child: ElevatedButton(
-                                        style: isInWatched
-                                            ? ElevatedButton.styleFrom(
-                                                primary: Colors.blueGrey[800],
-                                                onPrimary: Colors.tealAccent[700],
-                                                side: BorderSide(
-                                                  width: 3,
-                                                  color: Colors.tealAccent[700],
-                                                ),
-                                                shape: RoundedRectangleBorder(
-                                                  borderRadius: BorderRadius.circular(10),
-                                                ),
-                                              )
-                                            : ElevatedButton.styleFrom(
-                                                primary: Colors.tealAccent[700],
-                                                shape: RoundedRectangleBorder(
-                                                  borderRadius: BorderRadius.circular(10),
-                                                ),
-                                              ),
+                                        style: isInWatched ? kWatchedButton : kNotWatchedButton,
                                         onPressed: () {
                                           if (isInWatched) {
                                             showDialog(
                                               context: context,
                                               builder: (context) {
-                                                return AlertDialog(
-                                                  title: Text("Confirm if you want to remove from Watchlist"),
-                                                  actions: [
-                                                    TextButton(
-                                                      onPressed: () {
-                                                        Navigator.of(context, rootNavigator: true).pop();
-                                                      },
-                                                      style: TextButton.styleFrom(
-                                                        primary: Colors.tealAccent[200],
-                                                      ),
-                                                      child: Text("No"),
-                                                    ),
-                                                    TextButton(
-                                                      onPressed: () {
-                                                        context.read<MovieListsUserProfileBloc>().add(
-                                                              MovieListsUserProfileEvent.removeMovieFromWatchedPressed(
-                                                                  state.movieDetails),
-                                                            );
-                                                        Navigator.of(context, rootNavigator: true).pop();
-                                                      },
-                                                      style: TextButton.styleFrom(
-                                                        primary: Colors.tealAccent[200],
-                                                      ),
-                                                      child: Text("Yes"),
-                                                    ),
-                                                  ],
-                                                );
+                                                return MovieRemoveReviewDialog(movieDetails: state.movieDetails);
                                               },
                                             );
                                           } else {
-                                            context.read<MovieListsUserProfileBloc>().add(
-                                                  MovieListsUserProfileEvent.addMovieToWatchedPressed(
-                                                      state.movieDetails, review, rating),
-                                                );
+                                            showDialog(
+                                              context: context,
+                                              builder: (context) {
+                                                return MovieReviewDialog(movieDetails: state.movieDetails);
+                                              },
+                                            );
                                           }
                                         },
-                                        child: const Text("I Watched It"),
+                                        child: Text(isInWatched ? "✅ Watched" : "Rate it"),
                                       ),
                                     ),
                                   ),
@@ -673,6 +579,210 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
             );
           },
         ),
+      ),
+    );
+  }
+}
+
+class MovieRemoveWatchlistDialog extends StatefulWidget {
+  final MovieDetails movieDetails;
+
+  MovieRemoveWatchlistDialog({this.movieDetails});
+
+  @override
+  _MovieRemoveWatchlistDialogState createState() => _MovieRemoveWatchlistDialogState();
+}
+
+class _MovieRemoveWatchlistDialogState extends State<MovieRemoveWatchlistDialog> {
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: Text("Confirm if you want to remove from Watchlist"),
+      actions: [
+        TextButton(
+          onPressed: () {
+            Navigator.of(context, rootNavigator: true).pop();
+          },
+          style: TextButton.styleFrom(
+            primary: Colors.tealAccent[200],
+          ),
+          child: Text("No"),
+        ),
+        TextButton(
+          onPressed: () {
+            context.read<MovieListsUserProfileBloc>().add(
+                  MovieListsUserProfileEvent.removeMovieFromWatchlistPressed(widget.movieDetails),
+                );
+            Navigator.of(context, rootNavigator: true).pop();
+          },
+          style: TextButton.styleFrom(
+            primary: Colors.tealAccent[200],
+          ),
+          child: Text("Yes"),
+        ),
+      ],
+    );
+  }
+}
+
+class MovieRemoveReviewDialog extends StatefulWidget {
+  final MovieDetails movieDetails;
+
+  MovieRemoveReviewDialog({this.movieDetails});
+
+  @override
+  _MovieRemoveReviewDialogState createState() => _MovieRemoveReviewDialogState();
+}
+
+class _MovieRemoveReviewDialogState extends State<MovieRemoveReviewDialog> {
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: Text("Confirm if you want to remove from Watched"),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text("Note: this action cannot be undone, your rating and review will be lost."),
+        ],
+      ),
+      actions: [
+        TextButton(
+          onPressed: () {
+            Navigator.of(context, rootNavigator: true).pop();
+          },
+          style: TextButton.styleFrom(
+            primary: Colors.tealAccent[200],
+          ),
+          child: Text("No"),
+        ),
+        TextButton(
+          onPressed: () {
+            context.read<MovieListsUserProfileBloc>().add(
+                  MovieListsUserProfileEvent.removeMovieFromWatchedPressed(widget.movieDetails),
+                );
+            Navigator.of(context, rootNavigator: true).pop();
+          },
+          style: TextButton.styleFrom(
+            primary: Colors.tealAccent[200],
+          ),
+          child: Text("Yes"),
+        ),
+      ],
+    );
+  }
+}
+
+class MovieReviewDialog extends StatefulWidget {
+  final MovieDetails movieDetails;
+
+  MovieReviewDialog({this.movieDetails});
+
+  @override
+  _MovieReviewDialogState createState() => _MovieReviewDialogState();
+}
+
+class _MovieReviewDialogState extends State<MovieReviewDialog> {
+  double rating = 6.0;
+  bool isSpoiler = false;
+  TextEditingController _movieReviewController;
+  @override
+  void initState() {
+    super.initState();
+    _movieReviewController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    _movieReviewController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        FocusScope.of(context).unfocus();
+      },
+      child: AlertDialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(25.0)),
+        ),
+        actionsPadding: EdgeInsets.only(right: 12),
+        contentPadding: const EdgeInsets.fromLTRB(24.0, 20.0, 24.0, 0.0),
+        insetPadding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 50.0),
+        //title: Text("Rate the movie and write a review"),
+        content: SizedBox(
+          width: MediaQuery.of(context).size.width,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                "⭐ ${rating.toInt().toString()}",
+                style: TextStyle(
+                  fontSize: 20,
+                ),
+              ),
+              Slider(
+                  min: 1.0,
+                  max: 10.0,
+                  divisions: 9,
+                  value: rating,
+                  activeColor: Colors.tealAccent[700],
+                  onChanged: (double value) {
+                    setState(() {
+                      rating = value;
+                    });
+                  }),
+              Expanded(
+                child: TextField(
+                  controller: _movieReviewController,
+                  maxLines: 80,
+                  maxLength: 1000,
+                  decoration: InputDecoration(
+                    hintText: 'Type your review here...',
+                    //alignLabelWithHint: true,
+                    counter: Offstage(),
+                  ),
+                ),
+              ),
+              CheckboxListTile(
+                activeColor: Colors.tealAccent[700],
+                value: isSpoiler,
+                title: Text("Contains spoilers"),
+                controlAffinity: ListTileControlAffinity.leading,
+                onChanged: (bool value) {
+                  setState(() {
+                    isSpoiler = value;
+                  });
+                },
+              )
+            ],
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(context, rootNavigator: true).pop();
+            },
+            style: TextButton.styleFrom(
+              primary: Colors.tealAccent[200],
+            ),
+            child: Text("Cancel"),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              context.read<MovieListsUserProfileBloc>().add(
+                    MovieListsUserProfileEvent.addMovieToWatchedPressed(
+                        widget.movieDetails, _movieReviewController.text, rating, isSpoiler),
+                  );
+              Navigator.of(context, rootNavigator: true).pop();
+            },
+            style: ElevatedButton.styleFrom(
+              primary: Colors.tealAccent[700],
+            ),
+            child: Text("Submit"),
+          ),
+        ],
       ),
     );
   }

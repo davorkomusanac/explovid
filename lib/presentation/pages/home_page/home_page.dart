@@ -1,7 +1,5 @@
 import 'package:explovid/application/movie_search/movie_search_bloc.dart';
-import 'package:explovid/presentation/pages/home_page/four.dart';
 import 'package:explovid/presentation/pages/home_page/one.dart';
-import 'package:explovid/presentation/pages/home_page/three.dart';
 import 'package:explovid/presentation/pages/profile_page/profile_page.dart';
 import 'package:explovid/presentation/pages/search_page/search_page.dart';
 import 'package:flutter/cupertino.dart';
@@ -18,8 +16,8 @@ class _HomePageState extends State<HomePage> {
     GlobalKey<NavigatorState>(),
     GlobalKey<NavigatorState>(),
     GlobalKey<NavigatorState>(),
-    GlobalKey<NavigatorState>(),
-    GlobalKey<NavigatorState>(),
+    //  GlobalKey<NavigatorState>(),
+    //  GlobalKey<NavigatorState>(),
   ];
   CupertinoTabController _tabController;
   int currentIndex = 0;
@@ -48,29 +46,29 @@ class _HomePageState extends State<HomePage> {
           items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(icon: Icon(Icons.home)),
             BottomNavigationBarItem(icon: Icon(Icons.search)),
-            BottomNavigationBarItem(icon: Icon(Icons.photo_camera, size: 37.0)),
-            BottomNavigationBarItem(icon: Icon(Icons.favorite)),
+            //  BottomNavigationBarItem(icon: Icon(Icons.photo_camera, size: 37.0)),
+            //  BottomNavigationBarItem(icon: Icon(Icons.favorite)),
             BottomNavigationBarItem(icon: Icon(Icons.person)),
           ],
           onTap: (index) {
             if (currentIndex == index) {
               switch (index) {
                 case 0:
-                  BlocProvider.of<MovieSearchBloc>(context, listen: false).add(MovieSearchEvent.searchPageDoublePressed());
                   tabNavKeys[0].currentState.popUntil((route) => route.isFirst);
                   break;
                 case 1:
+                  BlocProvider.of<MovieSearchBloc>(context, listen: false).add(MovieSearchEvent.searchPageDoublePressed());
                   tabNavKeys[1].currentState.popUntil((route) => route.isFirst);
                   break;
                 case 2:
                   tabNavKeys[2].currentState.popUntil((route) => route.isFirst);
                   break;
-                case 3:
-                  tabNavKeys[3].currentState.popUntil((route) => route.isFirst);
-                  break;
-                case 4:
-                  tabNavKeys[4].currentState.popUntil((route) => route.isFirst);
-                  break;
+                // case 3:
+                //   tabNavKeys[3].currentState.popUntil((route) => route.isFirst);
+                //   break;
+                // case 4:
+                //   tabNavKeys[4].currentState.popUntil((route) => route.isFirst);
+                //   break;
                 default:
               }
             }
@@ -84,7 +82,7 @@ class _HomePageState extends State<HomePage> {
                 navigatorKey: tabNavKeys[0],
                 builder: (context) {
                   return CupertinoPageScaffold(
-                    child: SearchPage(),
+                    child: OnePage(),
                   );
                 },
               );
@@ -93,7 +91,7 @@ class _HomePageState extends State<HomePage> {
                 navigatorKey: tabNavKeys[1],
                 builder: (context) {
                   return CupertinoPageScaffold(
-                    child: OnePage(),
+                    child: SearchPage(),
                   );
                 },
               );
@@ -102,34 +100,34 @@ class _HomePageState extends State<HomePage> {
                 navigatorKey: tabNavKeys[2],
                 builder: (context) {
                   return CupertinoPageScaffold(
-                    child: ThreePage(),
-                  );
-                },
-              );
-            case 3:
-              return CupertinoTabView(
-                navigatorKey: tabNavKeys[3],
-                builder: (context) {
-                  return CupertinoPageScaffold(
-                    child: FourPage(),
-                  );
-                },
-              );
-            case 4:
-              return CupertinoTabView(
-                navigatorKey: tabNavKeys[4],
-                builder: (context) {
-                  return CupertinoPageScaffold(
                     child: ProfilePage(),
                   );
                 },
               );
+            // case 3:
+            //   return CupertinoTabView(
+            //     navigatorKey: tabNavKeys[3],
+            //     builder: (context) {
+            //       return CupertinoPageScaffold(
+            //         child: FourPage(),
+            //       );
+            //     },
+            //   );
+            // case 4:
+            //   return CupertinoTabView(
+            //     navigatorKey: tabNavKeys[4],
+            //     builder: (context) {
+            //       return CupertinoPageScaffold(
+            //         child: ProfilePage(),
+            //       );
+            //     },
+            //   );
             default:
               return CupertinoTabView(
                 navigatorKey: tabNavKeys[0],
                 builder: (context) {
                   return CupertinoPageScaffold(
-                    child: SearchPage(),
+                    child: OnePage(),
                   );
                 },
               );

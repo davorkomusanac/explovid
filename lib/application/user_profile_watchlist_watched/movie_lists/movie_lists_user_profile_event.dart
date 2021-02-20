@@ -13,8 +13,8 @@ abstract class MovieListsUserProfileEvent with _$MovieListsUserProfileEvent {
   //timestamp needed since Firebase doesn't allow removing from Array by index, only by value
   const factory MovieListsUserProfileEvent.removeMovieFromWatchlistPressed(MovieDetails movieDetails) =
       _RemoveMovieFromWatchlistPressed;
-  const factory MovieListsUserProfileEvent.addMovieToWatchedPressed(MovieDetails movieDetails, String review, num rating) =
-      _AddMovieToWatchedPressed;
+  const factory MovieListsUserProfileEvent.addMovieToWatchedPressed(
+      MovieDetails movieDetails, String review, num rating, bool isSpoiler) = _AddMovieToWatchedPressed;
   const factory MovieListsUserProfileEvent.removeMovieFromWatchedPressed(MovieDetails movieDetails) =
       _RemoveMovieFromWatchedPressed;
 }

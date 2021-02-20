@@ -260,3 +260,22 @@ class BuildPosterImage extends StatelessWidget {
     );
   }
 }
+
+var kWatchedButton = ElevatedButton.styleFrom(
+  primary: Colors.blueGrey[800],
+  onPrimary: Colors.tealAccent[700],
+  side: BorderSide(
+    width: 3,
+    color: Colors.tealAccent[700],
+  ),
+  shape: RoundedRectangleBorder(
+    borderRadius: BorderRadius.circular(10),
+  ),
+);
+
+var kNotWatchedButton = ElevatedButton.styleFrom(
+  primary: Colors.tealAccent[700],
+  shape: RoundedRectangleBorder(
+    borderRadius: BorderRadius.circular(10),
+  ),
+);

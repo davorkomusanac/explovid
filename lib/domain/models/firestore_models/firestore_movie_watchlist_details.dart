@@ -23,10 +23,10 @@ class FirestoreMovieWatchlistDetails {
   factory FirestoreMovieWatchlistDetails.fromMap(Map<String, dynamic> data) => FirestoreMovieWatchlistDetails(
         id: data['id'],
         title: data['title'],
-        posterPath: data['posterPath'],
+        posterPath: data['poster_path'],
         popularity: data['popularity'],
-        voteAverage: data['voteAverage'],
-        releaseDate: data['releaseDate'],
+        voteAverage: data['vote_average'],
+        releaseDate: data['release_date'],
         timestampAddedToFirestore: data['added_to_list_date'],
       );
 

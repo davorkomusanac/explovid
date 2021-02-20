@@ -39,10 +39,6 @@ class AuthRepository {
         "full_name": fullName,
         "username": "",
         "account_created_date": Timestamp.now(),
-        "movies_watched": [],
-        "movies_watchlist": [],
-        "tv_shows_watched": [],
-        "tv_shows_watchlist": [],
         "followers": [],
         "following": [],
       });
@@ -98,10 +94,6 @@ class AuthRepository {
           "full_name": googleSignInAccount.displayName,
           "username": "",
           "account_created_date": Timestamp.now(),
-          "movies_watched": [],
-          "movies_watchlist": [],
-          "tv_shows_watched": [],
-          "tv_shows_watchlist": [],
           "followers": [],
           "following": [],
         });

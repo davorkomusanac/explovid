@@ -11,6 +11,7 @@ class FirestoreMovieWatchedDetails {
     this.timestampAddedToFirestore,
     this.review,
     this.rating,
+    this.isSpoiler,
   });
 
   final int id;
@@ -22,18 +23,20 @@ class FirestoreMovieWatchedDetails {
   final Timestamp timestampAddedToFirestore;
   final String review;
   final num rating;
+  final bool isSpoiler;
 
 // added fromSnapshot and toDocument methods to add movie info to firestore, but only certain fields, not all
   factory FirestoreMovieWatchedDetails.fromMap(Map<String, dynamic> data) => FirestoreMovieWatchedDetails(
         id: data['id'],
         title: data['title'],
-        posterPath: data['posterPath'],
+        posterPath: data['poster_path'],
         popularity: data['popularity'],
-        voteAverage: data['voteAverage'],
-        releaseDate: data['releaseDate'],
+        voteAverage: data['vote_average'],
+        releaseDate: data['release_date'],
         timestampAddedToFirestore: data['added_to_list_date'],
         review: data['review'],
         rating: data['rating'],
+        isSpoiler: data['is_spoiler'],
       );
 
   factory FirestoreMovieWatchedDetails.fromSnapshot(DocumentSnapshot snapshot) =>
@@ -49,5 +52,6 @@ class FirestoreMovieWatchedDetails {
         'added_to_list_date': timestampAddedToFirestore,
         'review': review,
         'rating': rating,
+        'is_spoiler': isSpoiler,
       };
 }

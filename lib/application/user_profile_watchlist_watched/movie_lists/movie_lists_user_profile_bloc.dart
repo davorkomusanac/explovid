@@ -60,7 +60,7 @@ class MovieListsUserProfileBloc extends Bloc<MovieListsUserProfileEvent, MovieLi
         _userProfileRepository.removeMovieFromWatchlist(e.movieDetails);
       },
       addMovieToWatchedPressed: (e) async* {
-        _userProfileRepository.addMovieToWatched(e.movieDetails, e.review, e.rating);
+        _userProfileRepository.addMovieToWatched(e.movieDetails, e.review, e.rating, e.isSpoiler);
       },
       removeMovieFromWatchedPressed: (e) async* {
         _userProfileRepository.removeMovieFromWatched(e.movieDetails);
