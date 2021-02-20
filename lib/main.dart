@@ -7,6 +7,7 @@ import 'package:explovid/application/movie_search/movie_search_bloc.dart';
 import 'package:explovid/application/tv_show_search/tv_show_details/tv_show_details_bloc.dart';
 import 'package:explovid/application/tv_show_search/tv_show_search_bloc.dart';
 import 'package:explovid/application/user_profile_watchlist_watched/movie_lists/movie_lists_user_profile_bloc.dart';
+import 'package:explovid/application/user_profile_watchlist_watched/tv_show_lists/tv_show_lists_user_profile_bloc.dart';
 import 'package:explovid/domain/actor_db/actor_repository.dart';
 import 'package:explovid/domain/auth/auth_repository.dart';
 import 'package:explovid/domain/movie_db/movie_repository.dart';
@@ -97,6 +98,13 @@ class _MyAppState extends State<MyApp> {
             _userProfileRepository,
           )..add(
               MovieListsUserProfileEvent.loadMovieToListInitial(),
+            ),
+        ),
+        BlocProvider(
+          create: (context) => TvShowListsUserProfileBloc(
+            _userProfileRepository,
+          )..add(
+              TvShowListsUserProfileEvent.loadTvShowToListInitial(),
             ),
         ),
       ],
