@@ -31,6 +31,7 @@ dependencies:
   http: ^0.12.2
   url_launcher: ^5.7.10
   cloud_firestore: ^0.16.0
+  community_material_icon: ^5.8.55
 
 
 
