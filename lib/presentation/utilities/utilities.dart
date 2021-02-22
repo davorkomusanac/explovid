@@ -261,6 +261,46 @@ class BuildPosterImage extends StatelessWidget {
   }
 }
 
+class WatchedStatsCard extends StatelessWidget {
+  final String category;
+  final int quantity;
+
+  const WatchedStatsCard({
+    Key key,
+    this.category,
+    this.quantity,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Material(
+        elevation: 5,
+        borderRadius: const BorderRadius.all(
+          Radius.circular(10),
+        ),
+        child: ClipRRect(
+          borderRadius: const BorderRadius.all(
+            Radius.circular(10),
+          ),
+          child: Container(
+            width: 150,
+            color: Colors.tealAccent[700],
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(category, overflow: TextOverflow.ellipsis),
+                Text(quantity.toString(), overflow: TextOverflow.ellipsis),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 var kWatchedButton = ElevatedButton.styleFrom(
   primary: Colors.blueGrey[800],
   onPrimary: Colors.tealAccent[700],

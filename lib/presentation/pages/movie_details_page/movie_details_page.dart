@@ -709,7 +709,7 @@ class _MovieReviewDialogState extends State<MovieReviewDialog> {
         ),
         actionsPadding: EdgeInsets.only(right: 12),
         contentPadding: const EdgeInsets.fromLTRB(24.0, 20.0, 24.0, 0.0),
-        insetPadding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 50.0),
+        insetPadding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
         //title: Text("Rate the movie and write a review"),
         content: SizedBox(
           width: MediaQuery.of(context).size.width,

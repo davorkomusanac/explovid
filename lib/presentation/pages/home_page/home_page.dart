@@ -20,12 +20,14 @@ class _HomePageState extends State<HomePage> {
     //  GlobalKey<NavigatorState>(),
   ];
   CupertinoTabController _tabController;
-  int currentIndex = 0;
+  //CurrentIndex needs to be equal to initialIndex so that an exception is not thrown
+  int currentIndex = 2;
 
   @override
   void initState() {
     super.initState();
-    _tabController = CupertinoTabController();
+    //Put the Search page as the starting one? For the time being until the app is populated
+    _tabController = CupertinoTabController(initialIndex: 2);
   }
 
   @override
@@ -43,6 +45,7 @@ class _HomePageState extends State<HomePage> {
       child: CupertinoTabScaffold(
         controller: _tabController,
         tabBar: CupertinoTabBar(
+          activeColor: Colors.tealAccent,
           items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(icon: Icon(Icons.home)),
             BottomNavigationBarItem(icon: Icon(Icons.search)),
