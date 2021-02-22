@@ -1,4 +1,7 @@
+import 'package:community_material_icon/community_material_icon.dart';
 import 'package:explovid/application/user_profile_watchlist_watched/movie_lists/movie_lists_user_profile_bloc.dart';
+import 'package:explovid/application/user_profile_watchlist_watched/tv_show_lists/tv_show_lists_user_profile_bloc.dart';
+import 'package:explovid/presentation/utilities/utilities.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -7,11 +10,241 @@ class ProfilePage extends StatefulWidget {
   _ProfilePageState createState() => _ProfilePageState();
 }
 
-class _ProfilePageState extends State<ProfilePage> {
+class _ProfilePageState extends State<ProfilePage> with TickerProviderStateMixin {
+  TabController _watchTypeTabController;
+  TabController _moviesTabController;
+  TabController _tvShowsTabController;
+  final List<Tab> _watchTypeTabs = <Tab>[
+    const Tab(
+      icon: Icon(
+        CommunityMaterialIcons.movie_open,
+        size: 30,
+      ),
+    ),
+    const Tab(
+      icon: Icon(
+        CommunityMaterialIcons.television_classic,
+        size: 30,
+      ),
+    ),
+  ];
+  final List<Tab> _moviesTabs = <Tab>[
+    const Tab(text: "Watchlist"),
+    const Tab(text: "Watched"),
+  ];
+  final List<Tab> _tvShowsTabs = <Tab>[
+    const Tab(text: "Watchlist"),
+    const Tab(text: "Watched"),
+  ];
+
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
+    _watchTypeTabController = TabController(initialIndex: 0, vsync: this, length: _watchTypeTabs.length);
+    _moviesTabController = TabController(initialIndex: 0, vsync: this, length: _watchTypeTabs.length);
+    _tvShowsTabController = TabController(initialIndex: 0, vsync: this, length: _watchTypeTabs.length);
+  }
+
+  @override
+  void dispose() {
+    _watchTypeTabController.dispose();
+    _moviesTabController.dispose();
+    _tvShowsTabController.dispose();
+    super.dispose();
+  }
+
+  List<Widget> _watchTypeTabViews(BuildContext context) {
+    List<Widget> views = <Widget>[
+      _buildMoviesTabs(context),
+      _buildTvShowsTabs(context),
+    ];
+    return views;
+  }
+
+  Widget _buildMoviesTabs(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(0.0),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Expanded(
+            child: TabBarView(
+              physics: NeverScrollableScrollPhysics(),
+              controller: _moviesTabController,
+              children: _moviesTabViews(context),
+            ),
+          ),
+          TabBar(
+            controller: _moviesTabController,
+            tabs: _moviesTabs,
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildTvShowsTabs(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(0.0),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Expanded(
+            child: TabBarView(
+              physics: NeverScrollableScrollPhysics(),
+              controller: _tvShowsTabController,
+              children: _tvShowsTabViews(context),
+            ),
+          ),
+          TabBar(
+            controller: _tvShowsTabController,
+            tabs: _tvShowsTabs,
+          ),
+        ],
+      ),
+    );
+  }
+
+  List<Widget> _moviesTabViews(BuildContext context) {
+    List<Widget> views = <Widget>[
+      _buildMovieWatchlistTab(context),
+      _buildMovieWatchedTab(context),
+    ];
+    return views;
+  }
+
+  List<Widget> _tvShowsTabViews(BuildContext context) {
+    List<Widget> views = <Widget>[
+      _buildTvShowWatchlistTab(context),
+      _buildTvShowWatchedTab(context),
+    ];
+    return views;
+  }
+
+  Widget _buildMovieWatchlistTab(BuildContext context) {
+    return BlocBuilder<MovieListsUserProfileBloc, MovieListsUserProfileState>(
+      builder: (context, state) {
+        if (state.isLoading) {
+          return CircularProgressIndicator();
+        } else {
+          final movieWatchlist = state.movieWatchlist;
+          return movieWatchlist.isEmpty
+              ? Center(
+                  child: Text(
+                    "Movies added to watchlist will show up here",
+                  ),
+                )
+              : GridView.builder(
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 3,
+                    childAspectRatio: 0.69,
+                  ),
+                  itemCount: movieWatchlist.length,
+                  itemBuilder: (context, index) {
+                    return _buildGridImage(posterPath: movieWatchlist[index].posterPath);
+                  },
+                );
+        }
+      },
+    );
+  }
+
+  Widget _buildMovieWatchedTab(BuildContext context) {
+    return BlocBuilder<MovieListsUserProfileBloc, MovieListsUserProfileState>(
+      builder: (context, state) {
+        if (state.isLoading) {
+          return CircularProgressIndicator();
+        } else {
+          final movieWatched = state.movieWatched;
+          return movieWatched.isEmpty
+              ? Center(
+                  child: Text(
+                    "Movies marked as watched will show up here",
+                  ),
+                )
+              : GridView.builder(
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 3,
+                    childAspectRatio: 0.69,
+                  ),
+                  itemCount: movieWatched.length,
+                  itemBuilder: (context, index) {
+                    return _buildGridImage(posterPath: movieWatched[index].posterPath);
+                  },
+                );
+        }
+      },
+    );
+  }
+
+  Widget _buildTvShowWatchlistTab(BuildContext context) {
+    return BlocBuilder<TvShowListsUserProfileBloc, TvShowListsUserProfileState>(
+      builder: (context, state) {
+        if (state.isLoading) {
+          return CircularProgressIndicator();
+        } else {
+          final tvShowWatchlist = state.tvShowWatchlist;
+          return tvShowWatchlist.isEmpty
+              ? Center(
+                  child: Text(
+                    "TV shows added to watchlist will show up here",
+                  ),
+                )
+              : GridView.builder(
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 3,
+                    childAspectRatio: 0.69,
+                  ),
+                  itemCount: tvShowWatchlist.length,
+                  itemBuilder: (context, index) {
+                    return _buildGridImage(posterPath: tvShowWatchlist[index].posterPath);
+                  },
+                );
+        }
+      },
+    );
+  }
+
+  Widget _buildTvShowWatchedTab(BuildContext context) {
+    return BlocBuilder<TvShowListsUserProfileBloc, TvShowListsUserProfileState>(
+      builder: (context, state) {
+        if (state.isLoading) {
+          return CircularProgressIndicator();
+        } else {
+          final tvShowWatched = state.tvShowWatched;
+          return tvShowWatched.isEmpty
+              ? Center(
+                  child: Text(
+                    "TV shows marked as watched will show up here",
+                  ),
+                )
+              : GridView.builder(
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 3,
+                    childAspectRatio: 0.69,
+                  ),
+                  itemCount: tvShowWatched.length,
+                  itemBuilder: (context, index) {
+                    return _buildGridImage(posterPath: tvShowWatched[index].posterPath);
+                  },
+                );
+        }
+      },
+    );
+  }
+
+  Widget _buildGridImage({String posterPath}) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: AspectRatio(
+        aspectRatio: 0.69,
+        child: BuildPosterImage(
+          height: 135,
+          width: 90,
+          imagePath: posterPath,
+        ),
+      ),
+    );
   }
 
   @override
@@ -77,116 +310,26 @@ class _ProfilePageState extends State<ProfilePage> {
               "Short bio goes here... two or three lines of text max? ",
               maxLines: 3,
             ),
-            ElevatedButton(
-              onPressed: () {},
-              child: Text("Edit Profile?"),
-            ),
-            Container(
-              //color: Colors.red,
-              height: 70,
-              child: ListView(
-                scrollDirection: Axis.horizontal,
+            Expanded(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
                 children: [
-                  _WatchedStatsCard(category: "Movies Watched", quantity: 33),
-                  _WatchedStatsCard(category: "Movies In Watchlist", quantity: 80),
-                  _WatchedStatsCard(category: "Tv Shows Watched", quantity: 15),
-                  _WatchedStatsCard(category: "Tv Shows In Watchlist", quantity: 28),
+                  TabBar(
+                    controller: _watchTypeTabController,
+                    tabs: _watchTypeTabs,
+                    labelColor: Colors.tealAccent,
+                    unselectedLabelColor: Colors.grey,
+                  ),
+                  Expanded(
+                    child: TabBarView(
+                      controller: _watchTypeTabController,
+                      children: _watchTypeTabViews(context),
+                    ),
+                  ),
                 ],
               ),
             ),
-            Text("Gridviews here"),
-            BlocBuilder<MovieListsUserProfileBloc, MovieListsUserProfileState>(
-              builder: (context, state) {
-                if (state.isLoading) {
-                  return CircularProgressIndicator();
-                } else {
-                  final movies = state.movieWatchlist;
-                  final moviesWatched = state.movieWatched;
-                  return Expanded(
-                    child: Column(
-                      children: [
-                        Expanded(
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: ListView.builder(
-                              shrinkWrap: true,
-                              itemCount: movies.length,
-                              itemBuilder: (context, index) {
-                                final movie = movies[index];
-                                return Container(
-                                  height: 100,
-                                  color: Colors.red,
-                                  child: Text(movie.title),
-                                );
-                              },
-                            ),
-                          ),
-                        ),
-                        Expanded(
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: ListView.builder(
-                              shrinkWrap: true,
-                              itemCount: moviesWatched.length,
-                              itemBuilder: (context, index) {
-                                final movie = moviesWatched[index];
-                                return Container(
-                                  height: 100,
-                                  color: Colors.red,
-                                  child: Text(movie.title),
-                                );
-                              },
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  );
-                }
-              },
-            ),
-            // Container(height: 100, color: Colors.red),
           ],
-        ),
-      ),
-    );
-  }
-}
-
-class _WatchedStatsCard extends StatelessWidget {
-  final String category;
-  final int quantity;
-
-  const _WatchedStatsCard({
-    Key key,
-    this.category,
-    this.quantity,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Material(
-        elevation: 5,
-        borderRadius: const BorderRadius.all(
-          Radius.circular(10),
-        ),
-        child: ClipRRect(
-          borderRadius: const BorderRadius.all(
-            Radius.circular(10),
-          ),
-          child: Container(
-            width: 150,
-            color: Colors.tealAccent[700],
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(category, overflow: TextOverflow.ellipsis),
-                Text(quantity.toString(), overflow: TextOverflow.ellipsis),
-              ],
-            ),
-          ),
         ),
       ),
     );
