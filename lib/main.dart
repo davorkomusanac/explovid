@@ -16,11 +16,17 @@ import 'package:explovid/domain/user_profile_db/user_profile_repository.dart';
 import 'package:explovid/presentation/pages/splash_page/splash_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart' as http;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations([
+    //DeviceOrientation.landscapeRight,
+    //DeviceOrientation.portraitDown,
+    DeviceOrientation.portraitUp,
+  ]);
   await Firebase.initializeApp();
   runApp(MyApp());
 }
@@ -112,7 +118,6 @@ class _MyAppState extends State<MyApp> {
         title: 'Explovid',
         debugShowCheckedModeBanner: false,
         theme: ThemeData.dark().copyWith(
-          //scaffoldBackgroundColor: Color.fromRGBO(20, 24, 28, 1),
           scaffoldBackgroundColor: Colors.blueGrey[900],
           inputDecorationTheme: InputDecorationTheme(
             border: OutlineInputBorder(
