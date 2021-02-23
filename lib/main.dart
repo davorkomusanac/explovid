@@ -2,6 +2,7 @@ import 'package:explovid/application/actor_search/actor_details/actor_details_bl
 import 'package:explovid/application/actor_search/actor_search_bloc.dart';
 import 'package:explovid/application/auth/auth_check/auth_check_bloc.dart';
 import 'package:explovid/application/auth/sign_in_form/sign_in_form_bloc.dart';
+import 'package:explovid/application/feedback/feedback_bloc.dart';
 import 'package:explovid/application/movie_search/movie_details/movie_details_bloc.dart';
 import 'package:explovid/application/movie_search/movie_search_bloc.dart';
 import 'package:explovid/application/tv_show_search/tv_show_details/tv_show_details_bloc.dart';
@@ -12,6 +13,7 @@ import 'package:explovid/domain/actor_db/actor_repository.dart';
 import 'package:explovid/domain/auth/auth_repository.dart';
 import 'package:explovid/domain/movie_db/movie_repository.dart';
 import 'package:explovid/domain/tv_show_db/tv_show_repository.dart';
+import 'package:explovid/domain/user_profile_db/user_feedback_repository.dart';
 import 'package:explovid/domain/user_profile_db/user_profile_repository.dart';
 import 'package:explovid/presentation/pages/splash_page/splash_page.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -42,6 +44,7 @@ class _MyAppState extends State<MyApp> {
   TvShowRepository _tvShowRepository;
   ActorRepository _actorRepository;
   UserProfileRepository _userProfileRepository;
+  UserFeedbackRepository _userFeedbackRepository;
   http.Client client;
 
   @override
@@ -53,6 +56,7 @@ class _MyAppState extends State<MyApp> {
     _tvShowRepository = TvShowRepository(client);
     _actorRepository = ActorRepository(client);
     _userProfileRepository = UserProfileRepository();
+    _userFeedbackRepository = UserFeedbackRepository();
   }
 
   @override
@@ -112,6 +116,11 @@ class _MyAppState extends State<MyApp> {
           )..add(
               TvShowListsUserProfileEvent.loadTvShowToListInitial(),
             ),
+        ),
+        BlocProvider(
+          create: (context) => FeedbackBloc(
+            _userFeedbackRepository,
+          ),
         ),
       ],
       child: MaterialApp(
