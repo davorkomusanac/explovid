@@ -33,7 +33,7 @@ class _TvShowDetailsPageState extends State<TvShowDetailsPage> {
     super.didChangeDependencies();
   }
 
-  //Method to call, when Navigator.pop is called, to update the movieDetails page
+  //Method to call, when Navigator.pop is called, to update the TvShowDetails page
   void sendEvent() {
     context.read<TvShowDetailsBloc>().add(
           TvShowDetailsEvent.tvShowDetailsPressed(widget.tvShowId),
@@ -227,18 +227,29 @@ class _TvShowDetailsPageState extends State<TvShowDetailsPage> {
                               ),
                             ],
                           ),
-                          BlocBuilder<TvShowListsUserProfileBloc, TvShowListsUserProfileState>(
+                          BlocConsumer<TvShowListsUserProfileBloc, TvShowListsUserProfileState>(
+                            listener: (context, tvShowListState) {
+                              if (tvShowListState.errorMessage.isNotEmpty) {
+                                Scaffold.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text(tvShowListState.errorMessage),
+                                    duration: Duration(seconds: 1),
+                                  ),
+                                );
+                              }
+                            },
                             builder: (context, tvShowListState) {
                               //Check if tvShow is watchList so that buttons can be updated correctly
                               bool isInWatchlist = false;
                               bool isInWatched = false;
-                              for (var tvShow in tvShowListState.tvShowWatchlist) {
-                                if (tvShow.id == state.tvShowDetails.id && tvShow.name == state.tvShowDetails.name) {
+                              String compare = state.tvShowDetails.name + "_" + state.tvShowDetails.id.toString();
+                              for (var tvShow in tvShowListState.tvShowWatchlistArrayTitlesOnly) {
+                                if (tvShow == compare) {
                                   isInWatchlist = true;
                                 }
                               }
-                              for (var tvShow in tvShowListState.tvShowWatched) {
-                                if (tvShow.id == state.tvShowDetails.id && tvShow.name == state.tvShowDetails.name) {
+                              for (var tvShow in tvShowListState.tvShowWatchedArrayTitlesOnly) {
+                                if (tvShow == compare) {
                                   isInWatched = true;
                                 }
                               }
@@ -247,50 +258,55 @@ class _TvShowDetailsPageState extends State<TvShowDetailsPage> {
                                   Expanded(
                                     child: Padding(
                                       padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
-                                      child: ElevatedButton(
-                                        style: isInWatchlist ? kWatchedButton : kNotWatchedButton,
-                                        onPressed: () {
-                                          if (isInWatchlist) {
-                                            showDialog(
-                                              context: context,
-                                              builder: (context) {
-                                                return TvShowRemoveWatchlistDialog(tvShowDetails: state.tvShowDetails);
+                                      child: tvShowListState.isSubmittingWatchlist
+                                          ? Center(child: CircularProgressIndicator())
+                                          : ElevatedButton(
+                                              style: isInWatchlist ? kWatchedButton : kNotWatchedButton,
+                                              onPressed: () {
+                                                if (isInWatchlist) {
+                                                  showDialog(
+                                                    context: context,
+                                                    builder: (context) {
+                                                      return TvShowRemoveWatchlistDialog(tvShowDetails: state.tvShowDetails);
+                                                    },
+                                                  );
+                                                } else {
+                                                  context.read<TvShowListsUserProfileBloc>().add(
+                                                        TvShowListsUserProfileEvent.addTvShowToWatchlistPressed(
+                                                            state.tvShowDetails),
+                                                      );
+                                                }
                                               },
-                                            );
-                                          } else {
-                                            context.read<TvShowListsUserProfileBloc>().add(
-                                                  TvShowListsUserProfileEvent.addTvShowToWatchlistPressed(state.tvShowDetails),
-                                                );
-                                          }
-                                        },
-                                        child: Text(isInWatchlist ? "✅ In Watchlist" : "Add to Watchlist"),
-                                      ),
+                                              child: Text(isInWatchlist ? "✅ In Watchlist" : "Add to Watchlist"),
+                                            ),
                                     ),
                                   ),
                                   Expanded(
                                     child: Padding(
                                       padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
-                                      child: ElevatedButton(
-                                        style: isInWatched ? kWatchedButton : kNotWatchedButton,
-                                        onPressed: () {
-                                          if (isInWatched) {
-                                            showDialog(
-                                              context: context,
-                                              builder: (context) {
-                                                return TvShowRemoveReviewDialog(tvShowDetails: state.tvShowDetails);
+                                      child: tvShowListState.isSubmittingWatched
+                                          ? Center(child: CircularProgressIndicator())
+                                          : ElevatedButton(
+                                              style: isInWatched ? kWatchedButton : kNotWatchedButton,
+                                              onPressed: () {
+                                                if (isInWatched) {
+                                                  showDialog(
+                                                    context: context,
+                                                    builder: (context) {
+                                                      return TvShowRemoveReviewDialog(tvShowDetails: state.tvShowDetails);
+                                                    },
+                                                  );
+                                                } else {
+                                                  showDialog(
+                                                    context: context,
+                                                    builder: (context) {
+                                                      return TvShowReviewDialog(tvShowDetails: state.tvShowDetails);
+                                                    },
+                                                  );
+                                                }
                                               },
-                                            );
-                                          } else {
-                                            showDialog(
-                                              context: context,
-                                              builder: (context) {
-                                                return TvShowReviewDialog(tvShowDetails: state.tvShowDetails);
-                                              },
-                                            );
-                                          }
-                                        },
-                                        child: Text(isInWatched ? "✅ Watched" : "Rate it"),
-                                      ),
+                                              child: Text(isInWatched ? "✅ Watched" : "Rate it"),
+                                            ),
                                     ),
                                   ),
                                 ],
@@ -506,7 +522,7 @@ class _TvShowDetailsPageState extends State<TvShowDetailsPage> {
                                   child: InkWell(
                                     onTap: () {
                                       //Had to add .then and call setState, so that the first page is refreshed if it is popped back, from the second page where the Navigator
-                                      //is going to push right now (otherwise each page will have the identical MovieDetails)
+                                      //is going to push right now (otherwise each page will have the identical TvShowDetails)
                                       Navigator.of(context, rootNavigator: false)
                                           .push(
                                             MaterialPageRoute(

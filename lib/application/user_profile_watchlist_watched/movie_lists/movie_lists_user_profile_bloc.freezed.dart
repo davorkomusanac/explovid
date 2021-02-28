@@ -68,6 +68,16 @@ class _$MovieListsUserProfileEventTearOff {
       movieDetails,
     );
   }
+
+// ignore: unused_element
+  _NextMovieWatchlistPageCalled nextMovieWatchlistPageCalled() {
+    return const _NextMovieWatchlistPageCalled();
+  }
+
+// ignore: unused_element
+  _NextMovieWatchedPageCalled nextMovieWatchedPageCalled() {
+    return const _NextMovieWatchedPageCalled();
+  }
 }
 
 /// @nodoc
@@ -92,6 +102,8 @@ mixin _$MovieListsUserProfileEvent {
         TResult addMovieToWatchedPressed(MovieDetails movieDetails,
             String review, num rating, bool isSpoiler),
     @required TResult removeMovieFromWatchedPressed(MovieDetails movieDetails),
+    @required TResult nextMovieWatchlistPageCalled(),
+    @required TResult nextMovieWatchedPageCalled(),
   });
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object>({
@@ -105,6 +117,8 @@ mixin _$MovieListsUserProfileEvent {
     TResult addMovieToWatchedPressed(
         MovieDetails movieDetails, String review, num rating, bool isSpoiler),
     TResult removeMovieFromWatchedPressed(MovieDetails movieDetails),
+    TResult nextMovieWatchlistPageCalled(),
+    TResult nextMovieWatchedPageCalled(),
     @required TResult orElse(),
   });
   @optionalTypeArgs
@@ -121,6 +135,11 @@ mixin _$MovieListsUserProfileEvent {
     @required
         TResult removeMovieFromWatchedPressed(
             _RemoveMovieFromWatchedPressed value),
+    @required
+        TResult nextMovieWatchlistPageCalled(
+            _NextMovieWatchlistPageCalled value),
+    @required
+        TResult nextMovieWatchedPageCalled(_NextMovieWatchedPageCalled value),
   });
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object>({
@@ -132,6 +151,8 @@ mixin _$MovieListsUserProfileEvent {
         _RemoveMovieFromWatchlistPressed value),
     TResult addMovieToWatchedPressed(_AddMovieToWatchedPressed value),
     TResult removeMovieFromWatchedPressed(_RemoveMovieFromWatchedPressed value),
+    TResult nextMovieWatchlistPageCalled(_NextMovieWatchlistPageCalled value),
+    TResult nextMovieWatchedPageCalled(_NextMovieWatchedPageCalled value),
     @required TResult orElse(),
   });
 }
@@ -206,6 +227,8 @@ class _$_LoadMovieToListInitial implements _LoadMovieToListInitial {
         TResult addMovieToWatchedPressed(MovieDetails movieDetails,
             String review, num rating, bool isSpoiler),
     @required TResult removeMovieFromWatchedPressed(MovieDetails movieDetails),
+    @required TResult nextMovieWatchlistPageCalled(),
+    @required TResult nextMovieWatchedPageCalled(),
   }) {
     assert(loadMovieToListInitial != null);
     assert(movieWatchlistUpdated != null);
@@ -214,6 +237,8 @@ class _$_LoadMovieToListInitial implements _LoadMovieToListInitial {
     assert(removeMovieFromWatchlistPressed != null);
     assert(addMovieToWatchedPressed != null);
     assert(removeMovieFromWatchedPressed != null);
+    assert(nextMovieWatchlistPageCalled != null);
+    assert(nextMovieWatchedPageCalled != null);
     return loadMovieToListInitial();
   }
 
@@ -230,6 +255,8 @@ class _$_LoadMovieToListInitial implements _LoadMovieToListInitial {
     TResult addMovieToWatchedPressed(
         MovieDetails movieDetails, String review, num rating, bool isSpoiler),
     TResult removeMovieFromWatchedPressed(MovieDetails movieDetails),
+    TResult nextMovieWatchlistPageCalled(),
+    TResult nextMovieWatchedPageCalled(),
     @required TResult orElse(),
   }) {
     assert(orElse != null);
@@ -254,6 +281,11 @@ class _$_LoadMovieToListInitial implements _LoadMovieToListInitial {
     @required
         TResult removeMovieFromWatchedPressed(
             _RemoveMovieFromWatchedPressed value),
+    @required
+        TResult nextMovieWatchlistPageCalled(
+            _NextMovieWatchlistPageCalled value),
+    @required
+        TResult nextMovieWatchedPageCalled(_NextMovieWatchedPageCalled value),
   }) {
     assert(loadMovieToListInitial != null);
     assert(movieWatchlistUpdated != null);
@@ -262,6 +294,8 @@ class _$_LoadMovieToListInitial implements _LoadMovieToListInitial {
     assert(removeMovieFromWatchlistPressed != null);
     assert(addMovieToWatchedPressed != null);
     assert(removeMovieFromWatchedPressed != null);
+    assert(nextMovieWatchlistPageCalled != null);
+    assert(nextMovieWatchedPageCalled != null);
     return loadMovieToListInitial(this);
   }
 
@@ -276,6 +310,8 @@ class _$_LoadMovieToListInitial implements _LoadMovieToListInitial {
         _RemoveMovieFromWatchlistPressed value),
     TResult addMovieToWatchedPressed(_AddMovieToWatchedPressed value),
     TResult removeMovieFromWatchedPressed(_RemoveMovieFromWatchedPressed value),
+    TResult nextMovieWatchlistPageCalled(_NextMovieWatchlistPageCalled value),
+    TResult nextMovieWatchedPageCalled(_NextMovieWatchedPageCalled value),
     @required TResult orElse(),
   }) {
     assert(orElse != null);
@@ -371,6 +407,8 @@ class _$_MovieWatchlistUpdated implements _MovieWatchlistUpdated {
         TResult addMovieToWatchedPressed(MovieDetails movieDetails,
             String review, num rating, bool isSpoiler),
     @required TResult removeMovieFromWatchedPressed(MovieDetails movieDetails),
+    @required TResult nextMovieWatchlistPageCalled(),
+    @required TResult nextMovieWatchedPageCalled(),
   }) {
     assert(loadMovieToListInitial != null);
     assert(movieWatchlistUpdated != null);
@@ -379,6 +417,8 @@ class _$_MovieWatchlistUpdated implements _MovieWatchlistUpdated {
     assert(removeMovieFromWatchlistPressed != null);
     assert(addMovieToWatchedPressed != null);
     assert(removeMovieFromWatchedPressed != null);
+    assert(nextMovieWatchlistPageCalled != null);
+    assert(nextMovieWatchedPageCalled != null);
     return movieWatchlistUpdated(moviesWatchlist);
   }
 
@@ -395,6 +435,8 @@ class _$_MovieWatchlistUpdated implements _MovieWatchlistUpdated {
     TResult addMovieToWatchedPressed(
         MovieDetails movieDetails, String review, num rating, bool isSpoiler),
     TResult removeMovieFromWatchedPressed(MovieDetails movieDetails),
+    TResult nextMovieWatchlistPageCalled(),
+    TResult nextMovieWatchedPageCalled(),
     @required TResult orElse(),
   }) {
     assert(orElse != null);
@@ -419,6 +461,11 @@ class _$_MovieWatchlistUpdated implements _MovieWatchlistUpdated {
     @required
         TResult removeMovieFromWatchedPressed(
             _RemoveMovieFromWatchedPressed value),
+    @required
+        TResult nextMovieWatchlistPageCalled(
+            _NextMovieWatchlistPageCalled value),
+    @required
+        TResult nextMovieWatchedPageCalled(_NextMovieWatchedPageCalled value),
   }) {
     assert(loadMovieToListInitial != null);
     assert(movieWatchlistUpdated != null);
@@ -427,6 +474,8 @@ class _$_MovieWatchlistUpdated implements _MovieWatchlistUpdated {
     assert(removeMovieFromWatchlistPressed != null);
     assert(addMovieToWatchedPressed != null);
     assert(removeMovieFromWatchedPressed != null);
+    assert(nextMovieWatchlistPageCalled != null);
+    assert(nextMovieWatchedPageCalled != null);
     return movieWatchlistUpdated(this);
   }
 
@@ -441,6 +490,8 @@ class _$_MovieWatchlistUpdated implements _MovieWatchlistUpdated {
         _RemoveMovieFromWatchlistPressed value),
     TResult addMovieToWatchedPressed(_AddMovieToWatchedPressed value),
     TResult removeMovieFromWatchedPressed(_RemoveMovieFromWatchedPressed value),
+    TResult nextMovieWatchlistPageCalled(_NextMovieWatchlistPageCalled value),
+    TResult nextMovieWatchedPageCalled(_NextMovieWatchedPageCalled value),
     @required TResult orElse(),
   }) {
     assert(orElse != null);
@@ -541,6 +592,8 @@ class _$_MovieWatchedUpdated implements _MovieWatchedUpdated {
         TResult addMovieToWatchedPressed(MovieDetails movieDetails,
             String review, num rating, bool isSpoiler),
     @required TResult removeMovieFromWatchedPressed(MovieDetails movieDetails),
+    @required TResult nextMovieWatchlistPageCalled(),
+    @required TResult nextMovieWatchedPageCalled(),
   }) {
     assert(loadMovieToListInitial != null);
     assert(movieWatchlistUpdated != null);
@@ -549,6 +602,8 @@ class _$_MovieWatchedUpdated implements _MovieWatchedUpdated {
     assert(removeMovieFromWatchlistPressed != null);
     assert(addMovieToWatchedPressed != null);
     assert(removeMovieFromWatchedPressed != null);
+    assert(nextMovieWatchlistPageCalled != null);
+    assert(nextMovieWatchedPageCalled != null);
     return movieWatchedUpdated(moviesWatched);
   }
 
@@ -565,6 +620,8 @@ class _$_MovieWatchedUpdated implements _MovieWatchedUpdated {
     TResult addMovieToWatchedPressed(
         MovieDetails movieDetails, String review, num rating, bool isSpoiler),
     TResult removeMovieFromWatchedPressed(MovieDetails movieDetails),
+    TResult nextMovieWatchlistPageCalled(),
+    TResult nextMovieWatchedPageCalled(),
     @required TResult orElse(),
   }) {
     assert(orElse != null);
@@ -589,6 +646,11 @@ class _$_MovieWatchedUpdated implements _MovieWatchedUpdated {
     @required
         TResult removeMovieFromWatchedPressed(
             _RemoveMovieFromWatchedPressed value),
+    @required
+        TResult nextMovieWatchlistPageCalled(
+            _NextMovieWatchlistPageCalled value),
+    @required
+        TResult nextMovieWatchedPageCalled(_NextMovieWatchedPageCalled value),
   }) {
     assert(loadMovieToListInitial != null);
     assert(movieWatchlistUpdated != null);
@@ -597,6 +659,8 @@ class _$_MovieWatchedUpdated implements _MovieWatchedUpdated {
     assert(removeMovieFromWatchlistPressed != null);
     assert(addMovieToWatchedPressed != null);
     assert(removeMovieFromWatchedPressed != null);
+    assert(nextMovieWatchlistPageCalled != null);
+    assert(nextMovieWatchedPageCalled != null);
     return movieWatchedUpdated(this);
   }
 
@@ -611,6 +675,8 @@ class _$_MovieWatchedUpdated implements _MovieWatchedUpdated {
         _RemoveMovieFromWatchlistPressed value),
     TResult addMovieToWatchedPressed(_AddMovieToWatchedPressed value),
     TResult removeMovieFromWatchedPressed(_RemoveMovieFromWatchedPressed value),
+    TResult nextMovieWatchlistPageCalled(_NextMovieWatchlistPageCalled value),
+    TResult nextMovieWatchedPageCalled(_NextMovieWatchedPageCalled value),
     @required TResult orElse(),
   }) {
     assert(orElse != null);
@@ -713,6 +779,8 @@ class _$_AddMovieToWatchlistPressed implements _AddMovieToWatchlistPressed {
         TResult addMovieToWatchedPressed(MovieDetails movieDetails,
             String review, num rating, bool isSpoiler),
     @required TResult removeMovieFromWatchedPressed(MovieDetails movieDetails),
+    @required TResult nextMovieWatchlistPageCalled(),
+    @required TResult nextMovieWatchedPageCalled(),
   }) {
     assert(loadMovieToListInitial != null);
     assert(movieWatchlistUpdated != null);
@@ -721,6 +789,8 @@ class _$_AddMovieToWatchlistPressed implements _AddMovieToWatchlistPressed {
     assert(removeMovieFromWatchlistPressed != null);
     assert(addMovieToWatchedPressed != null);
     assert(removeMovieFromWatchedPressed != null);
+    assert(nextMovieWatchlistPageCalled != null);
+    assert(nextMovieWatchedPageCalled != null);
     return addMovieToWatchlistPressed(movieDetails);
   }
 
@@ -737,6 +807,8 @@ class _$_AddMovieToWatchlistPressed implements _AddMovieToWatchlistPressed {
     TResult addMovieToWatchedPressed(
         MovieDetails movieDetails, String review, num rating, bool isSpoiler),
     TResult removeMovieFromWatchedPressed(MovieDetails movieDetails),
+    TResult nextMovieWatchlistPageCalled(),
+    TResult nextMovieWatchedPageCalled(),
     @required TResult orElse(),
   }) {
     assert(orElse != null);
@@ -761,6 +833,11 @@ class _$_AddMovieToWatchlistPressed implements _AddMovieToWatchlistPressed {
     @required
         TResult removeMovieFromWatchedPressed(
             _RemoveMovieFromWatchedPressed value),
+    @required
+        TResult nextMovieWatchlistPageCalled(
+            _NextMovieWatchlistPageCalled value),
+    @required
+        TResult nextMovieWatchedPageCalled(_NextMovieWatchedPageCalled value),
   }) {
     assert(loadMovieToListInitial != null);
     assert(movieWatchlistUpdated != null);
@@ -769,6 +846,8 @@ class _$_AddMovieToWatchlistPressed implements _AddMovieToWatchlistPressed {
     assert(removeMovieFromWatchlistPressed != null);
     assert(addMovieToWatchedPressed != null);
     assert(removeMovieFromWatchedPressed != null);
+    assert(nextMovieWatchlistPageCalled != null);
+    assert(nextMovieWatchedPageCalled != null);
     return addMovieToWatchlistPressed(this);
   }
 
@@ -783,6 +862,8 @@ class _$_AddMovieToWatchlistPressed implements _AddMovieToWatchlistPressed {
         _RemoveMovieFromWatchlistPressed value),
     TResult addMovieToWatchedPressed(_AddMovieToWatchedPressed value),
     TResult removeMovieFromWatchedPressed(_RemoveMovieFromWatchedPressed value),
+    TResult nextMovieWatchlistPageCalled(_NextMovieWatchlistPageCalled value),
+    TResult nextMovieWatchedPageCalled(_NextMovieWatchedPageCalled value),
     @required TResult orElse(),
   }) {
     assert(orElse != null);
@@ -888,6 +969,8 @@ class _$_RemoveMovieFromWatchlistPressed
         TResult addMovieToWatchedPressed(MovieDetails movieDetails,
             String review, num rating, bool isSpoiler),
     @required TResult removeMovieFromWatchedPressed(MovieDetails movieDetails),
+    @required TResult nextMovieWatchlistPageCalled(),
+    @required TResult nextMovieWatchedPageCalled(),
   }) {
     assert(loadMovieToListInitial != null);
     assert(movieWatchlistUpdated != null);
@@ -896,6 +979,8 @@ class _$_RemoveMovieFromWatchlistPressed
     assert(removeMovieFromWatchlistPressed != null);
     assert(addMovieToWatchedPressed != null);
     assert(removeMovieFromWatchedPressed != null);
+    assert(nextMovieWatchlistPageCalled != null);
+    assert(nextMovieWatchedPageCalled != null);
     return removeMovieFromWatchlistPressed(movieDetails);
   }
 
@@ -912,6 +997,8 @@ class _$_RemoveMovieFromWatchlistPressed
     TResult addMovieToWatchedPressed(
         MovieDetails movieDetails, String review, num rating, bool isSpoiler),
     TResult removeMovieFromWatchedPressed(MovieDetails movieDetails),
+    TResult nextMovieWatchlistPageCalled(),
+    TResult nextMovieWatchedPageCalled(),
     @required TResult orElse(),
   }) {
     assert(orElse != null);
@@ -936,6 +1023,11 @@ class _$_RemoveMovieFromWatchlistPressed
     @required
         TResult removeMovieFromWatchedPressed(
             _RemoveMovieFromWatchedPressed value),
+    @required
+        TResult nextMovieWatchlistPageCalled(
+            _NextMovieWatchlistPageCalled value),
+    @required
+        TResult nextMovieWatchedPageCalled(_NextMovieWatchedPageCalled value),
   }) {
     assert(loadMovieToListInitial != null);
     assert(movieWatchlistUpdated != null);
@@ -944,6 +1036,8 @@ class _$_RemoveMovieFromWatchlistPressed
     assert(removeMovieFromWatchlistPressed != null);
     assert(addMovieToWatchedPressed != null);
     assert(removeMovieFromWatchedPressed != null);
+    assert(nextMovieWatchlistPageCalled != null);
+    assert(nextMovieWatchedPageCalled != null);
     return removeMovieFromWatchlistPressed(this);
   }
 
@@ -958,6 +1052,8 @@ class _$_RemoveMovieFromWatchlistPressed
         _RemoveMovieFromWatchlistPressed value),
     TResult addMovieToWatchedPressed(_AddMovieToWatchedPressed value),
     TResult removeMovieFromWatchedPressed(_RemoveMovieFromWatchedPressed value),
+    TResult nextMovieWatchlistPageCalled(_NextMovieWatchlistPageCalled value),
+    TResult nextMovieWatchedPageCalled(_NextMovieWatchedPageCalled value),
     @required TResult orElse(),
   }) {
     assert(orElse != null);
@@ -1088,6 +1184,8 @@ class _$_AddMovieToWatchedPressed implements _AddMovieToWatchedPressed {
         TResult addMovieToWatchedPressed(MovieDetails movieDetails,
             String review, num rating, bool isSpoiler),
     @required TResult removeMovieFromWatchedPressed(MovieDetails movieDetails),
+    @required TResult nextMovieWatchlistPageCalled(),
+    @required TResult nextMovieWatchedPageCalled(),
   }) {
     assert(loadMovieToListInitial != null);
     assert(movieWatchlistUpdated != null);
@@ -1096,6 +1194,8 @@ class _$_AddMovieToWatchedPressed implements _AddMovieToWatchedPressed {
     assert(removeMovieFromWatchlistPressed != null);
     assert(addMovieToWatchedPressed != null);
     assert(removeMovieFromWatchedPressed != null);
+    assert(nextMovieWatchlistPageCalled != null);
+    assert(nextMovieWatchedPageCalled != null);
     return addMovieToWatchedPressed(movieDetails, review, rating, isSpoiler);
   }
 
@@ -1112,6 +1212,8 @@ class _$_AddMovieToWatchedPressed implements _AddMovieToWatchedPressed {
     TResult addMovieToWatchedPressed(
         MovieDetails movieDetails, String review, num rating, bool isSpoiler),
     TResult removeMovieFromWatchedPressed(MovieDetails movieDetails),
+    TResult nextMovieWatchlistPageCalled(),
+    TResult nextMovieWatchedPageCalled(),
     @required TResult orElse(),
   }) {
     assert(orElse != null);
@@ -1136,6 +1238,11 @@ class _$_AddMovieToWatchedPressed implements _AddMovieToWatchedPressed {
     @required
         TResult removeMovieFromWatchedPressed(
             _RemoveMovieFromWatchedPressed value),
+    @required
+        TResult nextMovieWatchlistPageCalled(
+            _NextMovieWatchlistPageCalled value),
+    @required
+        TResult nextMovieWatchedPageCalled(_NextMovieWatchedPageCalled value),
   }) {
     assert(loadMovieToListInitial != null);
     assert(movieWatchlistUpdated != null);
@@ -1144,6 +1251,8 @@ class _$_AddMovieToWatchedPressed implements _AddMovieToWatchedPressed {
     assert(removeMovieFromWatchlistPressed != null);
     assert(addMovieToWatchedPressed != null);
     assert(removeMovieFromWatchedPressed != null);
+    assert(nextMovieWatchlistPageCalled != null);
+    assert(nextMovieWatchedPageCalled != null);
     return addMovieToWatchedPressed(this);
   }
 
@@ -1158,6 +1267,8 @@ class _$_AddMovieToWatchedPressed implements _AddMovieToWatchedPressed {
         _RemoveMovieFromWatchlistPressed value),
     TResult addMovieToWatchedPressed(_AddMovieToWatchedPressed value),
     TResult removeMovieFromWatchedPressed(_RemoveMovieFromWatchedPressed value),
+    TResult nextMovieWatchlistPageCalled(_NextMovieWatchlistPageCalled value),
+    TResult nextMovieWatchedPageCalled(_NextMovieWatchedPageCalled value),
     @required TResult orElse(),
   }) {
     assert(orElse != null);
@@ -1264,6 +1375,8 @@ class _$_RemoveMovieFromWatchedPressed
         TResult addMovieToWatchedPressed(MovieDetails movieDetails,
             String review, num rating, bool isSpoiler),
     @required TResult removeMovieFromWatchedPressed(MovieDetails movieDetails),
+    @required TResult nextMovieWatchlistPageCalled(),
+    @required TResult nextMovieWatchedPageCalled(),
   }) {
     assert(loadMovieToListInitial != null);
     assert(movieWatchlistUpdated != null);
@@ -1272,6 +1385,8 @@ class _$_RemoveMovieFromWatchedPressed
     assert(removeMovieFromWatchlistPressed != null);
     assert(addMovieToWatchedPressed != null);
     assert(removeMovieFromWatchedPressed != null);
+    assert(nextMovieWatchlistPageCalled != null);
+    assert(nextMovieWatchedPageCalled != null);
     return removeMovieFromWatchedPressed(movieDetails);
   }
 
@@ -1288,6 +1403,8 @@ class _$_RemoveMovieFromWatchedPressed
     TResult addMovieToWatchedPressed(
         MovieDetails movieDetails, String review, num rating, bool isSpoiler),
     TResult removeMovieFromWatchedPressed(MovieDetails movieDetails),
+    TResult nextMovieWatchlistPageCalled(),
+    TResult nextMovieWatchedPageCalled(),
     @required TResult orElse(),
   }) {
     assert(orElse != null);
@@ -1312,6 +1429,11 @@ class _$_RemoveMovieFromWatchedPressed
     @required
         TResult removeMovieFromWatchedPressed(
             _RemoveMovieFromWatchedPressed value),
+    @required
+        TResult nextMovieWatchlistPageCalled(
+            _NextMovieWatchlistPageCalled value),
+    @required
+        TResult nextMovieWatchedPageCalled(_NextMovieWatchedPageCalled value),
   }) {
     assert(loadMovieToListInitial != null);
     assert(movieWatchlistUpdated != null);
@@ -1320,6 +1442,8 @@ class _$_RemoveMovieFromWatchedPressed
     assert(removeMovieFromWatchlistPressed != null);
     assert(addMovieToWatchedPressed != null);
     assert(removeMovieFromWatchedPressed != null);
+    assert(nextMovieWatchlistPageCalled != null);
+    assert(nextMovieWatchedPageCalled != null);
     return removeMovieFromWatchedPressed(this);
   }
 
@@ -1334,6 +1458,8 @@ class _$_RemoveMovieFromWatchedPressed
         _RemoveMovieFromWatchlistPressed value),
     TResult addMovieToWatchedPressed(_AddMovieToWatchedPressed value),
     TResult removeMovieFromWatchedPressed(_RemoveMovieFromWatchedPressed value),
+    TResult nextMovieWatchlistPageCalled(_NextMovieWatchlistPageCalled value),
+    TResult nextMovieWatchedPageCalled(_NextMovieWatchedPageCalled value),
     @required TResult orElse(),
   }) {
     assert(orElse != null);
@@ -1356,6 +1482,318 @@ abstract class _RemoveMovieFromWatchedPressed
 }
 
 /// @nodoc
+abstract class _$NextMovieWatchlistPageCalledCopyWith<$Res> {
+  factory _$NextMovieWatchlistPageCalledCopyWith(
+          _NextMovieWatchlistPageCalled value,
+          $Res Function(_NextMovieWatchlistPageCalled) then) =
+      __$NextMovieWatchlistPageCalledCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$NextMovieWatchlistPageCalledCopyWithImpl<$Res>
+    extends _$MovieListsUserProfileEventCopyWithImpl<$Res>
+    implements _$NextMovieWatchlistPageCalledCopyWith<$Res> {
+  __$NextMovieWatchlistPageCalledCopyWithImpl(
+      _NextMovieWatchlistPageCalled _value,
+      $Res Function(_NextMovieWatchlistPageCalled) _then)
+      : super(_value, (v) => _then(v as _NextMovieWatchlistPageCalled));
+
+  @override
+  _NextMovieWatchlistPageCalled get _value =>
+      super._value as _NextMovieWatchlistPageCalled;
+}
+
+/// @nodoc
+class _$_NextMovieWatchlistPageCalled implements _NextMovieWatchlistPageCalled {
+  const _$_NextMovieWatchlistPageCalled();
+
+  @override
+  String toString() {
+    return 'MovieListsUserProfileEvent.nextMovieWatchlistPageCalled()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) || (other is _NextMovieWatchlistPageCalled);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object>({
+    @required TResult loadMovieToListInitial(),
+    @required
+        TResult movieWatchlistUpdated(
+            List<FirestoreMovieWatchlistDetails> moviesWatchlist),
+    @required
+        TResult movieWatchedUpdated(
+            List<FirestoreMovieWatchedDetails> moviesWatched),
+    @required TResult addMovieToWatchlistPressed(MovieDetails movieDetails),
+    @required
+        TResult removeMovieFromWatchlistPressed(MovieDetails movieDetails),
+    @required
+        TResult addMovieToWatchedPressed(MovieDetails movieDetails,
+            String review, num rating, bool isSpoiler),
+    @required TResult removeMovieFromWatchedPressed(MovieDetails movieDetails),
+    @required TResult nextMovieWatchlistPageCalled(),
+    @required TResult nextMovieWatchedPageCalled(),
+  }) {
+    assert(loadMovieToListInitial != null);
+    assert(movieWatchlistUpdated != null);
+    assert(movieWatchedUpdated != null);
+    assert(addMovieToWatchlistPressed != null);
+    assert(removeMovieFromWatchlistPressed != null);
+    assert(addMovieToWatchedPressed != null);
+    assert(removeMovieFromWatchedPressed != null);
+    assert(nextMovieWatchlistPageCalled != null);
+    assert(nextMovieWatchedPageCalled != null);
+    return nextMovieWatchlistPageCalled();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object>({
+    TResult loadMovieToListInitial(),
+    TResult movieWatchlistUpdated(
+        List<FirestoreMovieWatchlistDetails> moviesWatchlist),
+    TResult movieWatchedUpdated(
+        List<FirestoreMovieWatchedDetails> moviesWatched),
+    TResult addMovieToWatchlistPressed(MovieDetails movieDetails),
+    TResult removeMovieFromWatchlistPressed(MovieDetails movieDetails),
+    TResult addMovieToWatchedPressed(
+        MovieDetails movieDetails, String review, num rating, bool isSpoiler),
+    TResult removeMovieFromWatchedPressed(MovieDetails movieDetails),
+    TResult nextMovieWatchlistPageCalled(),
+    TResult nextMovieWatchedPageCalled(),
+    @required TResult orElse(),
+  }) {
+    assert(orElse != null);
+    if (nextMovieWatchlistPageCalled != null) {
+      return nextMovieWatchlistPageCalled();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object>({
+    @required TResult loadMovieToListInitial(_LoadMovieToListInitial value),
+    @required TResult movieWatchlistUpdated(_MovieWatchlistUpdated value),
+    @required TResult movieWatchedUpdated(_MovieWatchedUpdated value),
+    @required
+        TResult addMovieToWatchlistPressed(_AddMovieToWatchlistPressed value),
+    @required
+        TResult removeMovieFromWatchlistPressed(
+            _RemoveMovieFromWatchlistPressed value),
+    @required TResult addMovieToWatchedPressed(_AddMovieToWatchedPressed value),
+    @required
+        TResult removeMovieFromWatchedPressed(
+            _RemoveMovieFromWatchedPressed value),
+    @required
+        TResult nextMovieWatchlistPageCalled(
+            _NextMovieWatchlistPageCalled value),
+    @required
+        TResult nextMovieWatchedPageCalled(_NextMovieWatchedPageCalled value),
+  }) {
+    assert(loadMovieToListInitial != null);
+    assert(movieWatchlistUpdated != null);
+    assert(movieWatchedUpdated != null);
+    assert(addMovieToWatchlistPressed != null);
+    assert(removeMovieFromWatchlistPressed != null);
+    assert(addMovieToWatchedPressed != null);
+    assert(removeMovieFromWatchedPressed != null);
+    assert(nextMovieWatchlistPageCalled != null);
+    assert(nextMovieWatchedPageCalled != null);
+    return nextMovieWatchlistPageCalled(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object>({
+    TResult loadMovieToListInitial(_LoadMovieToListInitial value),
+    TResult movieWatchlistUpdated(_MovieWatchlistUpdated value),
+    TResult movieWatchedUpdated(_MovieWatchedUpdated value),
+    TResult addMovieToWatchlistPressed(_AddMovieToWatchlistPressed value),
+    TResult removeMovieFromWatchlistPressed(
+        _RemoveMovieFromWatchlistPressed value),
+    TResult addMovieToWatchedPressed(_AddMovieToWatchedPressed value),
+    TResult removeMovieFromWatchedPressed(_RemoveMovieFromWatchedPressed value),
+    TResult nextMovieWatchlistPageCalled(_NextMovieWatchlistPageCalled value),
+    TResult nextMovieWatchedPageCalled(_NextMovieWatchedPageCalled value),
+    @required TResult orElse(),
+  }) {
+    assert(orElse != null);
+    if (nextMovieWatchlistPageCalled != null) {
+      return nextMovieWatchlistPageCalled(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _NextMovieWatchlistPageCalled
+    implements MovieListsUserProfileEvent {
+  const factory _NextMovieWatchlistPageCalled() =
+      _$_NextMovieWatchlistPageCalled;
+}
+
+/// @nodoc
+abstract class _$NextMovieWatchedPageCalledCopyWith<$Res> {
+  factory _$NextMovieWatchedPageCalledCopyWith(
+          _NextMovieWatchedPageCalled value,
+          $Res Function(_NextMovieWatchedPageCalled) then) =
+      __$NextMovieWatchedPageCalledCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$NextMovieWatchedPageCalledCopyWithImpl<$Res>
+    extends _$MovieListsUserProfileEventCopyWithImpl<$Res>
+    implements _$NextMovieWatchedPageCalledCopyWith<$Res> {
+  __$NextMovieWatchedPageCalledCopyWithImpl(_NextMovieWatchedPageCalled _value,
+      $Res Function(_NextMovieWatchedPageCalled) _then)
+      : super(_value, (v) => _then(v as _NextMovieWatchedPageCalled));
+
+  @override
+  _NextMovieWatchedPageCalled get _value =>
+      super._value as _NextMovieWatchedPageCalled;
+}
+
+/// @nodoc
+class _$_NextMovieWatchedPageCalled implements _NextMovieWatchedPageCalled {
+  const _$_NextMovieWatchedPageCalled();
+
+  @override
+  String toString() {
+    return 'MovieListsUserProfileEvent.nextMovieWatchedPageCalled()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) || (other is _NextMovieWatchedPageCalled);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object>({
+    @required TResult loadMovieToListInitial(),
+    @required
+        TResult movieWatchlistUpdated(
+            List<FirestoreMovieWatchlistDetails> moviesWatchlist),
+    @required
+        TResult movieWatchedUpdated(
+            List<FirestoreMovieWatchedDetails> moviesWatched),
+    @required TResult addMovieToWatchlistPressed(MovieDetails movieDetails),
+    @required
+        TResult removeMovieFromWatchlistPressed(MovieDetails movieDetails),
+    @required
+        TResult addMovieToWatchedPressed(MovieDetails movieDetails,
+            String review, num rating, bool isSpoiler),
+    @required TResult removeMovieFromWatchedPressed(MovieDetails movieDetails),
+    @required TResult nextMovieWatchlistPageCalled(),
+    @required TResult nextMovieWatchedPageCalled(),
+  }) {
+    assert(loadMovieToListInitial != null);
+    assert(movieWatchlistUpdated != null);
+    assert(movieWatchedUpdated != null);
+    assert(addMovieToWatchlistPressed != null);
+    assert(removeMovieFromWatchlistPressed != null);
+    assert(addMovieToWatchedPressed != null);
+    assert(removeMovieFromWatchedPressed != null);
+    assert(nextMovieWatchlistPageCalled != null);
+    assert(nextMovieWatchedPageCalled != null);
+    return nextMovieWatchedPageCalled();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object>({
+    TResult loadMovieToListInitial(),
+    TResult movieWatchlistUpdated(
+        List<FirestoreMovieWatchlistDetails> moviesWatchlist),
+    TResult movieWatchedUpdated(
+        List<FirestoreMovieWatchedDetails> moviesWatched),
+    TResult addMovieToWatchlistPressed(MovieDetails movieDetails),
+    TResult removeMovieFromWatchlistPressed(MovieDetails movieDetails),
+    TResult addMovieToWatchedPressed(
+        MovieDetails movieDetails, String review, num rating, bool isSpoiler),
+    TResult removeMovieFromWatchedPressed(MovieDetails movieDetails),
+    TResult nextMovieWatchlistPageCalled(),
+    TResult nextMovieWatchedPageCalled(),
+    @required TResult orElse(),
+  }) {
+    assert(orElse != null);
+    if (nextMovieWatchedPageCalled != null) {
+      return nextMovieWatchedPageCalled();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object>({
+    @required TResult loadMovieToListInitial(_LoadMovieToListInitial value),
+    @required TResult movieWatchlistUpdated(_MovieWatchlistUpdated value),
+    @required TResult movieWatchedUpdated(_MovieWatchedUpdated value),
+    @required
+        TResult addMovieToWatchlistPressed(_AddMovieToWatchlistPressed value),
+    @required
+        TResult removeMovieFromWatchlistPressed(
+            _RemoveMovieFromWatchlistPressed value),
+    @required TResult addMovieToWatchedPressed(_AddMovieToWatchedPressed value),
+    @required
+        TResult removeMovieFromWatchedPressed(
+            _RemoveMovieFromWatchedPressed value),
+    @required
+        TResult nextMovieWatchlistPageCalled(
+            _NextMovieWatchlistPageCalled value),
+    @required
+        TResult nextMovieWatchedPageCalled(_NextMovieWatchedPageCalled value),
+  }) {
+    assert(loadMovieToListInitial != null);
+    assert(movieWatchlistUpdated != null);
+    assert(movieWatchedUpdated != null);
+    assert(addMovieToWatchlistPressed != null);
+    assert(removeMovieFromWatchlistPressed != null);
+    assert(addMovieToWatchedPressed != null);
+    assert(removeMovieFromWatchedPressed != null);
+    assert(nextMovieWatchlistPageCalled != null);
+    assert(nextMovieWatchedPageCalled != null);
+    return nextMovieWatchedPageCalled(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object>({
+    TResult loadMovieToListInitial(_LoadMovieToListInitial value),
+    TResult movieWatchlistUpdated(_MovieWatchlistUpdated value),
+    TResult movieWatchedUpdated(_MovieWatchedUpdated value),
+    TResult addMovieToWatchlistPressed(_AddMovieToWatchlistPressed value),
+    TResult removeMovieFromWatchlistPressed(
+        _RemoveMovieFromWatchlistPressed value),
+    TResult addMovieToWatchedPressed(_AddMovieToWatchedPressed value),
+    TResult removeMovieFromWatchedPressed(_RemoveMovieFromWatchedPressed value),
+    TResult nextMovieWatchlistPageCalled(_NextMovieWatchlistPageCalled value),
+    TResult nextMovieWatchedPageCalled(_NextMovieWatchedPageCalled value),
+    @required TResult orElse(),
+  }) {
+    assert(orElse != null);
+    if (nextMovieWatchedPageCalled != null) {
+      return nextMovieWatchedPageCalled(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _NextMovieWatchedPageCalled
+    implements MovieListsUserProfileEvent {
+  const factory _NextMovieWatchedPageCalled() = _$_NextMovieWatchedPageCalled;
+}
+
+/// @nodoc
 class _$MovieListsUserProfileStateTearOff {
   const _$MovieListsUserProfileStateTearOff();
 
@@ -1363,11 +1801,27 @@ class _$MovieListsUserProfileStateTearOff {
   _MovieListsUserProfileState call(
       {@required bool isLoading,
       @required List<FirestoreMovieWatchlistDetails> movieWatchlist,
-      @required List<FirestoreMovieWatchedDetails> movieWatched}) {
+      @required List<FirestoreMovieWatchedDetails> movieWatched,
+      @required int nextPage,
+      @required bool isThereMoreMovieWatchlistPageToLoad,
+      @required List<String> movieWatchlistArrayTitlesOnly,
+      @required bool isSubmittingWatchlist,
+      @required String errorMessage,
+      @required bool isThereMoreMovieWatchedPageToLoad,
+      @required List<String> movieWatchedArrayTitlesOnly,
+      @required bool isSubmittingWatched}) {
     return _MovieListsUserProfileState(
       isLoading: isLoading,
       movieWatchlist: movieWatchlist,
       movieWatched: movieWatched,
+      nextPage: nextPage,
+      isThereMoreMovieWatchlistPageToLoad: isThereMoreMovieWatchlistPageToLoad,
+      movieWatchlistArrayTitlesOnly: movieWatchlistArrayTitlesOnly,
+      isSubmittingWatchlist: isSubmittingWatchlist,
+      errorMessage: errorMessage,
+      isThereMoreMovieWatchedPageToLoad: isThereMoreMovieWatchedPageToLoad,
+      movieWatchedArrayTitlesOnly: movieWatchedArrayTitlesOnly,
+      isSubmittingWatched: isSubmittingWatched,
     );
   }
 }
@@ -1381,6 +1835,14 @@ mixin _$MovieListsUserProfileState {
   bool get isLoading;
   List<FirestoreMovieWatchlistDetails> get movieWatchlist;
   List<FirestoreMovieWatchedDetails> get movieWatched;
+  int get nextPage;
+  bool get isThereMoreMovieWatchlistPageToLoad;
+  List<String> get movieWatchlistArrayTitlesOnly;
+  bool get isSubmittingWatchlist;
+  String get errorMessage;
+  bool get isThereMoreMovieWatchedPageToLoad;
+  List<String> get movieWatchedArrayTitlesOnly;
+  bool get isSubmittingWatched;
 
   @JsonKey(ignore: true)
   $MovieListsUserProfileStateCopyWith<MovieListsUserProfileState> get copyWith;
@@ -1394,7 +1856,15 @@ abstract class $MovieListsUserProfileStateCopyWith<$Res> {
   $Res call(
       {bool isLoading,
       List<FirestoreMovieWatchlistDetails> movieWatchlist,
-      List<FirestoreMovieWatchedDetails> movieWatched});
+      List<FirestoreMovieWatchedDetails> movieWatched,
+      int nextPage,
+      bool isThereMoreMovieWatchlistPageToLoad,
+      List<String> movieWatchlistArrayTitlesOnly,
+      bool isSubmittingWatchlist,
+      String errorMessage,
+      bool isThereMoreMovieWatchedPageToLoad,
+      List<String> movieWatchedArrayTitlesOnly,
+      bool isSubmittingWatched});
 }
 
 /// @nodoc
@@ -1411,6 +1881,14 @@ class _$MovieListsUserProfileStateCopyWithImpl<$Res>
     Object isLoading = freezed,
     Object movieWatchlist = freezed,
     Object movieWatched = freezed,
+    Object nextPage = freezed,
+    Object isThereMoreMovieWatchlistPageToLoad = freezed,
+    Object movieWatchlistArrayTitlesOnly = freezed,
+    Object isSubmittingWatchlist = freezed,
+    Object errorMessage = freezed,
+    Object isThereMoreMovieWatchedPageToLoad = freezed,
+    Object movieWatchedArrayTitlesOnly = freezed,
+    Object isSubmittingWatched = freezed,
   }) {
     return _then(_value.copyWith(
       isLoading: isLoading == freezed ? _value.isLoading : isLoading as bool,
@@ -1420,6 +1898,30 @@ class _$MovieListsUserProfileStateCopyWithImpl<$Res>
       movieWatched: movieWatched == freezed
           ? _value.movieWatched
           : movieWatched as List<FirestoreMovieWatchedDetails>,
+      nextPage: nextPage == freezed ? _value.nextPage : nextPage as int,
+      isThereMoreMovieWatchlistPageToLoad:
+          isThereMoreMovieWatchlistPageToLoad == freezed
+              ? _value.isThereMoreMovieWatchlistPageToLoad
+              : isThereMoreMovieWatchlistPageToLoad as bool,
+      movieWatchlistArrayTitlesOnly: movieWatchlistArrayTitlesOnly == freezed
+          ? _value.movieWatchlistArrayTitlesOnly
+          : movieWatchlistArrayTitlesOnly as List<String>,
+      isSubmittingWatchlist: isSubmittingWatchlist == freezed
+          ? _value.isSubmittingWatchlist
+          : isSubmittingWatchlist as bool,
+      errorMessage: errorMessage == freezed
+          ? _value.errorMessage
+          : errorMessage as String,
+      isThereMoreMovieWatchedPageToLoad:
+          isThereMoreMovieWatchedPageToLoad == freezed
+              ? _value.isThereMoreMovieWatchedPageToLoad
+              : isThereMoreMovieWatchedPageToLoad as bool,
+      movieWatchedArrayTitlesOnly: movieWatchedArrayTitlesOnly == freezed
+          ? _value.movieWatchedArrayTitlesOnly
+          : movieWatchedArrayTitlesOnly as List<String>,
+      isSubmittingWatched: isSubmittingWatched == freezed
+          ? _value.isSubmittingWatched
+          : isSubmittingWatched as bool,
     ));
   }
 }
@@ -1435,7 +1937,15 @@ abstract class _$MovieListsUserProfileStateCopyWith<$Res>
   $Res call(
       {bool isLoading,
       List<FirestoreMovieWatchlistDetails> movieWatchlist,
-      List<FirestoreMovieWatchedDetails> movieWatched});
+      List<FirestoreMovieWatchedDetails> movieWatched,
+      int nextPage,
+      bool isThereMoreMovieWatchlistPageToLoad,
+      List<String> movieWatchlistArrayTitlesOnly,
+      bool isSubmittingWatchlist,
+      String errorMessage,
+      bool isThereMoreMovieWatchedPageToLoad,
+      List<String> movieWatchedArrayTitlesOnly,
+      bool isSubmittingWatched});
 }
 
 /// @nodoc
@@ -1455,6 +1965,14 @@ class __$MovieListsUserProfileStateCopyWithImpl<$Res>
     Object isLoading = freezed,
     Object movieWatchlist = freezed,
     Object movieWatched = freezed,
+    Object nextPage = freezed,
+    Object isThereMoreMovieWatchlistPageToLoad = freezed,
+    Object movieWatchlistArrayTitlesOnly = freezed,
+    Object isSubmittingWatchlist = freezed,
+    Object errorMessage = freezed,
+    Object isThereMoreMovieWatchedPageToLoad = freezed,
+    Object movieWatchedArrayTitlesOnly = freezed,
+    Object isSubmittingWatched = freezed,
   }) {
     return _then(_MovieListsUserProfileState(
       isLoading: isLoading == freezed ? _value.isLoading : isLoading as bool,
@@ -1464,6 +1982,30 @@ class __$MovieListsUserProfileStateCopyWithImpl<$Res>
       movieWatched: movieWatched == freezed
           ? _value.movieWatched
           : movieWatched as List<FirestoreMovieWatchedDetails>,
+      nextPage: nextPage == freezed ? _value.nextPage : nextPage as int,
+      isThereMoreMovieWatchlistPageToLoad:
+          isThereMoreMovieWatchlistPageToLoad == freezed
+              ? _value.isThereMoreMovieWatchlistPageToLoad
+              : isThereMoreMovieWatchlistPageToLoad as bool,
+      movieWatchlistArrayTitlesOnly: movieWatchlistArrayTitlesOnly == freezed
+          ? _value.movieWatchlistArrayTitlesOnly
+          : movieWatchlistArrayTitlesOnly as List<String>,
+      isSubmittingWatchlist: isSubmittingWatchlist == freezed
+          ? _value.isSubmittingWatchlist
+          : isSubmittingWatchlist as bool,
+      errorMessage: errorMessage == freezed
+          ? _value.errorMessage
+          : errorMessage as String,
+      isThereMoreMovieWatchedPageToLoad:
+          isThereMoreMovieWatchedPageToLoad == freezed
+              ? _value.isThereMoreMovieWatchedPageToLoad
+              : isThereMoreMovieWatchedPageToLoad as bool,
+      movieWatchedArrayTitlesOnly: movieWatchedArrayTitlesOnly == freezed
+          ? _value.movieWatchedArrayTitlesOnly
+          : movieWatchedArrayTitlesOnly as List<String>,
+      isSubmittingWatched: isSubmittingWatched == freezed
+          ? _value.isSubmittingWatched
+          : isSubmittingWatched as bool,
     ));
   }
 }
@@ -1473,10 +2015,26 @@ class _$_MovieListsUserProfileState implements _MovieListsUserProfileState {
   const _$_MovieListsUserProfileState(
       {@required this.isLoading,
       @required this.movieWatchlist,
-      @required this.movieWatched})
+      @required this.movieWatched,
+      @required this.nextPage,
+      @required this.isThereMoreMovieWatchlistPageToLoad,
+      @required this.movieWatchlistArrayTitlesOnly,
+      @required this.isSubmittingWatchlist,
+      @required this.errorMessage,
+      @required this.isThereMoreMovieWatchedPageToLoad,
+      @required this.movieWatchedArrayTitlesOnly,
+      @required this.isSubmittingWatched})
       : assert(isLoading != null),
         assert(movieWatchlist != null),
-        assert(movieWatched != null);
+        assert(movieWatched != null),
+        assert(nextPage != null),
+        assert(isThereMoreMovieWatchlistPageToLoad != null),
+        assert(movieWatchlistArrayTitlesOnly != null),
+        assert(isSubmittingWatchlist != null),
+        assert(errorMessage != null),
+        assert(isThereMoreMovieWatchedPageToLoad != null),
+        assert(movieWatchedArrayTitlesOnly != null),
+        assert(isSubmittingWatched != null);
 
   @override
   final bool isLoading;
@@ -1484,10 +2042,26 @@ class _$_MovieListsUserProfileState implements _MovieListsUserProfileState {
   final List<FirestoreMovieWatchlistDetails> movieWatchlist;
   @override
   final List<FirestoreMovieWatchedDetails> movieWatched;
+  @override
+  final int nextPage;
+  @override
+  final bool isThereMoreMovieWatchlistPageToLoad;
+  @override
+  final List<String> movieWatchlistArrayTitlesOnly;
+  @override
+  final bool isSubmittingWatchlist;
+  @override
+  final String errorMessage;
+  @override
+  final bool isThereMoreMovieWatchedPageToLoad;
+  @override
+  final List<String> movieWatchedArrayTitlesOnly;
+  @override
+  final bool isSubmittingWatched;
 
   @override
   String toString() {
-    return 'MovieListsUserProfileState(isLoading: $isLoading, movieWatchlist: $movieWatchlist, movieWatched: $movieWatched)';
+    return 'MovieListsUserProfileState(isLoading: $isLoading, movieWatchlist: $movieWatchlist, movieWatched: $movieWatched, nextPage: $nextPage, isThereMoreMovieWatchlistPageToLoad: $isThereMoreMovieWatchlistPageToLoad, movieWatchlistArrayTitlesOnly: $movieWatchlistArrayTitlesOnly, isSubmittingWatchlist: $isSubmittingWatchlist, errorMessage: $errorMessage, isThereMoreMovieWatchedPageToLoad: $isThereMoreMovieWatchedPageToLoad, movieWatchedArrayTitlesOnly: $movieWatchedArrayTitlesOnly, isSubmittingWatched: $isSubmittingWatched)';
   }
 
   @override
@@ -1502,7 +2076,36 @@ class _$_MovieListsUserProfileState implements _MovieListsUserProfileState {
                     .equals(other.movieWatchlist, movieWatchlist)) &&
             (identical(other.movieWatched, movieWatched) ||
                 const DeepCollectionEquality()
-                    .equals(other.movieWatched, movieWatched)));
+                    .equals(other.movieWatched, movieWatched)) &&
+            (identical(other.nextPage, nextPage) ||
+                const DeepCollectionEquality()
+                    .equals(other.nextPage, nextPage)) &&
+            (identical(other.isThereMoreMovieWatchlistPageToLoad,
+                    isThereMoreMovieWatchlistPageToLoad) ||
+                const DeepCollectionEquality().equals(
+                    other.isThereMoreMovieWatchlistPageToLoad,
+                    isThereMoreMovieWatchlistPageToLoad)) &&
+            (identical(other.movieWatchlistArrayTitlesOnly, movieWatchlistArrayTitlesOnly) ||
+                const DeepCollectionEquality().equals(
+                    other.movieWatchlistArrayTitlesOnly,
+                    movieWatchlistArrayTitlesOnly)) &&
+            (identical(other.isSubmittingWatchlist, isSubmittingWatchlist) ||
+                const DeepCollectionEquality().equals(
+                    other.isSubmittingWatchlist, isSubmittingWatchlist)) &&
+            (identical(other.errorMessage, errorMessage) ||
+                const DeepCollectionEquality()
+                    .equals(other.errorMessage, errorMessage)) &&
+            (identical(other.isThereMoreMovieWatchedPageToLoad, isThereMoreMovieWatchedPageToLoad) ||
+                const DeepCollectionEquality().equals(
+                    other.isThereMoreMovieWatchedPageToLoad,
+                    isThereMoreMovieWatchedPageToLoad)) &&
+            (identical(other.movieWatchedArrayTitlesOnly, movieWatchedArrayTitlesOnly) ||
+                const DeepCollectionEquality().equals(
+                    other.movieWatchedArrayTitlesOnly,
+                    movieWatchedArrayTitlesOnly)) &&
+            (identical(other.isSubmittingWatched, isSubmittingWatched) ||
+                const DeepCollectionEquality()
+                    .equals(other.isSubmittingWatched, isSubmittingWatched)));
   }
 
   @override
@@ -1510,7 +2113,15 @@ class _$_MovieListsUserProfileState implements _MovieListsUserProfileState {
       runtimeType.hashCode ^
       const DeepCollectionEquality().hash(isLoading) ^
       const DeepCollectionEquality().hash(movieWatchlist) ^
-      const DeepCollectionEquality().hash(movieWatched);
+      const DeepCollectionEquality().hash(movieWatched) ^
+      const DeepCollectionEquality().hash(nextPage) ^
+      const DeepCollectionEquality().hash(isThereMoreMovieWatchlistPageToLoad) ^
+      const DeepCollectionEquality().hash(movieWatchlistArrayTitlesOnly) ^
+      const DeepCollectionEquality().hash(isSubmittingWatchlist) ^
+      const DeepCollectionEquality().hash(errorMessage) ^
+      const DeepCollectionEquality().hash(isThereMoreMovieWatchedPageToLoad) ^
+      const DeepCollectionEquality().hash(movieWatchedArrayTitlesOnly) ^
+      const DeepCollectionEquality().hash(isSubmittingWatched);
 
   @JsonKey(ignore: true)
   @override
@@ -1522,10 +2133,17 @@ class _$_MovieListsUserProfileState implements _MovieListsUserProfileState {
 abstract class _MovieListsUserProfileState
     implements MovieListsUserProfileState {
   const factory _MovieListsUserProfileState(
-          {@required bool isLoading,
-          @required List<FirestoreMovieWatchlistDetails> movieWatchlist,
-          @required List<FirestoreMovieWatchedDetails> movieWatched}) =
-      _$_MovieListsUserProfileState;
+      {@required bool isLoading,
+      @required List<FirestoreMovieWatchlistDetails> movieWatchlist,
+      @required List<FirestoreMovieWatchedDetails> movieWatched,
+      @required int nextPage,
+      @required bool isThereMoreMovieWatchlistPageToLoad,
+      @required List<String> movieWatchlistArrayTitlesOnly,
+      @required bool isSubmittingWatchlist,
+      @required String errorMessage,
+      @required bool isThereMoreMovieWatchedPageToLoad,
+      @required List<String> movieWatchedArrayTitlesOnly,
+      @required bool isSubmittingWatched}) = _$_MovieListsUserProfileState;
 
   @override
   bool get isLoading;
@@ -1533,6 +2151,22 @@ abstract class _MovieListsUserProfileState
   List<FirestoreMovieWatchlistDetails> get movieWatchlist;
   @override
   List<FirestoreMovieWatchedDetails> get movieWatched;
+  @override
+  int get nextPage;
+  @override
+  bool get isThereMoreMovieWatchlistPageToLoad;
+  @override
+  List<String> get movieWatchlistArrayTitlesOnly;
+  @override
+  bool get isSubmittingWatchlist;
+  @override
+  String get errorMessage;
+  @override
+  bool get isThereMoreMovieWatchedPageToLoad;
+  @override
+  List<String> get movieWatchedArrayTitlesOnly;
+  @override
+  bool get isSubmittingWatched;
   @override
   @JsonKey(ignore: true)
   _$MovieListsUserProfileStateCopyWith<_MovieListsUserProfileState>

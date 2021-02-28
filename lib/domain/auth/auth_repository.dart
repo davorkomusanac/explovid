@@ -41,6 +41,10 @@ class AuthRepository {
         "account_created_date": Timestamp.now(),
         "followers": [],
         "following": [],
+        "movie_watchlist": [],
+        "movie_watched": [],
+        "tv_show_watchlist": [],
+        "tv_show_watched": [],
       });
       returnValue = kSuccess;
     } on FirebaseAuthException catch (e) {
@@ -96,6 +100,10 @@ class AuthRepository {
           "account_created_date": Timestamp.now(),
           "followers": [],
           "following": [],
+          "movie_watchlist": [],
+          "movie_watched": [],
+          "tv_show_watchlist": [],
+          "tv_show_watched": [],
         });
       } else {
         print("Document already exits, nvm");

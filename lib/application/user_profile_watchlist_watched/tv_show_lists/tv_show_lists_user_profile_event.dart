@@ -11,11 +11,12 @@ abstract class TvShowListsUserProfileEvent with _$TvShowListsUserProfileEvent {
   ) = _TvShowWatchedUpdated;
   const factory TvShowListsUserProfileEvent.addTvShowToWatchlistPressed(TvShowDetails tvShowDetails) =
       _AddTvShowToWatchlistPressed;
-  //timestamp needed since Firebase doesn't allow removing from Array by index, only by value
   const factory TvShowListsUserProfileEvent.removeTvShowFromWatchlistPressed(TvShowDetails tvShowDetails) =
       _RemoveTvShowFromWatchlistPressed;
   const factory TvShowListsUserProfileEvent.addTvShowToWatchedPressed(
       TvShowDetails tvShowDetails, String review, num rating, bool isSpoiler) = _AddTvShowToWatchedPressed;
   const factory TvShowListsUserProfileEvent.removeTvShowFromWatchedPressed(TvShowDetails tvShowDetails) =
       _RemoveTvShowFromWatchedPressed;
+  const factory TvShowListsUserProfileEvent.nextTvShowWatchlistPageCalled() = _NextTvShowWatchlistPageCalled;
+  const factory TvShowListsUserProfileEvent.nextTvShowWatchedPageCalled() = _NextTvShowWatchedPageCalled;
 }

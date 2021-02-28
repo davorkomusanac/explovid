@@ -37,34 +37,125 @@ class TvShowListsUserProfileBloc extends Bloc<TvShowListsUserProfileEvent, TvSho
         _tvShowWatchlistSubscription = _userProfileRepository.getTvShowWatchlist().listen(
               (tvShowWatchlist) => add(TvShowListsUserProfileEvent.tvShowWatchlistUpdated(tvShowWatchlist)),
             );
+        var tvShowWatchlistTitles = await _userProfileRepository.getListWithAllTvShowsNamesInWatchlist();
+        var tvShowWatchedTitles = await _userProfileRepository.getListWithAllTvShowsNamesInWatched();
         _tvShowWatchedSubscription?.cancel();
         _tvShowWatchedSubscription = _userProfileRepository.getTvShowWatched().listen(
               (tvShowWatched) => add(TvShowListsUserProfileEvent.tvShowWatchedUpdated(tvShowWatched)),
             );
+        yield state.copyWith(
+          tvShowWatchlistArrayTitlesOnly: tvShowWatchlistTitles,
+          tvShowWatchedArrayTitlesOnly: tvShowWatchedTitles,
+        );
       },
       tvShowWatchlistUpdated: (e) async* {
         yield state.copyWith(
           isLoading: false,
           tvShowWatchlist: e.tvShowWatchlist,
+          isThereMoreTvShowWatchlistPageToLoad: true,
         );
       },
       tvShowWatchedUpdated: (e) async* {
         yield state.copyWith(
           isLoading: false,
           tvShowWatched: e.tvShowWatched,
+          isThereMoreTvShowWatchedPageToLoad: true,
         );
       },
       addTvShowToWatchlistPressed: (e) async* {
-        _userProfileRepository.addTvShowToWatchlist(e.tvShowDetails);
+        yield state.copyWith(
+          isSubmittingWatchlist: true,
+        );
+        String returnVal = await _userProfileRepository.addTvShowToWatchlist(e.tvShowDetails);
+        if (returnVal.isEmpty)
+          state.tvShowWatchlistArrayTitlesOnly.add(e.tvShowDetails.name + "_" + e.tvShowDetails.id.toString());
+        //forcing State to update (nextPage has no other function)
+        yield state.copyWith(
+          nextPage: state.nextPage + 1,
+          isSubmittingWatchlist: false,
+          errorMessage: returnVal,
+        );
       },
       removeTvShowFromWatchlistPressed: (e) async* {
-        _userProfileRepository.removeTvShowFromWatchlist(e.tvShowDetails);
+        yield state.copyWith(
+          isSubmittingWatchlist: true,
+        );
+        int indexNumberOfTvShow;
+        String returnVal = await _userProfileRepository.removeTvShowFromWatchlist(e.tvShowDetails);
+        if (returnVal.isEmpty) {
+          for (int i = 0; i < state.tvShowWatchlist.length; i++) {
+            if (state.tvShowWatchlist[i].name == e.tvShowDetails.name && state.tvShowWatchlist[i].id == e.tvShowDetails.id)
+              indexNumberOfTvShow = i;
+          }
+          if (indexNumberOfTvShow != null) state.tvShowWatchlist.removeAt(indexNumberOfTvShow);
+          state.tvShowWatchlistArrayTitlesOnly.remove(e.tvShowDetails.name + "_" + e.tvShowDetails.id.toString());
+        }
+        yield state.copyWith(
+          nextPage: state.nextPage + 1,
+          isSubmittingWatchlist: false,
+          errorMessage: returnVal,
+        );
       },
       addTvShowToWatchedPressed: (e) async* {
-        _userProfileRepository.addTvShowToWatched(e.tvShowDetails, e.review, e.rating, e.isSpoiler);
+        yield state.copyWith(
+          isSubmittingWatched: true,
+        );
+        String returnVal = await _userProfileRepository.addTvShowToWatched(e.tvShowDetails, e.review, e.rating, e.isSpoiler);
+        if (returnVal.isEmpty) state.tvShowWatchedArrayTitlesOnly.add(e.tvShowDetails.name + "_" + e.tvShowDetails.id.toString());
+        yield state.copyWith(
+          nextPage: state.nextPage + 1,
+          isSubmittingWatched: false,
+          errorMessage: returnVal,
+        );
       },
       removeTvShowFromWatchedPressed: (e) async* {
-        _userProfileRepository.removeTvShowFromWatched(e.tvShowDetails);
+        yield state.copyWith(
+          isSubmittingWatched: true,
+        );
+        int indexNumberOfTvShow;
+        String returnVal = await _userProfileRepository.removeTvShowFromWatched(e.tvShowDetails);
+        if (returnVal.isEmpty) {
+          for (int i = 0; i < state.tvShowWatched.length; i++) {
+            if (state.tvShowWatched[i].name == e.tvShowDetails.name && state.tvShowWatched[i].id == e.tvShowDetails.id)
+              indexNumberOfTvShow = i;
+          }
+          if (indexNumberOfTvShow != null) state.tvShowWatched.removeAt(indexNumberOfTvShow);
+          state.tvShowWatchedArrayTitlesOnly.remove(e.tvShowDetails.name + "_" + e.tvShowDetails.id.toString());
+        }
+        yield state.copyWith(
+          nextPage: state.nextPage + 1,
+          isSubmittingWatched: false,
+          errorMessage: returnVal,
+        );
+      },
+      nextTvShowWatchlistPageCalled: (e) async* {
+        bool isThereMore = false;
+        if (state.isThereMoreTvShowWatchlistPageToLoad) {
+          var newTvShowWatchlistPage = await _userProfileRepository.getTvShowWatchlistNextPage(state.tvShowWatchlist.last);
+          isThereMore = newTvShowWatchlistPage.length < 9 ? false : true;
+          for (var tvShow in newTvShowWatchlistPage) {
+            state.tvShowWatchlist.add(tvShow);
+          }
+        }
+        //Added this to state, just so that the state updates
+        yield state.copyWith(
+          nextPage: state.nextPage + 1,
+          isThereMoreTvShowWatchlistPageToLoad: isThereMore,
+        );
+      },
+      nextTvShowWatchedPageCalled: (e) async* {
+        bool isThereMore = false;
+        if (state.isThereMoreTvShowWatchedPageToLoad) {
+          var newTvShowWatchedPage = await _userProfileRepository.getTvShowWatchedNextPage(state.tvShowWatched.last);
+          isThereMore = newTvShowWatchedPage.length < 9 ? false : true;
+          for (var tvShow in newTvShowWatchedPage) {
+            state.tvShowWatched.add(tvShow);
+          }
+        }
+        yield state.copyWith(
+          nextPage: state.nextPage + 1,
+          isThereMoreTvShowWatchedPageToLoad: isThereMore,
+        );
       },
     );
   }

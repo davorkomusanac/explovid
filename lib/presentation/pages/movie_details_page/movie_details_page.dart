@@ -233,18 +233,29 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
                               ),
                             ],
                           ),
-                          BlocBuilder<MovieListsUserProfileBloc, MovieListsUserProfileState>(
+                          BlocConsumer<MovieListsUserProfileBloc, MovieListsUserProfileState>(
+                            listener: (context, movieListState) {
+                              if (movieListState.errorMessage.isNotEmpty) {
+                                Scaffold.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text(movieListState.errorMessage),
+                                    duration: Duration(seconds: 1),
+                                  ),
+                                );
+                              }
+                            },
                             builder: (context, movieListState) {
                               //Check if movie is watchList so that buttons can be updated correctly
                               bool isInWatchlist = false;
                               bool isInWatched = false;
-                              for (var movie in movieListState.movieWatchlist) {
-                                if (movie.id == state.movieDetails.id && movie.title == state.movieDetails.title) {
+                              String compare = state.movieDetails.title + "_" + state.movieDetails.id.toString();
+                              for (var movie in movieListState.movieWatchlistArrayTitlesOnly) {
+                                if (movie == compare) {
                                   isInWatchlist = true;
                                 }
                               }
-                              for (var movie in movieListState.movieWatched) {
-                                if (movie.id == state.movieDetails.id && movie.title == state.movieDetails.title) {
+                              for (var movie in movieListState.movieWatchedArrayTitlesOnly) {
+                                if (movie == compare) {
                                   isInWatched = true;
                                 }
                               }
@@ -253,50 +264,54 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
                                   Expanded(
                                     child: Padding(
                                       padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
-                                      child: ElevatedButton(
-                                        style: isInWatchlist ? kWatchedButton : kNotWatchedButton,
-                                        onPressed: () {
-                                          if (isInWatchlist) {
-                                            showDialog(
-                                              context: context,
-                                              builder: (context) {
-                                                return MovieRemoveWatchlistDialog(movieDetails: state.movieDetails);
+                                      child: movieListState.isSubmittingWatchlist
+                                          ? Center(child: CircularProgressIndicator())
+                                          : ElevatedButton(
+                                              style: isInWatchlist ? kWatchedButton : kNotWatchedButton,
+                                              onPressed: () {
+                                                if (isInWatchlist) {
+                                                  showDialog(
+                                                    context: context,
+                                                    builder: (context) {
+                                                      return MovieRemoveWatchlistDialog(movieDetails: state.movieDetails);
+                                                    },
+                                                  );
+                                                } else {
+                                                  context.read<MovieListsUserProfileBloc>().add(
+                                                        MovieListsUserProfileEvent.addMovieToWatchlistPressed(state.movieDetails),
+                                                      );
+                                                }
                                               },
-                                            );
-                                          } else {
-                                            context.read<MovieListsUserProfileBloc>().add(
-                                                  MovieListsUserProfileEvent.addMovieToWatchlistPressed(state.movieDetails),
-                                                );
-                                          }
-                                        },
-                                        child: Text(isInWatchlist ? "✅ In Watchlist" : "Add to Watchlist"),
-                                      ),
+                                              child: Text(isInWatchlist ? "✅ In Watchlist" : "Add to Watchlist"),
+                                            ),
                                     ),
                                   ),
                                   Expanded(
                                     child: Padding(
                                       padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
-                                      child: ElevatedButton(
-                                        style: isInWatched ? kWatchedButton : kNotWatchedButton,
-                                        onPressed: () {
-                                          if (isInWatched) {
-                                            showDialog(
-                                              context: context,
-                                              builder: (context) {
-                                                return MovieRemoveReviewDialog(movieDetails: state.movieDetails);
+                                      child: movieListState.isSubmittingWatched
+                                          ? Center(child: CircularProgressIndicator())
+                                          : ElevatedButton(
+                                              style: isInWatched ? kWatchedButton : kNotWatchedButton,
+                                              onPressed: () {
+                                                if (isInWatched) {
+                                                  showDialog(
+                                                    context: context,
+                                                    builder: (context) {
+                                                      return MovieRemoveReviewDialog(movieDetails: state.movieDetails);
+                                                    },
+                                                  );
+                                                } else {
+                                                  showDialog(
+                                                    context: context,
+                                                    builder: (context) {
+                                                      return MovieReviewDialog(movieDetails: state.movieDetails);
+                                                    },
+                                                  );
+                                                }
                                               },
-                                            );
-                                          } else {
-                                            showDialog(
-                                              context: context,
-                                              builder: (context) {
-                                                return MovieReviewDialog(movieDetails: state.movieDetails);
-                                              },
-                                            );
-                                          }
-                                        },
-                                        child: Text(isInWatched ? "✅ Watched" : "Rate it"),
-                                      ),
+                                              child: Text(isInWatched ? "✅ Watched" : "Rate it"),
+                                            ),
                                     ),
                                   ),
                                 ],

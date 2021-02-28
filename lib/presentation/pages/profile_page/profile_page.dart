@@ -14,6 +14,7 @@ class _ProfilePageState extends State<ProfilePage> with TickerProviderStateMixin
   TabController _watchTypeTabController;
   TabController _moviesTabController;
   TabController _tvShowsTabController;
+  ScrollController _scrollController;
   final List<Tab> _watchTypeTabs = <Tab>[
     const Tab(
       icon: Icon(
@@ -43,6 +44,7 @@ class _ProfilePageState extends State<ProfilePage> with TickerProviderStateMixin
     _watchTypeTabController = TabController(initialIndex: 0, vsync: this, length: _watchTypeTabs.length);
     _moviesTabController = TabController(initialIndex: 0, vsync: this, length: _watchTypeTabs.length);
     _tvShowsTabController = TabController(initialIndex: 0, vsync: this, length: _watchTypeTabs.length);
+    _scrollController = ScrollController();
   }
 
   @override
@@ -50,7 +52,48 @@ class _ProfilePageState extends State<ProfilePage> with TickerProviderStateMixin
     _watchTypeTabController.dispose();
     _moviesTabController.dispose();
     _tvShowsTabController.dispose();
+    _scrollController.dispose();
     super.dispose();
+  }
+
+  bool _handleScrollNotification(ScrollNotification notification) {
+    if (notification is ScrollEndNotification && _scrollController.position.extentAfter == 0) {
+      print("Calling FETCH NEXT WATCH TYPE PAGE");
+      switch (_watchTypeTabController.index) {
+        case (0):
+          switch (_moviesTabController.index) {
+            case (0):
+              context.read<MovieListsUserProfileBloc>().add(
+                    MovieListsUserProfileEvent.nextMovieWatchlistPageCalled(),
+                  );
+              break;
+            case (1):
+              context.read<MovieListsUserProfileBloc>().add(
+                    MovieListsUserProfileEvent.nextMovieWatchedPageCalled(),
+                  );
+              break;
+            default:
+          }
+          break;
+        case (1):
+          switch (_tvShowsTabController.index) {
+            case (0):
+              context.read<TvShowListsUserProfileBloc>().add(
+                    TvShowListsUserProfileEvent.nextTvShowWatchlistPageCalled(),
+                  );
+              break;
+            case (1):
+              context.read<TvShowListsUserProfileBloc>().add(
+                    TvShowListsUserProfileEvent.nextTvShowWatchedPageCalled(),
+                  );
+              break;
+            default:
+          }
+          break;
+        default:
+      }
+    }
+    return false;
   }
 
   List<Widget> _watchTypeTabViews(BuildContext context) {
@@ -125,7 +168,9 @@ class _ProfilePageState extends State<ProfilePage> with TickerProviderStateMixin
     return BlocBuilder<MovieListsUserProfileBloc, MovieListsUserProfileState>(
       builder: (context, state) {
         if (state.isLoading) {
-          return CircularProgressIndicator();
+          return Center(
+            child: CircularProgressIndicator(),
+          );
         } else {
           final movieWatchlist = state.movieWatchlist;
           return movieWatchlist.isEmpty
@@ -134,26 +179,42 @@ class _ProfilePageState extends State<ProfilePage> with TickerProviderStateMixin
                     "Movies added to watchlist will show up here",
                   ),
                 )
-              : GridView.builder(
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 3,
-                    childAspectRatio: 0.69,
+              : NotificationListener<ScrollNotification>(
+                  onNotification: _handleScrollNotification,
+                  child: GridView.builder(
+                    controller: _scrollController,
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 3,
+                      childAspectRatio: 0.69,
+                    ),
+                    itemCount: _calculateMovieWatchlistItemCount(state),
+                    itemBuilder: (context, index) {
+                      return index >= movieWatchlist.length
+                          ? BuildLoaderNextPage()
+                          : _buildGridImage(posterPath: movieWatchlist[index].posterPath);
+                    },
                   ),
-                  itemCount: movieWatchlist.length,
-                  itemBuilder: (context, index) {
-                    return _buildGridImage(posterPath: movieWatchlist[index].posterPath);
-                  },
                 );
         }
       },
     );
   }
 
+  int _calculateMovieWatchlistItemCount(MovieListsUserProfileState state) {
+    if (state.movieWatchlist.length < 9 || state.movieWatchlist.length % 3 != 0 || !state.isThereMoreMovieWatchlistPageToLoad) {
+      return state.movieWatchlist.length;
+    } else {
+      return state.movieWatchlist.length + 1;
+    }
+  }
+
   Widget _buildMovieWatchedTab(BuildContext context) {
     return BlocBuilder<MovieListsUserProfileBloc, MovieListsUserProfileState>(
       builder: (context, state) {
         if (state.isLoading) {
-          return CircularProgressIndicator();
+          return Center(
+            child: CircularProgressIndicator(),
+          );
         } else {
           final movieWatched = state.movieWatched;
           return movieWatched.isEmpty
@@ -162,26 +223,42 @@ class _ProfilePageState extends State<ProfilePage> with TickerProviderStateMixin
                     "Movies marked as watched will show up here",
                   ),
                 )
-              : GridView.builder(
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 3,
-                    childAspectRatio: 0.69,
+              : NotificationListener<ScrollNotification>(
+                  onNotification: _handleScrollNotification,
+                  child: GridView.builder(
+                    controller: _scrollController,
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 3,
+                      childAspectRatio: 0.69,
+                    ),
+                    itemCount: _calculateMovieWatchedItemCount(state),
+                    itemBuilder: (context, index) {
+                      return index >= movieWatched.length
+                          ? BuildLoaderNextPage()
+                          : _buildGridImage(posterPath: movieWatched[index].posterPath);
+                    },
                   ),
-                  itemCount: movieWatched.length,
-                  itemBuilder: (context, index) {
-                    return _buildGridImage(posterPath: movieWatched[index].posterPath);
-                  },
                 );
         }
       },
     );
   }
 
+  int _calculateMovieWatchedItemCount(MovieListsUserProfileState state) {
+    if (state.movieWatched.length < 9 || state.movieWatched.length % 3 != 0 || !state.isThereMoreMovieWatchedPageToLoad) {
+      return state.movieWatched.length;
+    } else {
+      return state.movieWatched.length + 1;
+    }
+  }
+
   Widget _buildTvShowWatchlistTab(BuildContext context) {
     return BlocBuilder<TvShowListsUserProfileBloc, TvShowListsUserProfileState>(
       builder: (context, state) {
         if (state.isLoading) {
-          return CircularProgressIndicator();
+          return Center(
+            child: CircularProgressIndicator(),
+          );
         } else {
           final tvShowWatchlist = state.tvShowWatchlist;
           return tvShowWatchlist.isEmpty
@@ -190,26 +267,44 @@ class _ProfilePageState extends State<ProfilePage> with TickerProviderStateMixin
                     "TV shows added to watchlist will show up here",
                   ),
                 )
-              : GridView.builder(
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 3,
-                    childAspectRatio: 0.69,
+              : NotificationListener<ScrollNotification>(
+                  onNotification: _handleScrollNotification,
+                  child: GridView.builder(
+                    controller: _scrollController,
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 3,
+                      childAspectRatio: 0.69,
+                    ),
+                    itemCount: _calculateTvShowWatchlistItemCount(state),
+                    itemBuilder: (context, index) {
+                      return index >= tvShowWatchlist.length
+                          ? BuildLoaderNextPage()
+                          : _buildGridImage(posterPath: tvShowWatchlist[index].posterPath);
+                    },
                   ),
-                  itemCount: tvShowWatchlist.length,
-                  itemBuilder: (context, index) {
-                    return _buildGridImage(posterPath: tvShowWatchlist[index].posterPath);
-                  },
                 );
         }
       },
     );
   }
 
+  int _calculateTvShowWatchlistItemCount(TvShowListsUserProfileState state) {
+    if (state.tvShowWatchlist.length < 9 ||
+        state.tvShowWatchlist.length % 3 != 0 ||
+        !state.isThereMoreTvShowWatchlistPageToLoad) {
+      return state.tvShowWatchlist.length;
+    } else {
+      return state.tvShowWatchlist.length + 1;
+    }
+  }
+
   Widget _buildTvShowWatchedTab(BuildContext context) {
     return BlocBuilder<TvShowListsUserProfileBloc, TvShowListsUserProfileState>(
       builder: (context, state) {
         if (state.isLoading) {
-          return CircularProgressIndicator();
+          return Center(
+            child: CircularProgressIndicator(),
+          );
         } else {
           final tvShowWatched = state.tvShowWatched;
           return tvShowWatched.isEmpty
@@ -218,19 +313,33 @@ class _ProfilePageState extends State<ProfilePage> with TickerProviderStateMixin
                     "TV shows marked as watched will show up here",
                   ),
                 )
-              : GridView.builder(
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 3,
-                    childAspectRatio: 0.69,
+              : NotificationListener<ScrollNotification>(
+                  onNotification: _handleScrollNotification,
+                  child: GridView.builder(
+                    controller: _scrollController,
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 3,
+                      childAspectRatio: 0.69,
+                    ),
+                    itemCount: _calculateTvShowWatchedItemCount(state),
+                    itemBuilder: (context, index) {
+                      return index >= tvShowWatched.length
+                          ? BuildLoaderNextPage()
+                          : _buildGridImage(posterPath: tvShowWatched[index].posterPath);
+                    },
                   ),
-                  itemCount: tvShowWatched.length,
-                  itemBuilder: (context, index) {
-                    return _buildGridImage(posterPath: tvShowWatched[index].posterPath);
-                  },
                 );
         }
       },
     );
+  }
+
+  int _calculateTvShowWatchedItemCount(TvShowListsUserProfileState state) {
+    if (state.tvShowWatched.length < 9 || state.tvShowWatched.length % 3 != 0 || !state.isThereMoreTvShowWatchedPageToLoad) {
+      return state.tvShowWatched.length;
+    } else {
+      return state.tvShowWatched.length + 1;
+    }
   }
 
   Widget _buildGridImage({String posterPath}) {
