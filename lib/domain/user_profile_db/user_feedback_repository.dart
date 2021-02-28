@@ -8,39 +8,43 @@ class UserFeedbackRepository {
 
   Future<String> addFeatureFeedback(String feedback) async {
     String returnValue = "";
-    await _feedbackFeature.doc(_auth.currentUser.uid).set(
-      {
-        "feedback": FieldValue.arrayUnion([feedback])
-      },
-      SetOptions(merge: true),
-    ).then(
-      (value) {
-        returnValue = "Feedback submitted, thank you.";
-      },
-    ).catchError(
-      (error) {
-        returnValue = error.toString();
-      },
-    );
+    try {
+      await _feedbackFeature.doc(_auth.currentUser.uid).set(
+        {
+          "feedback": FieldValue.arrayUnion([
+            {
+              "message": feedback,
+              "timestamp": Timestamp.now(),
+            }
+          ])
+        },
+        SetOptions(merge: true),
+      );
+      returnValue = "Feedback submitted, thank you.";
+    } catch (error) {
+      returnValue = error.toString();
+    }
     return returnValue;
   }
 
   Future<String> addBugFeedback(String feedback) async {
     String returnValue = "";
-    await _feedbackBugs.doc(_auth.currentUser.uid).set(
-      {
-        "feedback": FieldValue.arrayUnion([feedback])
-      },
-      SetOptions(merge: true),
-    ).then(
-      (value) {
-        returnValue = "Feedback submitted, thank you.";
-      },
-    ).catchError(
-      (error) {
-        returnValue = error.toString();
-      },
-    );
+    try {
+      await _feedbackBugs.doc(_auth.currentUser.uid).set(
+        {
+          "feedback": FieldValue.arrayUnion([
+            {
+              "message": feedback,
+              "timestamp": Timestamp.now(),
+            },
+          ])
+        },
+        SetOptions(merge: true),
+      );
+      returnValue = "Feedback submitted, thank you.";
+    } catch (error) {
+      returnValue = error.toString();
+    }
     return returnValue;
   }
 }
