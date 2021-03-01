@@ -300,7 +300,10 @@ class _TvShowDetailsPageState extends State<TvShowDetailsPage> {
                                                   showDialog(
                                                     context: context,
                                                     builder: (context) {
-                                                      return TvShowReviewDialog(tvShowDetails: state.tvShowDetails);
+                                                      return TvShowReviewDialog(
+                                                        tvShowDetails: state.tvShowDetails,
+                                                        isInWatchlist: isInWatchlist,
+                                                      );
                                                     },
                                                   );
                                                 }
@@ -684,8 +687,9 @@ class _TvShowRemoveReviewDialogState extends State<TvShowRemoveReviewDialog> {
 
 class TvShowReviewDialog extends StatefulWidget {
   final TvShowDetails tvShowDetails;
+  final bool isInWatchlist;
 
-  TvShowReviewDialog({this.tvShowDetails});
+  TvShowReviewDialog({this.tvShowDetails, this.isInWatchlist});
 
   @override
   _TvShowReviewDialogState createState() => _TvShowReviewDialogState();
@@ -785,6 +789,10 @@ class _TvShowReviewDialogState extends State<TvShowReviewDialog> {
                     TvShowListsUserProfileEvent.addTvShowToWatchedPressed(
                         widget.tvShowDetails, _tvShowReviewController.text, rating, isSpoiler),
                   );
+              if (widget.isInWatchlist)
+                context.read<TvShowListsUserProfileBloc>().add(
+                      TvShowListsUserProfileEvent.removeTvShowFromWatchlistPressed(widget.tvShowDetails),
+                    );
               Navigator.of(context, rootNavigator: true).pop();
             },
             style: ElevatedButton.styleFrom(

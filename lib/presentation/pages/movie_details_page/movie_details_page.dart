@@ -305,7 +305,10 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
                                                   showDialog(
                                                     context: context,
                                                     builder: (context) {
-                                                      return MovieReviewDialog(movieDetails: state.movieDetails);
+                                                      return MovieReviewDialog(
+                                                        movieDetails: state.movieDetails,
+                                                        isInWatchlist: isInWatchlist,
+                                                      );
                                                     },
                                                   );
                                                 }
@@ -689,8 +692,9 @@ class _MovieRemoveReviewDialogState extends State<MovieRemoveReviewDialog> {
 
 class MovieReviewDialog extends StatefulWidget {
   final MovieDetails movieDetails;
+  final bool isInWatchlist;
 
-  MovieReviewDialog({this.movieDetails});
+  MovieReviewDialog({this.movieDetails, this.isInWatchlist});
 
   @override
   _MovieReviewDialogState createState() => _MovieReviewDialogState();
@@ -790,6 +794,10 @@ class _MovieReviewDialogState extends State<MovieReviewDialog> {
                     MovieListsUserProfileEvent.addMovieToWatchedPressed(
                         widget.movieDetails, _movieReviewController.text, rating, isSpoiler),
                   );
+              if (widget.isInWatchlist)
+                context.read<MovieListsUserProfileBloc>().add(
+                      MovieListsUserProfileEvent.removeMovieFromWatchlistPressed(widget.movieDetails),
+                    );
               Navigator.of(context, rootNavigator: true).pop();
             },
             style: ElevatedButton.styleFrom(
