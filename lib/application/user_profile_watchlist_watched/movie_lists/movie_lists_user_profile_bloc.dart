@@ -130,7 +130,7 @@ class MovieListsUserProfileBloc extends Bloc<MovieListsUserProfileEvent, MovieLi
         bool isThereMore = false;
         if (state.isThereMoreMovieWatchlistPageToLoad) {
           var newMovieWatchlistPage = await _userProfileRepository.getMovieWatchlistNextPage(state.movieWatchlist.last);
-          isThereMore = newMovieWatchlistPage.length < 9 ? false : true;
+          isThereMore = newMovieWatchlistPage.length < 18 ? false : true;
           for (var movie in newMovieWatchlistPage) {
             state.movieWatchlist.add(movie);
           }
@@ -145,7 +145,7 @@ class MovieListsUserProfileBloc extends Bloc<MovieListsUserProfileEvent, MovieLi
         bool isThereMore = false;
         if (state.isThereMoreMovieWatchedPageToLoad) {
           var newMovieWatchedPage = await _userProfileRepository.getMovieWatchedNextPage(state.movieWatched.last);
-          isThereMore = newMovieWatchedPage.length < 9 ? false : true;
+          isThereMore = newMovieWatchedPage.length < 18 ? false : true;
           for (var movie in newMovieWatchedPage) {
             state.movieWatched.add(movie);
           }

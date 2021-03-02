@@ -132,7 +132,7 @@ class TvShowListsUserProfileBloc extends Bloc<TvShowListsUserProfileEvent, TvSho
         bool isThereMore = false;
         if (state.isThereMoreTvShowWatchlistPageToLoad) {
           var newTvShowWatchlistPage = await _userProfileRepository.getTvShowWatchlistNextPage(state.tvShowWatchlist.last);
-          isThereMore = newTvShowWatchlistPage.length < 9 ? false : true;
+          isThereMore = newTvShowWatchlistPage.length < 18 ? false : true;
           for (var tvShow in newTvShowWatchlistPage) {
             state.tvShowWatchlist.add(tvShow);
           }
@@ -147,7 +147,7 @@ class TvShowListsUserProfileBloc extends Bloc<TvShowListsUserProfileEvent, TvSho
         bool isThereMore = false;
         if (state.isThereMoreTvShowWatchedPageToLoad) {
           var newTvShowWatchedPage = await _userProfileRepository.getTvShowWatchedNextPage(state.tvShowWatched.last);
-          isThereMore = newTvShowWatchedPage.length < 9 ? false : true;
+          isThereMore = newTvShowWatchedPage.length < 18 ? false : true;
           for (var tvShow in newTvShowWatchedPage) {
             state.tvShowWatched.add(tvShow);
           }

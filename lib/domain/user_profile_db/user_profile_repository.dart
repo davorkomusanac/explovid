@@ -22,19 +22,21 @@ class UserProfileRepository {
       releaseDate: movieDetails.releaseDate,
       timestampAddedToFirestore: Timestamp.now(),
     );
+    WriteBatch batch = FirebaseFirestore.instance.batch();
+
     try {
-      await _users
-          .doc(_auth.currentUser.uid)
-          .collection("movie_watchlist")
-          .doc(firestoreMovieDetails.title + "_" + firestoreMovieDetails.id.toString())
-          .set(
-            firestoreMovieDetails.toDocument(),
-          );
-      print("successfully added movie to watchlist");
+      batch.set(
+        _users
+            .doc(_auth.currentUser.uid)
+            .collection("movie_watchlist")
+            .doc(firestoreMovieDetails.title + "_" + firestoreMovieDetails.id.toString()),
+        firestoreMovieDetails.toDocument(),
+      );
 
       //Need to also have an additional array inside user document consisting of movie id's
       //so that in MovieDetails page the movie can be updated correctly based on info
-      await _users.doc(_auth.currentUser.uid).set(
+      batch.set(
+        _users.doc(_auth.currentUser.uid),
         {
           "movie_watchlist": FieldValue.arrayUnion([
             firestoreMovieDetails.title + "_" + firestoreMovieDetails.id.toString(),
@@ -42,6 +44,7 @@ class UserProfileRepository {
         },
         SetOptions(merge: true),
       );
+      await batch.commit();
       print("successfully added movie to array watchlist");
     } catch (error) {
       print(error.toString());
@@ -64,17 +67,18 @@ class UserProfileRepository {
       rating: rating,
       isSpoiler: isSpoiler,
     );
-    try {
-      await _users
-          .doc(_auth.currentUser.uid)
-          .collection("movie_watched")
-          .doc(firestoreMovieDetails.title + "_" + firestoreMovieDetails.id.toString())
-          .set(
-            firestoreMovieDetails.toDocument(),
-          );
-      print("successfully added movie to watched");
+    WriteBatch batch = FirebaseFirestore.instance.batch();
 
-      await _users.doc(_auth.currentUser.uid).set(
+    try {
+      batch.set(
+        _users
+            .doc(_auth.currentUser.uid)
+            .collection("movie_watched")
+            .doc(firestoreMovieDetails.title + "_" + firestoreMovieDetails.id.toString()),
+        firestoreMovieDetails.toDocument(),
+      );
+      batch.set(
+        _users.doc(_auth.currentUser.uid),
         {
           "movie_watched": FieldValue.arrayUnion([
             firestoreMovieDetails.title + "_" + firestoreMovieDetails.id.toString(),
@@ -82,6 +86,7 @@ class UserProfileRepository {
         },
         SetOptions(merge: true),
       );
+      await batch.commit();
       print("successfully added movie to array watched");
     } catch (error) {
       print(error.toString());
@@ -91,16 +96,15 @@ class UserProfileRepository {
   }
 
   Future<String> removeMovieFromWatchlist(MovieDetails movieDetails) async {
+    WriteBatch batch = FirebaseFirestore.instance.batch();
     String returnVal = "";
     try {
-      await _users
+      batch.delete(_users
           .doc(_auth.currentUser.uid)
           .collection("movie_watchlist")
-          .doc(movieDetails.title + "_" + movieDetails.id.toString())
-          .delete();
-      print("successfully removed movie from watchlist");
-
-      await _users.doc(_auth.currentUser.uid).set(
+          .doc(movieDetails.title + "_" + movieDetails.id.toString()));
+      batch.set(
+        _users.doc(_auth.currentUser.uid),
         {
           "movie_watchlist": FieldValue.arrayRemove([
             movieDetails.title + "_" + movieDetails.id.toString(),
@@ -108,6 +112,7 @@ class UserProfileRepository {
         },
         SetOptions(merge: true),
       );
+      await batch.commit();
       print("successfully removed  movie from watchlist array");
     } catch (error) {
       print(error.toString());
@@ -117,16 +122,15 @@ class UserProfileRepository {
   }
 
   Future<String> removeMovieFromWatched(MovieDetails movieDetails) async {
+    WriteBatch batch = FirebaseFirestore.instance.batch();
     String returnVal = "";
     try {
-      await _users
+      batch.delete(_users
           .doc(_auth.currentUser.uid)
           .collection("movie_watched")
-          .doc(movieDetails.title + "_" + movieDetails.id.toString())
-          .delete();
-      print("successfully removed movie from watched");
-
-      await _users.doc(_auth.currentUser.uid).set(
+          .doc(movieDetails.title + "_" + movieDetails.id.toString()));
+      batch.set(
+        _users.doc(_auth.currentUser.uid),
         {
           "movie_watched": FieldValue.arrayRemove([
             movieDetails.title + "_" + movieDetails.id.toString(),
@@ -134,6 +138,7 @@ class UserProfileRepository {
         },
         SetOptions(merge: true),
       );
+      await batch.commit();
       print("successfully removed  movie from watched array");
     } catch (error) {
       print(error.toString());
@@ -157,17 +162,17 @@ class UserProfileRepository {
       firstAirDate: tvShowDetails.firstAirDate,
       timestampAddedToFirestore: Timestamp.now(),
     );
+    WriteBatch batch = FirebaseFirestore.instance.batch();
     try {
-      await _users
-          .doc(_auth.currentUser.uid)
-          .collection("tv_show_watchlist")
-          .doc(firestoreTvShowWatchlistDetails.name + "_" + firestoreTvShowWatchlistDetails.id.toString())
-          .set(
-            firestoreTvShowWatchlistDetails.toDocument(),
-          );
-      print("successfully added tv show to watchlist");
-
-      await _users.doc(_auth.currentUser.uid).set(
+      batch.set(
+        _users
+            .doc(_auth.currentUser.uid)
+            .collection("tv_show_watchlist")
+            .doc(firestoreTvShowWatchlistDetails.name + "_" + firestoreTvShowWatchlistDetails.id.toString()),
+        firestoreTvShowWatchlistDetails.toDocument(),
+      );
+      batch.set(
+        _users.doc(_auth.currentUser.uid),
         {
           "tv_show_watchlist": FieldValue.arrayUnion([
             firestoreTvShowWatchlistDetails.name + "_" + firestoreTvShowWatchlistDetails.id.toString(),
@@ -175,6 +180,7 @@ class UserProfileRepository {
         },
         SetOptions(merge: true),
       );
+      await batch.commit();
       print("successfully added tv show to array watchlist");
     } catch (error) {
       print(error.toString());
@@ -197,18 +203,18 @@ class UserProfileRepository {
       rating: rating,
       isSpoiler: isSpoiler,
     );
+    WriteBatch batch = FirebaseFirestore.instance.batch();
 
     try {
-      await _users
-          .doc(_auth.currentUser.uid)
-          .collection("tv_show_watched")
-          .doc(firestoreTvShowWatchedDetails.name + "_" + firestoreTvShowWatchedDetails.id.toString())
-          .set(
-            firestoreTvShowWatchedDetails.toDocument(),
-          );
-      print("successfully added tv show to watched");
-
-      await _users.doc(_auth.currentUser.uid).set(
+      batch.set(
+        _users
+            .doc(_auth.currentUser.uid)
+            .collection("tv_show_watched")
+            .doc(firestoreTvShowWatchedDetails.name + "_" + firestoreTvShowWatchedDetails.id.toString()),
+        firestoreTvShowWatchedDetails.toDocument(),
+      );
+      batch.set(
+        _users.doc(_auth.currentUser.uid),
         {
           "tv_show_watched": FieldValue.arrayUnion([
             firestoreTvShowWatchedDetails.name + "_" + firestoreTvShowWatchedDetails.id.toString(),
@@ -216,6 +222,7 @@ class UserProfileRepository {
         },
         SetOptions(merge: true),
       );
+      await batch.commit();
       print("successfully added tv show to array watched");
     } catch (error) {
       print(error.toString());
@@ -226,15 +233,14 @@ class UserProfileRepository {
 
   Future<String> removeTvShowFromWatchlist(TvShowDetails tvShowDetails) async {
     String returnVal = "";
+    WriteBatch batch = FirebaseFirestore.instance.batch();
     try {
-      await _users
+      batch.delete(_users
           .doc(_auth.currentUser.uid)
           .collection("tv_show_watchlist")
-          .doc(tvShowDetails.name + "_" + tvShowDetails.id.toString())
-          .delete();
-      print("successfully removed tv show from watchlist");
-
-      await _users.doc(_auth.currentUser.uid).set(
+          .doc(tvShowDetails.name + "_" + tvShowDetails.id.toString()));
+      batch.set(
+        _users.doc(_auth.currentUser.uid),
         {
           "tv_show_watchlist": FieldValue.arrayRemove([
             tvShowDetails.name + "_" + tvShowDetails.id.toString(),
@@ -242,6 +248,7 @@ class UserProfileRepository {
         },
         SetOptions(merge: true),
       );
+      await batch.commit();
       print("successfully removed tv show from watchlist array");
     } catch (error) {
       print(error.toString());
@@ -252,15 +259,14 @@ class UserProfileRepository {
 
   Future<String> removeTvShowFromWatched(TvShowDetails tvShowDetails) async {
     String returnVal = "";
+    WriteBatch batch = FirebaseFirestore.instance.batch();
     try {
-      await _users
+      batch.delete(_users
           .doc(_auth.currentUser.uid)
           .collection("tv_show_watched")
-          .doc(tvShowDetails.name + "_" + tvShowDetails.id.toString())
-          .delete();
-      print("successfully removed tv show from watched");
-
-      await _users.doc(_auth.currentUser.uid).set(
+          .doc(tvShowDetails.name + "_" + tvShowDetails.id.toString()));
+      batch.set(
+        _users.doc(_auth.currentUser.uid),
         {
           "tv_show_watched": FieldValue.arrayRemove([
             tvShowDetails.name + "_" + tvShowDetails.id.toString(),
@@ -268,6 +274,7 @@ class UserProfileRepository {
         },
         SetOptions(merge: true),
       );
+      await batch.commit();
       print("successfully removed tv show from watched array");
     } catch (error) {
       print(error.toString());
@@ -282,7 +289,7 @@ class UserProfileRepository {
         .doc(_auth.currentUser.uid)
         .collection("movie_watchlist")
         .orderBy('added_to_list_date', descending: true)
-        .limit(9)
+        .limit(18)
         .snapshots()
         .map(
       (snapshot) {
@@ -316,7 +323,7 @@ class UserProfileRepository {
         .doc(_auth.currentUser.uid)
         .collection("movie_watched")
         .orderBy('added_to_list_date', descending: true)
-        .limit(9)
+        .limit(18)
         .snapshots()
         .map(
       (snapshot) {
@@ -350,7 +357,7 @@ class UserProfileRepository {
         .doc(_auth.currentUser.uid)
         .collection("tv_show_watchlist")
         .orderBy('added_to_list_date', descending: true)
-        .limit(9)
+        .limit(18)
         .snapshots()
         .map(
       (snapshot) {
@@ -384,7 +391,7 @@ class UserProfileRepository {
         .doc(_auth.currentUser.uid)
         .collection("tv_show_watched")
         .orderBy('added_to_list_date', descending: true)
-        .limit(9)
+        .limit(18)
         .snapshots()
         .map(
       (snapshot) {
@@ -421,7 +428,7 @@ class UserProfileRepository {
           .doc(_auth.currentUser.uid)
           .collection("movie_watchlist")
           .orderBy('added_to_list_date', descending: true)
-          .limit(9)
+          .limit(18)
           .startAfter([lastItemInList.timestampAddedToFirestore]).get();
       for (var doc in query.docs) {
         nextPageMovieResults.add(
@@ -441,7 +448,7 @@ class UserProfileRepository {
           .doc(_auth.currentUser.uid)
           .collection("movie_watched")
           .orderBy('added_to_list_date', descending: true)
-          .limit(9)
+          .limit(18)
           .startAfter([lastItemInList.timestampAddedToFirestore]).get();
       for (var doc in query.docs) {
         nextPageMovieResults.add(
@@ -461,7 +468,7 @@ class UserProfileRepository {
           .doc(_auth.currentUser.uid)
           .collection("tv_show_watchlist")
           .orderBy('added_to_list_date', descending: true)
-          .limit(9)
+          .limit(18)
           .startAfter([lastItemInList.timestampAddedToFirestore]).get();
       for (var doc in query.docs) {
         nextPageTvShowResults.add(
@@ -481,7 +488,7 @@ class UserProfileRepository {
           .doc(_auth.currentUser.uid)
           .collection("tv_show_watched")
           .orderBy('added_to_list_date', descending: true)
-          .limit(9)
+          .limit(18)
           .startAfter([lastItemInList.timestampAddedToFirestore]).get();
       for (var doc in query.docs) {
         nextPageTvShowResults.add(
