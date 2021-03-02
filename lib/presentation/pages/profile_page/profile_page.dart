@@ -1,9 +1,19 @@
 import 'package:community_material_icon/community_material_icon.dart';
 import 'package:explovid/application/user_profile_watchlist_watched/movie_lists/movie_lists_user_profile_bloc.dart';
 import 'package:explovid/application/user_profile_watchlist_watched/tv_show_lists/tv_show_lists_user_profile_bloc.dart';
+import 'package:explovid/presentation/pages/movie_details_page/movie_details_page.dart';
+import 'package:explovid/presentation/pages/profile_page/post_page.dart';
+import 'package:explovid/presentation/pages/tv_show_details_page/tv_show_details_page.dart';
 import 'package:explovid/presentation/utilities/utilities.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+enum VideoType {
+  MOVIE_WATCHLIST,
+  MOVIE_WATCHED,
+  TV_SHOW_WATCHLIST,
+  TV_SHOW_WATCHED,
+}
 
 class ProfilePage extends StatefulWidget {
   @override
@@ -191,7 +201,11 @@ class _ProfilePageState extends State<ProfilePage> with TickerProviderStateMixin
                     itemBuilder: (context, index) {
                       return index >= movieWatchlist.length
                           ? BuildLoaderNextPage()
-                          : _buildGridImage(posterPath: movieWatchlist[index].posterPath);
+                          : _buildGridImage(
+                              posterPath: movieWatchlist[index].posterPath,
+                              id: movieWatchlist[index].id,
+                              videoType: VideoType.MOVIE_WATCHLIST,
+                            );
                     },
                   ),
                 );
@@ -201,7 +215,7 @@ class _ProfilePageState extends State<ProfilePage> with TickerProviderStateMixin
   }
 
   int _calculateMovieWatchlistItemCount(MovieListsUserProfileState state) {
-    if (state.movieWatchlist.length < 9 || state.movieWatchlist.length % 3 != 0 || !state.isThereMoreMovieWatchlistPageToLoad) {
+    if (state.movieWatchlist.length < 18 || state.movieWatchlist.length % 3 != 0 || !state.isThereMoreMovieWatchlistPageToLoad) {
       return state.movieWatchlist.length;
     } else {
       return state.movieWatchlist.length + 1;
@@ -235,7 +249,11 @@ class _ProfilePageState extends State<ProfilePage> with TickerProviderStateMixin
                     itemBuilder: (context, index) {
                       return index >= movieWatched.length
                           ? BuildLoaderNextPage()
-                          : _buildGridImage(posterPath: movieWatched[index].posterPath);
+                          : _buildGridImage(
+                              posterPath: movieWatched[index].posterPath,
+                              id: movieWatched[index].id,
+                              videoType: VideoType.MOVIE_WATCHED,
+                            );
                     },
                   ),
                 );
@@ -245,7 +263,7 @@ class _ProfilePageState extends State<ProfilePage> with TickerProviderStateMixin
   }
 
   int _calculateMovieWatchedItemCount(MovieListsUserProfileState state) {
-    if (state.movieWatched.length < 9 || state.movieWatched.length % 3 != 0 || !state.isThereMoreMovieWatchedPageToLoad) {
+    if (state.movieWatched.length < 18 || state.movieWatched.length % 3 != 0 || !state.isThereMoreMovieWatchedPageToLoad) {
       return state.movieWatched.length;
     } else {
       return state.movieWatched.length + 1;
@@ -279,7 +297,11 @@ class _ProfilePageState extends State<ProfilePage> with TickerProviderStateMixin
                     itemBuilder: (context, index) {
                       return index >= tvShowWatchlist.length
                           ? BuildLoaderNextPage()
-                          : _buildGridImage(posterPath: tvShowWatchlist[index].posterPath);
+                          : _buildGridImage(
+                              posterPath: tvShowWatchlist[index].posterPath,
+                              id: tvShowWatchlist[index].id,
+                              videoType: VideoType.TV_SHOW_WATCHLIST,
+                            );
                     },
                   ),
                 );
@@ -289,7 +311,7 @@ class _ProfilePageState extends State<ProfilePage> with TickerProviderStateMixin
   }
 
   int _calculateTvShowWatchlistItemCount(TvShowListsUserProfileState state) {
-    if (state.tvShowWatchlist.length < 9 ||
+    if (state.tvShowWatchlist.length < 18 ||
         state.tvShowWatchlist.length % 3 != 0 ||
         !state.isThereMoreTvShowWatchlistPageToLoad) {
       return state.tvShowWatchlist.length;
@@ -325,7 +347,11 @@ class _ProfilePageState extends State<ProfilePage> with TickerProviderStateMixin
                     itemBuilder: (context, index) {
                       return index >= tvShowWatched.length
                           ? BuildLoaderNextPage()
-                          : _buildGridImage(posterPath: tvShowWatched[index].posterPath);
+                          : _buildGridImage(
+                              posterPath: tvShowWatched[index].posterPath,
+                              id: tvShowWatched[index].id,
+                              videoType: VideoType.TV_SHOW_WATCHED,
+                            );
                     },
                   ),
                 );
@@ -335,25 +361,54 @@ class _ProfilePageState extends State<ProfilePage> with TickerProviderStateMixin
   }
 
   int _calculateTvShowWatchedItemCount(TvShowListsUserProfileState state) {
-    if (state.tvShowWatched.length < 9 || state.tvShowWatched.length % 3 != 0 || !state.isThereMoreTvShowWatchedPageToLoad) {
+    if (state.tvShowWatched.length < 18 || state.tvShowWatched.length % 3 != 0 || !state.isThereMoreTvShowWatchedPageToLoad) {
       return state.tvShowWatched.length;
     } else {
       return state.tvShowWatched.length + 1;
     }
   }
 
-  Widget _buildGridImage({String posterPath}) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: AspectRatio(
-        aspectRatio: 0.69,
-        child: BuildPosterImage(
-          height: 135,
-          width: 90,
-          imagePath: posterPath,
+  Widget _buildGridImage({String posterPath, int id, VideoType videoType}) {
+    return GestureDetector(
+      onTap: () {
+        Navigator.of(context, rootNavigator: false).push(
+          MaterialPageRoute(
+            // ignore: missing_return
+            builder: (context) {
+              switch (videoType) {
+                case VideoType.MOVIE_WATCHLIST:
+                  return MovieDetailsPage(id);
+                  break;
+                case VideoType.MOVIE_WATCHED:
+                  return PostPage();
+                  break;
+                case VideoType.TV_SHOW_WATCHLIST:
+                  return TvShowDetailsPage(id);
+                  break;
+                case VideoType.TV_SHOW_WATCHED:
+                  return PostPage();
+                  break;
+              }
+            },
+          ),
+        );
+      },
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: AspectRatio(
+          aspectRatio: 0.69,
+          child: BuildPosterImage(
+            height: 135,
+            width: 90,
+            imagePath: posterPath,
+          ),
         ),
       ),
     );
+  }
+
+  Widget _buildPostListView() {
+    // return ListView.builder(itemBuilder: null)
   }
 
   @override
