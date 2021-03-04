@@ -271,6 +271,11 @@ class _$AuthCheckStateTearOff {
   _Unauthenticated unauthenticated() {
     return const _Unauthenticated();
   }
+
+// ignore: unused_element
+  _EmailNotVerified emailNotVerified() {
+    return const _EmailNotVerified();
+  }
 }
 
 /// @nodoc
@@ -284,12 +289,14 @@ mixin _$AuthCheckState {
     @required TResult initial(),
     @required TResult authenticated(),
     @required TResult unauthenticated(),
+    @required TResult emailNotVerified(),
   });
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object>({
     TResult initial(),
     TResult authenticated(),
     TResult unauthenticated(),
+    TResult emailNotVerified(),
     @required TResult orElse(),
   });
   @optionalTypeArgs
@@ -297,12 +304,14 @@ mixin _$AuthCheckState {
     @required TResult initial(_Initial value),
     @required TResult authenticated(_Authenticated value),
     @required TResult unauthenticated(_Unauthenticated value),
+    @required TResult emailNotVerified(_EmailNotVerified value),
   });
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object>({
     TResult initial(_Initial value),
     TResult authenticated(_Authenticated value),
     TResult unauthenticated(_Unauthenticated value),
+    TResult emailNotVerified(_EmailNotVerified value),
     @required TResult orElse(),
   });
 }
@@ -363,10 +372,12 @@ class _$_Initial implements _Initial {
     @required TResult initial(),
     @required TResult authenticated(),
     @required TResult unauthenticated(),
+    @required TResult emailNotVerified(),
   }) {
     assert(initial != null);
     assert(authenticated != null);
     assert(unauthenticated != null);
+    assert(emailNotVerified != null);
     return initial();
   }
 
@@ -376,6 +387,7 @@ class _$_Initial implements _Initial {
     TResult initial(),
     TResult authenticated(),
     TResult unauthenticated(),
+    TResult emailNotVerified(),
     @required TResult orElse(),
   }) {
     assert(orElse != null);
@@ -391,10 +403,12 @@ class _$_Initial implements _Initial {
     @required TResult initial(_Initial value),
     @required TResult authenticated(_Authenticated value),
     @required TResult unauthenticated(_Unauthenticated value),
+    @required TResult emailNotVerified(_EmailNotVerified value),
   }) {
     assert(initial != null);
     assert(authenticated != null);
     assert(unauthenticated != null);
+    assert(emailNotVerified != null);
     return initial(this);
   }
 
@@ -404,6 +418,7 @@ class _$_Initial implements _Initial {
     TResult initial(_Initial value),
     TResult authenticated(_Authenticated value),
     TResult unauthenticated(_Unauthenticated value),
+    TResult emailNotVerified(_EmailNotVerified value),
     @required TResult orElse(),
   }) {
     assert(orElse != null);
@@ -460,10 +475,12 @@ class _$_Authenticated implements _Authenticated {
     @required TResult initial(),
     @required TResult authenticated(),
     @required TResult unauthenticated(),
+    @required TResult emailNotVerified(),
   }) {
     assert(initial != null);
     assert(authenticated != null);
     assert(unauthenticated != null);
+    assert(emailNotVerified != null);
     return authenticated();
   }
 
@@ -473,6 +490,7 @@ class _$_Authenticated implements _Authenticated {
     TResult initial(),
     TResult authenticated(),
     TResult unauthenticated(),
+    TResult emailNotVerified(),
     @required TResult orElse(),
   }) {
     assert(orElse != null);
@@ -488,10 +506,12 @@ class _$_Authenticated implements _Authenticated {
     @required TResult initial(_Initial value),
     @required TResult authenticated(_Authenticated value),
     @required TResult unauthenticated(_Unauthenticated value),
+    @required TResult emailNotVerified(_EmailNotVerified value),
   }) {
     assert(initial != null);
     assert(authenticated != null);
     assert(unauthenticated != null);
+    assert(emailNotVerified != null);
     return authenticated(this);
   }
 
@@ -501,6 +521,7 @@ class _$_Authenticated implements _Authenticated {
     TResult initial(_Initial value),
     TResult authenticated(_Authenticated value),
     TResult unauthenticated(_Unauthenticated value),
+    TResult emailNotVerified(_EmailNotVerified value),
     @required TResult orElse(),
   }) {
     assert(orElse != null);
@@ -557,10 +578,12 @@ class _$_Unauthenticated implements _Unauthenticated {
     @required TResult initial(),
     @required TResult authenticated(),
     @required TResult unauthenticated(),
+    @required TResult emailNotVerified(),
   }) {
     assert(initial != null);
     assert(authenticated != null);
     assert(unauthenticated != null);
+    assert(emailNotVerified != null);
     return unauthenticated();
   }
 
@@ -570,6 +593,7 @@ class _$_Unauthenticated implements _Unauthenticated {
     TResult initial(),
     TResult authenticated(),
     TResult unauthenticated(),
+    TResult emailNotVerified(),
     @required TResult orElse(),
   }) {
     assert(orElse != null);
@@ -585,10 +609,12 @@ class _$_Unauthenticated implements _Unauthenticated {
     @required TResult initial(_Initial value),
     @required TResult authenticated(_Authenticated value),
     @required TResult unauthenticated(_Unauthenticated value),
+    @required TResult emailNotVerified(_EmailNotVerified value),
   }) {
     assert(initial != null);
     assert(authenticated != null);
     assert(unauthenticated != null);
+    assert(emailNotVerified != null);
     return unauthenticated(this);
   }
 
@@ -598,6 +624,7 @@ class _$_Unauthenticated implements _Unauthenticated {
     TResult initial(_Initial value),
     TResult authenticated(_Authenticated value),
     TResult unauthenticated(_Unauthenticated value),
+    TResult emailNotVerified(_EmailNotVerified value),
     @required TResult orElse(),
   }) {
     assert(orElse != null);
@@ -610,4 +637,107 @@ class _$_Unauthenticated implements _Unauthenticated {
 
 abstract class _Unauthenticated implements AuthCheckState {
   const factory _Unauthenticated() = _$_Unauthenticated;
+}
+
+/// @nodoc
+abstract class _$EmailNotVerifiedCopyWith<$Res> {
+  factory _$EmailNotVerifiedCopyWith(
+          _EmailNotVerified value, $Res Function(_EmailNotVerified) then) =
+      __$EmailNotVerifiedCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$EmailNotVerifiedCopyWithImpl<$Res>
+    extends _$AuthCheckStateCopyWithImpl<$Res>
+    implements _$EmailNotVerifiedCopyWith<$Res> {
+  __$EmailNotVerifiedCopyWithImpl(
+      _EmailNotVerified _value, $Res Function(_EmailNotVerified) _then)
+      : super(_value, (v) => _then(v as _EmailNotVerified));
+
+  @override
+  _EmailNotVerified get _value => super._value as _EmailNotVerified;
+}
+
+/// @nodoc
+class _$_EmailNotVerified implements _EmailNotVerified {
+  const _$_EmailNotVerified();
+
+  @override
+  String toString() {
+    return 'AuthCheckState.emailNotVerified()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) || (other is _EmailNotVerified);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object>({
+    @required TResult initial(),
+    @required TResult authenticated(),
+    @required TResult unauthenticated(),
+    @required TResult emailNotVerified(),
+  }) {
+    assert(initial != null);
+    assert(authenticated != null);
+    assert(unauthenticated != null);
+    assert(emailNotVerified != null);
+    return emailNotVerified();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object>({
+    TResult initial(),
+    TResult authenticated(),
+    TResult unauthenticated(),
+    TResult emailNotVerified(),
+    @required TResult orElse(),
+  }) {
+    assert(orElse != null);
+    if (emailNotVerified != null) {
+      return emailNotVerified();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object>({
+    @required TResult initial(_Initial value),
+    @required TResult authenticated(_Authenticated value),
+    @required TResult unauthenticated(_Unauthenticated value),
+    @required TResult emailNotVerified(_EmailNotVerified value),
+  }) {
+    assert(initial != null);
+    assert(authenticated != null);
+    assert(unauthenticated != null);
+    assert(emailNotVerified != null);
+    return emailNotVerified(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object>({
+    TResult initial(_Initial value),
+    TResult authenticated(_Authenticated value),
+    TResult unauthenticated(_Unauthenticated value),
+    TResult emailNotVerified(_EmailNotVerified value),
+    @required TResult orElse(),
+  }) {
+    assert(orElse != null);
+    if (emailNotVerified != null) {
+      return emailNotVerified(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _EmailNotVerified implements AuthCheckState {
+  const factory _EmailNotVerified() = _$_EmailNotVerified;
 }

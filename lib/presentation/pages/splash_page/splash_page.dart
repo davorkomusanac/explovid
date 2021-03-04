@@ -1,5 +1,6 @@
 import 'package:explovid/application/auth/auth_check/auth_check_bloc.dart';
 import 'package:explovid/presentation/pages/home_page/home_page.dart';
+import 'package:explovid/presentation/pages/sign_up_page/verify_email_page.dart';
 import 'package:explovid/presentation/pages/welcome_page/welcome_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -29,6 +30,13 @@ class _SplashPageState extends State<SplashPage> {
             Navigator.of(context).pushReplacement(
               MaterialPageRoute(
                 builder: (context) => HomePage(),
+              ),
+            );
+          },
+          emailNotVerified: (_) {
+            Navigator.of(context).pushReplacement(
+              MaterialPageRoute(
+                builder: (context) => VerifyEmailPage(),
               ),
             );
           },

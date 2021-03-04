@@ -1,8 +1,10 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:bloc/bloc.dart';
 import 'package:explovid/constants.dart';
 import 'package:explovid/domain/auth/auth_repository.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:meta/meta.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -23,16 +25,21 @@ class AuthCheckBloc extends Bloc<AuthCheckEvent, AuthCheckState> {
       authCheckRequested: (e) async* {
         final isUserAuth = _authRepository.isUserSignedIn();
         if (isUserAuth) {
-          yield const AuthCheckState.authenticated();
+          await FirebaseAuth.instance.currentUser.reload();
+          final isUserVerified = FirebaseAuth.instance.currentUser.emailVerified;
+          if (isUserVerified) {
+            yield const AuthCheckState.authenticated();
+          } else {
+            yield const AuthCheckState.emailNotVerified();
+          }
         } else {
-          yield const AuthCheckState.unauthenticated();
+          yield AuthCheckState.unauthenticated();
         }
       },
       signOutPressed: (e) async* {
         String returnValue = await _authRepository.signOut();
         if (returnValue == kSuccess) {
           //Not yielding a state since authCheck is called in initState in SplashPage and it will perform the authentication
-          //yield const AuthCheckState.unauthenticated();
         } else {
           print("There was an error signing out!");
         }

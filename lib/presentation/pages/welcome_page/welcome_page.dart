@@ -1,11 +1,23 @@
 import 'package:explovid/application/auth/sign_in_form/sign_in_form_bloc.dart';
+import 'package:explovid/presentation/pages/sign_up_page/privacy_policy_page.dart';
 import 'package:explovid/presentation/pages/sign_up_page/sign_up_page.dart';
+import 'package:explovid/presentation/pages/sign_up_page/terms_of_use_page.dart';
 import 'package:explovid/presentation/pages/splash_page/splash_page.dart';
+import 'package:explovid/presentation/pages/welcome_page/forgot_password_page.dart';
+import 'package:explovid/presentation/utilities/utilities.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class WelcomePage extends StatelessWidget {
+class WelcomePage extends StatefulWidget {
+  @override
+  _WelcomePageState createState() => _WelcomePageState();
+}
+
+class _WelcomePageState extends State<WelcomePage> {
+  bool isAgreed = false;
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -45,17 +57,16 @@ class WelcomePage extends StatelessWidget {
                         ),
                       ),
                     ),
+                    Text("Discuss your favorite movies with friends"),
                     state.isSubmitting ? LinearProgressIndicator(value: null) : Text(""),
                     Padding(
                       padding: const EdgeInsets.only(left: 25, right: 25, top: 25),
                       child: TextFormField(
                         autocorrect: false,
-                        style: TextStyle(color: Colors.blue),
                         decoration: const InputDecoration(
-                          focusColor: Colors.yellow,
                           prefixIcon: Icon(
                             Icons.email,
-                            color: Colors.green,
+                            color: Colors.tealAccent,
                           ),
                           labelText: 'Email',
                         ),
@@ -72,7 +83,7 @@ class WelcomePage extends StatelessWidget {
                         decoration: const InputDecoration(
                           prefixIcon: Icon(
                             Icons.lock_outline,
-                            color: Colors.green,
+                            color: Colors.tealAccent,
                           ),
                           labelText: 'Password',
                         ),
@@ -84,26 +95,91 @@ class WelcomePage extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.only(top: 5.0, bottom: 8.0),
                       child: ElevatedButton(
+                        style: kNotWatchedButton,
                         onPressed: () {
                           context.read<SignInFormBloc>().add(
                                 SignInFormEvent.signInWithEmailAndPasswordPressed(),
                               );
                         },
-                        child: Text("Sign In"),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                          child: Text("Sign In"),
+                        ),
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(builder: (context) => ForgotPasswordPage()),
+                        );
+                      },
+                      child: Text(
+                        "Forgot password?",
+                        style: TextStyle(fontWeight: FontWeight.w700, color: Colors.grey[400]),
                       ),
                     ),
                     Divider(
                       color: Colors.black,
+                      thickness: 1,
                       indent: MediaQuery.of(context).size.width * 0.1,
                       endIndent: MediaQuery.of(context).size.width * 0.1,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 15, right: 10),
+                      child: CheckboxListTile(
+                        activeColor: Colors.tealAccent[700],
+                        value: isAgreed,
+                        title: RichText(
+                          text: TextSpan(
+                            text: "I confirm that I am over 18 and I agree to the ",
+                            style: TextStyle(color: Colors.grey[300]),
+                            children: [
+                              TextSpan(
+                                text: "Terms of Use",
+                                style: TextStyle(fontWeight: FontWeight.w700, color: Colors.grey[50]),
+                                recognizer: TapGestureRecognizer()
+                                  ..onTap = () {
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(builder: (context) => TermsOfUsePage()),
+                                    );
+                                  },
+                              ),
+                              TextSpan(text: " and ", style: TextStyle()),
+                              TextSpan(
+                                text: "Privacy Policy",
+                                style: TextStyle(fontWeight: FontWeight.w700, color: Colors.grey[50]),
+                                recognizer: TapGestureRecognizer()
+                                  ..onTap = () {
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(builder: (context) => PrivacyPolicyPage()),
+                                    );
+                                  },
+                              ),
+                            ],
+                          ),
+                        ),
+                        controlAffinity: ListTileControlAffinity.leading,
+                        onChanged: (bool value) {
+                          setState(() {
+                            isAgreed = value;
+                          });
+                        },
+                      ),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 8.0),
                       child: ElevatedButton(
                         onPressed: () {
-                          context.read<SignInFormBloc>().add(
-                                SignInFormEvent.signInWithGooglePressed(),
-                              );
+                          !isAgreed
+                              ? Scaffold.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text("You need to check the checkbox before continuing"),
+                                    duration: Duration(seconds: 1),
+                                  ),
+                                )
+                              : context.read<SignInFormBloc>().add(
+                                    SignInFormEvent.signInWithGooglePressed(),
+                                  );
                         },
                         child: Text("Sign In With Google"),
                       ),
@@ -120,80 +196,34 @@ class WelcomePage extends StatelessWidget {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 10.0),
-                      child: Container(
-                        padding: const EdgeInsets.all(16),
-                        decoration: BoxDecoration(
-                          color: Colors.black,
-                          borderRadius: BorderRadius.circular(25.0),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black,
-                              blurRadius: 10.0,
-                              spreadRadius: 1.0,
-                              offset: Offset(
-                                4.0,
-                                4.0,
-                              ),
+                      padding: const EdgeInsets.only(top: 5.0, bottom: 8.0),
+                      child: ElevatedButton(
+                        style: kAlreadyHaveAccountButton,
+                        onPressed: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => SignUpPage(),
                             ),
-                          ],
-                        ),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Text("Don't have an account?"),
-                            Row(
-                              mainAxisSize: MainAxisSize.min,
-                              mainAxisAlignment: MainAxisAlignment.center,
+                          );
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12),
+                          child: RichText(
+                            textAlign: TextAlign.center,
+                            text: TextSpan(
+                              text: "Don't have an account?",
+                              style: TextStyle(color: Colors.grey[300]),
                               children: [
-                                Text("Register "),
-                                GestureDetector(
-                                  onTap: () {
-                                    Navigator.of(context).push(
-                                      MaterialPageRoute(
-                                        builder: (context) => SignUpPage(),
-                                      ),
-                                    );
-                                  },
-                                  child: Text(
-                                    "here.",
-                                    style: TextStyle(color: Colors.blue),
-                                  ),
+                                TextSpan(
+                                  text: "\nRegister for free.",
+                                  style: TextStyle(fontWeight: FontWeight.w700, color: Colors.grey[50]),
                                 ),
-                                Text(" For free."),
                               ],
                             ),
-                          ],
+                          ),
                         ),
                       ),
                     ),
-                    Container(
-                      padding: EdgeInsets.all(8.0),
-                      width: MediaQuery.of(context).size.width * 0.5,
-                      decoration: BoxDecoration(
-                        color: Colors.black,
-                        borderRadius: BorderRadius.circular(25.0),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black,
-                            blurRadius: 10.0,
-                            spreadRadius: 1.0,
-                            offset: Offset(
-                              4.0,
-                              4.0,
-                            ),
-                          ),
-                        ],
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          Text("Terms of Use"),
-                          Text("Privacy"),
-                        ],
-                      ),
-                    )
                   ],
                 ),
               ],
