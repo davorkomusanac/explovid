@@ -61,6 +61,13 @@ class _$SignInFormEventTearOff {
   _SignInWithApplePressed signInWithApplePressed() {
     return const _SignInWithApplePressed();
   }
+
+// ignore: unused_element
+  _ResetPasswordPressed resetPasswordPressed(String email) {
+    return _ResetPasswordPressed(
+      email,
+    );
+  }
 }
 
 /// @nodoc
@@ -79,6 +86,7 @@ mixin _$SignInFormEvent {
     @required TResult signInWithEmailAndPasswordPressed(),
     @required TResult signInWithGooglePressed(),
     @required TResult signInWithApplePressed(),
+    @required TResult resetPasswordPressed(String email),
   });
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object>({
@@ -90,6 +98,7 @@ mixin _$SignInFormEvent {
     TResult signInWithEmailAndPasswordPressed(),
     TResult signInWithGooglePressed(),
     TResult signInWithApplePressed(),
+    TResult resetPasswordPressed(String email),
     @required TResult orElse(),
   });
   @optionalTypeArgs
@@ -105,6 +114,7 @@ mixin _$SignInFormEvent {
             _SignInWithEmailAndPasswordPressed value),
     @required TResult signInWithGooglePressed(_SignInWithGooglePressed value),
     @required TResult signInWithApplePressed(_SignInWithApplePressed value),
+    @required TResult resetPasswordPressed(_ResetPasswordPressed value),
   });
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object>({
@@ -117,6 +127,7 @@ mixin _$SignInFormEvent {
         _SignInWithEmailAndPasswordPressed value),
     TResult signInWithGooglePressed(_SignInWithGooglePressed value),
     TResult signInWithApplePressed(_SignInWithApplePressed value),
+    TResult resetPasswordPressed(_ResetPasswordPressed value),
     @required TResult orElse(),
   });
 }
@@ -207,6 +218,7 @@ class _$_EmailChanged implements _EmailChanged {
     @required TResult signInWithEmailAndPasswordPressed(),
     @required TResult signInWithGooglePressed(),
     @required TResult signInWithApplePressed(),
+    @required TResult resetPasswordPressed(String email),
   }) {
     assert(emailChanged != null);
     assert(passwordChanged != null);
@@ -216,6 +228,7 @@ class _$_EmailChanged implements _EmailChanged {
     assert(signInWithEmailAndPasswordPressed != null);
     assert(signInWithGooglePressed != null);
     assert(signInWithApplePressed != null);
+    assert(resetPasswordPressed != null);
     return emailChanged(email);
   }
 
@@ -230,6 +243,7 @@ class _$_EmailChanged implements _EmailChanged {
     TResult signInWithEmailAndPasswordPressed(),
     TResult signInWithGooglePressed(),
     TResult signInWithApplePressed(),
+    TResult resetPasswordPressed(String email),
     @required TResult orElse(),
   }) {
     assert(orElse != null);
@@ -253,6 +267,7 @@ class _$_EmailChanged implements _EmailChanged {
             _SignInWithEmailAndPasswordPressed value),
     @required TResult signInWithGooglePressed(_SignInWithGooglePressed value),
     @required TResult signInWithApplePressed(_SignInWithApplePressed value),
+    @required TResult resetPasswordPressed(_ResetPasswordPressed value),
   }) {
     assert(emailChanged != null);
     assert(passwordChanged != null);
@@ -262,6 +277,7 @@ class _$_EmailChanged implements _EmailChanged {
     assert(signInWithEmailAndPasswordPressed != null);
     assert(signInWithGooglePressed != null);
     assert(signInWithApplePressed != null);
+    assert(resetPasswordPressed != null);
     return emailChanged(this);
   }
 
@@ -277,6 +293,7 @@ class _$_EmailChanged implements _EmailChanged {
         _SignInWithEmailAndPasswordPressed value),
     TResult signInWithGooglePressed(_SignInWithGooglePressed value),
     TResult signInWithApplePressed(_SignInWithApplePressed value),
+    TResult resetPasswordPressed(_ResetPasswordPressed value),
     @required TResult orElse(),
   }) {
     assert(orElse != null);
@@ -365,6 +382,7 @@ class _$_PasswordChanged implements _PasswordChanged {
     @required TResult signInWithEmailAndPasswordPressed(),
     @required TResult signInWithGooglePressed(),
     @required TResult signInWithApplePressed(),
+    @required TResult resetPasswordPressed(String email),
   }) {
     assert(emailChanged != null);
     assert(passwordChanged != null);
@@ -374,6 +392,7 @@ class _$_PasswordChanged implements _PasswordChanged {
     assert(signInWithEmailAndPasswordPressed != null);
     assert(signInWithGooglePressed != null);
     assert(signInWithApplePressed != null);
+    assert(resetPasswordPressed != null);
     return passwordChanged(password);
   }
 
@@ -388,6 +407,7 @@ class _$_PasswordChanged implements _PasswordChanged {
     TResult signInWithEmailAndPasswordPressed(),
     TResult signInWithGooglePressed(),
     TResult signInWithApplePressed(),
+    TResult resetPasswordPressed(String email),
     @required TResult orElse(),
   }) {
     assert(orElse != null);
@@ -411,6 +431,7 @@ class _$_PasswordChanged implements _PasswordChanged {
             _SignInWithEmailAndPasswordPressed value),
     @required TResult signInWithGooglePressed(_SignInWithGooglePressed value),
     @required TResult signInWithApplePressed(_SignInWithApplePressed value),
+    @required TResult resetPasswordPressed(_ResetPasswordPressed value),
   }) {
     assert(emailChanged != null);
     assert(passwordChanged != null);
@@ -420,6 +441,7 @@ class _$_PasswordChanged implements _PasswordChanged {
     assert(signInWithEmailAndPasswordPressed != null);
     assert(signInWithGooglePressed != null);
     assert(signInWithApplePressed != null);
+    assert(resetPasswordPressed != null);
     return passwordChanged(this);
   }
 
@@ -435,6 +457,7 @@ class _$_PasswordChanged implements _PasswordChanged {
         _SignInWithEmailAndPasswordPressed value),
     TResult signInWithGooglePressed(_SignInWithGooglePressed value),
     TResult signInWithApplePressed(_SignInWithApplePressed value),
+    TResult resetPasswordPressed(_ResetPasswordPressed value),
     @required TResult orElse(),
   }) {
     assert(orElse != null);
@@ -531,6 +554,7 @@ class _$_PasswordConfirmationChanged implements _PasswordConfirmationChanged {
     @required TResult signInWithEmailAndPasswordPressed(),
     @required TResult signInWithGooglePressed(),
     @required TResult signInWithApplePressed(),
+    @required TResult resetPasswordPressed(String email),
   }) {
     assert(emailChanged != null);
     assert(passwordChanged != null);
@@ -540,6 +564,7 @@ class _$_PasswordConfirmationChanged implements _PasswordConfirmationChanged {
     assert(signInWithEmailAndPasswordPressed != null);
     assert(signInWithGooglePressed != null);
     assert(signInWithApplePressed != null);
+    assert(resetPasswordPressed != null);
     return passwordConfirmationChanged(passwordConfirmation);
   }
 
@@ -554,6 +579,7 @@ class _$_PasswordConfirmationChanged implements _PasswordConfirmationChanged {
     TResult signInWithEmailAndPasswordPressed(),
     TResult signInWithGooglePressed(),
     TResult signInWithApplePressed(),
+    TResult resetPasswordPressed(String email),
     @required TResult orElse(),
   }) {
     assert(orElse != null);
@@ -577,6 +603,7 @@ class _$_PasswordConfirmationChanged implements _PasswordConfirmationChanged {
             _SignInWithEmailAndPasswordPressed value),
     @required TResult signInWithGooglePressed(_SignInWithGooglePressed value),
     @required TResult signInWithApplePressed(_SignInWithApplePressed value),
+    @required TResult resetPasswordPressed(_ResetPasswordPressed value),
   }) {
     assert(emailChanged != null);
     assert(passwordChanged != null);
@@ -586,6 +613,7 @@ class _$_PasswordConfirmationChanged implements _PasswordConfirmationChanged {
     assert(signInWithEmailAndPasswordPressed != null);
     assert(signInWithGooglePressed != null);
     assert(signInWithApplePressed != null);
+    assert(resetPasswordPressed != null);
     return passwordConfirmationChanged(this);
   }
 
@@ -601,6 +629,7 @@ class _$_PasswordConfirmationChanged implements _PasswordConfirmationChanged {
         _SignInWithEmailAndPasswordPressed value),
     TResult signInWithGooglePressed(_SignInWithGooglePressed value),
     TResult signInWithApplePressed(_SignInWithApplePressed value),
+    TResult resetPasswordPressed(_ResetPasswordPressed value),
     @required TResult orElse(),
   }) {
     assert(orElse != null);
@@ -691,6 +720,7 @@ class _$_FullNameChanged implements _FullNameChanged {
     @required TResult signInWithEmailAndPasswordPressed(),
     @required TResult signInWithGooglePressed(),
     @required TResult signInWithApplePressed(),
+    @required TResult resetPasswordPressed(String email),
   }) {
     assert(emailChanged != null);
     assert(passwordChanged != null);
@@ -700,6 +730,7 @@ class _$_FullNameChanged implements _FullNameChanged {
     assert(signInWithEmailAndPasswordPressed != null);
     assert(signInWithGooglePressed != null);
     assert(signInWithApplePressed != null);
+    assert(resetPasswordPressed != null);
     return fullNameChanged(fullName);
   }
 
@@ -714,6 +745,7 @@ class _$_FullNameChanged implements _FullNameChanged {
     TResult signInWithEmailAndPasswordPressed(),
     TResult signInWithGooglePressed(),
     TResult signInWithApplePressed(),
+    TResult resetPasswordPressed(String email),
     @required TResult orElse(),
   }) {
     assert(orElse != null);
@@ -737,6 +769,7 @@ class _$_FullNameChanged implements _FullNameChanged {
             _SignInWithEmailAndPasswordPressed value),
     @required TResult signInWithGooglePressed(_SignInWithGooglePressed value),
     @required TResult signInWithApplePressed(_SignInWithApplePressed value),
+    @required TResult resetPasswordPressed(_ResetPasswordPressed value),
   }) {
     assert(emailChanged != null);
     assert(passwordChanged != null);
@@ -746,6 +779,7 @@ class _$_FullNameChanged implements _FullNameChanged {
     assert(signInWithEmailAndPasswordPressed != null);
     assert(signInWithGooglePressed != null);
     assert(signInWithApplePressed != null);
+    assert(resetPasswordPressed != null);
     return fullNameChanged(this);
   }
 
@@ -761,6 +795,7 @@ class _$_FullNameChanged implements _FullNameChanged {
         _SignInWithEmailAndPasswordPressed value),
     TResult signInWithGooglePressed(_SignInWithGooglePressed value),
     TResult signInWithApplePressed(_SignInWithApplePressed value),
+    TResult resetPasswordPressed(_ResetPasswordPressed value),
     @required TResult orElse(),
   }) {
     assert(orElse != null);
@@ -826,6 +861,7 @@ class _$_RegisterPressed implements _RegisterPressed {
     @required TResult signInWithEmailAndPasswordPressed(),
     @required TResult signInWithGooglePressed(),
     @required TResult signInWithApplePressed(),
+    @required TResult resetPasswordPressed(String email),
   }) {
     assert(emailChanged != null);
     assert(passwordChanged != null);
@@ -835,6 +871,7 @@ class _$_RegisterPressed implements _RegisterPressed {
     assert(signInWithEmailAndPasswordPressed != null);
     assert(signInWithGooglePressed != null);
     assert(signInWithApplePressed != null);
+    assert(resetPasswordPressed != null);
     return registerPressed();
   }
 
@@ -849,6 +886,7 @@ class _$_RegisterPressed implements _RegisterPressed {
     TResult signInWithEmailAndPasswordPressed(),
     TResult signInWithGooglePressed(),
     TResult signInWithApplePressed(),
+    TResult resetPasswordPressed(String email),
     @required TResult orElse(),
   }) {
     assert(orElse != null);
@@ -872,6 +910,7 @@ class _$_RegisterPressed implements _RegisterPressed {
             _SignInWithEmailAndPasswordPressed value),
     @required TResult signInWithGooglePressed(_SignInWithGooglePressed value),
     @required TResult signInWithApplePressed(_SignInWithApplePressed value),
+    @required TResult resetPasswordPressed(_ResetPasswordPressed value),
   }) {
     assert(emailChanged != null);
     assert(passwordChanged != null);
@@ -881,6 +920,7 @@ class _$_RegisterPressed implements _RegisterPressed {
     assert(signInWithEmailAndPasswordPressed != null);
     assert(signInWithGooglePressed != null);
     assert(signInWithApplePressed != null);
+    assert(resetPasswordPressed != null);
     return registerPressed(this);
   }
 
@@ -896,6 +936,7 @@ class _$_RegisterPressed implements _RegisterPressed {
         _SignInWithEmailAndPasswordPressed value),
     TResult signInWithGooglePressed(_SignInWithGooglePressed value),
     TResult signInWithApplePressed(_SignInWithApplePressed value),
+    TResult resetPasswordPressed(_ResetPasswordPressed value),
     @required TResult orElse(),
   }) {
     assert(orElse != null);
@@ -962,6 +1003,7 @@ class _$_SignInWithEmailAndPasswordPressed
     @required TResult signInWithEmailAndPasswordPressed(),
     @required TResult signInWithGooglePressed(),
     @required TResult signInWithApplePressed(),
+    @required TResult resetPasswordPressed(String email),
   }) {
     assert(emailChanged != null);
     assert(passwordChanged != null);
@@ -971,6 +1013,7 @@ class _$_SignInWithEmailAndPasswordPressed
     assert(signInWithEmailAndPasswordPressed != null);
     assert(signInWithGooglePressed != null);
     assert(signInWithApplePressed != null);
+    assert(resetPasswordPressed != null);
     return signInWithEmailAndPasswordPressed();
   }
 
@@ -985,6 +1028,7 @@ class _$_SignInWithEmailAndPasswordPressed
     TResult signInWithEmailAndPasswordPressed(),
     TResult signInWithGooglePressed(),
     TResult signInWithApplePressed(),
+    TResult resetPasswordPressed(String email),
     @required TResult orElse(),
   }) {
     assert(orElse != null);
@@ -1008,6 +1052,7 @@ class _$_SignInWithEmailAndPasswordPressed
             _SignInWithEmailAndPasswordPressed value),
     @required TResult signInWithGooglePressed(_SignInWithGooglePressed value),
     @required TResult signInWithApplePressed(_SignInWithApplePressed value),
+    @required TResult resetPasswordPressed(_ResetPasswordPressed value),
   }) {
     assert(emailChanged != null);
     assert(passwordChanged != null);
@@ -1017,6 +1062,7 @@ class _$_SignInWithEmailAndPasswordPressed
     assert(signInWithEmailAndPasswordPressed != null);
     assert(signInWithGooglePressed != null);
     assert(signInWithApplePressed != null);
+    assert(resetPasswordPressed != null);
     return signInWithEmailAndPasswordPressed(this);
   }
 
@@ -1032,6 +1078,7 @@ class _$_SignInWithEmailAndPasswordPressed
         _SignInWithEmailAndPasswordPressed value),
     TResult signInWithGooglePressed(_SignInWithGooglePressed value),
     TResult signInWithApplePressed(_SignInWithApplePressed value),
+    TResult resetPasswordPressed(_ResetPasswordPressed value),
     @required TResult orElse(),
   }) {
     assert(orElse != null);
@@ -1095,6 +1142,7 @@ class _$_SignInWithGooglePressed implements _SignInWithGooglePressed {
     @required TResult signInWithEmailAndPasswordPressed(),
     @required TResult signInWithGooglePressed(),
     @required TResult signInWithApplePressed(),
+    @required TResult resetPasswordPressed(String email),
   }) {
     assert(emailChanged != null);
     assert(passwordChanged != null);
@@ -1104,6 +1152,7 @@ class _$_SignInWithGooglePressed implements _SignInWithGooglePressed {
     assert(signInWithEmailAndPasswordPressed != null);
     assert(signInWithGooglePressed != null);
     assert(signInWithApplePressed != null);
+    assert(resetPasswordPressed != null);
     return signInWithGooglePressed();
   }
 
@@ -1118,6 +1167,7 @@ class _$_SignInWithGooglePressed implements _SignInWithGooglePressed {
     TResult signInWithEmailAndPasswordPressed(),
     TResult signInWithGooglePressed(),
     TResult signInWithApplePressed(),
+    TResult resetPasswordPressed(String email),
     @required TResult orElse(),
   }) {
     assert(orElse != null);
@@ -1141,6 +1191,7 @@ class _$_SignInWithGooglePressed implements _SignInWithGooglePressed {
             _SignInWithEmailAndPasswordPressed value),
     @required TResult signInWithGooglePressed(_SignInWithGooglePressed value),
     @required TResult signInWithApplePressed(_SignInWithApplePressed value),
+    @required TResult resetPasswordPressed(_ResetPasswordPressed value),
   }) {
     assert(emailChanged != null);
     assert(passwordChanged != null);
@@ -1150,6 +1201,7 @@ class _$_SignInWithGooglePressed implements _SignInWithGooglePressed {
     assert(signInWithEmailAndPasswordPressed != null);
     assert(signInWithGooglePressed != null);
     assert(signInWithApplePressed != null);
+    assert(resetPasswordPressed != null);
     return signInWithGooglePressed(this);
   }
 
@@ -1165,6 +1217,7 @@ class _$_SignInWithGooglePressed implements _SignInWithGooglePressed {
         _SignInWithEmailAndPasswordPressed value),
     TResult signInWithGooglePressed(_SignInWithGooglePressed value),
     TResult signInWithApplePressed(_SignInWithApplePressed value),
+    TResult resetPasswordPressed(_ResetPasswordPressed value),
     @required TResult orElse(),
   }) {
     assert(orElse != null);
@@ -1226,6 +1279,7 @@ class _$_SignInWithApplePressed implements _SignInWithApplePressed {
     @required TResult signInWithEmailAndPasswordPressed(),
     @required TResult signInWithGooglePressed(),
     @required TResult signInWithApplePressed(),
+    @required TResult resetPasswordPressed(String email),
   }) {
     assert(emailChanged != null);
     assert(passwordChanged != null);
@@ -1235,6 +1289,7 @@ class _$_SignInWithApplePressed implements _SignInWithApplePressed {
     assert(signInWithEmailAndPasswordPressed != null);
     assert(signInWithGooglePressed != null);
     assert(signInWithApplePressed != null);
+    assert(resetPasswordPressed != null);
     return signInWithApplePressed();
   }
 
@@ -1249,6 +1304,7 @@ class _$_SignInWithApplePressed implements _SignInWithApplePressed {
     TResult signInWithEmailAndPasswordPressed(),
     TResult signInWithGooglePressed(),
     TResult signInWithApplePressed(),
+    TResult resetPasswordPressed(String email),
     @required TResult orElse(),
   }) {
     assert(orElse != null);
@@ -1272,6 +1328,7 @@ class _$_SignInWithApplePressed implements _SignInWithApplePressed {
             _SignInWithEmailAndPasswordPressed value),
     @required TResult signInWithGooglePressed(_SignInWithGooglePressed value),
     @required TResult signInWithApplePressed(_SignInWithApplePressed value),
+    @required TResult resetPasswordPressed(_ResetPasswordPressed value),
   }) {
     assert(emailChanged != null);
     assert(passwordChanged != null);
@@ -1281,6 +1338,7 @@ class _$_SignInWithApplePressed implements _SignInWithApplePressed {
     assert(signInWithEmailAndPasswordPressed != null);
     assert(signInWithGooglePressed != null);
     assert(signInWithApplePressed != null);
+    assert(resetPasswordPressed != null);
     return signInWithApplePressed(this);
   }
 
@@ -1296,6 +1354,7 @@ class _$_SignInWithApplePressed implements _SignInWithApplePressed {
         _SignInWithEmailAndPasswordPressed value),
     TResult signInWithGooglePressed(_SignInWithGooglePressed value),
     TResult signInWithApplePressed(_SignInWithApplePressed value),
+    TResult resetPasswordPressed(_ResetPasswordPressed value),
     @required TResult orElse(),
   }) {
     assert(orElse != null);
@@ -1311,6 +1370,170 @@ abstract class _SignInWithApplePressed implements SignInFormEvent {
 }
 
 /// @nodoc
+abstract class _$ResetPasswordPressedCopyWith<$Res> {
+  factory _$ResetPasswordPressedCopyWith(_ResetPasswordPressed value,
+          $Res Function(_ResetPasswordPressed) then) =
+      __$ResetPasswordPressedCopyWithImpl<$Res>;
+  $Res call({String email});
+}
+
+/// @nodoc
+class __$ResetPasswordPressedCopyWithImpl<$Res>
+    extends _$SignInFormEventCopyWithImpl<$Res>
+    implements _$ResetPasswordPressedCopyWith<$Res> {
+  __$ResetPasswordPressedCopyWithImpl(
+      _ResetPasswordPressed _value, $Res Function(_ResetPasswordPressed) _then)
+      : super(_value, (v) => _then(v as _ResetPasswordPressed));
+
+  @override
+  _ResetPasswordPressed get _value => super._value as _ResetPasswordPressed;
+
+  @override
+  $Res call({
+    Object email = freezed,
+  }) {
+    return _then(_ResetPasswordPressed(
+      email == freezed ? _value.email : email as String,
+    ));
+  }
+}
+
+/// @nodoc
+class _$_ResetPasswordPressed implements _ResetPasswordPressed {
+  const _$_ResetPasswordPressed(this.email) : assert(email != null);
+
+  @override
+  final String email;
+
+  @override
+  String toString() {
+    return 'SignInFormEvent.resetPasswordPressed(email: $email)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is _ResetPasswordPressed &&
+            (identical(other.email, email) ||
+                const DeepCollectionEquality().equals(other.email, email)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(email);
+
+  @JsonKey(ignore: true)
+  @override
+  _$ResetPasswordPressedCopyWith<_ResetPasswordPressed> get copyWith =>
+      __$ResetPasswordPressedCopyWithImpl<_ResetPasswordPressed>(
+          this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object>({
+    @required TResult emailChanged(String email),
+    @required TResult passwordChanged(String password),
+    @required TResult passwordConfirmationChanged(String passwordConfirmation),
+    @required TResult fullNameChanged(String fullName),
+    @required TResult registerPressed(),
+    @required TResult signInWithEmailAndPasswordPressed(),
+    @required TResult signInWithGooglePressed(),
+    @required TResult signInWithApplePressed(),
+    @required TResult resetPasswordPressed(String email),
+  }) {
+    assert(emailChanged != null);
+    assert(passwordChanged != null);
+    assert(passwordConfirmationChanged != null);
+    assert(fullNameChanged != null);
+    assert(registerPressed != null);
+    assert(signInWithEmailAndPasswordPressed != null);
+    assert(signInWithGooglePressed != null);
+    assert(signInWithApplePressed != null);
+    assert(resetPasswordPressed != null);
+    return resetPasswordPressed(email);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object>({
+    TResult emailChanged(String email),
+    TResult passwordChanged(String password),
+    TResult passwordConfirmationChanged(String passwordConfirmation),
+    TResult fullNameChanged(String fullName),
+    TResult registerPressed(),
+    TResult signInWithEmailAndPasswordPressed(),
+    TResult signInWithGooglePressed(),
+    TResult signInWithApplePressed(),
+    TResult resetPasswordPressed(String email),
+    @required TResult orElse(),
+  }) {
+    assert(orElse != null);
+    if (resetPasswordPressed != null) {
+      return resetPasswordPressed(email);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object>({
+    @required TResult emailChanged(_EmailChanged value),
+    @required TResult passwordChanged(_PasswordChanged value),
+    @required
+        TResult passwordConfirmationChanged(_PasswordConfirmationChanged value),
+    @required TResult fullNameChanged(_FullNameChanged value),
+    @required TResult registerPressed(_RegisterPressed value),
+    @required
+        TResult signInWithEmailAndPasswordPressed(
+            _SignInWithEmailAndPasswordPressed value),
+    @required TResult signInWithGooglePressed(_SignInWithGooglePressed value),
+    @required TResult signInWithApplePressed(_SignInWithApplePressed value),
+    @required TResult resetPasswordPressed(_ResetPasswordPressed value),
+  }) {
+    assert(emailChanged != null);
+    assert(passwordChanged != null);
+    assert(passwordConfirmationChanged != null);
+    assert(fullNameChanged != null);
+    assert(registerPressed != null);
+    assert(signInWithEmailAndPasswordPressed != null);
+    assert(signInWithGooglePressed != null);
+    assert(signInWithApplePressed != null);
+    assert(resetPasswordPressed != null);
+    return resetPasswordPressed(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object>({
+    TResult emailChanged(_EmailChanged value),
+    TResult passwordChanged(_PasswordChanged value),
+    TResult passwordConfirmationChanged(_PasswordConfirmationChanged value),
+    TResult fullNameChanged(_FullNameChanged value),
+    TResult registerPressed(_RegisterPressed value),
+    TResult signInWithEmailAndPasswordPressed(
+        _SignInWithEmailAndPasswordPressed value),
+    TResult signInWithGooglePressed(_SignInWithGooglePressed value),
+    TResult signInWithApplePressed(_SignInWithApplePressed value),
+    TResult resetPasswordPressed(_ResetPasswordPressed value),
+    @required TResult orElse(),
+  }) {
+    assert(orElse != null);
+    if (resetPasswordPressed != null) {
+      return resetPasswordPressed(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _ResetPasswordPressed implements SignInFormEvent {
+  const factory _ResetPasswordPressed(String email) = _$_ResetPasswordPressed;
+
+  String get email;
+  @JsonKey(ignore: true)
+  _$ResetPasswordPressedCopyWith<_ResetPasswordPressed> get copyWith;
+}
+
+/// @nodoc
 class _$SignInFormStateTearOff {
   const _$SignInFormStateTearOff();
 
@@ -1322,7 +1545,8 @@ class _$SignInFormStateTearOff {
       @required String fullName,
       @required String errorMessage,
       @required bool isAuthStateChanged,
-      @required bool isSubmitting}) {
+      @required bool isSubmitting,
+      @required String snackBarMessageForPasswordReset}) {
     return _SignInFormState(
       emailAddress: emailAddress,
       password: password,
@@ -1331,6 +1555,7 @@ class _$SignInFormStateTearOff {
       errorMessage: errorMessage,
       isAuthStateChanged: isAuthStateChanged,
       isSubmitting: isSubmitting,
+      snackBarMessageForPasswordReset: snackBarMessageForPasswordReset,
     );
   }
 }
@@ -1348,6 +1573,7 @@ mixin _$SignInFormState {
   String get errorMessage;
   bool get isAuthStateChanged;
   bool get isSubmitting;
+  String get snackBarMessageForPasswordReset;
 
   @JsonKey(ignore: true)
   $SignInFormStateCopyWith<SignInFormState> get copyWith;
@@ -1365,7 +1591,8 @@ abstract class $SignInFormStateCopyWith<$Res> {
       String fullName,
       String errorMessage,
       bool isAuthStateChanged,
-      bool isSubmitting});
+      bool isSubmitting,
+      String snackBarMessageForPasswordReset});
 }
 
 /// @nodoc
@@ -1386,6 +1613,7 @@ class _$SignInFormStateCopyWithImpl<$Res>
     Object errorMessage = freezed,
     Object isAuthStateChanged = freezed,
     Object isSubmitting = freezed,
+    Object snackBarMessageForPasswordReset = freezed,
   }) {
     return _then(_value.copyWith(
       emailAddress: emailAddress == freezed
@@ -1404,6 +1632,10 @@ class _$SignInFormStateCopyWithImpl<$Res>
           : isAuthStateChanged as bool,
       isSubmitting:
           isSubmitting == freezed ? _value.isSubmitting : isSubmitting as bool,
+      snackBarMessageForPasswordReset:
+          snackBarMessageForPasswordReset == freezed
+              ? _value.snackBarMessageForPasswordReset
+              : snackBarMessageForPasswordReset as String,
     ));
   }
 }
@@ -1422,7 +1654,8 @@ abstract class _$SignInFormStateCopyWith<$Res>
       String fullName,
       String errorMessage,
       bool isAuthStateChanged,
-      bool isSubmitting});
+      bool isSubmitting,
+      String snackBarMessageForPasswordReset});
 }
 
 /// @nodoc
@@ -1445,6 +1678,7 @@ class __$SignInFormStateCopyWithImpl<$Res>
     Object errorMessage = freezed,
     Object isAuthStateChanged = freezed,
     Object isSubmitting = freezed,
+    Object snackBarMessageForPasswordReset = freezed,
   }) {
     return _then(_SignInFormState(
       emailAddress: emailAddress == freezed
@@ -1463,6 +1697,10 @@ class __$SignInFormStateCopyWithImpl<$Res>
           : isAuthStateChanged as bool,
       isSubmitting:
           isSubmitting == freezed ? _value.isSubmitting : isSubmitting as bool,
+      snackBarMessageForPasswordReset:
+          snackBarMessageForPasswordReset == freezed
+              ? _value.snackBarMessageForPasswordReset
+              : snackBarMessageForPasswordReset as String,
     ));
   }
 }
@@ -1476,14 +1714,16 @@ class _$_SignInFormState implements _SignInFormState {
       @required this.fullName,
       @required this.errorMessage,
       @required this.isAuthStateChanged,
-      @required this.isSubmitting})
+      @required this.isSubmitting,
+      @required this.snackBarMessageForPasswordReset})
       : assert(emailAddress != null),
         assert(password != null),
         assert(confirmation != null),
         assert(fullName != null),
         assert(errorMessage != null),
         assert(isAuthStateChanged != null),
-        assert(isSubmitting != null);
+        assert(isSubmitting != null),
+        assert(snackBarMessageForPasswordReset != null);
 
   @override
   final String emailAddress;
@@ -1499,10 +1739,12 @@ class _$_SignInFormState implements _SignInFormState {
   final bool isAuthStateChanged;
   @override
   final bool isSubmitting;
+  @override
+  final String snackBarMessageForPasswordReset;
 
   @override
   String toString() {
-    return 'SignInFormState(emailAddress: $emailAddress, password: $password, confirmation: $confirmation, fullName: $fullName, errorMessage: $errorMessage, isAuthStateChanged: $isAuthStateChanged, isSubmitting: $isSubmitting)';
+    return 'SignInFormState(emailAddress: $emailAddress, password: $password, confirmation: $confirmation, fullName: $fullName, errorMessage: $errorMessage, isAuthStateChanged: $isAuthStateChanged, isSubmitting: $isSubmitting, snackBarMessageForPasswordReset: $snackBarMessageForPasswordReset)';
   }
 
   @override
@@ -1529,7 +1771,12 @@ class _$_SignInFormState implements _SignInFormState {
                     .equals(other.isAuthStateChanged, isAuthStateChanged)) &&
             (identical(other.isSubmitting, isSubmitting) ||
                 const DeepCollectionEquality()
-                    .equals(other.isSubmitting, isSubmitting)));
+                    .equals(other.isSubmitting, isSubmitting)) &&
+            (identical(other.snackBarMessageForPasswordReset,
+                    snackBarMessageForPasswordReset) ||
+                const DeepCollectionEquality().equals(
+                    other.snackBarMessageForPasswordReset,
+                    snackBarMessageForPasswordReset)));
   }
 
   @override
@@ -1541,7 +1788,8 @@ class _$_SignInFormState implements _SignInFormState {
       const DeepCollectionEquality().hash(fullName) ^
       const DeepCollectionEquality().hash(errorMessage) ^
       const DeepCollectionEquality().hash(isAuthStateChanged) ^
-      const DeepCollectionEquality().hash(isSubmitting);
+      const DeepCollectionEquality().hash(isSubmitting) ^
+      const DeepCollectionEquality().hash(snackBarMessageForPasswordReset);
 
   @JsonKey(ignore: true)
   @override
@@ -1557,7 +1805,8 @@ abstract class _SignInFormState implements SignInFormState {
       @required String fullName,
       @required String errorMessage,
       @required bool isAuthStateChanged,
-      @required bool isSubmitting}) = _$_SignInFormState;
+      @required bool isSubmitting,
+      @required String snackBarMessageForPasswordReset}) = _$_SignInFormState;
 
   @override
   String get emailAddress;
@@ -1573,6 +1822,8 @@ abstract class _SignInFormState implements SignInFormState {
   bool get isAuthStateChanged;
   @override
   bool get isSubmitting;
+  @override
+  String get snackBarMessageForPasswordReset;
   @override
   @JsonKey(ignore: true)
   _$SignInFormStateCopyWith<_SignInFormState> get copyWith;

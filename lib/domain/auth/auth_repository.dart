@@ -19,6 +19,16 @@ class AuthRepository {
     return _auth.currentUser != null;
   }
 
+  Future<String> resetPassword(String email) async {
+    String returnVal = "A link to reset your password has been sent to your email.";
+    try {
+      await _auth.sendPasswordResetEmail(email: email);
+    } catch (e) {
+      returnVal = e.toString();
+    }
+    return returnVal;
+  }
+
   Future<String> registerWithEmailAndPassword({
     @required String email,
     @required String password,
@@ -33,7 +43,7 @@ class AuthRepository {
         password: password,
       );
 
-      _users.doc(userCredential.user.uid).set({
+      await _users.doc(userCredential.user.uid).set({
         "uid": userCredential.user.uid,
         "email": email,
         "full_name": fullName,
@@ -46,6 +56,7 @@ class AuthRepository {
         "tv_show_watchlist": [],
         "tv_show_watched": [],
       });
+      _auth.currentUser.sendEmailVerification();
       returnValue = kSuccess;
     } on FirebaseAuthException catch (e) {
       print(e.message);
@@ -67,6 +78,7 @@ class AuthRepository {
         email: email,
         password: password,
       );
+
       returnValue = kSuccess;
     } on FirebaseAuthException catch (e) {
       print(e.message);
@@ -92,7 +104,7 @@ class AuthRepository {
       //Check if user uid is already in, if not, create his profile under users Collection
       DocumentSnapshot userDocumentSnapshot = await _users.doc(userCredential.user.uid).get();
       if (!userDocumentSnapshot.exists) {
-        _users.doc(userCredential.user.uid).set({
+        await _users.doc(userCredential.user.uid).set({
           "uid": userCredential.user.uid,
           "email": googleSignInAccount.email,
           "full_name": googleSignInAccount.displayName,

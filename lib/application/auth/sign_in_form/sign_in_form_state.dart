@@ -10,6 +10,7 @@ abstract class SignInFormState with _$SignInFormState {
     @required String errorMessage,
     @required bool isAuthStateChanged,
     @required bool isSubmitting,
+    @required String snackBarMessageForPasswordReset,
   }) = _SignInFormState;
 
   factory SignInFormState.initial() => SignInFormState(
@@ -20,7 +21,6 @@ abstract class SignInFormState with _$SignInFormState {
         errorMessage: '',
         isAuthStateChanged: false,
         isSubmitting: false,
+        snackBarMessageForPasswordReset: '',
       );
 }
-
-/// maybe put \n at errorMessage so that ui doesn't move when error message appears?

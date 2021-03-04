@@ -167,6 +167,17 @@ class SignInFormBloc extends Bloc<SignInFormEvent, SignInFormState> {
         //currently not implemented a Mac is needed for the signInWithApple package
         print("Not implemented yet");
       },
+      resetPasswordPressed: (e) async* {
+        yield state.copyWith(
+          isSubmitting: true,
+          snackBarMessageForPasswordReset: '',
+        );
+        final String result = await _authRepository.resetPassword(e.email);
+        yield state.copyWith(
+          isSubmitting: false,
+          snackBarMessageForPasswordReset: result,
+        );
+      },
     );
   }
 }
