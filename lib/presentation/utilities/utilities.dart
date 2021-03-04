@@ -319,3 +319,15 @@ var kNotWatchedButton = ElevatedButton.styleFrom(
     borderRadius: BorderRadius.circular(10),
   ),
 );
+
+var kAlreadyHaveAccountButton = ElevatedButton.styleFrom(
+  primary: Colors.blueGrey[800],
+  onPrimary: Colors.tealAccent[700],
+  side: BorderSide(
+    width: 3,
+    color: Colors.tealAccent[700],
+  ),
+  shape: RoundedRectangleBorder(
+    borderRadius: BorderRadius.circular(20),
+  ),
+);

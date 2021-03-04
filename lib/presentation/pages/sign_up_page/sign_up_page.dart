@@ -1,9 +1,20 @@
 import 'package:explovid/application/auth/sign_in_form/sign_in_form_bloc.dart';
+import 'package:explovid/presentation/pages/sign_up_page/privacy_policy_page.dart';
+import 'package:explovid/presentation/pages/sign_up_page/terms_of_use_page.dart';
 import 'package:explovid/presentation/pages/splash_page/splash_page.dart';
+import 'package:explovid/presentation/utilities/utilities.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class SignUpPage extends StatelessWidget {
+class SignUpPage extends StatefulWidget {
+  @override
+  _SignUpPageState createState() => _SignUpPageState();
+}
+
+class _SignUpPageState extends State<SignUpPage> {
+  bool isAgreed = false;
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -24,7 +35,6 @@ class SignUpPage extends StatelessWidget {
                   builder: (context) => SplashPage(),
                 ),
               );
-              //Add email verification? Show snackbar, asking to verify email, so that they can log in?
             }
           },
           builder: (context, state) {
@@ -48,12 +58,11 @@ class SignUpPage extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.only(left: 25, right: 25, top: 25),
                       child: TextFormField(
-                        style: TextStyle(color: Colors.blue),
                         decoration: const InputDecoration(
                           focusColor: Colors.yellow,
                           prefixIcon: Icon(
                             Icons.person,
-                            color: Colors.green,
+                            color: Colors.tealAccent,
                           ),
                           labelText: 'Full Name',
                         ),
@@ -66,12 +75,11 @@ class SignUpPage extends StatelessWidget {
                       padding: const EdgeInsets.only(left: 25, right: 25, top: 25),
                       child: TextFormField(
                         autocorrect: false,
-                        style: TextStyle(color: Colors.blue),
                         decoration: const InputDecoration(
                           focusColor: Colors.yellow,
                           prefixIcon: Icon(
                             Icons.email,
-                            color: Colors.green,
+                            color: Colors.tealAccent,
                           ),
                           labelText: 'Email',
                         ),
@@ -88,7 +96,7 @@ class SignUpPage extends StatelessWidget {
                         decoration: const InputDecoration(
                           prefixIcon: Icon(
                             Icons.lock_outline,
-                            color: Colors.green,
+                            color: Colors.tealAccent,
                           ),
                           labelText: 'Password (at least 6 characters)',
                         ),
@@ -105,7 +113,7 @@ class SignUpPage extends StatelessWidget {
                         decoration: const InputDecoration(
                           prefixIcon: Icon(
                             Icons.lock_outline,
-                            color: Colors.green,
+                            color: Colors.tealAccent,
                           ),
                           labelText: 'Confirm your password...',
                         ),
@@ -115,91 +123,100 @@ class SignUpPage extends StatelessWidget {
                       ),
                     ),
                     Padding(
+                      padding: const EdgeInsets.only(left: 5, right: 5),
+                      child: CheckboxListTile(
+                        activeColor: Colors.tealAccent[700],
+                        value: isAgreed,
+                        title: RichText(
+                          text: TextSpan(
+                            text: "I confirm that I am over 18 and I agree to the ",
+                            style: TextStyle(color: Colors.grey[300]),
+                            children: [
+                              TextSpan(
+                                text: "Terms of Use",
+                                style: TextStyle(fontWeight: FontWeight.w700, color: Colors.grey[50]),
+                                recognizer: TapGestureRecognizer()
+                                  ..onTap = () {
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(builder: (context) => TermsOfUsePage()),
+                                    );
+                                  },
+                              ),
+                              TextSpan(text: " and ", style: TextStyle()),
+                              TextSpan(
+                                text: "Privacy Policy",
+                                style: TextStyle(fontWeight: FontWeight.w700, color: Colors.grey[50]),
+                                recognizer: TapGestureRecognizer()
+                                  ..onTap = () {
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(builder: (context) => PrivacyPolicyPage()),
+                                    );
+                                  },
+                              ),
+                            ],
+                          ),
+                        ),
+                        controlAffinity: ListTileControlAffinity.leading,
+                        onChanged: (bool value) {
+                          setState(() {
+                            isAgreed = value;
+                          });
+                        },
+                      ),
+                    ),
+                    Padding(
                       padding: const EdgeInsets.only(top: 5.0, bottom: 8.0),
                       child: ElevatedButton(
+                        style: kNotWatchedButton,
                         onPressed: () {
-                          context.read<SignInFormBloc>().add(
-                                SignInFormEvent.registerPressed(),
-                              );
+                          !isAgreed
+                              ? Scaffold.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text("You need to check the checkbox before continuing"),
+                                    duration: Duration(seconds: 1),
+                                  ),
+                                )
+                              : context.read<SignInFormBloc>().add(
+                                    SignInFormEvent.registerPressed(),
+                                  );
                         },
-                        child: Text("Register"),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                          child: Text("Register"),
+                        ),
                       ),
                     ),
                     Divider(
                       color: Colors.black,
+                      thickness: 1,
                       indent: MediaQuery.of(context).size.width * 0.1,
                       endIndent: MediaQuery.of(context).size.width * 0.1,
                     ),
                     Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 10.0),
-                      child: Container(
-                        padding: const EdgeInsets.all(16),
-                        decoration: BoxDecoration(
-                          color: Colors.tealAccent[700],
-                          borderRadius: BorderRadius.circular(25.0),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black,
-                              blurRadius: 5.0,
-                              spreadRadius: 1.0,
-                              offset: Offset(
-                                4.0,
-                                4.0,
-                              ),
-                            ),
-                          ],
-                        ),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Text("Already have an account?"),
-                            Row(
-                              mainAxisSize: MainAxisSize.min,
-                              mainAxisAlignment: MainAxisAlignment.center,
+                      padding: const EdgeInsets.only(top: 5.0, bottom: 8.0),
+                      child: ElevatedButton(
+                        style: kAlreadyHaveAccountButton,
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12),
+                          child: RichText(
+                            textAlign: TextAlign.center,
+                            text: TextSpan(
+                              text: "Already have an account?",
+                              style: TextStyle(color: Colors.grey[300]),
                               children: [
-                                Text("Sign in "),
-                                GestureDetector(
-                                  onTap: () {
-                                    Navigator.of(context).pop();
-                                  },
-                                  child: Text(
-                                    "here.",
-                                    style: TextStyle(color: Colors.blue[900]),
-                                  ),
+                                TextSpan(
+                                  text: "\n Sign in Here.",
+                                  style: TextStyle(fontWeight: FontWeight.w700, color: Colors.grey[50]),
                                 ),
                               ],
                             ),
-                          ],
+                          ),
                         ),
                       ),
                     ),
-                    Container(
-                      padding: EdgeInsets.all(8.0),
-                      width: MediaQuery.of(context).size.width * 0.5,
-                      decoration: BoxDecoration(
-                        color: Colors.tealAccent[700],
-                        borderRadius: BorderRadius.circular(25.0),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black,
-                            blurRadius: 5.0,
-                            spreadRadius: 1.0,
-                            offset: Offset(
-                              4.0,
-                              4.0,
-                            ),
-                          ),
-                        ],
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          Text("Terms of Use"),
-                          Text("Privacy"),
-                        ],
-                      ),
-                    )
                   ],
                 ),
               ],
