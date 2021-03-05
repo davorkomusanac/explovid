@@ -6,4 +6,5 @@ abstract class AuthCheckState with _$AuthCheckState {
   const factory AuthCheckState.authenticated() = _Authenticated;
   const factory AuthCheckState.unauthenticated() = _Unauthenticated;
   const factory AuthCheckState.emailNotVerified() = _EmailNotVerified;
+  const factory AuthCheckState.usernameNotGiven() = _UsernameNotGiven;
 }

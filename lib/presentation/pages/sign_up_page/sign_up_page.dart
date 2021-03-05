@@ -14,6 +14,23 @@ class SignUpPage extends StatefulWidget {
 
 class _SignUpPageState extends State<SignUpPage> {
   bool isAgreed = false;
+  final _debouncer = Debouncer(milliseconds: 500);
+
+  Widget getUsernameStatusIcon(SignInFormState state) {
+    if (state.isUserTypingUsername) {
+      return Icon(null);
+    } else {
+      return state.isUsernameAvailable
+          ? Icon(
+              Icons.check,
+              color: Colors.tealAccent,
+            )
+          : Icon(
+              Icons.clear,
+              color: Colors.red,
+            );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +60,7 @@ class _SignUpPageState extends State<SignUpPage> {
                 Column(
                   children: [
                     Padding(
-                      padding: const EdgeInsets.only(top: 50.0, bottom: 20),
+                      padding: const EdgeInsets.only(top: 40.0, bottom: 20),
                       child: Text(
                         "Explovid",
                         style: TextStyle(
@@ -59,7 +76,6 @@ class _SignUpPageState extends State<SignUpPage> {
                       padding: const EdgeInsets.only(left: 25, right: 25, top: 25),
                       child: TextFormField(
                         decoration: const InputDecoration(
-                          focusColor: Colors.yellow,
                           prefixIcon: Icon(
                             Icons.person,
                             color: Colors.tealAccent,
@@ -74,9 +90,30 @@ class _SignUpPageState extends State<SignUpPage> {
                     Padding(
                       padding: const EdgeInsets.only(left: 25, right: 25, top: 25),
                       child: TextFormField(
+                          decoration: InputDecoration(
+                            prefixIcon: Icon(
+                              Icons.person,
+                              color: Colors.tealAccent,
+                            ),
+                            labelText: 'Username',
+                            suffixIcon: getUsernameStatusIcon(state),
+                          ),
+                          onChanged: (value) {
+                            context.read<SignInFormBloc>().add(
+                                  SignInFormEvent.usernameChanged(),
+                                );
+                            _debouncer.run(() {
+                              context.read<SignInFormBloc>().add(
+                                    SignInFormEvent.usernameBeingChecked(value),
+                                  );
+                            });
+                          }),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 25, right: 25, top: 25),
+                      child: TextFormField(
                         autocorrect: false,
                         decoration: const InputDecoration(
-                          focusColor: Colors.yellow,
                           prefixIcon: Icon(
                             Icons.email,
                             color: Colors.tealAccent,

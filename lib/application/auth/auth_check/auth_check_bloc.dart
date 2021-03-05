@@ -1,6 +1,4 @@
 import 'dart:async';
-import 'dart:math';
-
 import 'package:bloc/bloc.dart';
 import 'package:explovid/constants.dart';
 import 'package:explovid/domain/auth/auth_repository.dart';
@@ -25,10 +23,15 @@ class AuthCheckBloc extends Bloc<AuthCheckEvent, AuthCheckState> {
       authCheckRequested: (e) async* {
         final isUserAuth = _authRepository.isUserSignedIn();
         if (isUserAuth) {
-          await FirebaseAuth.instance.currentUser.reload();
-          final isUserVerified = FirebaseAuth.instance.currentUser.emailVerified;
+          _authRepository.reloadCurrentUser();
+          final isUserVerified = _authRepository.isUserVerified();
           if (isUserVerified) {
-            yield const AuthCheckState.authenticated();
+            final isUsernameGiven = await _authRepository.isUsernameGivenToUser();
+            if (isUsernameGiven) {
+              yield const AuthCheckState.authenticated();
+            } else {
+              yield const AuthCheckState.usernameNotGiven();
+            }
           } else {
             yield const AuthCheckState.emailNotVerified();
           }

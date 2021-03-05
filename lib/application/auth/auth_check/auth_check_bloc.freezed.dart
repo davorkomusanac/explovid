@@ -276,6 +276,11 @@ class _$AuthCheckStateTearOff {
   _EmailNotVerified emailNotVerified() {
     return const _EmailNotVerified();
   }
+
+// ignore: unused_element
+  _UsernameNotGiven usernameNotGiven() {
+    return const _UsernameNotGiven();
+  }
 }
 
 /// @nodoc
@@ -290,6 +295,7 @@ mixin _$AuthCheckState {
     @required TResult authenticated(),
     @required TResult unauthenticated(),
     @required TResult emailNotVerified(),
+    @required TResult usernameNotGiven(),
   });
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object>({
@@ -297,6 +303,7 @@ mixin _$AuthCheckState {
     TResult authenticated(),
     TResult unauthenticated(),
     TResult emailNotVerified(),
+    TResult usernameNotGiven(),
     @required TResult orElse(),
   });
   @optionalTypeArgs
@@ -305,6 +312,7 @@ mixin _$AuthCheckState {
     @required TResult authenticated(_Authenticated value),
     @required TResult unauthenticated(_Unauthenticated value),
     @required TResult emailNotVerified(_EmailNotVerified value),
+    @required TResult usernameNotGiven(_UsernameNotGiven value),
   });
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object>({
@@ -312,6 +320,7 @@ mixin _$AuthCheckState {
     TResult authenticated(_Authenticated value),
     TResult unauthenticated(_Unauthenticated value),
     TResult emailNotVerified(_EmailNotVerified value),
+    TResult usernameNotGiven(_UsernameNotGiven value),
     @required TResult orElse(),
   });
 }
@@ -373,11 +382,13 @@ class _$_Initial implements _Initial {
     @required TResult authenticated(),
     @required TResult unauthenticated(),
     @required TResult emailNotVerified(),
+    @required TResult usernameNotGiven(),
   }) {
     assert(initial != null);
     assert(authenticated != null);
     assert(unauthenticated != null);
     assert(emailNotVerified != null);
+    assert(usernameNotGiven != null);
     return initial();
   }
 
@@ -388,6 +399,7 @@ class _$_Initial implements _Initial {
     TResult authenticated(),
     TResult unauthenticated(),
     TResult emailNotVerified(),
+    TResult usernameNotGiven(),
     @required TResult orElse(),
   }) {
     assert(orElse != null);
@@ -404,11 +416,13 @@ class _$_Initial implements _Initial {
     @required TResult authenticated(_Authenticated value),
     @required TResult unauthenticated(_Unauthenticated value),
     @required TResult emailNotVerified(_EmailNotVerified value),
+    @required TResult usernameNotGiven(_UsernameNotGiven value),
   }) {
     assert(initial != null);
     assert(authenticated != null);
     assert(unauthenticated != null);
     assert(emailNotVerified != null);
+    assert(usernameNotGiven != null);
     return initial(this);
   }
 
@@ -419,6 +433,7 @@ class _$_Initial implements _Initial {
     TResult authenticated(_Authenticated value),
     TResult unauthenticated(_Unauthenticated value),
     TResult emailNotVerified(_EmailNotVerified value),
+    TResult usernameNotGiven(_UsernameNotGiven value),
     @required TResult orElse(),
   }) {
     assert(orElse != null);
@@ -476,11 +491,13 @@ class _$_Authenticated implements _Authenticated {
     @required TResult authenticated(),
     @required TResult unauthenticated(),
     @required TResult emailNotVerified(),
+    @required TResult usernameNotGiven(),
   }) {
     assert(initial != null);
     assert(authenticated != null);
     assert(unauthenticated != null);
     assert(emailNotVerified != null);
+    assert(usernameNotGiven != null);
     return authenticated();
   }
 
@@ -491,6 +508,7 @@ class _$_Authenticated implements _Authenticated {
     TResult authenticated(),
     TResult unauthenticated(),
     TResult emailNotVerified(),
+    TResult usernameNotGiven(),
     @required TResult orElse(),
   }) {
     assert(orElse != null);
@@ -507,11 +525,13 @@ class _$_Authenticated implements _Authenticated {
     @required TResult authenticated(_Authenticated value),
     @required TResult unauthenticated(_Unauthenticated value),
     @required TResult emailNotVerified(_EmailNotVerified value),
+    @required TResult usernameNotGiven(_UsernameNotGiven value),
   }) {
     assert(initial != null);
     assert(authenticated != null);
     assert(unauthenticated != null);
     assert(emailNotVerified != null);
+    assert(usernameNotGiven != null);
     return authenticated(this);
   }
 
@@ -522,6 +542,7 @@ class _$_Authenticated implements _Authenticated {
     TResult authenticated(_Authenticated value),
     TResult unauthenticated(_Unauthenticated value),
     TResult emailNotVerified(_EmailNotVerified value),
+    TResult usernameNotGiven(_UsernameNotGiven value),
     @required TResult orElse(),
   }) {
     assert(orElse != null);
@@ -579,11 +600,13 @@ class _$_Unauthenticated implements _Unauthenticated {
     @required TResult authenticated(),
     @required TResult unauthenticated(),
     @required TResult emailNotVerified(),
+    @required TResult usernameNotGiven(),
   }) {
     assert(initial != null);
     assert(authenticated != null);
     assert(unauthenticated != null);
     assert(emailNotVerified != null);
+    assert(usernameNotGiven != null);
     return unauthenticated();
   }
 
@@ -594,6 +617,7 @@ class _$_Unauthenticated implements _Unauthenticated {
     TResult authenticated(),
     TResult unauthenticated(),
     TResult emailNotVerified(),
+    TResult usernameNotGiven(),
     @required TResult orElse(),
   }) {
     assert(orElse != null);
@@ -610,11 +634,13 @@ class _$_Unauthenticated implements _Unauthenticated {
     @required TResult authenticated(_Authenticated value),
     @required TResult unauthenticated(_Unauthenticated value),
     @required TResult emailNotVerified(_EmailNotVerified value),
+    @required TResult usernameNotGiven(_UsernameNotGiven value),
   }) {
     assert(initial != null);
     assert(authenticated != null);
     assert(unauthenticated != null);
     assert(emailNotVerified != null);
+    assert(usernameNotGiven != null);
     return unauthenticated(this);
   }
 
@@ -625,6 +651,7 @@ class _$_Unauthenticated implements _Unauthenticated {
     TResult authenticated(_Authenticated value),
     TResult unauthenticated(_Unauthenticated value),
     TResult emailNotVerified(_EmailNotVerified value),
+    TResult usernameNotGiven(_UsernameNotGiven value),
     @required TResult orElse(),
   }) {
     assert(orElse != null);
@@ -682,11 +709,13 @@ class _$_EmailNotVerified implements _EmailNotVerified {
     @required TResult authenticated(),
     @required TResult unauthenticated(),
     @required TResult emailNotVerified(),
+    @required TResult usernameNotGiven(),
   }) {
     assert(initial != null);
     assert(authenticated != null);
     assert(unauthenticated != null);
     assert(emailNotVerified != null);
+    assert(usernameNotGiven != null);
     return emailNotVerified();
   }
 
@@ -697,6 +726,7 @@ class _$_EmailNotVerified implements _EmailNotVerified {
     TResult authenticated(),
     TResult unauthenticated(),
     TResult emailNotVerified(),
+    TResult usernameNotGiven(),
     @required TResult orElse(),
   }) {
     assert(orElse != null);
@@ -713,11 +743,13 @@ class _$_EmailNotVerified implements _EmailNotVerified {
     @required TResult authenticated(_Authenticated value),
     @required TResult unauthenticated(_Unauthenticated value),
     @required TResult emailNotVerified(_EmailNotVerified value),
+    @required TResult usernameNotGiven(_UsernameNotGiven value),
   }) {
     assert(initial != null);
     assert(authenticated != null);
     assert(unauthenticated != null);
     assert(emailNotVerified != null);
+    assert(usernameNotGiven != null);
     return emailNotVerified(this);
   }
 
@@ -728,6 +760,7 @@ class _$_EmailNotVerified implements _EmailNotVerified {
     TResult authenticated(_Authenticated value),
     TResult unauthenticated(_Unauthenticated value),
     TResult emailNotVerified(_EmailNotVerified value),
+    TResult usernameNotGiven(_UsernameNotGiven value),
     @required TResult orElse(),
   }) {
     assert(orElse != null);
@@ -740,4 +773,113 @@ class _$_EmailNotVerified implements _EmailNotVerified {
 
 abstract class _EmailNotVerified implements AuthCheckState {
   const factory _EmailNotVerified() = _$_EmailNotVerified;
+}
+
+/// @nodoc
+abstract class _$UsernameNotGivenCopyWith<$Res> {
+  factory _$UsernameNotGivenCopyWith(
+          _UsernameNotGiven value, $Res Function(_UsernameNotGiven) then) =
+      __$UsernameNotGivenCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$UsernameNotGivenCopyWithImpl<$Res>
+    extends _$AuthCheckStateCopyWithImpl<$Res>
+    implements _$UsernameNotGivenCopyWith<$Res> {
+  __$UsernameNotGivenCopyWithImpl(
+      _UsernameNotGiven _value, $Res Function(_UsernameNotGiven) _then)
+      : super(_value, (v) => _then(v as _UsernameNotGiven));
+
+  @override
+  _UsernameNotGiven get _value => super._value as _UsernameNotGiven;
+}
+
+/// @nodoc
+class _$_UsernameNotGiven implements _UsernameNotGiven {
+  const _$_UsernameNotGiven();
+
+  @override
+  String toString() {
+    return 'AuthCheckState.usernameNotGiven()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) || (other is _UsernameNotGiven);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object>({
+    @required TResult initial(),
+    @required TResult authenticated(),
+    @required TResult unauthenticated(),
+    @required TResult emailNotVerified(),
+    @required TResult usernameNotGiven(),
+  }) {
+    assert(initial != null);
+    assert(authenticated != null);
+    assert(unauthenticated != null);
+    assert(emailNotVerified != null);
+    assert(usernameNotGiven != null);
+    return usernameNotGiven();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object>({
+    TResult initial(),
+    TResult authenticated(),
+    TResult unauthenticated(),
+    TResult emailNotVerified(),
+    TResult usernameNotGiven(),
+    @required TResult orElse(),
+  }) {
+    assert(orElse != null);
+    if (usernameNotGiven != null) {
+      return usernameNotGiven();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object>({
+    @required TResult initial(_Initial value),
+    @required TResult authenticated(_Authenticated value),
+    @required TResult unauthenticated(_Unauthenticated value),
+    @required TResult emailNotVerified(_EmailNotVerified value),
+    @required TResult usernameNotGiven(_UsernameNotGiven value),
+  }) {
+    assert(initial != null);
+    assert(authenticated != null);
+    assert(unauthenticated != null);
+    assert(emailNotVerified != null);
+    assert(usernameNotGiven != null);
+    return usernameNotGiven(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object>({
+    TResult initial(_Initial value),
+    TResult authenticated(_Authenticated value),
+    TResult unauthenticated(_Unauthenticated value),
+    TResult emailNotVerified(_EmailNotVerified value),
+    TResult usernameNotGiven(_UsernameNotGiven value),
+    @required TResult orElse(),
+  }) {
+    assert(orElse != null);
+    if (usernameNotGiven != null) {
+      return usernameNotGiven(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _UsernameNotGiven implements AuthCheckState {
+  const factory _UsernameNotGiven() = _$_UsernameNotGiven;
 }

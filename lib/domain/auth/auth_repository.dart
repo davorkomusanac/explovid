@@ -19,6 +19,56 @@ class AuthRepository {
     return _auth.currentUser != null;
   }
 
+  bool isUserVerified() {
+    return _auth.currentUser.emailVerified;
+  }
+
+  Future<void> reloadCurrentUser() async {
+    try {
+      await _auth.currentUser.reload();
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
+  Future<bool> isUsernameGivenToUser() async {
+    bool isGiven = false;
+    try {
+      var doc = await _users.doc(_auth.currentUser.uid).get();
+      String username = doc.data()['username'];
+      if (username.isNotEmpty) isGiven = true;
+    } catch (e) {
+      print(e.toString());
+    }
+    return isGiven;
+  }
+
+  Future<bool> isUsernameAvailable(String username) async {
+    bool isAvailable = false;
+    if (username.isEmpty) return isAvailable;
+    try {
+      var querySnapshot = await _users.where('username', isEqualTo: username).limit(1).get();
+      if (querySnapshot.docs.isEmpty) isAvailable = true;
+    } catch (e) {
+      print(e.toString());
+    }
+    return isAvailable;
+  }
+
+  Future<String> createUsername(String username) async {
+    String returnVal = "";
+    try {
+      await _users.doc(_auth.currentUser.uid).update(
+        {'username': username},
+      );
+      returnVal = "Success";
+    } catch (e) {
+      returnVal = e.toString();
+      print(e.toString());
+    }
+    return returnVal;
+  }
+
   Future<String> resetPassword(String email) async {
     String returnVal = "A link to reset your password has been sent to your email.";
     try {
@@ -33,9 +83,8 @@ class AuthRepository {
     @required String email,
     @required String password,
     @required String fullName,
+    @required String username,
   }) async {
-    //add emailVerification
-    //fullName currently not used, needs to be used when registering users in Cloud Firestore
     String returnValue = kError;
     try {
       UserCredential userCredential = await _auth.createUserWithEmailAndPassword(
@@ -47,10 +96,11 @@ class AuthRepository {
         "uid": userCredential.user.uid,
         "email": email,
         "full_name": fullName,
-        "username": "",
+        "username": username,
+        "profile_photo_url": "",
         "account_created_date": Timestamp.now(),
-        "followers": [],
-        "following": [],
+        "followers": 0,
+        "following": 0,
         "movie_watchlist": [],
         "movie_watched": [],
         "tv_show_watchlist": [],
@@ -109,9 +159,10 @@ class AuthRepository {
           "email": googleSignInAccount.email,
           "full_name": googleSignInAccount.displayName,
           "username": "",
+          "profile_photo_url": googleSignInAccount.photoUrl,
           "account_created_date": Timestamp.now(),
-          "followers": [],
-          "following": [],
+          "followers": 0,
+          "following": 0,
           "movie_watchlist": [],
           "movie_watched": [],
           "tv_show_watchlist": [],

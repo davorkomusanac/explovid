@@ -11,6 +11,10 @@ abstract class SignInFormState with _$SignInFormState {
     @required bool isAuthStateChanged,
     @required bool isSubmitting,
     @required String snackBarMessageForPasswordReset,
+    @required bool isUserTypingUsername,
+    @required bool isUsernameAvailable,
+    @required String username,
+    @required String usernameErrorMessage,
   }) = _SignInFormState;
 
   factory SignInFormState.initial() => SignInFormState(
@@ -22,5 +26,9 @@ abstract class SignInFormState with _$SignInFormState {
         isAuthStateChanged: false,
         isSubmitting: false,
         snackBarMessageForPasswordReset: '',
+        isUserTypingUsername: true,
+        isUsernameAvailable: false,
+        username: '',
+        usernameErrorMessage: '',
       );
 }

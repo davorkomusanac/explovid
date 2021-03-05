@@ -48,41 +48,74 @@ class SignInFormBloc extends Bloc<SignInFormEvent, SignInFormState> {
           errorMessage: '',
         );
       },
+      usernameChanged: (e) async* {
+        yield state.copyWith(
+          isUserTypingUsername: true,
+        );
+      },
+      usernameBeingChecked: (e) async* {
+        bool isAvailable = await _authRepository.isUsernameAvailable(e.username.trim());
+        if (isAvailable) {
+          yield state.copyWith(
+            isUsernameAvailable: true,
+            isUserTypingUsername: false,
+            username: e.username.trim(),
+          );
+        } else {
+          yield state.copyWith(
+            isUsernameAvailable: false,
+            isUserTypingUsername: false,
+          );
+        }
+      },
+      registerUsernamePressed: (e) async* {
+        String result = await _authRepository.createUsername(state.username);
+        yield state.copyWith(
+          usernameErrorMessage: result,
+        );
+      },
       registerPressed: (e) async* {
         final bool isPasswordLongEnough = state.password.trim().length >= 6;
         final bool isPasswordMatchingConfirmation = state.password.trim() == state.confirmation.trim();
         final bool isFullNameNotEmpty = state.fullName.trim().isNotEmpty;
+        final bool isUsernameAvailable = state.isUsernameAvailable;
 
         //Do basic form validation (no empty strings, long enough, and matching..
         if (isFullNameNotEmpty) {
           if (isPasswordLongEnough) {
             if (isPasswordMatchingConfirmation) {
-              //send state to show ProgressIndicator
-              yield state.copyWith(
-                isSubmitting: true,
-                isAuthStateChanged: false,
-                errorMessage: '',
-              );
-              //Try to create user, if successful String result will be = 'success', otherwise it will hold an exception
-              final String result = await _authRepository.registerWithEmailAndPassword(
-                email: state.emailAddress.trim(),
-                password: state.password.trim(),
-                fullName: state.fullName.trim(),
-              );
-              //if successful notify state listeners to change authState
-              if (result == kSuccess) {
+              if (isUsernameAvailable) {
+                //send state to show ProgressIndicator
                 yield state.copyWith(
-                  isSubmitting: false,
-                  isAuthStateChanged: true,
+                  isSubmitting: true,
+                  isAuthStateChanged: false,
                   errorMessage: '',
                 );
-                //if failed, show the exception inside errorMessage
-              } else {
-                yield state.copyWith(
-                  isSubmitting: false,
-                  isAuthStateChanged: false,
-                  errorMessage: result,
+                //Try to create user, if successful String result will be = 'success', otherwise it will hold an exception
+                final String result = await _authRepository.registerWithEmailAndPassword(
+                  email: state.emailAddress.trim(),
+                  password: state.password.trim(),
+                  fullName: state.fullName.trim(),
+                  username: state.username.trim(),
                 );
+                //if successful notify state listeners to change authState
+                if (result == kSuccess) {
+                  yield state.copyWith(
+                    isSubmitting: false,
+                    isAuthStateChanged: true,
+                    errorMessage: '',
+                  );
+                  //if failed, show the exception inside errorMessage
+                } else {
+                  yield state.copyWith(
+                    isSubmitting: false,
+                    isAuthStateChanged: false,
+                    errorMessage: result,
+                  );
+                }
+              } else {
+                //Had to put empty message since snackBar keeps getting called constantly
+                yield state.copyWith(errorMessage: "");
               }
             } else {
               yield state.copyWith(errorMessage: "Error! Passwords must match.");
