@@ -64,6 +64,9 @@ class _CreateUsernamePageState extends State<CreateUsernamePage> {
                 duration: Duration(seconds: 3),
               ),
             );
+            setState(() {
+              isLoading = false;
+            });
           }
         },
         builder: (context, state) {

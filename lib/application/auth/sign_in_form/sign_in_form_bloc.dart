@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:explovid/constants.dart';
-import 'package:explovid/domain/auth/auth_repository.dart';
+import 'package:explovid/data/auth/auth_repository.dart';
 import 'package:meta/meta.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 

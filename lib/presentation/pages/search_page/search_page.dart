@@ -1,6 +1,6 @@
-import 'package:explovid/application/actor_search/actor_search_bloc.dart';
-import 'package:explovid/application/movie_search/movie_search_bloc.dart';
-import 'package:explovid/application/tv_show_search/tv_show_search_bloc.dart';
+import 'package:explovid/application/search/actor_search/actor_search_bloc.dart';
+import 'package:explovid/application/search/movie_search/movie_search_bloc.dart';
+import 'package:explovid/application/search/tv_show_search/tv_show_search_bloc.dart';
 import 'package:explovid/presentation/pages/actor_details_page/actor_details_page.dart';
 import 'package:explovid/presentation/pages/movie_details_page/movie_details_page.dart';
 import 'package:explovid/presentation/pages/tv_show_details_page/tv_show_details_page.dart';

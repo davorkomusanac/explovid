@@ -1,6 +1,6 @@
 import 'package:community_material_icon/community_material_icon.dart';
-import 'package:explovid/application/user_profile_watchlist_watched/movie_lists/movie_lists_user_profile_bloc.dart';
-import 'package:explovid/application/user_profile_watchlist_watched/tv_show_lists/tv_show_lists_user_profile_bloc.dart';
+import 'package:explovid/application/current_user_profile_watchlist_watched/movie_lists/movie_lists_user_profile_bloc.dart';
+import 'package:explovid/application/current_user_profile_watchlist_watched/tv_show_lists/tv_show_lists_user_profile_bloc.dart';
 import 'package:explovid/presentation/pages/movie_details_page/movie_details_page.dart';
 import 'package:explovid/presentation/pages/profile_page/post_page.dart';
 import 'package:explovid/presentation/pages/tv_show_details_page/tv_show_details_page.dart';
@@ -16,6 +16,10 @@ enum VideoType {
 }
 
 class ProfilePage extends StatefulWidget {
+  final String uid;
+
+  ProfilePage({this.uid});
+
   @override
   _ProfilePageState createState() => _ProfilePageState();
 }
@@ -441,12 +445,26 @@ class _ProfilePageState extends State<ProfilePage> with TickerProviderStateMixin
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  CircleAvatar(
-                    child: Text(
-                      "USER PHOTO",
-                      textAlign: TextAlign.center,
-                    ),
-                    radius: 40,
+                  Stack(
+                    clipBehavior: Clip.none,
+                    children: [
+                      CircleAvatar(
+                        backgroundColor: Colors.black,
+                        child: Text(
+                          "USER PHOTO",
+                          textAlign: TextAlign.center,
+                        ),
+                        radius: 40,
+                      ),
+                      Positioned(
+                        bottom: -15,
+                        right: -15,
+                        child: IconButton(
+                          icon: Icon(Icons.add_circle),
+                          onPressed: () {},
+                        ),
+                      ),
+                    ],
                   ),
                   Column(
                     children: [

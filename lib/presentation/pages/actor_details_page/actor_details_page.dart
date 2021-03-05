@@ -1,4 +1,4 @@
-import 'package:explovid/application/actor_search/actor_details/actor_details_bloc.dart';
+import 'package:explovid/application/search/actor_search/actor_details/actor_details_bloc.dart';
 import 'package:explovid/presentation/pages/actor_details_page/actor_all_movies_page.dart';
 import 'package:explovid/presentation/pages/actor_details_page/actor_all_tv_shows_page.dart';
 import 'package:explovid/presentation/pages/actor_details_page/actor_biography_page.dart';

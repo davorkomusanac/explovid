@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:explovid/domain/user_profile_db/user_feedback_repository.dart';
+import 'package:explovid/data/user_profile_db/current_user_profile_db/user_feedback_repository.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:meta/meta.dart';
 

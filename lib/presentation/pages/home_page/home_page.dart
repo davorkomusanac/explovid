@@ -1,5 +1,7 @@
 import 'package:community_material_icon/community_material_icon.dart';
-import 'package:explovid/application/movie_search/movie_search_bloc.dart';
+import 'package:explovid/application/search/movie_search/movie_details/movie_details_bloc.dart';
+import 'package:explovid/application/search/movie_search/movie_search_bloc.dart';
+import 'package:explovid/data/search_db/movie_db/movie_repository.dart';
 import 'package:explovid/presentation/pages/feedback_page/feedback_page.dart';
 import 'package:explovid/presentation/pages/home_page/four.dart';
 import 'package:explovid/presentation/pages/home_page/one.dart';
@@ -8,6 +10,7 @@ import 'package:explovid/presentation/pages/search_page/search_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:http/http.dart' as http;
 
 class HomePage extends StatefulWidget {
   @override
@@ -15,6 +18,9 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  http.Client client;
+  MovieRepository _movieRepository;
+
   final List<GlobalKey<NavigatorState>> tabNavKeys = [
     GlobalKey<NavigatorState>(),
     GlobalKey<NavigatorState>(),
@@ -24,13 +30,15 @@ class _HomePageState extends State<HomePage> {
   ];
   CupertinoTabController _tabController;
   //CurrentIndex needs to be equal to initialIndex so that an exception is not thrown
-  int currentIndex = 1;
+  int currentIndex = 4;
 
   @override
   void initState() {
     super.initState();
     //Put the Search page as the starting one? For the time being until the app is populated
-    _tabController = CupertinoTabController(initialIndex: 1);
+    _tabController = CupertinoTabController(initialIndex: 4);
+    client = http.Client();
+    _movieRepository = MovieRepository(client);
   }
 
   @override
@@ -102,13 +110,23 @@ class _HomePageState extends State<HomePage> {
                 },
               );
             case 2:
-              return CupertinoTabView(
-                navigatorKey: tabNavKeys[2],
-                builder: (context) {
-                  return CupertinoPageScaffold(
-                    child: SearchPage(),
-                  );
-                },
+              // BlocProvider(
+              //   create: (context) => MovieDetailsBloc(
+              //     _movieRepository,
+              //   ),
+              // ),
+              return BlocProvider(
+                create: (context) => MovieDetailsBloc(
+                  _movieRepository,
+                ),
+                child: CupertinoTabView(
+                  navigatorKey: tabNavKeys[2],
+                  builder: (context) {
+                    return CupertinoPageScaffold(
+                      child: SearchPage(),
+                    );
+                  },
+                ),
               );
             case 3:
               return CupertinoTabView(
@@ -120,13 +138,18 @@ class _HomePageState extends State<HomePage> {
                 },
               );
             case 4:
-              return CupertinoTabView(
-                navigatorKey: tabNavKeys[4],
-                builder: (context) {
-                  return CupertinoPageScaffold(
-                    child: ProfilePage(),
-                  );
-                },
+              return BlocProvider(
+                create: (context) => MovieDetailsBloc(
+                  _movieRepository,
+                ),
+                child: CupertinoTabView(
+                  navigatorKey: tabNavKeys[4],
+                  builder: (context) {
+                    return CupertinoPageScaffold(
+                      child: ProfilePage(),
+                    );
+                  },
+                ),
               );
             default:
               return CupertinoTabView(

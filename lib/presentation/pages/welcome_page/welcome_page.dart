@@ -42,7 +42,6 @@ class _WelcomePageState extends State<WelcomePage> {
           },
           builder: (context, state) {
             return ListView(
-              //physics: BouncingScrollPhysics(),
               children: [
                 Column(
                   children: [

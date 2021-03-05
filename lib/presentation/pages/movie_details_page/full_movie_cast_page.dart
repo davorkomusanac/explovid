@@ -1,4 +1,4 @@
-import 'package:explovid/domain/models/movie_details/movie_details.dart';
+import 'package:explovid/data/models/movie_details/movie_details.dart';
 import 'package:explovid/presentation/pages/actor_details_page/actor_details_page.dart';
 import 'package:explovid/presentation/utilities/utilities.dart';
 import 'package:flutter/material.dart';
