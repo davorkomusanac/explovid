@@ -12,6 +12,7 @@ class FirestoreMovieWatchedDetails {
     this.review,
     this.rating,
     this.isSpoiler,
+    this.postUid,
   });
 
   final int id;
@@ -24,6 +25,7 @@ class FirestoreMovieWatchedDetails {
   final String review;
   final num rating;
   final bool isSpoiler;
+  final String postUid;
 
 // added fromSnapshot and toDocument methods to add movie info to firestore, but only certain fields, not all
   factory FirestoreMovieWatchedDetails.fromMap(Map<String, dynamic> data) => FirestoreMovieWatchedDetails(
@@ -37,6 +39,7 @@ class FirestoreMovieWatchedDetails {
         review: data['review'],
         rating: data['rating'],
         isSpoiler: data['is_spoiler'],
+        postUid: data['post_uid'],
       );
 
   factory FirestoreMovieWatchedDetails.fromSnapshot(DocumentSnapshot snapshot) =>
@@ -53,5 +56,6 @@ class FirestoreMovieWatchedDetails {
         'review': review,
         'rating': rating,
         'is_spoiler': isSpoiler,
+        'post_uid': postUid,
       };
 }

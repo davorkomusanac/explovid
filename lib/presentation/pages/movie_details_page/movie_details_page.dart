@@ -55,7 +55,7 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
         throw 'Could not launch trailer link';
       }
     } catch (e) {
-      Scaffold.of(context).showSnackBar(
+      ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(
             e.toString(),
@@ -236,7 +236,7 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
                           BlocConsumer<MovieListsUserProfileBloc, MovieListsUserProfileState>(
                             listener: (context, movieListState) {
                               if (movieListState.errorMessage.isNotEmpty) {
-                                Scaffold.of(context).showSnackBar(
+                                ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(
                                     content: Text(movieListState.errorMessage),
                                     duration: Duration(seconds: 1),

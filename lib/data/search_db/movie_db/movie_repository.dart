@@ -17,7 +17,7 @@ class MovieRepository {
 
   Future<MovieSearchResults> searchMovie(String title, [int page = 1]) async {
     try {
-      final response = await client.get(_buildSearchUrl(title, page));
+      final response = await client.get(Uri.parse(_buildSearchUrl(title, page)));
       print(_buildSearchUrl(title, page));
 
       if (response.statusCode != 200) throw Exception('There was an error searching');
@@ -66,7 +66,7 @@ class MovieRepository {
 
   Future<MovieDetails> getMovieDetails(int id) async {
     try {
-      final response = await client.get(_buildMovieDetailsUrl(id));
+      final response = await client.get(Uri.parse(_buildMovieDetailsUrl(id)));
       print(_buildMovieDetailsUrl(id));
 
       if (response.statusCode != 200) throw Exception('There was an error getting movie details');
@@ -93,7 +93,7 @@ class MovieRepository {
 
   Future<MovieSearchResults> getPopularMovies([int page = 1]) async {
     try {
-      final response = await client.get(_basePopularMoviesUrl + page.toString());
+      final response = await client.get(Uri.parse(_basePopularMoviesUrl + page.toString()));
       print(_basePopularMoviesUrl + page.toString());
 
       if (response.statusCode != 200) throw Exception('There was an error searching');

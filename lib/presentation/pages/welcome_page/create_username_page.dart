@@ -58,7 +58,7 @@ class _CreateUsernamePageState extends State<CreateUsernamePage> {
             );
           }
           if (state.usernameErrorMessage != "Success" && state.usernameErrorMessage.isNotEmpty) {
-            Scaffold.of(context).showSnackBar(
+            ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 content: Text(state.usernameErrorMessage),
                 duration: Duration(seconds: 3),
@@ -112,7 +112,7 @@ class _CreateUsernamePageState extends State<CreateUsernamePage> {
                             SignInFormEvent.registerUsernamePressed(),
                           );
                     } else {
-                      Scaffold.of(context).showSnackBar(
+                      ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
                           content: Text('Invalid username, try a different one'),
                           duration: Duration(seconds: 2),

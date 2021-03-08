@@ -9,7 +9,6 @@ import 'package:meta/meta.dart';
 
 part 'movie_lists_user_profile_event.dart';
 part 'movie_lists_user_profile_state.dart';
-
 part 'movie_lists_user_profile_bloc.freezed.dart';
 
 class MovieListsUserProfileBloc extends Bloc<MovieListsUserProfileEvent, MovieListsUserProfileState> {

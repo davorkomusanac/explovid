@@ -97,6 +97,7 @@ class AuthRepository {
         "email": email,
         "full_name": fullName,
         "username": username,
+        "bio": "",
         "profile_photo_url": "",
         "account_created_date": Timestamp.now(),
         "followers": 0,
@@ -105,6 +106,8 @@ class AuthRepository {
         "movie_watched": [],
         "tv_show_watchlist": [],
         "tv_show_watched": [],
+        "watched_length": 0,
+        "watchlist_length": 0,
       });
       _auth.currentUser.sendEmailVerification();
       returnValue = kSuccess;
@@ -159,7 +162,8 @@ class AuthRepository {
           "email": googleSignInAccount.email,
           "full_name": googleSignInAccount.displayName,
           "username": "",
-          "profile_photo_url": googleSignInAccount.photoUrl,
+          "bio": "",
+          "profile_photo_url": "", //googleSignInAccount.photoUrl,
           "account_created_date": Timestamp.now(),
           "followers": 0,
           "following": 0,
@@ -167,6 +171,8 @@ class AuthRepository {
           "movie_watched": [],
           "tv_show_watchlist": [],
           "tv_show_watched": [],
+          "watched_length": 0,
+          "watchlist_length": 0,
         });
       } else {
         print("Document already exits, nvm");

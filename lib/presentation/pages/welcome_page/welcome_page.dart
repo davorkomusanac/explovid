@@ -25,7 +25,7 @@ class _WelcomePageState extends State<WelcomePage> {
         body: BlocConsumer<SignInFormBloc, SignInFormState>(
           listener: (context, state) {
             if (state.errorMessage.isNotEmpty) {
-              Scaffold.of(context).showSnackBar(
+              ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
                   content: Text(state.errorMessage),
                   duration: Duration(seconds: 1),
@@ -170,7 +170,7 @@ class _WelcomePageState extends State<WelcomePage> {
                       child: ElevatedButton(
                         onPressed: () {
                           !isAgreed
-                              ? Scaffold.of(context).showSnackBar(
+                              ? ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(
                                     content: Text("You need to check the checkbox before continuing"),
                                     duration: Duration(seconds: 1),

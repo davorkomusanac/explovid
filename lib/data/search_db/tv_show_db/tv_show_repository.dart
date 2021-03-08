@@ -17,7 +17,7 @@ class TvShowRepository {
 
   Future<TvShowSearchResults> searchTvShow(String name, [int page = 1]) async {
     try {
-      final response = await client.get(_buildSearchUrl(name, page));
+      final response = await client.get(Uri.parse(_buildSearchUrl(name, page)));
       print(_buildSearchUrl(name, page));
 
       if (response.statusCode != 200) throw Exception('There was an error searching');
@@ -66,7 +66,7 @@ class TvShowRepository {
 
   Future<TvShowDetails> getTvShowDetails(int id) async {
     try {
-      final response = await client.get(_buildTvShowDetailsUrl(id));
+      final response = await client.get(Uri.parse(_buildTvShowDetailsUrl(id)));
       print(_buildTvShowDetailsUrl(id));
 
       if (response.statusCode != 200) throw Exception('There was an error getting tv show details');
@@ -95,7 +95,7 @@ class TvShowRepository {
 
   Future<TvShowSearchResults> getPopularTvShows([int page = 1]) async {
     try {
-      final response = await client.get(_basePopularTvShowsUrl + page.toString());
+      final response = await client.get(Uri.parse(_basePopularTvShowsUrl + page.toString()));
       print(_basePopularTvShowsUrl + page.toString());
 
       if (response.statusCode != 200) throw Exception('There was an error searching');

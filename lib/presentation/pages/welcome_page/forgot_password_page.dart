@@ -32,7 +32,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
       body: BlocConsumer<SignInFormBloc, SignInFormState>(
         listener: (context, state) {
           if (state.snackBarMessageForPasswordReset.isNotEmpty) {
-            Scaffold.of(context).showSnackBar(
+            ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 content: Text(state.snackBarMessageForPasswordReset),
                 duration: Duration(seconds: 3),

@@ -4,12 +4,20 @@ import 'package:explovid/data/models/firestore_models/firestore_movie_watchlist_
 import 'package:explovid/data/models/firestore_models/firestore_tv_show_watched_details.dart';
 import 'package:explovid/data/models/firestore_models/firestore_tv_show_watchlist_details.dart';
 import 'package:explovid/data/models/movie_details/movie_details.dart';
+import 'package:explovid/data/models/our_user/our_user.dart';
 import 'package:explovid/data/models/tv_show_details/tv_show_details.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:uuid/uuid.dart';
 
 class UserProfileRepository {
   CollectionReference _users = FirebaseFirestore.instance.collection('users');
   FirebaseAuth _auth = FirebaseAuth.instance;
+
+  Stream<OurUser> getCurrentUserProfileInformation() {
+    return _users.doc(_auth.currentUser.uid).snapshots().map(
+          (documentSnap) => OurUser.fromSnapshot(documentSnap),
+        );
+  }
 
   Future<String> addMovieToWatchlist(MovieDetails movieDetails) async {
     String returnVal = "";
@@ -41,6 +49,7 @@ class UserProfileRepository {
           "movie_watchlist": FieldValue.arrayUnion([
             firestoreMovieDetails.title + "_" + firestoreMovieDetails.id.toString(),
           ]),
+          "watchlist_length": FieldValue.increment(1),
         },
         SetOptions(merge: true),
       );
@@ -66,6 +75,7 @@ class UserProfileRepository {
       review: review,
       rating: rating,
       isSpoiler: isSpoiler,
+      postUid: Uuid().v4(),
     );
     WriteBatch batch = FirebaseFirestore.instance.batch();
 
@@ -83,6 +93,7 @@ class UserProfileRepository {
           "movie_watched": FieldValue.arrayUnion([
             firestoreMovieDetails.title + "_" + firestoreMovieDetails.id.toString(),
           ]),
+          "watched_length": FieldValue.increment(1),
         },
         SetOptions(merge: true),
       );
@@ -109,6 +120,7 @@ class UserProfileRepository {
           "movie_watchlist": FieldValue.arrayRemove([
             movieDetails.title + "_" + movieDetails.id.toString(),
           ]),
+          "watchlist_length": FieldValue.increment(-1),
         },
         SetOptions(merge: true),
       );
@@ -135,6 +147,7 @@ class UserProfileRepository {
           "movie_watched": FieldValue.arrayRemove([
             movieDetails.title + "_" + movieDetails.id.toString(),
           ]),
+          "watched_length": FieldValue.increment(-1),
         },
         SetOptions(merge: true),
       );
@@ -177,6 +190,7 @@ class UserProfileRepository {
           "tv_show_watchlist": FieldValue.arrayUnion([
             firestoreTvShowWatchlistDetails.name + "_" + firestoreTvShowWatchlistDetails.id.toString(),
           ]),
+          "watchlist_length": FieldValue.increment(1),
         },
         SetOptions(merge: true),
       );
@@ -202,6 +216,7 @@ class UserProfileRepository {
       review: review,
       rating: rating,
       isSpoiler: isSpoiler,
+      postUid: Uuid().v4(),
     );
     WriteBatch batch = FirebaseFirestore.instance.batch();
 
@@ -219,6 +234,7 @@ class UserProfileRepository {
           "tv_show_watched": FieldValue.arrayUnion([
             firestoreTvShowWatchedDetails.name + "_" + firestoreTvShowWatchedDetails.id.toString(),
           ]),
+          "watched_length": FieldValue.increment(1),
         },
         SetOptions(merge: true),
       );
@@ -245,6 +261,7 @@ class UserProfileRepository {
           "tv_show_watchlist": FieldValue.arrayRemove([
             tvShowDetails.name + "_" + tvShowDetails.id.toString(),
           ]),
+          "watchlist_length": FieldValue.increment(-1),
         },
         SetOptions(merge: true),
       );
@@ -271,6 +288,7 @@ class UserProfileRepository {
           "tv_show_watched": FieldValue.arrayRemove([
             tvShowDetails.name + "_" + tvShowDetails.id.toString(),
           ]),
+          "watched_length": FieldValue.increment(-1),
         },
         SetOptions(merge: true),
       );

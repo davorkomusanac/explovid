@@ -11,6 +11,7 @@ class FirestoreTvShowWatchedDetails {
   final String review;
   final num rating;
   final bool isSpoiler;
+  final String postUid;
 
   FirestoreTvShowWatchedDetails({
     this.id,
@@ -23,6 +24,7 @@ class FirestoreTvShowWatchedDetails {
     this.review,
     this.rating,
     this.isSpoiler,
+    this.postUid,
   });
 
   // added fromSnapshot and toDocument methods to add movie info to firestore, but only certain fields, not all
@@ -37,6 +39,7 @@ class FirestoreTvShowWatchedDetails {
         review: data['review'],
         rating: data['rating'],
         isSpoiler: data['is_spoiler'],
+        postUid: data['post_uid'],
       );
 
   factory FirestoreTvShowWatchedDetails.fromSnapshot(DocumentSnapshot snapshot) =>
@@ -53,5 +56,6 @@ class FirestoreTvShowWatchedDetails {
         'review': review,
         'rating': rating,
         'is_spoiler': isSpoiler,
+        'post_uid': postUid,
       };
 }

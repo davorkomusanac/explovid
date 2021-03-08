@@ -9,6 +9,7 @@ import 'package:explovid/application/search/tv_show_search/tv_show_details/tv_sh
 import 'package:explovid/application/search/tv_show_search/tv_show_search_bloc.dart';
 import 'package:explovid/application/current_user_profile_watchlist_watched/movie_lists/movie_lists_user_profile_bloc.dart';
 import 'package:explovid/application/current_user_profile_watchlist_watched/tv_show_lists/tv_show_lists_user_profile_bloc.dart';
+import 'package:explovid/application/user_profile_information/current_user_profile_information/current_user_profile_information_bloc.dart';
 import 'package:explovid/data/search_db/actor_db/actor_repository.dart';
 import 'package:explovid/data/auth/auth_repository.dart';
 import 'package:explovid/data/search_db/movie_db/movie_repository.dart';
@@ -122,6 +123,13 @@ class _MyAppState extends State<MyApp> {
           create: (context) => FeedbackBloc(
             _userFeedbackRepository,
           ),
+        ),
+        BlocProvider(
+          create: (context) => CurrentUserProfileInformationBloc(
+            _userProfileRepository,
+          )..add(
+              CurrentUserProfileInformationEvent.loadCurrentUserProfilePressed(),
+            ),
         ),
       ],
       child: MaterialApp(

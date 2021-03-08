@@ -29,7 +29,7 @@ class _FeedbackPageState extends State<FeedbackPage> {
         body: BlocConsumer<FeedbackBloc, FeedbackState>(
           listener: (context, state) {
             if (state.errorMessage.isNotEmpty) {
-              Scaffold.of(context).showSnackBar(
+              ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
                   content: Text(state.errorMessage),
                   duration: Duration(seconds: 1),

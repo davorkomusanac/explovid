@@ -17,7 +17,7 @@ class ActorRepository {
 
   Future<ActorSearchResults> searchActor(String name, [int page = 1]) async {
     try {
-      final response = await client.get(_buildSearchUrl(name, page));
+      final response = await client.get(Uri.parse(_buildSearchUrl(name, page)));
       print(_buildSearchUrl(name, page));
 
       if (response.statusCode != 200) throw Exception('There was an error searching');
@@ -66,7 +66,7 @@ class ActorRepository {
 
   Future<ActorDetails> getActorDetails(int id) async {
     try {
-      final response = await client.get(_buildActorDetailsUrl(id));
+      final response = await client.get(Uri.parse(_buildActorDetailsUrl(id)));
       print(_buildActorDetailsUrl(id));
 
       if (response.statusCode != 200) throw Exception('There was an error searching');
@@ -93,7 +93,7 @@ class ActorRepository {
 
   Future<ActorSearchResults> getPopularActors([int page = 1]) async {
     try {
-      final response = await client.get(_basePopularActorsUrl + page.toString());
+      final response = await client.get(Uri.parse(_basePopularActorsUrl + page.toString()));
       print(_basePopularActorsUrl + page.toString());
 
       if (response.statusCode != 200) throw Exception('There was an error searching');
