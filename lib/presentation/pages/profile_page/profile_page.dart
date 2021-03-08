@@ -1,6 +1,7 @@
 import 'package:community_material_icon/community_material_icon.dart';
 import 'package:explovid/application/current_user_profile_watchlist_watched/movie_lists/movie_lists_user_profile_bloc.dart';
 import 'package:explovid/application/current_user_profile_watchlist_watched/tv_show_lists/tv_show_lists_user_profile_bloc.dart';
+import 'package:explovid/application/user_profile_information/current_user_profile_information/current_user_profile_information_bloc.dart';
 import 'package:explovid/presentation/pages/movie_details_page/movie_details_page.dart';
 import 'package:explovid/presentation/pages/profile_page/post_page.dart';
 import 'package:explovid/presentation/pages/tv_show_details_page/tv_show_details_page.dart';
@@ -16,10 +17,6 @@ enum VideoType {
 }
 
 class ProfilePage extends StatefulWidget {
-  final String uid;
-
-  ProfilePage({this.uid});
-
   @override
   _ProfilePageState createState() => _ProfilePageState();
 }
@@ -418,101 +415,114 @@ class _ProfilePageState extends State<ProfilePage> with TickerProviderStateMixin
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Scaffold(
-        body: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "Username HERE",
-                    style: TextStyle(fontSize: 20),
-                  ),
-                  InkWell(
-                    onTap: () {},
-                    child: Icon(
-                      Icons.settings,
-                      size: 30,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Stack(
-                    clipBehavior: Clip.none,
+      child: BlocBuilder<CurrentUserProfileInformationBloc, CurrentUserProfileInformationState>(
+        builder: (context, state) {
+          return Scaffold(
+            body: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: 30.0, top: 12.0, right: 12.0, bottom: 10),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      CircleAvatar(
-                        backgroundColor: Colors.black,
-                        child: Text(
-                          "USER PHOTO",
-                          textAlign: TextAlign.center,
+                      Text(
+                        state.isSearching ? "" : state.ourUser.username,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w600,
                         ),
-                        radius: 40,
                       ),
-                      Positioned(
-                        bottom: -15,
-                        right: -15,
-                        child: IconButton(
-                          icon: Icon(Icons.add_circle),
-                          onPressed: () {},
+                      InkWell(
+                        onTap: () {
+                          //TODO Add Settings page here
+                        },
+                        child: Icon(
+                          Icons.settings,
+                          size: 30,
                         ),
                       ),
                     ],
                   ),
-                  Column(
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      Text("0"),
-                      Text("Posts"),
+                      Stack(
+                        clipBehavior: Clip.none,
+                        children: [
+                          CircleAvatar(
+                            backgroundImage: NetworkImage(
+                              state.isSearching ? "" : "https://miro.medium.com/max/1200/1*mk1-6aYaf_Bes1E3Imhc0A.jpeg",
+                            ),
+                            backgroundColor: Colors.black,
+                            child: Text(
+                              "USER PHOTO",
+                              textAlign: TextAlign.center,
+                            ),
+                            radius: 40,
+                          ),
+                          Positioned(
+                            bottom: -15,
+                            right: -15,
+                            child: IconButton(
+                              icon: Icon(Icons.add_circle),
+                              onPressed: () {},
+                            ),
+                          ),
+                        ],
+                      ),
+                      Column(
+                        children: [
+                          Text(state.isSearching ? "" : state.ourUser.watchedLength.toString()),
+                          Text("Watched"),
+                        ],
+                      ),
+                      Column(
+                        children: [
+                          Text(state.isSearching ? "" : state.ourUser.followers.toString()),
+                          Text("Followers"),
+                        ],
+                      ),
+                      Column(
+                        children: [
+                          Text(state.isSearching ? "" : state.ourUser.following.toString()),
+                          Text("Following"),
+                        ],
+                      ),
                     ],
                   ),
-                  Column(
+                ),
+                Text(state.isSearching ? "" : state.ourUser.fullName),
+                Text(
+                  state.isSearching ? "" : state.ourUser.bio,
+                  maxLines: 3,
+                ),
+                Expanded(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
                     children: [
-                      Text("100"),
-                      Text("Followers"),
+                      TabBar(
+                        controller: _watchTypeTabController,
+                        tabs: _watchTypeTabs,
+                        labelColor: Colors.tealAccent,
+                        unselectedLabelColor: Colors.grey,
+                      ),
+                      Expanded(
+                        child: TabBarView(
+                          controller: _watchTypeTabController,
+                          children: _watchTypeTabViews(context),
+                        ),
+                      ),
                     ],
                   ),
-                  Column(
-                    children: [
-                      Text("200"),
-                      Text("Following"),
-                    ],
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
-            Text("NAME"),
-            Text(
-              "Short bio goes here... two or three lines of text max? ",
-              maxLines: 3,
-            ),
-            Expanded(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  TabBar(
-                    controller: _watchTypeTabController,
-                    tabs: _watchTypeTabs,
-                    labelColor: Colors.tealAccent,
-                    unselectedLabelColor: Colors.grey,
-                  ),
-                  Expanded(
-                    child: TabBarView(
-                      controller: _watchTypeTabController,
-                      children: _watchTypeTabViews(context),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
+          );
+        },
       ),
     );
   }
