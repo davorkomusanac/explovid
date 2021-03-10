@@ -1,7 +1,9 @@
 import 'package:community_material_icon/community_material_icon.dart';
 import 'package:explovid/application/search/movie_search/movie_details/movie_details_bloc.dart';
 import 'package:explovid/application/search/movie_search/movie_search_bloc.dart';
+import 'package:explovid/application/search/user_search/user_search_bloc.dart';
 import 'package:explovid/data/search_db/movie_db/movie_repository.dart';
+import 'package:explovid/data/user_profile_db/user_actions_db/user_actions_repository.dart';
 import 'package:explovid/presentation/pages/feedback_page/feedback_page.dart';
 import 'package:explovid/presentation/pages/home_page/four.dart';
 import 'package:explovid/presentation/pages/home_page/one.dart';
@@ -20,6 +22,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   http.Client client;
   MovieRepository _movieRepository;
+  UserActionsRepository _userActionsRepository;
 
   final List<GlobalKey<NavigatorState>> tabNavKeys = [
     GlobalKey<NavigatorState>(),
@@ -39,6 +42,7 @@ class _HomePageState extends State<HomePage> {
     _tabController = CupertinoTabController(initialIndex: 4);
     client = http.Client();
     _movieRepository = MovieRepository(client);
+    _userActionsRepository = UserActionsRepository();
   }
 
   @override
@@ -110,15 +114,19 @@ class _HomePageState extends State<HomePage> {
                 },
               );
             case 2:
-              // BlocProvider(
-              //   create: (context) => MovieDetailsBloc(
-              //     _movieRepository,
-              //   ),
-              // ),
-              return BlocProvider(
-                create: (context) => MovieDetailsBloc(
-                  _movieRepository,
-                ),
+              return MultiBlocProvider(
+                providers: [
+                  BlocProvider(
+                    create: (context) => UserSearchBloc(
+                      _userActionsRepository,
+                    ),
+                  ),
+                  BlocProvider(
+                    create: (context) => MovieDetailsBloc(
+                      _movieRepository,
+                    ),
+                  ),
+                ],
                 child: CupertinoTabView(
                   navigatorKey: tabNavKeys[2],
                   builder: (context) {

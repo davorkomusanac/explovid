@@ -1,6 +1,7 @@
 import 'package:explovid/application/search/actor_search/actor_search_bloc.dart';
 import 'package:explovid/application/search/movie_search/movie_search_bloc.dart';
 import 'package:explovid/application/search/tv_show_search/tv_show_search_bloc.dart';
+import 'package:explovid/application/search/user_search/user_search_bloc.dart';
 import 'package:explovid/presentation/pages/actor_details_page/actor_details_page.dart';
 import 'package:explovid/presentation/pages/movie_details_page/movie_details_page.dart';
 import 'package:explovid/presentation/pages/tv_show_details_page/tv_show_details_page.dart';
@@ -66,7 +67,9 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
               );
           break;
         case (3):
-          print("User SEARCH NEXT PAGE CALLED");
+          context.read<UserSearchBloc>().add(
+                UserSearchEvent.nextSearchResultPageCalled(),
+              );
           break;
         default:
       }
@@ -108,20 +111,16 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
       _buildSearchMovieTabView(context),
       _buildSearchTvShowTabView(context),
       _buildSearchActorTabView(context),
-      Container(
-        height: 150,
-        width: 200,
-        child: Text("Fourth"),
-      ),
+      _buildSearchUserTabView(context),
     ];
     return views;
   }
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        body: BlocListener<MovieSearchBloc, MovieSearchState>(
+    return Scaffold(
+      body: SafeArea(
+        child: BlocListener<MovieSearchBloc, MovieSearchState>(
           listener: (context, state) {
             if (state.isSearchPageDoublePressed) {
               setState(() {
@@ -136,6 +135,9 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
                   );
               context.read<ActorSearchBloc>().add(
                     ActorSearchEvent.deleteSearchPressed(),
+                  );
+              context.read<UserSearchBloc>().add(
+                    UserSearchEvent.deleteSearchPressed(),
                   );
             }
           },
@@ -186,7 +188,9 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
                                             );
                                         break;
                                       case (3):
-                                        print("User");
+                                        context.read<UserSearchBloc>().add(
+                                              UserSearchEvent.deleteSearchPressed(),
+                                            );
                                         break;
                                       default:
                                     }
@@ -217,7 +221,9 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
                                     );
                                 break;
                               case (3):
-                                print("User search");
+                                context.read<UserSearchBloc>().add(
+                                      UserSearchEvent.searchUsernameChanged(value),
+                                    );
                                 break;
                               default:
                             }
@@ -241,7 +247,9 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
                                   );
                               break;
                             case (3):
-                              print("User");
+                              context.read<UserSearchBloc>().add(
+                                    UserSearchEvent.searchUsernameChanged(value),
+                                  );
                               break;
                             default:
                           }
@@ -265,6 +273,71 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
           ),
         ),
       ),
+    );
+  }
+
+  ///BUILD USER SEARCH TAB View
+  Widget _buildSearchUserTabView(BuildContext context) {
+    return BlocBuilder<UserSearchBloc, UserSearchState>(
+      builder: (context, state) {
+        return Column(
+          children: [
+            if (!state.isSearching && state.errorMessage.isEmpty && !state.isSearchCompleted)
+              Expanded(
+                child: Center(
+                  child: Text("Start typing to search users"),
+                ),
+              ),
+            if (state.isSearching) BuildSearchProgressIndicator(),
+            if (state.errorMessage.isNotEmpty) BuildSearchErrorMessage(state.errorMessage),
+            if (state.isSearchCompleted)
+              Expanded(
+                child: NotificationListener<ScrollNotification>(
+                  onNotification: _handleScrollNotification,
+                  child: ListView.builder(
+                    controller: _scrollController,
+                    keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+                    itemCount: _calculateSearchUserListItemCount(state),
+                    itemBuilder: (context, index) {
+                      return index >= state.userSearchResults.length
+                          ? BuildLoaderNextPage()
+                          : _buildUserSearchCard(context, state, index);
+                    },
+                  ),
+                ),
+              ),
+          ],
+        );
+      },
+    );
+  }
+
+  int _calculateSearchUserListItemCount(UserSearchState state) {
+    if (state.isThereMoreUserSearchPageToLoad) {
+      return state.userSearchResults.length + 1;
+    } else {
+      return state.userSearchResults.length;
+    }
+  }
+
+  Widget _buildUserSearchCard(BuildContext context, UserSearchState state, int index) {
+    var user = state.userSearchResults[index];
+    return ListTile(
+      leading: CircleAvatar(
+        foregroundImage: NetworkImage(user.profilePhotoUrl),
+
+      ),
+      title: Text(user.username),
+      subtitle: Text(user.fullName),
+      onTap: () {
+        print("HELLO");
+      },
+      // child: Padding(
+      //   padding: const EdgeInsets.all(8.0),
+      //   child: Center(
+      //     child: Text(state.userSearchResults[index].username),
+      //   ),
+      // ),
     );
   }
 
