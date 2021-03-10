@@ -24,9 +24,9 @@ class _FeedbackPageState extends State<FeedbackPage> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        body: BlocConsumer<FeedbackBloc, FeedbackState>(
+    return Scaffold(
+      body: SafeArea(
+        child: BlocConsumer<FeedbackBloc, FeedbackState>(
           listener: (context, state) {
             if (state.errorMessage.isNotEmpty) {
               ScaffoldMessenger.of(context).showSnackBar(

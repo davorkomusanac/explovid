@@ -9,6 +9,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_signin_button/flutter_signin_button.dart';
 
 class WelcomePage extends StatefulWidget {
   @override
@@ -20,9 +21,9 @@ class _WelcomePageState extends State<WelcomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        body: BlocConsumer<SignInFormBloc, SignInFormState>(
+    return Scaffold(
+      body: SafeArea(
+        child: BlocConsumer<SignInFormBloc, SignInFormState>(
           listener: (context, state) {
             if (state.errorMessage.isNotEmpty) {
               ScaffoldMessenger.of(context).showSnackBar(
@@ -125,9 +126,16 @@ class _WelcomePageState extends State<WelcomePage> {
                     ),
                     Padding(
                       padding: const EdgeInsets.only(left: 15, right: 10),
-                      child: CheckboxListTile(
-                        activeColor: Colors.tealAccent[700],
-                        value: isAgreed,
+                      child: ListTile(
+                        leading: Checkbox(
+                          activeColor: Colors.tealAccent[700],
+                          value: isAgreed,
+                          onChanged: (bool value) {
+                            setState(() {
+                              isAgreed = value;
+                            });
+                          },
+                        ),
                         title: RichText(
                           text: TextSpan(
                             text: "I confirm that I am over 18 and I agree to the ",
@@ -157,17 +165,12 @@ class _WelcomePageState extends State<WelcomePage> {
                             ],
                           ),
                         ),
-                        controlAffinity: ListTileControlAffinity.leading,
-                        onChanged: (bool value) {
-                          setState(() {
-                            isAgreed = value;
-                          });
-                        },
                       ),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 8.0),
-                      child: ElevatedButton(
+                      child: SignInButton(
+                        Buttons.GoogleDark,
                         onPressed: () {
                           !isAgreed
                               ? ScaffoldMessenger.of(context).showSnackBar(
@@ -180,18 +183,26 @@ class _WelcomePageState extends State<WelcomePage> {
                                     SignInFormEvent.signInWithGooglePressed(),
                                   );
                         },
-                        child: Text("Sign In With Google"),
+                        text: "Sign In With Google",
                       ),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
-                      child: ElevatedButton(
+                      child: SignInButton(
+                        Buttons.Apple,
                         onPressed: () {
-                          context.read<SignInFormBloc>().add(
-                                SignInFormEvent.signInWithApplePressed(),
-                              );
+                          !isAgreed
+                              ? ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text("You need to check the checkbox before continuing"),
+                                    duration: Duration(seconds: 1),
+                                  ),
+                                )
+                              : context.read<SignInFormBloc>().add(
+                                    SignInFormEvent.signInWithApplePressed(),
+                                  );
                         },
-                        child: Text("Sign In With Apple"),
+                        text: "Sign In With Apple",
                       ),
                     ),
                     Padding(

@@ -34,9 +34,9 @@ class _SignUpPageState extends State<SignUpPage> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        body: BlocConsumer<SignInFormBloc, SignInFormState>(
+    return Scaffold(
+      body: SafeArea(
+        child: BlocConsumer<SignInFormBloc, SignInFormState>(
           listener: (context, state) {
             if (state.errorMessage.isNotEmpty) {
               ScaffoldMessenger.of(context).showSnackBar(
@@ -161,9 +161,16 @@ class _SignUpPageState extends State<SignUpPage> {
                     ),
                     Padding(
                       padding: const EdgeInsets.only(left: 5, right: 5),
-                      child: CheckboxListTile(
-                        activeColor: Colors.tealAccent[700],
-                        value: isAgreed,
+                      child: ListTile(
+                        leading: Checkbox(
+                          activeColor: Colors.tealAccent[700],
+                          value: isAgreed,
+                          onChanged: (bool value) {
+                            setState(() {
+                              isAgreed = value;
+                            });
+                          },
+                        ),
                         title: RichText(
                           text: TextSpan(
                             text: "I confirm that I am over 18 and I agree to the ",
@@ -193,12 +200,6 @@ class _SignUpPageState extends State<SignUpPage> {
                             ],
                           ),
                         ),
-                        controlAffinity: ListTileControlAffinity.leading,
-                        onChanged: (bool value) {
-                          setState(() {
-                            isAgreed = value;
-                          });
-                        },
                       ),
                     ),
                     Padding(
