@@ -54,12 +54,12 @@ class SignInFormBloc extends Bloc<SignInFormEvent, SignInFormState> {
         );
       },
       usernameBeingChecked: (e) async* {
-        bool isAvailable = await _authRepository.isUsernameAvailable(e.username.trim());
+        bool isAvailable = await _authRepository.isUsernameAvailable(e.username);
         if (isAvailable) {
           yield state.copyWith(
             isUsernameAvailable: true,
             isUserTypingUsername: false,
-            username: e.username.trim(),
+            username: e.username,
           );
         } else {
           yield state.copyWith(
@@ -96,7 +96,7 @@ class SignInFormBloc extends Bloc<SignInFormEvent, SignInFormState> {
                   email: state.emailAddress.trim(),
                   password: state.password.trim(),
                   fullName: state.fullName.trim(),
-                  username: state.username.trim(),
+                  username: state.username,
                 );
                 //if successful notify state listeners to change authState
                 if (result == kSuccess) {

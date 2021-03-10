@@ -22,10 +22,10 @@ class OtherUserProfileInformationBloc extends Bloc<OtherUserProfileInformationEv
     yield* event.map(
       otherUserProfileLoaded: (e) async* {
         var user = await _userProfileRepository.getUserProfileInformation(userUid: e.ourUser.uid);
-        var movieWatchlist = await _userProfileRepository.getMovieWatchlist(userUid: e.ourUser.uid);
-        var movieWatched = await _userProfileRepository.getMovieWatched(userUid: e.ourUser.uid);
-        var tvShowWatchlist = await _userProfileRepository.getTvShowWatchlist(userUid: e.ourUser.uid);
-        var tvShowWatched = await _userProfileRepository.getTvShowWatched(userUid: e.ourUser.uid);
+        yield state.copyWith(
+          isSearching: false,
+          ourUser: user,
+        );
       },
     );
   }

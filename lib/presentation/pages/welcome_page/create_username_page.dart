@@ -3,6 +3,7 @@ import 'package:explovid/application/auth/sign_in_form/sign_in_form_bloc.dart';
 import 'package:explovid/presentation/pages/splash_page/splash_page.dart';
 import 'package:explovid/presentation/utilities/utilities.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CreateUsernamePage extends StatefulWidget {
@@ -75,6 +76,10 @@ class _CreateUsernamePageState extends State<CreateUsernamePage> {
               Padding(
                 padding: const EdgeInsets.only(left: 25, right: 25, top: 125),
                 child: TextFormField(
+                  inputFormatters: [
+                    FilteringTextInputFormatter.deny(RegExp(r'[ ]')),
+                    LengthLimitingTextInputFormatter(30),
+                  ],
                     decoration: InputDecoration(
                       prefixIcon: Icon(
                         Icons.person,

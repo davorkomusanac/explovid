@@ -5,6 +5,7 @@ import 'package:explovid/presentation/pages/splash_page/splash_page.dart';
 import 'package:explovid/presentation/utilities/utilities.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SignUpPage extends StatefulWidget {
@@ -90,6 +91,10 @@ class _SignUpPageState extends State<SignUpPage> {
                     Padding(
                       padding: const EdgeInsets.only(left: 25, right: 25, top: 25),
                       child: TextFormField(
+                        inputFormatters: [
+                          FilteringTextInputFormatter.deny(RegExp(r'[ ]')),
+                          LengthLimitingTextInputFormatter(30),
+                        ],
                           decoration: InputDecoration(
                             prefixIcon: Icon(
                               Icons.person,

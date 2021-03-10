@@ -7,7 +7,13 @@ class UserActionsRepository {
   Future<List<OurUser>> searchUsersWithUsername({String usernameSearchTerm}) async {
     List<OurUser> searchUsersResult = [];
     try {
-      var querySnapshot = await _users.where('username', isGreaterThanOrEqualTo: usernameSearchTerm).limit(10).get();
+      var querySnapshot = await _users
+          .where(
+            'username',
+            isGreaterThanOrEqualTo: usernameSearchTerm.toLowerCase(),
+          )
+          .limit(10)
+          .get();
       for (var userQueryDocSnap in querySnapshot.docs) {
         searchUsersResult.add(OurUser.fromSnapshot(userQueryDocSnap));
       }
@@ -25,7 +31,7 @@ class UserActionsRepository {
     try {
       var querySnapshot = await _users
           .orderBy('username', descending: true)
-          .where('username', isGreaterThanOrEqualTo: usernameSearchTerm)
+          .where('username', isGreaterThanOrEqualTo: usernameSearchTerm.toLowerCase())
           .startAfter([lastUserInList.username])
           .limit(10)
           .get();

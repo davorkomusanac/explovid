@@ -47,7 +47,7 @@ class AuthRepository {
     bool isAvailable = false;
     if (username.isEmpty) return isAvailable;
     try {
-      var querySnapshot = await _users.where('username', isEqualTo: username).limit(1).get();
+      var querySnapshot = await _users.where('username', isEqualTo: username.toLowerCase()).limit(1).get();
       if (querySnapshot.docs.isEmpty) isAvailable = true;
     } catch (e) {
       print(e.toString());
@@ -59,7 +59,9 @@ class AuthRepository {
     String returnVal = "";
     try {
       await _users.doc(_auth.currentUser.uid).update(
-        {'username': username},
+        {
+          'username': username.toLowerCase(),
+        },
       );
       returnVal = "Success";
     } catch (e) {
@@ -96,7 +98,7 @@ class AuthRepository {
         "uid": userCredential.user.uid,
         "email": email,
         "full_name": fullName,
-        "username": username,
+        "username": username.toLowerCase(),
         "bio": "",
         "profile_photo_url": "",
         "account_created_date": Timestamp.now(),
