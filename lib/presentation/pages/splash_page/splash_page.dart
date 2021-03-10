@@ -56,9 +56,9 @@ class _SplashPageState extends State<SplashPage> {
           },
         );
       },
-      child: SafeArea(
-        child: Scaffold(
-          body: Center(
+      child: Scaffold(
+        body: SafeArea(
+          child: Center(
             child: Column(
               children: [
                 Spacer(),

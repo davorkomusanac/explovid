@@ -1,5 +1,5 @@
 import 'package:explovid/application/search/movie_search/movie_details/movie_details_bloc.dart';
-import 'package:explovid/application/current_user_profile_watchlist_watched/movie_lists/movie_lists_user_profile_bloc.dart';
+import 'package:explovid/application/user_profile_information/current_user_profile_information/current_user_profile_watchlist_watched/movie_lists/movie_lists_user_profile_bloc.dart';
 import 'package:explovid/data/models/movie_details/movie_details.dart';
 import 'package:explovid/presentation/pages/actor_details_page/actor_details_page.dart';
 import 'package:explovid/presentation/pages/movie_details_page/full_movie_cast_page.dart';

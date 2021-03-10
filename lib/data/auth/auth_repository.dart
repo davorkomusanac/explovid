@@ -190,12 +190,14 @@ class AuthRepository {
 
   Future<String> signInWithApple() async {
     //Not implemented for now. A Mac is needed
+    //TODO Add Sign In With Apple
     return "Not implemented for now, stay tuned for updates!";
   }
 
   Future<String> signOut() async {
     String returnValue = kError;
     try {
+      //add Apple logout with sign in
       await _googleSignIn.signOut();
       await _auth.signOut();
       returnValue = kSuccess;

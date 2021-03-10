@@ -1,5 +1,5 @@
 import 'package:explovid/application/search/tv_show_search/tv_show_details/tv_show_details_bloc.dart';
-import 'package:explovid/application/current_user_profile_watchlist_watched/tv_show_lists/tv_show_lists_user_profile_bloc.dart';
+import 'package:explovid/application/user_profile_information/current_user_profile_information/current_user_profile_watchlist_watched/tv_show_lists/tv_show_lists_user_profile_bloc.dart';
 import 'package:explovid/data/models/tv_show_details/tv_show_details.dart';
 import 'package:explovid/presentation/pages/actor_details_page/actor_details_page.dart';
 import 'package:explovid/presentation/pages/tv_show_details_page/full_tv_show_cast_page.dart';

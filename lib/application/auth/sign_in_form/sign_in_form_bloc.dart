@@ -197,6 +197,7 @@ class SignInFormBloc extends Bloc<SignInFormEvent, SignInFormState> {
       },
       // ignore: missing_return
       signInWithApplePressed: (e) async* {
+        //TODO Add Sign In With Apple
         //currently not implemented a Mac is needed for the signInWithApple package
         print("Not implemented yet");
       },
