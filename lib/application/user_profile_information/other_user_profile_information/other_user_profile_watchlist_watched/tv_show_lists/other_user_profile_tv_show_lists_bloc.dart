@@ -28,6 +28,8 @@ class OtherUserProfileTvShowListsBloc extends Bloc<OtherUserProfileTvShowListsEv
           isLoading: false,
           tvShowWatchlist: watchlist,
           tvShowWatched: watched,
+          isThereMoreTvShowWatchlistPageToLoad: watchlist.length < 18 ? false : true,
+          isThereMoreTvShowWatchedPageToLoad: watched.length < 18 ? false : true,
         );
       },
       nextTvShowWatchlistPageCalled: (e) async* {

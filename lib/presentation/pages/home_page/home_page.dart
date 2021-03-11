@@ -2,7 +2,10 @@ import 'package:community_material_icon/community_material_icon.dart';
 import 'package:explovid/application/search/movie_search/movie_details/movie_details_bloc.dart';
 import 'package:explovid/application/search/movie_search/movie_search_bloc.dart';
 import 'package:explovid/application/search/user_search/user_search_bloc.dart';
+import 'package:explovid/application/user_profile_information/other_user_profile_information/other_user_profile_watchlist_watched/movie_lists/other_user_profile_movie_lists_bloc.dart';
+import 'package:explovid/application/user_profile_information/other_user_profile_information/other_user_profile_watchlist_watched/tv_show_lists/other_user_profile_tv_show_lists_bloc.dart';
 import 'package:explovid/data/search_db/movie_db/movie_repository.dart';
+import 'package:explovid/data/user_profile_db/other_user_profile_db/other_user_profile_repository.dart';
 import 'package:explovid/data/user_profile_db/user_actions_db/user_actions_repository.dart';
 import 'package:explovid/presentation/pages/feedback_page/feedback_page.dart';
 import 'package:explovid/presentation/pages/home_page/four.dart';
@@ -23,6 +26,7 @@ class _HomePageState extends State<HomePage> {
   http.Client client;
   MovieRepository _movieRepository;
   UserActionsRepository _userActionsRepository;
+  OtherUserProfileRepository _otherUserProfileRepository;
 
   final List<GlobalKey<NavigatorState>> tabNavKeys = [
     GlobalKey<NavigatorState>(),
@@ -43,6 +47,7 @@ class _HomePageState extends State<HomePage> {
     client = http.Client();
     _movieRepository = MovieRepository(client);
     _userActionsRepository = UserActionsRepository();
+    _otherUserProfileRepository = OtherUserProfileRepository();
   }
 
   @override
@@ -124,6 +129,16 @@ class _HomePageState extends State<HomePage> {
                   BlocProvider(
                     create: (context) => MovieDetailsBloc(
                       _movieRepository,
+                    ),
+                  ),
+                  BlocProvider(
+                    create: (context) => OtherUserProfileMovieListsBloc(
+                      _otherUserProfileRepository,
+                    ),
+                  ),
+                  BlocProvider(
+                    create: (context) => OtherUserProfileTvShowListsBloc(
+                      _otherUserProfileRepository,
                     ),
                   ),
                 ],

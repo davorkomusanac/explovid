@@ -24,10 +24,13 @@ class OtherUserProfileMovieListsBloc extends Bloc<OtherUserProfileMovieListsEven
       loadMovieToListInitial: (e) async* {
         var watchlist = await _userProfileRepository.getMovieWatchlist(userUid: e.userUid);
         var watched = await _userProfileRepository.getMovieWatched(userUid: e.userUid);
+
         yield state.copyWith(
           isLoading: false,
           movieWatchlist: watchlist,
           movieWatched: watched,
+          isThereMoreMovieWatchlistPageToLoad: watchlist.length < 18 ? false : true,
+          isThereMoreMovieWatchedPageToLoad: watched.length < 18 ? false : true,
         );
       },
       nextMovieWatchlistPageCalled: (e) async* {

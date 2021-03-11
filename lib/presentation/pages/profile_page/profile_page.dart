@@ -410,14 +410,14 @@ class _ProfilePageState extends State<ProfilePage> with TickerProviderStateMixin
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: BlocBuilder<CurrentUserProfileInformationBloc, CurrentUserProfileInformationState>(
-        builder: (context, state) {
-          return Scaffold(
-            body: Column(
+    return BlocBuilder<CurrentUserProfileInformationBloc, CurrentUserProfileInformationState>(
+      builder: (context, state) {
+        return Scaffold(
+          body: SafeArea(
+            child: Column(
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(left: 30.0, top: 12.0, right: 12.0, bottom: 10),
+                  padding: const EdgeInsets.only(left: 30.0, top: 0.0, right: 12.0, bottom: 0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -426,7 +426,7 @@ class _ProfilePageState extends State<ProfilePage> with TickerProviderStateMixin
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
                           fontSize: 20,
-                          fontWeight: FontWeight.w600,
+                          fontWeight: FontWeight.w700,
                         ),
                       ),
                       InkWell(
@@ -445,56 +445,70 @@ class _ProfilePageState extends State<ProfilePage> with TickerProviderStateMixin
                   padding: const EdgeInsets.all(8.0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Stack(
-                        clipBehavior: Clip.none,
-                        children: [
-                          CircleAvatar(
-                            backgroundImage: NetworkImage(
-                              state.isSearching ? "" : "https://miro.medium.com/max/1200/1*mk1-6aYaf_Bes1E3Imhc0A.jpeg",
-                            ),
-                            backgroundColor: Colors.black,
-                            child: Text(
-                              "USER PHOTO",
-                              textAlign: TextAlign.center,
-                            ),
-                            radius: 40,
+                      Expanded(
+                        flex: 1,
+                        child: CircleAvatar(
+                          backgroundImage: NetworkImage(
+                            state.isSearching ? "" : "https://miro.medium.com/max/1200/1*mk1-6aYaf_Bes1E3Imhc0A.jpeg",
                           ),
-                          Positioned(
-                            bottom: -15,
-                            right: -15,
-                            child: IconButton(
-                              icon: Icon(Icons.add_circle),
-                              onPressed: () {},
-                            ),
+                          backgroundColor: Colors.black,
+                          child: Text(
+                            "USER PHOTO",
+                            textAlign: TextAlign.center,
                           ),
-                        ],
+                          radius: 40,
+                        ),
                       ),
-                      Column(
-                        children: [
-                          Text(state.isSearching ? "" : state.ourUser.watchedLength.toString()),
-                          Text("Watched"),
-                        ],
-                      ),
-                      Column(
-                        children: [
-                          Text(state.isSearching ? "" : state.ourUser.followers.toString()),
-                          Text("Followers"),
-                        ],
-                      ),
-                      Column(
-                        children: [
-                          Text(state.isSearching ? "" : state.ourUser.following.toString()),
-                          Text("Following"),
-                        ],
+                      Expanded(
+                        flex: 3,
+                        child: Container(
+                          height: 80,
+                          //Listview to stop overflow for larger fonts
+                          child: ListView(
+                            shrinkWrap: true,
+                            scrollDirection: Axis.horizontal,
+                            children: [
+                              _userInformationCard(title: "Watched", state: state),
+                              _userInformationCard(title: "Followers", state: state),
+                              _userInformationCard(title: "Following", state: state),
+                            ],
+                          ),
+                        ),
                       ),
                     ],
                   ),
                 ),
-                Text(state.isSearching ? "" : state.ourUser.fullName),
-                Text(
-                  state.isSearching ? "" : state.ourUser.bio,
-                  maxLines: 3,
+                Padding(
+                  padding: const EdgeInsets.only(left: 8.0, bottom: 4),
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      state.isSearching ? "" : state.ourUser.fullName,
+                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 8.0, bottom: 10),
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      state.isSearching ? "" : state.ourUser.bio,
+                      maxLines: 3,
+                    ),
+                  ),
+                ),
+                ElevatedButton(
+                  style: kWatchedButton,
+                  onPressed: () {
+                    //TODO Implement Edit profile button
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 48.0),
+                    child: Text("Edit Profile"),
+                  ),
                 ),
                 Expanded(
                   child: Column(
@@ -517,8 +531,36 @@ class _ProfilePageState extends State<ProfilePage> with TickerProviderStateMixin
                 ),
               ],
             ),
-          );
-        },
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _userInformationCard({String title, CurrentUserProfileInformationState state}) {
+    String category = "";
+    if (title == "Watched") {
+      category = state.ourUser.watchedLength.toString();
+    } else if (title == "Followers") {
+      category = state.ourUser.followers.toString();
+    } else {
+      category = state.ourUser.following.toString();
+    }
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 10.0),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            state.isSearching ? "" : category,
+            style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+          ),
+          Text(
+            title,
+            style: TextStyle(fontSize: 16),
+          ),
+        ],
       ),
     );
   }

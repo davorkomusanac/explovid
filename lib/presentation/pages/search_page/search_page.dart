@@ -4,6 +4,7 @@ import 'package:explovid/application/search/tv_show_search/tv_show_search_bloc.d
 import 'package:explovid/application/search/user_search/user_search_bloc.dart';
 import 'package:explovid/presentation/pages/actor_details_page/actor_details_page.dart';
 import 'package:explovid/presentation/pages/movie_details_page/movie_details_page.dart';
+import 'package:explovid/presentation/pages/profile_page/other_user_profile_page.dart';
 import 'package:explovid/presentation/pages/tv_show_details_page/tv_show_details_page.dart';
 import 'package:explovid/presentation/utilities/utilities.dart';
 import 'package:flutter/cupertino.dart';
@@ -325,12 +326,17 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
     return ListTile(
       leading: CircleAvatar(
         foregroundImage: NetworkImage(user.profilePhotoUrl),
-
       ),
       title: Text(user.username),
       subtitle: Text(user.fullName),
       onTap: () {
-        print("HELLO");
+        Navigator.of(context, rootNavigator: false).push(
+          MaterialPageRoute(
+            builder: (context) => OtherUserProfilePage(
+              ourUser: user,
+            ),
+          ),
+        );
       },
       // child: Padding(
       //   padding: const EdgeInsets.all(8.0),
