@@ -1,20 +1,19 @@
-import 'package:explovid/application/search/actor_search/actor_details/actor_details_bloc.dart';
-import 'package:explovid/application/search/actor_search/actor_search_bloc.dart';
 import 'package:explovid/application/auth/auth_check/auth_check_bloc.dart';
+import 'package:explovid/application/auth/sign_in_form/delete_account/delete_account_bloc.dart';
 import 'package:explovid/application/auth/sign_in_form/sign_in_form_bloc.dart';
 import 'package:explovid/application/feedback/feedback_bloc.dart';
-import 'package:explovid/application/search/movie_search/movie_details/movie_details_bloc.dart';
+import 'package:explovid/application/search/actor_search/actor_details/actor_details_bloc.dart';
+import 'package:explovid/application/search/actor_search/actor_search_bloc.dart';
 import 'package:explovid/application/search/movie_search/movie_search_bloc.dart';
 import 'package:explovid/application/search/tv_show_search/tv_show_details/tv_show_details_bloc.dart';
 import 'package:explovid/application/search/tv_show_search/tv_show_search_bloc.dart';
 import 'package:explovid/application/user_profile_information/current_user_profile_information/current_user_profile_information_bloc.dart';
 import 'package:explovid/application/user_profile_information/current_user_profile_information/current_user_profile_watchlist_watched/movie_lists/movie_lists_user_profile_bloc.dart';
 import 'package:explovid/application/user_profile_information/current_user_profile_information/current_user_profile_watchlist_watched/tv_show_lists/tv_show_lists_user_profile_bloc.dart';
-import 'package:explovid/data/search_db/actor_db/actor_repository.dart';
 import 'package:explovid/data/auth/auth_repository.dart';
+import 'package:explovid/data/search_db/actor_db/actor_repository.dart';
 import 'package:explovid/data/search_db/movie_db/movie_repository.dart';
 import 'package:explovid/data/search_db/tv_show_db/tv_show_repository.dart';
-
 import 'package:explovid/data/user_profile_db/current_user_profile_db/user_feedback_repository.dart';
 import 'package:explovid/data/user_profile_db/current_user_profile_db/user_profile_repository.dart';
 import 'package:explovid/presentation/pages/splash_page/splash_page.dart';
@@ -130,6 +129,11 @@ class _MyAppState extends State<MyApp> {
           )..add(
               CurrentUserProfileInformationEvent.loadCurrentUserProfilePressed(),
             ),
+        ),
+        BlocProvider(
+          create: (context) => DeleteAccountBloc(
+            _authRepository,
+          ),
         ),
       ],
       child: MaterialApp(
