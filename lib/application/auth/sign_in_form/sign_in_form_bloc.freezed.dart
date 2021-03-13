@@ -28,14 +28,6 @@ class _$SignInFormEventTearOff {
   }
 
 // ignore: unused_element
-  _PasswordConfirmationChanged passwordConfirmationChanged(
-      String passwordConfirmation) {
-    return _PasswordConfirmationChanged(
-      passwordConfirmation,
-    );
-  }
-
-// ignore: unused_element
   _FullNameChanged fullNameChanged(String fullName) {
     return _FullNameChanged(
       fullName,
@@ -97,7 +89,6 @@ mixin _$SignInFormEvent {
   TResult when<TResult extends Object>({
     @required TResult emailChanged(String email),
     @required TResult passwordChanged(String password),
-    @required TResult passwordConfirmationChanged(String passwordConfirmation),
     @required TResult fullNameChanged(String fullName),
     @required TResult usernameChanged(),
     @required TResult usernameBeingChecked(String username),
@@ -112,7 +103,6 @@ mixin _$SignInFormEvent {
   TResult maybeWhen<TResult extends Object>({
     TResult emailChanged(String email),
     TResult passwordChanged(String password),
-    TResult passwordConfirmationChanged(String passwordConfirmation),
     TResult fullNameChanged(String fullName),
     TResult usernameChanged(),
     TResult usernameBeingChecked(String username),
@@ -128,8 +118,6 @@ mixin _$SignInFormEvent {
   TResult map<TResult extends Object>({
     @required TResult emailChanged(_EmailChanged value),
     @required TResult passwordChanged(_PasswordChanged value),
-    @required
-        TResult passwordConfirmationChanged(_PasswordConfirmationChanged value),
     @required TResult fullNameChanged(_FullNameChanged value),
     @required TResult usernameChanged(_UsernameChanged value),
     @required TResult usernameBeingChecked(_UsernameBeingChecked value),
@@ -146,7 +134,6 @@ mixin _$SignInFormEvent {
   TResult maybeMap<TResult extends Object>({
     TResult emailChanged(_EmailChanged value),
     TResult passwordChanged(_PasswordChanged value),
-    TResult passwordConfirmationChanged(_PasswordConfirmationChanged value),
     TResult fullNameChanged(_FullNameChanged value),
     TResult usernameChanged(_UsernameChanged value),
     TResult usernameBeingChecked(_UsernameBeingChecked value),
@@ -241,7 +228,6 @@ class _$_EmailChanged implements _EmailChanged {
   TResult when<TResult extends Object>({
     @required TResult emailChanged(String email),
     @required TResult passwordChanged(String password),
-    @required TResult passwordConfirmationChanged(String passwordConfirmation),
     @required TResult fullNameChanged(String fullName),
     @required TResult usernameChanged(),
     @required TResult usernameBeingChecked(String username),
@@ -254,7 +240,6 @@ class _$_EmailChanged implements _EmailChanged {
   }) {
     assert(emailChanged != null);
     assert(passwordChanged != null);
-    assert(passwordConfirmationChanged != null);
     assert(fullNameChanged != null);
     assert(usernameChanged != null);
     assert(usernameBeingChecked != null);
@@ -272,7 +257,6 @@ class _$_EmailChanged implements _EmailChanged {
   TResult maybeWhen<TResult extends Object>({
     TResult emailChanged(String email),
     TResult passwordChanged(String password),
-    TResult passwordConfirmationChanged(String passwordConfirmation),
     TResult fullNameChanged(String fullName),
     TResult usernameChanged(),
     TResult usernameBeingChecked(String username),
@@ -296,8 +280,6 @@ class _$_EmailChanged implements _EmailChanged {
   TResult map<TResult extends Object>({
     @required TResult emailChanged(_EmailChanged value),
     @required TResult passwordChanged(_PasswordChanged value),
-    @required
-        TResult passwordConfirmationChanged(_PasswordConfirmationChanged value),
     @required TResult fullNameChanged(_FullNameChanged value),
     @required TResult usernameChanged(_UsernameChanged value),
     @required TResult usernameBeingChecked(_UsernameBeingChecked value),
@@ -312,7 +294,6 @@ class _$_EmailChanged implements _EmailChanged {
   }) {
     assert(emailChanged != null);
     assert(passwordChanged != null);
-    assert(passwordConfirmationChanged != null);
     assert(fullNameChanged != null);
     assert(usernameChanged != null);
     assert(usernameBeingChecked != null);
@@ -330,7 +311,6 @@ class _$_EmailChanged implements _EmailChanged {
   TResult maybeMap<TResult extends Object>({
     TResult emailChanged(_EmailChanged value),
     TResult passwordChanged(_PasswordChanged value),
-    TResult passwordConfirmationChanged(_PasswordConfirmationChanged value),
     TResult fullNameChanged(_FullNameChanged value),
     TResult usernameChanged(_UsernameChanged value),
     TResult usernameBeingChecked(_UsernameBeingChecked value),
@@ -423,7 +403,6 @@ class _$_PasswordChanged implements _PasswordChanged {
   TResult when<TResult extends Object>({
     @required TResult emailChanged(String email),
     @required TResult passwordChanged(String password),
-    @required TResult passwordConfirmationChanged(String passwordConfirmation),
     @required TResult fullNameChanged(String fullName),
     @required TResult usernameChanged(),
     @required TResult usernameBeingChecked(String username),
@@ -436,7 +415,6 @@ class _$_PasswordChanged implements _PasswordChanged {
   }) {
     assert(emailChanged != null);
     assert(passwordChanged != null);
-    assert(passwordConfirmationChanged != null);
     assert(fullNameChanged != null);
     assert(usernameChanged != null);
     assert(usernameBeingChecked != null);
@@ -454,7 +432,6 @@ class _$_PasswordChanged implements _PasswordChanged {
   TResult maybeWhen<TResult extends Object>({
     TResult emailChanged(String email),
     TResult passwordChanged(String password),
-    TResult passwordConfirmationChanged(String passwordConfirmation),
     TResult fullNameChanged(String fullName),
     TResult usernameChanged(),
     TResult usernameBeingChecked(String username),
@@ -478,8 +455,6 @@ class _$_PasswordChanged implements _PasswordChanged {
   TResult map<TResult extends Object>({
     @required TResult emailChanged(_EmailChanged value),
     @required TResult passwordChanged(_PasswordChanged value),
-    @required
-        TResult passwordConfirmationChanged(_PasswordConfirmationChanged value),
     @required TResult fullNameChanged(_FullNameChanged value),
     @required TResult usernameChanged(_UsernameChanged value),
     @required TResult usernameBeingChecked(_UsernameBeingChecked value),
@@ -494,7 +469,6 @@ class _$_PasswordChanged implements _PasswordChanged {
   }) {
     assert(emailChanged != null);
     assert(passwordChanged != null);
-    assert(passwordConfirmationChanged != null);
     assert(fullNameChanged != null);
     assert(usernameChanged != null);
     assert(usernameBeingChecked != null);
@@ -512,7 +486,6 @@ class _$_PasswordChanged implements _PasswordChanged {
   TResult maybeMap<TResult extends Object>({
     TResult emailChanged(_EmailChanged value),
     TResult passwordChanged(_PasswordChanged value),
-    TResult passwordConfirmationChanged(_PasswordConfirmationChanged value),
     TResult fullNameChanged(_FullNameChanged value),
     TResult usernameChanged(_UsernameChanged value),
     TResult usernameBeingChecked(_UsernameBeingChecked value),
@@ -539,198 +512,6 @@ abstract class _PasswordChanged implements SignInFormEvent {
   String get password;
   @JsonKey(ignore: true)
   _$PasswordChangedCopyWith<_PasswordChanged> get copyWith;
-}
-
-/// @nodoc
-abstract class _$PasswordConfirmationChangedCopyWith<$Res> {
-  factory _$PasswordConfirmationChangedCopyWith(
-          _PasswordConfirmationChanged value,
-          $Res Function(_PasswordConfirmationChanged) then) =
-      __$PasswordConfirmationChangedCopyWithImpl<$Res>;
-  $Res call({String passwordConfirmation});
-}
-
-/// @nodoc
-class __$PasswordConfirmationChangedCopyWithImpl<$Res>
-    extends _$SignInFormEventCopyWithImpl<$Res>
-    implements _$PasswordConfirmationChangedCopyWith<$Res> {
-  __$PasswordConfirmationChangedCopyWithImpl(
-      _PasswordConfirmationChanged _value,
-      $Res Function(_PasswordConfirmationChanged) _then)
-      : super(_value, (v) => _then(v as _PasswordConfirmationChanged));
-
-  @override
-  _PasswordConfirmationChanged get _value =>
-      super._value as _PasswordConfirmationChanged;
-
-  @override
-  $Res call({
-    Object passwordConfirmation = freezed,
-  }) {
-    return _then(_PasswordConfirmationChanged(
-      passwordConfirmation == freezed
-          ? _value.passwordConfirmation
-          : passwordConfirmation as String,
-    ));
-  }
-}
-
-/// @nodoc
-class _$_PasswordConfirmationChanged implements _PasswordConfirmationChanged {
-  const _$_PasswordConfirmationChanged(this.passwordConfirmation)
-      : assert(passwordConfirmation != null);
-
-  @override
-  final String passwordConfirmation;
-
-  @override
-  String toString() {
-    return 'SignInFormEvent.passwordConfirmationChanged(passwordConfirmation: $passwordConfirmation)';
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other is _PasswordConfirmationChanged &&
-            (identical(other.passwordConfirmation, passwordConfirmation) ||
-                const DeepCollectionEquality()
-                    .equals(other.passwordConfirmation, passwordConfirmation)));
-  }
-
-  @override
-  int get hashCode =>
-      runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(passwordConfirmation);
-
-  @JsonKey(ignore: true)
-  @override
-  _$PasswordConfirmationChangedCopyWith<_PasswordConfirmationChanged>
-      get copyWith => __$PasswordConfirmationChangedCopyWithImpl<
-          _PasswordConfirmationChanged>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object>({
-    @required TResult emailChanged(String email),
-    @required TResult passwordChanged(String password),
-    @required TResult passwordConfirmationChanged(String passwordConfirmation),
-    @required TResult fullNameChanged(String fullName),
-    @required TResult usernameChanged(),
-    @required TResult usernameBeingChecked(String username),
-    @required TResult registerUsernamePressed(),
-    @required TResult registerPressed(),
-    @required TResult signInWithEmailAndPasswordPressed(),
-    @required TResult signInWithGooglePressed(),
-    @required TResult signInWithApplePressed(),
-    @required TResult resetPasswordPressed(String email),
-  }) {
-    assert(emailChanged != null);
-    assert(passwordChanged != null);
-    assert(passwordConfirmationChanged != null);
-    assert(fullNameChanged != null);
-    assert(usernameChanged != null);
-    assert(usernameBeingChecked != null);
-    assert(registerUsernamePressed != null);
-    assert(registerPressed != null);
-    assert(signInWithEmailAndPasswordPressed != null);
-    assert(signInWithGooglePressed != null);
-    assert(signInWithApplePressed != null);
-    assert(resetPasswordPressed != null);
-    return passwordConfirmationChanged(passwordConfirmation);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object>({
-    TResult emailChanged(String email),
-    TResult passwordChanged(String password),
-    TResult passwordConfirmationChanged(String passwordConfirmation),
-    TResult fullNameChanged(String fullName),
-    TResult usernameChanged(),
-    TResult usernameBeingChecked(String username),
-    TResult registerUsernamePressed(),
-    TResult registerPressed(),
-    TResult signInWithEmailAndPasswordPressed(),
-    TResult signInWithGooglePressed(),
-    TResult signInWithApplePressed(),
-    TResult resetPasswordPressed(String email),
-    @required TResult orElse(),
-  }) {
-    assert(orElse != null);
-    if (passwordConfirmationChanged != null) {
-      return passwordConfirmationChanged(passwordConfirmation);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object>({
-    @required TResult emailChanged(_EmailChanged value),
-    @required TResult passwordChanged(_PasswordChanged value),
-    @required
-        TResult passwordConfirmationChanged(_PasswordConfirmationChanged value),
-    @required TResult fullNameChanged(_FullNameChanged value),
-    @required TResult usernameChanged(_UsernameChanged value),
-    @required TResult usernameBeingChecked(_UsernameBeingChecked value),
-    @required TResult registerUsernamePressed(_RegisterUsernamePressed value),
-    @required TResult registerPressed(_RegisterPressed value),
-    @required
-        TResult signInWithEmailAndPasswordPressed(
-            _SignInWithEmailAndPasswordPressed value),
-    @required TResult signInWithGooglePressed(_SignInWithGooglePressed value),
-    @required TResult signInWithApplePressed(_SignInWithApplePressed value),
-    @required TResult resetPasswordPressed(_ResetPasswordPressed value),
-  }) {
-    assert(emailChanged != null);
-    assert(passwordChanged != null);
-    assert(passwordConfirmationChanged != null);
-    assert(fullNameChanged != null);
-    assert(usernameChanged != null);
-    assert(usernameBeingChecked != null);
-    assert(registerUsernamePressed != null);
-    assert(registerPressed != null);
-    assert(signInWithEmailAndPasswordPressed != null);
-    assert(signInWithGooglePressed != null);
-    assert(signInWithApplePressed != null);
-    assert(resetPasswordPressed != null);
-    return passwordConfirmationChanged(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object>({
-    TResult emailChanged(_EmailChanged value),
-    TResult passwordChanged(_PasswordChanged value),
-    TResult passwordConfirmationChanged(_PasswordConfirmationChanged value),
-    TResult fullNameChanged(_FullNameChanged value),
-    TResult usernameChanged(_UsernameChanged value),
-    TResult usernameBeingChecked(_UsernameBeingChecked value),
-    TResult registerUsernamePressed(_RegisterUsernamePressed value),
-    TResult registerPressed(_RegisterPressed value),
-    TResult signInWithEmailAndPasswordPressed(
-        _SignInWithEmailAndPasswordPressed value),
-    TResult signInWithGooglePressed(_SignInWithGooglePressed value),
-    TResult signInWithApplePressed(_SignInWithApplePressed value),
-    TResult resetPasswordPressed(_ResetPasswordPressed value),
-    @required TResult orElse(),
-  }) {
-    assert(orElse != null);
-    if (passwordConfirmationChanged != null) {
-      return passwordConfirmationChanged(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _PasswordConfirmationChanged implements SignInFormEvent {
-  const factory _PasswordConfirmationChanged(String passwordConfirmation) =
-      _$_PasswordConfirmationChanged;
-
-  String get passwordConfirmation;
-  @JsonKey(ignore: true)
-  _$PasswordConfirmationChangedCopyWith<_PasswordConfirmationChanged>
-      get copyWith;
 }
 
 /// @nodoc
@@ -797,7 +578,6 @@ class _$_FullNameChanged implements _FullNameChanged {
   TResult when<TResult extends Object>({
     @required TResult emailChanged(String email),
     @required TResult passwordChanged(String password),
-    @required TResult passwordConfirmationChanged(String passwordConfirmation),
     @required TResult fullNameChanged(String fullName),
     @required TResult usernameChanged(),
     @required TResult usernameBeingChecked(String username),
@@ -810,7 +590,6 @@ class _$_FullNameChanged implements _FullNameChanged {
   }) {
     assert(emailChanged != null);
     assert(passwordChanged != null);
-    assert(passwordConfirmationChanged != null);
     assert(fullNameChanged != null);
     assert(usernameChanged != null);
     assert(usernameBeingChecked != null);
@@ -828,7 +607,6 @@ class _$_FullNameChanged implements _FullNameChanged {
   TResult maybeWhen<TResult extends Object>({
     TResult emailChanged(String email),
     TResult passwordChanged(String password),
-    TResult passwordConfirmationChanged(String passwordConfirmation),
     TResult fullNameChanged(String fullName),
     TResult usernameChanged(),
     TResult usernameBeingChecked(String username),
@@ -852,8 +630,6 @@ class _$_FullNameChanged implements _FullNameChanged {
   TResult map<TResult extends Object>({
     @required TResult emailChanged(_EmailChanged value),
     @required TResult passwordChanged(_PasswordChanged value),
-    @required
-        TResult passwordConfirmationChanged(_PasswordConfirmationChanged value),
     @required TResult fullNameChanged(_FullNameChanged value),
     @required TResult usernameChanged(_UsernameChanged value),
     @required TResult usernameBeingChecked(_UsernameBeingChecked value),
@@ -868,7 +644,6 @@ class _$_FullNameChanged implements _FullNameChanged {
   }) {
     assert(emailChanged != null);
     assert(passwordChanged != null);
-    assert(passwordConfirmationChanged != null);
     assert(fullNameChanged != null);
     assert(usernameChanged != null);
     assert(usernameBeingChecked != null);
@@ -886,7 +661,6 @@ class _$_FullNameChanged implements _FullNameChanged {
   TResult maybeMap<TResult extends Object>({
     TResult emailChanged(_EmailChanged value),
     TResult passwordChanged(_PasswordChanged value),
-    TResult passwordConfirmationChanged(_PasswordConfirmationChanged value),
     TResult fullNameChanged(_FullNameChanged value),
     TResult usernameChanged(_UsernameChanged value),
     TResult usernameBeingChecked(_UsernameBeingChecked value),
@@ -956,7 +730,6 @@ class _$_UsernameChanged implements _UsernameChanged {
   TResult when<TResult extends Object>({
     @required TResult emailChanged(String email),
     @required TResult passwordChanged(String password),
-    @required TResult passwordConfirmationChanged(String passwordConfirmation),
     @required TResult fullNameChanged(String fullName),
     @required TResult usernameChanged(),
     @required TResult usernameBeingChecked(String username),
@@ -969,7 +742,6 @@ class _$_UsernameChanged implements _UsernameChanged {
   }) {
     assert(emailChanged != null);
     assert(passwordChanged != null);
-    assert(passwordConfirmationChanged != null);
     assert(fullNameChanged != null);
     assert(usernameChanged != null);
     assert(usernameBeingChecked != null);
@@ -987,7 +759,6 @@ class _$_UsernameChanged implements _UsernameChanged {
   TResult maybeWhen<TResult extends Object>({
     TResult emailChanged(String email),
     TResult passwordChanged(String password),
-    TResult passwordConfirmationChanged(String passwordConfirmation),
     TResult fullNameChanged(String fullName),
     TResult usernameChanged(),
     TResult usernameBeingChecked(String username),
@@ -1011,8 +782,6 @@ class _$_UsernameChanged implements _UsernameChanged {
   TResult map<TResult extends Object>({
     @required TResult emailChanged(_EmailChanged value),
     @required TResult passwordChanged(_PasswordChanged value),
-    @required
-        TResult passwordConfirmationChanged(_PasswordConfirmationChanged value),
     @required TResult fullNameChanged(_FullNameChanged value),
     @required TResult usernameChanged(_UsernameChanged value),
     @required TResult usernameBeingChecked(_UsernameBeingChecked value),
@@ -1027,7 +796,6 @@ class _$_UsernameChanged implements _UsernameChanged {
   }) {
     assert(emailChanged != null);
     assert(passwordChanged != null);
-    assert(passwordConfirmationChanged != null);
     assert(fullNameChanged != null);
     assert(usernameChanged != null);
     assert(usernameBeingChecked != null);
@@ -1045,7 +813,6 @@ class _$_UsernameChanged implements _UsernameChanged {
   TResult maybeMap<TResult extends Object>({
     TResult emailChanged(_EmailChanged value),
     TResult passwordChanged(_PasswordChanged value),
-    TResult passwordConfirmationChanged(_PasswordConfirmationChanged value),
     TResult fullNameChanged(_FullNameChanged value),
     TResult usernameChanged(_UsernameChanged value),
     TResult usernameBeingChecked(_UsernameBeingChecked value),
@@ -1135,7 +902,6 @@ class _$_UsernameBeingChecked implements _UsernameBeingChecked {
   TResult when<TResult extends Object>({
     @required TResult emailChanged(String email),
     @required TResult passwordChanged(String password),
-    @required TResult passwordConfirmationChanged(String passwordConfirmation),
     @required TResult fullNameChanged(String fullName),
     @required TResult usernameChanged(),
     @required TResult usernameBeingChecked(String username),
@@ -1148,7 +914,6 @@ class _$_UsernameBeingChecked implements _UsernameBeingChecked {
   }) {
     assert(emailChanged != null);
     assert(passwordChanged != null);
-    assert(passwordConfirmationChanged != null);
     assert(fullNameChanged != null);
     assert(usernameChanged != null);
     assert(usernameBeingChecked != null);
@@ -1166,7 +931,6 @@ class _$_UsernameBeingChecked implements _UsernameBeingChecked {
   TResult maybeWhen<TResult extends Object>({
     TResult emailChanged(String email),
     TResult passwordChanged(String password),
-    TResult passwordConfirmationChanged(String passwordConfirmation),
     TResult fullNameChanged(String fullName),
     TResult usernameChanged(),
     TResult usernameBeingChecked(String username),
@@ -1190,8 +954,6 @@ class _$_UsernameBeingChecked implements _UsernameBeingChecked {
   TResult map<TResult extends Object>({
     @required TResult emailChanged(_EmailChanged value),
     @required TResult passwordChanged(_PasswordChanged value),
-    @required
-        TResult passwordConfirmationChanged(_PasswordConfirmationChanged value),
     @required TResult fullNameChanged(_FullNameChanged value),
     @required TResult usernameChanged(_UsernameChanged value),
     @required TResult usernameBeingChecked(_UsernameBeingChecked value),
@@ -1206,7 +968,6 @@ class _$_UsernameBeingChecked implements _UsernameBeingChecked {
   }) {
     assert(emailChanged != null);
     assert(passwordChanged != null);
-    assert(passwordConfirmationChanged != null);
     assert(fullNameChanged != null);
     assert(usernameChanged != null);
     assert(usernameBeingChecked != null);
@@ -1224,7 +985,6 @@ class _$_UsernameBeingChecked implements _UsernameBeingChecked {
   TResult maybeMap<TResult extends Object>({
     TResult emailChanged(_EmailChanged value),
     TResult passwordChanged(_PasswordChanged value),
-    TResult passwordConfirmationChanged(_PasswordConfirmationChanged value),
     TResult fullNameChanged(_FullNameChanged value),
     TResult usernameChanged(_UsernameChanged value),
     TResult usernameBeingChecked(_UsernameBeingChecked value),
@@ -1296,7 +1056,6 @@ class _$_RegisterUsernamePressed implements _RegisterUsernamePressed {
   TResult when<TResult extends Object>({
     @required TResult emailChanged(String email),
     @required TResult passwordChanged(String password),
-    @required TResult passwordConfirmationChanged(String passwordConfirmation),
     @required TResult fullNameChanged(String fullName),
     @required TResult usernameChanged(),
     @required TResult usernameBeingChecked(String username),
@@ -1309,7 +1068,6 @@ class _$_RegisterUsernamePressed implements _RegisterUsernamePressed {
   }) {
     assert(emailChanged != null);
     assert(passwordChanged != null);
-    assert(passwordConfirmationChanged != null);
     assert(fullNameChanged != null);
     assert(usernameChanged != null);
     assert(usernameBeingChecked != null);
@@ -1327,7 +1085,6 @@ class _$_RegisterUsernamePressed implements _RegisterUsernamePressed {
   TResult maybeWhen<TResult extends Object>({
     TResult emailChanged(String email),
     TResult passwordChanged(String password),
-    TResult passwordConfirmationChanged(String passwordConfirmation),
     TResult fullNameChanged(String fullName),
     TResult usernameChanged(),
     TResult usernameBeingChecked(String username),
@@ -1351,8 +1108,6 @@ class _$_RegisterUsernamePressed implements _RegisterUsernamePressed {
   TResult map<TResult extends Object>({
     @required TResult emailChanged(_EmailChanged value),
     @required TResult passwordChanged(_PasswordChanged value),
-    @required
-        TResult passwordConfirmationChanged(_PasswordConfirmationChanged value),
     @required TResult fullNameChanged(_FullNameChanged value),
     @required TResult usernameChanged(_UsernameChanged value),
     @required TResult usernameBeingChecked(_UsernameBeingChecked value),
@@ -1367,7 +1122,6 @@ class _$_RegisterUsernamePressed implements _RegisterUsernamePressed {
   }) {
     assert(emailChanged != null);
     assert(passwordChanged != null);
-    assert(passwordConfirmationChanged != null);
     assert(fullNameChanged != null);
     assert(usernameChanged != null);
     assert(usernameBeingChecked != null);
@@ -1385,7 +1139,6 @@ class _$_RegisterUsernamePressed implements _RegisterUsernamePressed {
   TResult maybeMap<TResult extends Object>({
     TResult emailChanged(_EmailChanged value),
     TResult passwordChanged(_PasswordChanged value),
-    TResult passwordConfirmationChanged(_PasswordConfirmationChanged value),
     TResult fullNameChanged(_FullNameChanged value),
     TResult usernameChanged(_UsernameChanged value),
     TResult usernameBeingChecked(_UsernameBeingChecked value),
@@ -1451,7 +1204,6 @@ class _$_RegisterPressed implements _RegisterPressed {
   TResult when<TResult extends Object>({
     @required TResult emailChanged(String email),
     @required TResult passwordChanged(String password),
-    @required TResult passwordConfirmationChanged(String passwordConfirmation),
     @required TResult fullNameChanged(String fullName),
     @required TResult usernameChanged(),
     @required TResult usernameBeingChecked(String username),
@@ -1464,7 +1216,6 @@ class _$_RegisterPressed implements _RegisterPressed {
   }) {
     assert(emailChanged != null);
     assert(passwordChanged != null);
-    assert(passwordConfirmationChanged != null);
     assert(fullNameChanged != null);
     assert(usernameChanged != null);
     assert(usernameBeingChecked != null);
@@ -1482,7 +1233,6 @@ class _$_RegisterPressed implements _RegisterPressed {
   TResult maybeWhen<TResult extends Object>({
     TResult emailChanged(String email),
     TResult passwordChanged(String password),
-    TResult passwordConfirmationChanged(String passwordConfirmation),
     TResult fullNameChanged(String fullName),
     TResult usernameChanged(),
     TResult usernameBeingChecked(String username),
@@ -1506,8 +1256,6 @@ class _$_RegisterPressed implements _RegisterPressed {
   TResult map<TResult extends Object>({
     @required TResult emailChanged(_EmailChanged value),
     @required TResult passwordChanged(_PasswordChanged value),
-    @required
-        TResult passwordConfirmationChanged(_PasswordConfirmationChanged value),
     @required TResult fullNameChanged(_FullNameChanged value),
     @required TResult usernameChanged(_UsernameChanged value),
     @required TResult usernameBeingChecked(_UsernameBeingChecked value),
@@ -1522,7 +1270,6 @@ class _$_RegisterPressed implements _RegisterPressed {
   }) {
     assert(emailChanged != null);
     assert(passwordChanged != null);
-    assert(passwordConfirmationChanged != null);
     assert(fullNameChanged != null);
     assert(usernameChanged != null);
     assert(usernameBeingChecked != null);
@@ -1540,7 +1287,6 @@ class _$_RegisterPressed implements _RegisterPressed {
   TResult maybeMap<TResult extends Object>({
     TResult emailChanged(_EmailChanged value),
     TResult passwordChanged(_PasswordChanged value),
-    TResult passwordConfirmationChanged(_PasswordConfirmationChanged value),
     TResult fullNameChanged(_FullNameChanged value),
     TResult usernameChanged(_UsernameChanged value),
     TResult usernameBeingChecked(_UsernameBeingChecked value),
@@ -1611,7 +1357,6 @@ class _$_SignInWithEmailAndPasswordPressed
   TResult when<TResult extends Object>({
     @required TResult emailChanged(String email),
     @required TResult passwordChanged(String password),
-    @required TResult passwordConfirmationChanged(String passwordConfirmation),
     @required TResult fullNameChanged(String fullName),
     @required TResult usernameChanged(),
     @required TResult usernameBeingChecked(String username),
@@ -1624,7 +1369,6 @@ class _$_SignInWithEmailAndPasswordPressed
   }) {
     assert(emailChanged != null);
     assert(passwordChanged != null);
-    assert(passwordConfirmationChanged != null);
     assert(fullNameChanged != null);
     assert(usernameChanged != null);
     assert(usernameBeingChecked != null);
@@ -1642,7 +1386,6 @@ class _$_SignInWithEmailAndPasswordPressed
   TResult maybeWhen<TResult extends Object>({
     TResult emailChanged(String email),
     TResult passwordChanged(String password),
-    TResult passwordConfirmationChanged(String passwordConfirmation),
     TResult fullNameChanged(String fullName),
     TResult usernameChanged(),
     TResult usernameBeingChecked(String username),
@@ -1666,8 +1409,6 @@ class _$_SignInWithEmailAndPasswordPressed
   TResult map<TResult extends Object>({
     @required TResult emailChanged(_EmailChanged value),
     @required TResult passwordChanged(_PasswordChanged value),
-    @required
-        TResult passwordConfirmationChanged(_PasswordConfirmationChanged value),
     @required TResult fullNameChanged(_FullNameChanged value),
     @required TResult usernameChanged(_UsernameChanged value),
     @required TResult usernameBeingChecked(_UsernameBeingChecked value),
@@ -1682,7 +1423,6 @@ class _$_SignInWithEmailAndPasswordPressed
   }) {
     assert(emailChanged != null);
     assert(passwordChanged != null);
-    assert(passwordConfirmationChanged != null);
     assert(fullNameChanged != null);
     assert(usernameChanged != null);
     assert(usernameBeingChecked != null);
@@ -1700,7 +1440,6 @@ class _$_SignInWithEmailAndPasswordPressed
   TResult maybeMap<TResult extends Object>({
     TResult emailChanged(_EmailChanged value),
     TResult passwordChanged(_PasswordChanged value),
-    TResult passwordConfirmationChanged(_PasswordConfirmationChanged value),
     TResult fullNameChanged(_FullNameChanged value),
     TResult usernameChanged(_UsernameChanged value),
     TResult usernameBeingChecked(_UsernameBeingChecked value),
@@ -1768,7 +1507,6 @@ class _$_SignInWithGooglePressed implements _SignInWithGooglePressed {
   TResult when<TResult extends Object>({
     @required TResult emailChanged(String email),
     @required TResult passwordChanged(String password),
-    @required TResult passwordConfirmationChanged(String passwordConfirmation),
     @required TResult fullNameChanged(String fullName),
     @required TResult usernameChanged(),
     @required TResult usernameBeingChecked(String username),
@@ -1781,7 +1519,6 @@ class _$_SignInWithGooglePressed implements _SignInWithGooglePressed {
   }) {
     assert(emailChanged != null);
     assert(passwordChanged != null);
-    assert(passwordConfirmationChanged != null);
     assert(fullNameChanged != null);
     assert(usernameChanged != null);
     assert(usernameBeingChecked != null);
@@ -1799,7 +1536,6 @@ class _$_SignInWithGooglePressed implements _SignInWithGooglePressed {
   TResult maybeWhen<TResult extends Object>({
     TResult emailChanged(String email),
     TResult passwordChanged(String password),
-    TResult passwordConfirmationChanged(String passwordConfirmation),
     TResult fullNameChanged(String fullName),
     TResult usernameChanged(),
     TResult usernameBeingChecked(String username),
@@ -1823,8 +1559,6 @@ class _$_SignInWithGooglePressed implements _SignInWithGooglePressed {
   TResult map<TResult extends Object>({
     @required TResult emailChanged(_EmailChanged value),
     @required TResult passwordChanged(_PasswordChanged value),
-    @required
-        TResult passwordConfirmationChanged(_PasswordConfirmationChanged value),
     @required TResult fullNameChanged(_FullNameChanged value),
     @required TResult usernameChanged(_UsernameChanged value),
     @required TResult usernameBeingChecked(_UsernameBeingChecked value),
@@ -1839,7 +1573,6 @@ class _$_SignInWithGooglePressed implements _SignInWithGooglePressed {
   }) {
     assert(emailChanged != null);
     assert(passwordChanged != null);
-    assert(passwordConfirmationChanged != null);
     assert(fullNameChanged != null);
     assert(usernameChanged != null);
     assert(usernameBeingChecked != null);
@@ -1857,7 +1590,6 @@ class _$_SignInWithGooglePressed implements _SignInWithGooglePressed {
   TResult maybeMap<TResult extends Object>({
     TResult emailChanged(_EmailChanged value),
     TResult passwordChanged(_PasswordChanged value),
-    TResult passwordConfirmationChanged(_PasswordConfirmationChanged value),
     TResult fullNameChanged(_FullNameChanged value),
     TResult usernameChanged(_UsernameChanged value),
     TResult usernameBeingChecked(_UsernameBeingChecked value),
@@ -1923,7 +1655,6 @@ class _$_SignInWithApplePressed implements _SignInWithApplePressed {
   TResult when<TResult extends Object>({
     @required TResult emailChanged(String email),
     @required TResult passwordChanged(String password),
-    @required TResult passwordConfirmationChanged(String passwordConfirmation),
     @required TResult fullNameChanged(String fullName),
     @required TResult usernameChanged(),
     @required TResult usernameBeingChecked(String username),
@@ -1936,7 +1667,6 @@ class _$_SignInWithApplePressed implements _SignInWithApplePressed {
   }) {
     assert(emailChanged != null);
     assert(passwordChanged != null);
-    assert(passwordConfirmationChanged != null);
     assert(fullNameChanged != null);
     assert(usernameChanged != null);
     assert(usernameBeingChecked != null);
@@ -1954,7 +1684,6 @@ class _$_SignInWithApplePressed implements _SignInWithApplePressed {
   TResult maybeWhen<TResult extends Object>({
     TResult emailChanged(String email),
     TResult passwordChanged(String password),
-    TResult passwordConfirmationChanged(String passwordConfirmation),
     TResult fullNameChanged(String fullName),
     TResult usernameChanged(),
     TResult usernameBeingChecked(String username),
@@ -1978,8 +1707,6 @@ class _$_SignInWithApplePressed implements _SignInWithApplePressed {
   TResult map<TResult extends Object>({
     @required TResult emailChanged(_EmailChanged value),
     @required TResult passwordChanged(_PasswordChanged value),
-    @required
-        TResult passwordConfirmationChanged(_PasswordConfirmationChanged value),
     @required TResult fullNameChanged(_FullNameChanged value),
     @required TResult usernameChanged(_UsernameChanged value),
     @required TResult usernameBeingChecked(_UsernameBeingChecked value),
@@ -1994,7 +1721,6 @@ class _$_SignInWithApplePressed implements _SignInWithApplePressed {
   }) {
     assert(emailChanged != null);
     assert(passwordChanged != null);
-    assert(passwordConfirmationChanged != null);
     assert(fullNameChanged != null);
     assert(usernameChanged != null);
     assert(usernameBeingChecked != null);
@@ -2012,7 +1738,6 @@ class _$_SignInWithApplePressed implements _SignInWithApplePressed {
   TResult maybeMap<TResult extends Object>({
     TResult emailChanged(_EmailChanged value),
     TResult passwordChanged(_PasswordChanged value),
-    TResult passwordConfirmationChanged(_PasswordConfirmationChanged value),
     TResult fullNameChanged(_FullNameChanged value),
     TResult usernameChanged(_UsernameChanged value),
     TResult usernameBeingChecked(_UsernameBeingChecked value),
@@ -2101,7 +1826,6 @@ class _$_ResetPasswordPressed implements _ResetPasswordPressed {
   TResult when<TResult extends Object>({
     @required TResult emailChanged(String email),
     @required TResult passwordChanged(String password),
-    @required TResult passwordConfirmationChanged(String passwordConfirmation),
     @required TResult fullNameChanged(String fullName),
     @required TResult usernameChanged(),
     @required TResult usernameBeingChecked(String username),
@@ -2114,7 +1838,6 @@ class _$_ResetPasswordPressed implements _ResetPasswordPressed {
   }) {
     assert(emailChanged != null);
     assert(passwordChanged != null);
-    assert(passwordConfirmationChanged != null);
     assert(fullNameChanged != null);
     assert(usernameChanged != null);
     assert(usernameBeingChecked != null);
@@ -2132,7 +1855,6 @@ class _$_ResetPasswordPressed implements _ResetPasswordPressed {
   TResult maybeWhen<TResult extends Object>({
     TResult emailChanged(String email),
     TResult passwordChanged(String password),
-    TResult passwordConfirmationChanged(String passwordConfirmation),
     TResult fullNameChanged(String fullName),
     TResult usernameChanged(),
     TResult usernameBeingChecked(String username),
@@ -2156,8 +1878,6 @@ class _$_ResetPasswordPressed implements _ResetPasswordPressed {
   TResult map<TResult extends Object>({
     @required TResult emailChanged(_EmailChanged value),
     @required TResult passwordChanged(_PasswordChanged value),
-    @required
-        TResult passwordConfirmationChanged(_PasswordConfirmationChanged value),
     @required TResult fullNameChanged(_FullNameChanged value),
     @required TResult usernameChanged(_UsernameChanged value),
     @required TResult usernameBeingChecked(_UsernameBeingChecked value),
@@ -2172,7 +1892,6 @@ class _$_ResetPasswordPressed implements _ResetPasswordPressed {
   }) {
     assert(emailChanged != null);
     assert(passwordChanged != null);
-    assert(passwordConfirmationChanged != null);
     assert(fullNameChanged != null);
     assert(usernameChanged != null);
     assert(usernameBeingChecked != null);
@@ -2190,7 +1909,6 @@ class _$_ResetPasswordPressed implements _ResetPasswordPressed {
   TResult maybeMap<TResult extends Object>({
     TResult emailChanged(_EmailChanged value),
     TResult passwordChanged(_PasswordChanged value),
-    TResult passwordConfirmationChanged(_PasswordConfirmationChanged value),
     TResult fullNameChanged(_FullNameChanged value),
     TResult usernameChanged(_UsernameChanged value),
     TResult usernameBeingChecked(_UsernameBeingChecked value),
@@ -2227,7 +1945,6 @@ class _$SignInFormStateTearOff {
   _SignInFormState call(
       {@required String emailAddress,
       @required String password,
-      @required String confirmation,
       @required String fullName,
       @required String errorMessage,
       @required bool isAuthStateChanged,
@@ -2240,7 +1957,6 @@ class _$SignInFormStateTearOff {
     return _SignInFormState(
       emailAddress: emailAddress,
       password: password,
-      confirmation: confirmation,
       fullName: fullName,
       errorMessage: errorMessage,
       isAuthStateChanged: isAuthStateChanged,
@@ -2262,7 +1978,6 @@ const $SignInFormState = _$SignInFormStateTearOff();
 mixin _$SignInFormState {
   String get emailAddress;
   String get password;
-  String get confirmation;
   String get fullName;
   String get errorMessage;
   bool get isAuthStateChanged;
@@ -2285,7 +2000,6 @@ abstract class $SignInFormStateCopyWith<$Res> {
   $Res call(
       {String emailAddress,
       String password,
-      String confirmation,
       String fullName,
       String errorMessage,
       bool isAuthStateChanged,
@@ -2310,7 +2024,6 @@ class _$SignInFormStateCopyWithImpl<$Res>
   $Res call({
     Object emailAddress = freezed,
     Object password = freezed,
-    Object confirmation = freezed,
     Object fullName = freezed,
     Object errorMessage = freezed,
     Object isAuthStateChanged = freezed,
@@ -2326,9 +2039,6 @@ class _$SignInFormStateCopyWithImpl<$Res>
           ? _value.emailAddress
           : emailAddress as String,
       password: password == freezed ? _value.password : password as String,
-      confirmation: confirmation == freezed
-          ? _value.confirmation
-          : confirmation as String,
       fullName: fullName == freezed ? _value.fullName : fullName as String,
       errorMessage: errorMessage == freezed
           ? _value.errorMessage
@@ -2366,7 +2076,6 @@ abstract class _$SignInFormStateCopyWith<$Res>
   $Res call(
       {String emailAddress,
       String password,
-      String confirmation,
       String fullName,
       String errorMessage,
       bool isAuthStateChanged,
@@ -2393,7 +2102,6 @@ class __$SignInFormStateCopyWithImpl<$Res>
   $Res call({
     Object emailAddress = freezed,
     Object password = freezed,
-    Object confirmation = freezed,
     Object fullName = freezed,
     Object errorMessage = freezed,
     Object isAuthStateChanged = freezed,
@@ -2409,9 +2117,6 @@ class __$SignInFormStateCopyWithImpl<$Res>
           ? _value.emailAddress
           : emailAddress as String,
       password: password == freezed ? _value.password : password as String,
-      confirmation: confirmation == freezed
-          ? _value.confirmation
-          : confirmation as String,
       fullName: fullName == freezed ? _value.fullName : fullName as String,
       errorMessage: errorMessage == freezed
           ? _value.errorMessage
@@ -2444,7 +2149,6 @@ class _$_SignInFormState implements _SignInFormState {
   const _$_SignInFormState(
       {@required this.emailAddress,
       @required this.password,
-      @required this.confirmation,
       @required this.fullName,
       @required this.errorMessage,
       @required this.isAuthStateChanged,
@@ -2456,7 +2160,6 @@ class _$_SignInFormState implements _SignInFormState {
       @required this.usernameErrorMessage})
       : assert(emailAddress != null),
         assert(password != null),
-        assert(confirmation != null),
         assert(fullName != null),
         assert(errorMessage != null),
         assert(isAuthStateChanged != null),
@@ -2471,8 +2174,6 @@ class _$_SignInFormState implements _SignInFormState {
   final String emailAddress;
   @override
   final String password;
-  @override
-  final String confirmation;
   @override
   final String fullName;
   @override
@@ -2494,7 +2195,7 @@ class _$_SignInFormState implements _SignInFormState {
 
   @override
   String toString() {
-    return 'SignInFormState(emailAddress: $emailAddress, password: $password, confirmation: $confirmation, fullName: $fullName, errorMessage: $errorMessage, isAuthStateChanged: $isAuthStateChanged, isSubmitting: $isSubmitting, snackBarMessageForPasswordReset: $snackBarMessageForPasswordReset, isUserTypingUsername: $isUserTypingUsername, isUsernameAvailable: $isUsernameAvailable, username: $username, usernameErrorMessage: $usernameErrorMessage)';
+    return 'SignInFormState(emailAddress: $emailAddress, password: $password, fullName: $fullName, errorMessage: $errorMessage, isAuthStateChanged: $isAuthStateChanged, isSubmitting: $isSubmitting, snackBarMessageForPasswordReset: $snackBarMessageForPasswordReset, isUserTypingUsername: $isUserTypingUsername, isUsernameAvailable: $isUsernameAvailable, username: $username, usernameErrorMessage: $usernameErrorMessage)';
   }
 
   @override
@@ -2507,9 +2208,6 @@ class _$_SignInFormState implements _SignInFormState {
             (identical(other.password, password) ||
                 const DeepCollectionEquality()
                     .equals(other.password, password)) &&
-            (identical(other.confirmation, confirmation) ||
-                const DeepCollectionEquality()
-                    .equals(other.confirmation, confirmation)) &&
             (identical(other.fullName, fullName) ||
                 const DeepCollectionEquality()
                     .equals(other.fullName, fullName)) &&
@@ -2546,7 +2244,6 @@ class _$_SignInFormState implements _SignInFormState {
       runtimeType.hashCode ^
       const DeepCollectionEquality().hash(emailAddress) ^
       const DeepCollectionEquality().hash(password) ^
-      const DeepCollectionEquality().hash(confirmation) ^
       const DeepCollectionEquality().hash(fullName) ^
       const DeepCollectionEquality().hash(errorMessage) ^
       const DeepCollectionEquality().hash(isAuthStateChanged) ^
@@ -2567,7 +2264,6 @@ abstract class _SignInFormState implements SignInFormState {
   const factory _SignInFormState(
       {@required String emailAddress,
       @required String password,
-      @required String confirmation,
       @required String fullName,
       @required String errorMessage,
       @required bool isAuthStateChanged,
@@ -2582,8 +2278,6 @@ abstract class _SignInFormState implements SignInFormState {
   String get emailAddress;
   @override
   String get password;
-  @override
-  String get confirmation;
   @override
   String get fullName;
   @override

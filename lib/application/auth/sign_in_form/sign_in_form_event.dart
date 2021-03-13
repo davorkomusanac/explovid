@@ -5,7 +5,6 @@ abstract class SignInFormEvent with _$SignInFormEvent {
   //TextFields values which can be changed during registration/login
   const factory SignInFormEvent.emailChanged(String email) = _EmailChanged;
   const factory SignInFormEvent.passwordChanged(String password) = _PasswordChanged;
-  const factory SignInFormEvent.passwordConfirmationChanged(String passwordConfirmation) = _PasswordConfirmationChanged;
   const factory SignInFormEvent.fullNameChanged(String fullName) = _FullNameChanged;
   //Having two userName events so that the sufficient icon can be displayed
   const factory SignInFormEvent.usernameChanged() = _UsernameChanged;

@@ -91,10 +91,10 @@ class _SignUpPageState extends State<SignUpPage> {
                     Padding(
                       padding: const EdgeInsets.only(left: 25, right: 25, top: 25),
                       child: TextFormField(
-                        inputFormatters: [
-                          FilteringTextInputFormatter.deny(RegExp(r'[ ]')),
-                          LengthLimitingTextInputFormatter(30),
-                        ],
+                          inputFormatters: [
+                            FilteringTextInputFormatter.deny(RegExp(r'[ ]')),
+                            LengthLimitingTextInputFormatter(30),
+                          ],
                           decoration: InputDecoration(
                             prefixIcon: Icon(
                               Icons.person,
@@ -144,23 +144,6 @@ class _SignUpPageState extends State<SignUpPage> {
                         ),
                         onChanged: (value) => context.read<SignInFormBloc>().add(
                               SignInFormEvent.passwordChanged(value),
-                            ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 25, right: 25, top: 25, bottom: 15),
-                      child: TextFormField(
-                        autocorrect: false,
-                        obscureText: true,
-                        decoration: const InputDecoration(
-                          prefixIcon: Icon(
-                            Icons.lock_outline,
-                            color: Colors.tealAccent,
-                          ),
-                          labelText: 'Confirm your password...',
-                        ),
-                        onChanged: (value) => context.read<SignInFormBloc>().add(
-                              SignInFormEvent.passwordConfirmationChanged(value),
                             ),
                       ),
                     ),
