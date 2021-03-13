@@ -23,6 +23,14 @@ class AuthRepository {
     return _auth.currentUser.emailVerified;
   }
 
+  String getAuthProvider() {
+    return _auth.currentUser.providerData[0].providerId;
+  }
+
+  String getUserEmail() {
+    return _auth.currentUser.email;
+  }
+
   Future<void> reloadCurrentUser() async {
     try {
       await _auth.currentUser.reload();
@@ -192,7 +200,7 @@ class AuthRepository {
 
   Future<String> signInWithApple() async {
     //Not implemented for now. A Mac is needed
-    //TODO Add Sign In With Apple
+    //TODO Add Sign In With Apple. Sign out Also
     return "Not implemented for now, stay tuned for updates!";
   }
 
@@ -202,6 +210,40 @@ class AuthRepository {
       //add Apple logout with sign in
       await _googleSignIn.signOut();
       await _auth.signOut();
+      returnValue = kSuccess;
+    } catch (e) {
+      print(e);
+      returnValue = e.toString();
+    }
+    return returnValue;
+  }
+
+  Future<String> deleteCurrentUser({String password}) async {
+    String returnValue = "There was an error, please try again.";
+    String userLoginService = _auth.currentUser.providerData[0].providerId;
+    if (userLoginService == "password") {
+      String result = await signInWithEmailAndPassword(email: _auth.currentUser.email, password: password);
+      if (result != kSuccess) {
+        returnValue = result;
+        return returnValue;
+      }
+    } else if (userLoginService == "google.com") {
+      String result = await signInWithGoogle();
+      if (result != kSuccess) {
+        returnValue = result;
+        return returnValue;
+      }
+    } else if (userLoginService == "apple.com") {
+      //TODO Implement Apple Delete account and log out also
+    } else {
+      return returnValue;
+    }
+
+    try {
+      //TODO Add Cloud function to delete each document, where the user UID is located?
+      await _users.doc(_auth.currentUser.uid).delete();
+      if (userLoginService == "google.com") await _googleSignIn.signOut();
+      await _auth.currentUser.delete();
       returnValue = kSuccess;
     } catch (e) {
       print(e);

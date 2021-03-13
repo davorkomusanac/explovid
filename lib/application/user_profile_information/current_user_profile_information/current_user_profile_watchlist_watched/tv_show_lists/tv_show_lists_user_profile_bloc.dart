@@ -8,10 +8,9 @@ import 'package:explovid/data/user_profile_db/current_user_profile_db/user_profi
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:meta/meta.dart';
 
+part 'tv_show_lists_user_profile_bloc.freezed.dart';
 part 'tv_show_lists_user_profile_event.dart';
 part 'tv_show_lists_user_profile_state.dart';
-
-part 'tv_show_lists_user_profile_bloc.freezed.dart';
 
 class TvShowListsUserProfileBloc extends Bloc<TvShowListsUserProfileEvent, TvShowListsUserProfileState> {
   final UserProfileRepository _userProfileRepository;
@@ -52,14 +51,14 @@ class TvShowListsUserProfileBloc extends Bloc<TvShowListsUserProfileEvent, TvSho
         yield state.copyWith(
           isLoading: false,
           tvShowWatchlist: e.tvShowWatchlist,
-          isThereMoreTvShowWatchlistPageToLoad: true,
+          isThereMoreTvShowWatchlistPageToLoad: e.tvShowWatchlist.length < 18 ? false : true,
         );
       },
       tvShowWatchedUpdated: (e) async* {
         yield state.copyWith(
           isLoading: false,
           tvShowWatched: e.tvShowWatched,
-          isThereMoreTvShowWatchedPageToLoad: true,
+          isThereMoreTvShowWatchedPageToLoad: e.tvShowWatched.length < 18 ? false : true,
         );
       },
       addTvShowToWatchlistPressed: (e) async* {

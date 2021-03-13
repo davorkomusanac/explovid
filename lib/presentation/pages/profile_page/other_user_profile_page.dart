@@ -423,7 +423,7 @@ class _OtherUserProfilePageState extends State<OtherUserProfilePage> with Ticker
         child: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.only(left: 10.0, top: 0.0, right: 12.0, bottom: 0),
+              padding: const EdgeInsets.only(left: 10.0, top: 2.0, right: 12.0, bottom: 0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
@@ -476,7 +476,6 @@ class _OtherUserProfilePageState extends State<OtherUserProfilePage> with Ticker
                                 Text(
                                   widget.ourUser.watchedLength.toString(),
                                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
-
                                 ),
                                 Text(
                                   "Watched",
@@ -490,8 +489,10 @@ class _OtherUserProfilePageState extends State<OtherUserProfilePage> with Ticker
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Text(widget.ourUser.followers.toString(),
-                                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),),
+                                Text(
+                                  widget.ourUser.followers.toString(),
+                                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+                                ),
                                 Text(
                                   "Followers",
                                   style: TextStyle(fontSize: 16),
@@ -504,8 +505,10 @@ class _OtherUserProfilePageState extends State<OtherUserProfilePage> with Ticker
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Text(widget.ourUser.following.toString(),
-                                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),),
+                                Text(
+                                  widget.ourUser.following.toString(),
+                                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+                                ),
                                 Text(
                                   "Following",
                                   style: TextStyle(fontSize: 16),
@@ -524,8 +527,10 @@ class _OtherUserProfilePageState extends State<OtherUserProfilePage> with Ticker
               padding: const EdgeInsets.only(left: 8.0, bottom: 4),
               child: Align(
                 alignment: Alignment.centerLeft,
-                child: Text(widget.ourUser.fullName,
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),),
+                child: Text(
+                  widget.ourUser.fullName,
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                ),
               ),
             ),
             Padding(

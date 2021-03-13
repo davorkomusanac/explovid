@@ -1,4 +1,5 @@
 import 'dart:async';
+
 import 'package:bloc/bloc.dart';
 import 'package:explovid/data/models/firestore_models/firestore_movie_watched_details.dart';
 import 'package:explovid/data/models/firestore_models/firestore_movie_watchlist_details.dart';
@@ -7,9 +8,9 @@ import 'package:explovid/data/user_profile_db/current_user_profile_db/user_profi
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:meta/meta.dart';
 
+part 'movie_lists_user_profile_bloc.freezed.dart';
 part 'movie_lists_user_profile_event.dart';
 part 'movie_lists_user_profile_state.dart';
-part 'movie_lists_user_profile_bloc.freezed.dart';
 
 class MovieListsUserProfileBloc extends Bloc<MovieListsUserProfileEvent, MovieListsUserProfileState> {
   final UserProfileRepository _userProfileRepository;
@@ -50,14 +51,14 @@ class MovieListsUserProfileBloc extends Bloc<MovieListsUserProfileEvent, MovieLi
         yield state.copyWith(
           isLoading: false,
           movieWatchlist: e.moviesWatchlist,
-          isThereMoreMovieWatchlistPageToLoad: true,
+          isThereMoreMovieWatchlistPageToLoad: e.moviesWatchlist.length < 18 ? false : true,
         );
       },
       movieWatchedUpdated: (e) async* {
         yield state.copyWith(
           isLoading: false,
           movieWatched: e.moviesWatched,
-          isThereMoreMovieWatchedPageToLoad: true,
+          isThereMoreMovieWatchedPageToLoad: e.moviesWatched.length < 18 ? false : true,
         );
       },
       addMovieToWatchlistPressed: (e) async* {
