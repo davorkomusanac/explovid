@@ -4,6 +4,7 @@ import 'package:explovid/application/user_profile_information/current_user_profi
 import 'package:explovid/application/user_profile_information/current_user_profile_information/current_user_profile_watchlist_watched/tv_show_lists/tv_show_lists_user_profile_bloc.dart';
 import 'package:explovid/presentation/pages/movie_details_page/movie_details_page.dart';
 import 'package:explovid/presentation/pages/profile_page/post_page.dart';
+import 'package:explovid/presentation/pages/profile_page/user_settings_page.dart';
 import 'package:explovid/presentation/pages/tv_show_details_page/tv_show_details_page.dart';
 import 'package:explovid/presentation/utilities/utilities.dart';
 import 'package:flutter/material.dart';
@@ -53,9 +54,8 @@ class _ProfilePageState extends State<ProfilePage> with TickerProviderStateMixin
   void initState() {
     super.initState();
     _watchTypeTabController = TabController(initialIndex: 0, vsync: this, length: _watchTypeTabs.length);
-    _moviesTabController = TabController(initialIndex: 0, vsync: this, length: _watchTypeTabs.length);
-    _tvShowsTabController = TabController(initialIndex: 0, vsync: this, length: _watchTypeTabs.length);
-    _scrollController = ScrollController();
+    _moviesTabController = TabController(initialIndex: 0, vsync: this, length: _moviesTabs.length);
+    _tvShowsTabController = TabController(initialIndex: 0, vsync: this, length: _tvShowsTabs.length);
   }
 
   @override
@@ -63,7 +63,6 @@ class _ProfilePageState extends State<ProfilePage> with TickerProviderStateMixin
     _watchTypeTabController.dispose();
     _moviesTabController.dispose();
     _tvShowsTabController.dispose();
-    _scrollController.dispose();
     super.dispose();
   }
 
@@ -193,7 +192,6 @@ class _ProfilePageState extends State<ProfilePage> with TickerProviderStateMixin
               : NotificationListener<ScrollNotification>(
                   onNotification: _handleScrollNotification,
                   child: GridView.builder(
-                    controller: _scrollController,
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 3,
                       childAspectRatio: 0.69,
@@ -241,7 +239,6 @@ class _ProfilePageState extends State<ProfilePage> with TickerProviderStateMixin
               : NotificationListener<ScrollNotification>(
                   onNotification: _handleScrollNotification,
                   child: GridView.builder(
-                    controller: _scrollController,
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 3,
                       childAspectRatio: 0.69,
@@ -289,7 +286,6 @@ class _ProfilePageState extends State<ProfilePage> with TickerProviderStateMixin
               : NotificationListener<ScrollNotification>(
                   onNotification: _handleScrollNotification,
                   child: GridView.builder(
-                    controller: _scrollController,
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 3,
                       childAspectRatio: 0.69,
@@ -339,7 +335,6 @@ class _ProfilePageState extends State<ProfilePage> with TickerProviderStateMixin
               : NotificationListener<ScrollNotification>(
                   onNotification: _handleScrollNotification,
                   child: GridView.builder(
-                    controller: _scrollController,
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 3,
                       childAspectRatio: 0.69,
@@ -414,122 +409,137 @@ class _ProfilePageState extends State<ProfilePage> with TickerProviderStateMixin
       builder: (context, state) {
         return Scaffold(
           body: SafeArea(
-            child: Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 30.0, top: 0.0, right: 12.0, bottom: 0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        state.isSearching ? "" : state.ourUser.username,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ),
-                      InkWell(
-                        onTap: () {
-                          //TODO Add Settings page here
-                        },
-                        child: Icon(
-                          Icons.settings,
-                          size: 30,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Expanded(
-                        flex: 1,
-                        child: CircleAvatar(
-                          backgroundImage: NetworkImage(
-                            state.isSearching ? "" : "https://miro.medium.com/max/1200/1*mk1-6aYaf_Bes1E3Imhc0A.jpeg",
-                          ),
-                          backgroundColor: Colors.black,
-                          child: Text(
-                            "USER PHOTO",
-                            textAlign: TextAlign.center,
-                          ),
-                          radius: 40,
-                        ),
-                      ),
-                      Expanded(
-                        flex: 3,
-                        child: Container(
-                          height: 80,
-                          //Listview to stop overflow for larger fonts
-                          child: ListView(
-                            shrinkWrap: true,
-                            scrollDirection: Axis.horizontal,
+            child: NestedScrollView(
+              physics: NeverScrollableScrollPhysics(),
+              headerSliverBuilder: (context, isScrolled) {
+                return [
+                  SliverAppBar(
+                    backgroundColor: Colors.blueGrey[900],
+                    collapsedHeight: 300,
+                    expandedHeight: 300,
+                    flexibleSpace: Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(left: 30.0, top: 2.0, right: 12.0, bottom: 0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              _userInformationCard(title: "Watched", state: state),
-                              _userInformationCard(title: "Followers", state: state),
-                              _userInformationCard(title: "Following", state: state),
+                              Text(
+                                state.isSearching ? "" : state.ourUser.username,
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              ),
+                              IconButton(
+                                  icon: Icon(
+                                    Icons.settings,
+                                    size: 30,
+                                  ),
+                                  onPressed: () {
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(builder: (context) => UserSettingsPage()),
+                                    );
+                                  }),
                             ],
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 8.0, bottom: 4),
-                  child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      state.isSearching ? "" : state.ourUser.fullName,
-                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Expanded(
+                                flex: 1,
+                                child: CircleAvatar(
+                                  backgroundImage: NetworkImage(
+                                    state.isSearching ? "" : "https://miro.medium.com/max/1200/1*mk1-6aYaf_Bes1E3Imhc0A.jpeg",
+                                  ),
+                                  backgroundColor: Colors.black,
+                                  child: Text(
+                                    "USER PHOTO",
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  radius: 40,
+                                ),
+                              ),
+                              Expanded(
+                                flex: 3,
+                                child: Container(
+                                  height: 80,
+                                  //Listview to stop overflow for larger fonts
+                                  child: ListView(
+                                    shrinkWrap: true,
+                                    scrollDirection: Axis.horizontal,
+                                    children: [
+                                      _userInformationCard(title: "Watched", state: state),
+                                      _userInformationCard(title: "Followers", state: state),
+                                      _userInformationCard(title: "Following", state: state),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 8.0, bottom: 4),
+                          child: Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              state.isSearching ? "" : state.ourUser.fullName,
+                              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 8.0, bottom: 10),
+                          child: Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              state.isSearching ? "" : state.ourUser.bio,
+                              maxLines: 3,
+                            ),
+                          ),
+                        ),
+                        ElevatedButton(
+                          style: kWatchedButton,
+                          onPressed: () {
+                            //TODO Implement Edit profile button
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 48.0),
+                            child: Text("Edit Profile"),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 8.0, bottom: 10),
-                  child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      state.isSearching ? "" : state.ourUser.bio,
-                      maxLines: 3,
-                    ),
-                  ),
-                ),
-                ElevatedButton(
-                  style: kWatchedButton,
-                  onPressed: () {
-                    //TODO Implement Edit profile button
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 48.0),
-                    child: Text("Edit Profile"),
-                  ),
-                ),
-                Expanded(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
+                  SliverPersistentHeader(
+                    floating: true,
+                    pinned: true,
+                    delegate: MyDelegate(
                       TabBar(
                         controller: _watchTypeTabController,
                         tabs: _watchTypeTabs,
                         labelColor: Colors.tealAccent,
                         unselectedLabelColor: Colors.grey,
                       ),
-                      Expanded(
-                        child: TabBarView(
-                          controller: _watchTypeTabController,
-                          children: _watchTypeTabViews(context),
-                        ),
-                      ),
-                    ],
+                    ),
                   ),
-                ),
-              ],
+                ];
+              },
+              body: Builder(
+                builder: (context) {
+                  _scrollController = PrimaryScrollController.of(context);
+                  return TabBarView(
+                    controller: _watchTypeTabController,
+                    children: _watchTypeTabViews(context),
+                  );
+                },
+              ),
             ),
           ),
         );
@@ -563,5 +573,29 @@ class _ProfilePageState extends State<ProfilePage> with TickerProviderStateMixin
         ],
       ),
     );
+  }
+}
+
+class MyDelegate extends SliverPersistentHeaderDelegate {
+  final TabBar tabBar;
+  MyDelegate(this.tabBar);
+
+  @override
+  Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
+    return Container(
+      color: Colors.blueGrey[900],
+      child: this.tabBar,
+    );
+  }
+
+  @override
+  double get maxExtent => tabBar.preferredSize.height;
+
+  @override
+  double get minExtent => tabBar.preferredSize.height;
+
+  @override
+  bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) {
+    return false;
   }
 }
