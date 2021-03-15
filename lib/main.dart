@@ -1,5 +1,6 @@
 import 'package:explovid/application/auth/auth_check/auth_check_bloc.dart';
 import 'package:explovid/application/auth/sign_in_form/delete_account/delete_account_bloc.dart';
+import 'package:explovid/application/auth/sign_in_form/edit_profile/edit_profile_bloc.dart';
 import 'package:explovid/application/auth/sign_in_form/sign_in_form_bloc.dart';
 import 'package:explovid/application/feedback/feedback_bloc.dart';
 import 'package:explovid/application/search/actor_search/actor_details/actor_details_bloc.dart';
@@ -132,6 +133,11 @@ class _MyAppState extends State<MyApp> {
         ),
         BlocProvider(
           create: (context) => DeleteAccountBloc(
+            _authRepository,
+          ),
+        ),
+        BlocProvider(
+          create: (context) => EditProfileBloc(
             _authRepository,
           ),
         ),

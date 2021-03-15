@@ -35,6 +35,7 @@ class CurrentUserProfileInformationBloc extends Bloc<CurrentUserProfileInformati
       },
       currentUserProfileLoaded: (e) async* {
         yield state.copyWith(
+          errorMessage: '',
           isSearching: false,
           ourUser: e.ourUser,
         );

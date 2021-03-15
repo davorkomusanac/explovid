@@ -500,6 +500,7 @@ class _ProfilePageState extends State<ProfilePage> with TickerProviderStateMixin
                             child: Text(
                               state.isSearching ? "" : state.ourUser.fullName,
                               style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                              overflow: TextOverflow.ellipsis,
                             ),
                           ),
                         ),
@@ -513,18 +514,24 @@ class _ProfilePageState extends State<ProfilePage> with TickerProviderStateMixin
                             ),
                           ),
                         ),
-                        ElevatedButton(
-                          style: kWatchedButton,
-                          onPressed: () {
-                            Navigator.of(context).push(
-                              MaterialPageRoute(builder: (context) => EditProfilePage()),
-                            );
-                          },
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 48.0),
-                            child: Text("Edit Profile"),
-                          ),
-                        ),
+                        state.isSearching
+                            ? LinearProgressIndicator()
+                            : ElevatedButton(
+                                style: kWatchedButton,
+                                onPressed: () {
+                                  Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                      builder: (context) => EditProfilePage(
+                                        ourUser: state.ourUser,
+                                      ),
+                                    ),
+                                  );
+                                },
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(horizontal: 48.0),
+                                  child: Text("Edit Profile"),
+                                ),
+                              ),
                       ],
                     ),
                   ),
@@ -585,7 +592,7 @@ class _ProfilePageState extends State<ProfilePage> with TickerProviderStateMixin
               ? CircleAvatar(
                   backgroundColor: Colors.black,
                   child: Text(
-                    "ADD PHOTO",
+                    "ADD\nPHOTO",
                     textAlign: TextAlign.center,
                   ),
                   radius: 40,

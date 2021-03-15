@@ -79,6 +79,24 @@ class AuthRepository {
     return returnVal;
   }
 
+  Future<String> editUserInformation({String name, String username, String bio}) async {
+    String returnVal = "";
+    try {
+      await _users.doc(_auth.currentUser.uid).update(
+        {
+          'full_name': name,
+          'username': username.toLowerCase(),
+          'bio': bio,
+        },
+      );
+      returnVal = kSuccess;
+    } catch (e) {
+      returnVal = e.toString();
+      print(e.toString());
+    }
+    return returnVal;
+  }
+
   Future<String> resetPassword(String email) async {
     String returnVal = "A link to reset your password has been sent to your email.";
     try {
