@@ -161,7 +161,7 @@ class _ActorAllMoviesPageState extends State<ActorAllMoviesPage> with TickerProv
     var movieSummary = isCast ? widget.movieCredits.cast[index].movieSummary : widget.movieCredits.crew[index].movieSummary;
     movieSummary.voteCount > 100 && movieSummary.voteAverage != 0
         ? returnString = "⭐" + movieSummary.voteAverage.toString() + " "
-        : returnString = "";
+        : returnString = "⭐ N/A ";
     return returnString;
   }
 }

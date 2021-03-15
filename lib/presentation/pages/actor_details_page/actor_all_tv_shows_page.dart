@@ -159,7 +159,7 @@ class _ActorAllTvShowsPageState extends State<ActorAllTvShowsPage> with TickerPr
     var tvShowSummary = isCast ? widget.tvCredits.cast[index].tvShowSummary : widget.tvCredits.crew[index].tvShowSummary;
     tvShowSummary.voteCount > 100 && tvShowSummary.voteAverage != 0
         ? returnString = "⭐" + tvShowSummary.voteAverage.toString() + " "
-        : returnString = "";
+        : returnString = "⭐ N/A ";
     return returnString;
   }
 }

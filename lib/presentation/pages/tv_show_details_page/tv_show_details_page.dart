@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:explovid/application/search/tv_show_search/tv_show_details/tv_show_details_bloc.dart';
 import 'package:explovid/application/user_profile_information/current_user_profile_information/current_user_profile_watchlist_watched/tv_show_lists/tv_show_lists_user_profile_bloc.dart';
 import 'package:explovid/data/models/tv_show_details/tv_show_details.dart';
@@ -104,31 +105,27 @@ class _TvShowDetailsPageState extends State<TvShowDetailsPage> {
                               child: Container(
                                 width: MediaQuery.of(context).size.width,
                                 height: MediaQuery.of(context).size.height * 0.35,
-                                child: Image.network(
-                                  "https://image.tmdb.org/t/p/w780/${state.tvShowDetails.backdropPath}",
+                                child: CachedNetworkImage(
+                                  imageUrl: "https://image.tmdb.org/t/p/w780/${state.tvShowDetails.backdropPath}",
                                   fit: BoxFit.cover,
-                                  loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent loadingProgress) {
-                                    if (loadingProgress == null) return child;
+                                  placeholder: (context, url) => Container(
+                                    color: Colors.green,
+                                    child: const Center(
+                                      child: CircularProgressIndicator(),
+                                    ),
+                                  ),
+                                  errorWidget: (context, url, error) {
                                     return Container(
-                                      color: Colors.green[900],
-                                      width: 132,
-                                      child: Center(
-                                        child: CircularProgressIndicator(
-                                          value: loadingProgress.expectedTotalBytes != null
-                                              ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes
-                                              : null,
-                                        ),
-                                      ),
-                                    );
-                                  },
-                                  errorBuilder: (BuildContext context, Object exception, StackTrace stackTrace) {
-                                    return Container(
-                                      color: Colors.yellow,
+                                      color: Colors.black,
                                       child: Column(
                                         mainAxisAlignment: MainAxisAlignment.center,
                                         children: [
                                           const Text('😢'),
-                                          const Text('No image available'),
+                                          const SizedBox(height: 5),
+                                          const Text(
+                                            'No image available',
+                                            textAlign: TextAlign.center,
+                                          ),
                                         ],
                                       ),
                                     );
@@ -565,7 +562,8 @@ class _TvShowDetailsPageState extends State<TvShowDetailsPage> {
                                                             .toString() +
                                                         " " +
                                                         state.tvShowDetails.tvShowSearchResults.tvShowSummaries[index].name
-                                                    : state.tvShowDetails.tvShowSearchResults.tvShowSummaries[index].name,
+                                                    : "⭐ N/A " +
+                                                        state.tvShowDetails.tvShowSearchResults.tvShowSummaries[index].name,
                                                 overflow: TextOverflow.ellipsis,
                                                 textAlign: TextAlign.center,
                                                 maxLines: 2,

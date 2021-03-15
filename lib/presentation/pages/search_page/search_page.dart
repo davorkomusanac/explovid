@@ -325,6 +325,7 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
     var user = state.userSearchResults[index];
     return ListTile(
       leading: CircleAvatar(
+        //TODO update Search results UI
         foregroundImage: NetworkImage(user.profilePhotoUrl),
       ),
       title: Text(user.username),

@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 String convertToReleaseYear(String text) {
@@ -218,28 +219,17 @@ class BuildPosterImage extends StatelessWidget {
         child: Container(
           height: height,
           width: width,
-          child: Image.network(
-            "https://image.tmdb.org/t/p/w185/$imagePath",
+          child: CachedNetworkImage(
+            imageUrl: "https://image.tmdb.org/t/p/w185/$imagePath",
             fit: BoxFit.cover,
-            loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent loadingProgress) {
-              if (loadingProgress == null) return child;
+            placeholder: (context, url) => Container(
+              color: Colors.green,
+              child: const Center(
+                child: CircularProgressIndicator(),
+              ),
+            ),
+            errorWidget: (context, url, error) {
               return Container(
-                height: height,
-                color: Colors.green,
-                width: width,
-                child: Center(
-                  child: CircularProgressIndicator(
-                    value: loadingProgress.expectedTotalBytes != null
-                        ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes
-                        : null,
-                  ),
-                ),
-              );
-            },
-            errorBuilder: (BuildContext context, Object exception, StackTrace stackTrace) {
-              return Container(
-                height: height,
-                width: width,
                 color: Colors.black,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
