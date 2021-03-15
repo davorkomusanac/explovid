@@ -24,6 +24,11 @@ class _$CurrentUserProfileInformationEventTearOff {
       ourUser,
     );
   }
+
+// ignore: unused_element
+  _UploadProfilePhotoPressed uploadProfilePhotoPressed() {
+    return const _UploadProfilePhotoPressed();
+  }
 }
 
 /// @nodoc
@@ -37,11 +42,13 @@ mixin _$CurrentUserProfileInformationEvent {
   TResult when<TResult extends Object>({
     @required TResult loadCurrentUserProfilePressed(),
     @required TResult currentUserProfileLoaded(OurUser ourUser),
+    @required TResult uploadProfilePhotoPressed(),
   });
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object>({
     TResult loadCurrentUserProfilePressed(),
     TResult currentUserProfileLoaded(OurUser ourUser),
+    TResult uploadProfilePhotoPressed(),
     @required TResult orElse(),
   });
   @optionalTypeArgs
@@ -50,11 +57,14 @@ mixin _$CurrentUserProfileInformationEvent {
         TResult loadCurrentUserProfilePressed(
             _LoadCurrentUserProfilePressed value),
     @required TResult currentUserProfileLoaded(_CurrentUserProfileLoaded value),
+    @required
+        TResult uploadProfilePhotoPressed(_UploadProfilePhotoPressed value),
   });
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object>({
     TResult loadCurrentUserProfilePressed(_LoadCurrentUserProfilePressed value),
     TResult currentUserProfileLoaded(_CurrentUserProfileLoaded value),
+    TResult uploadProfilePhotoPressed(_UploadProfilePhotoPressed value),
     @required TResult orElse(),
   });
 }
@@ -122,9 +132,11 @@ class _$_LoadCurrentUserProfilePressed
   TResult when<TResult extends Object>({
     @required TResult loadCurrentUserProfilePressed(),
     @required TResult currentUserProfileLoaded(OurUser ourUser),
+    @required TResult uploadProfilePhotoPressed(),
   }) {
     assert(loadCurrentUserProfilePressed != null);
     assert(currentUserProfileLoaded != null);
+    assert(uploadProfilePhotoPressed != null);
     return loadCurrentUserProfilePressed();
   }
 
@@ -133,6 +145,7 @@ class _$_LoadCurrentUserProfilePressed
   TResult maybeWhen<TResult extends Object>({
     TResult loadCurrentUserProfilePressed(),
     TResult currentUserProfileLoaded(OurUser ourUser),
+    TResult uploadProfilePhotoPressed(),
     @required TResult orElse(),
   }) {
     assert(orElse != null);
@@ -149,9 +162,12 @@ class _$_LoadCurrentUserProfilePressed
         TResult loadCurrentUserProfilePressed(
             _LoadCurrentUserProfilePressed value),
     @required TResult currentUserProfileLoaded(_CurrentUserProfileLoaded value),
+    @required
+        TResult uploadProfilePhotoPressed(_UploadProfilePhotoPressed value),
   }) {
     assert(loadCurrentUserProfilePressed != null);
     assert(currentUserProfileLoaded != null);
+    assert(uploadProfilePhotoPressed != null);
     return loadCurrentUserProfilePressed(this);
   }
 
@@ -160,6 +176,7 @@ class _$_LoadCurrentUserProfilePressed
   TResult maybeMap<TResult extends Object>({
     TResult loadCurrentUserProfilePressed(_LoadCurrentUserProfilePressed value),
     TResult currentUserProfileLoaded(_CurrentUserProfileLoaded value),
+    TResult uploadProfilePhotoPressed(_UploadProfilePhotoPressed value),
     @required TResult orElse(),
   }) {
     assert(orElse != null);
@@ -241,9 +258,11 @@ class _$_CurrentUserProfileLoaded implements _CurrentUserProfileLoaded {
   TResult when<TResult extends Object>({
     @required TResult loadCurrentUserProfilePressed(),
     @required TResult currentUserProfileLoaded(OurUser ourUser),
+    @required TResult uploadProfilePhotoPressed(),
   }) {
     assert(loadCurrentUserProfilePressed != null);
     assert(currentUserProfileLoaded != null);
+    assert(uploadProfilePhotoPressed != null);
     return currentUserProfileLoaded(ourUser);
   }
 
@@ -252,6 +271,7 @@ class _$_CurrentUserProfileLoaded implements _CurrentUserProfileLoaded {
   TResult maybeWhen<TResult extends Object>({
     TResult loadCurrentUserProfilePressed(),
     TResult currentUserProfileLoaded(OurUser ourUser),
+    TResult uploadProfilePhotoPressed(),
     @required TResult orElse(),
   }) {
     assert(orElse != null);
@@ -268,9 +288,12 @@ class _$_CurrentUserProfileLoaded implements _CurrentUserProfileLoaded {
         TResult loadCurrentUserProfilePressed(
             _LoadCurrentUserProfilePressed value),
     @required TResult currentUserProfileLoaded(_CurrentUserProfileLoaded value),
+    @required
+        TResult uploadProfilePhotoPressed(_UploadProfilePhotoPressed value),
   }) {
     assert(loadCurrentUserProfilePressed != null);
     assert(currentUserProfileLoaded != null);
+    assert(uploadProfilePhotoPressed != null);
     return currentUserProfileLoaded(this);
   }
 
@@ -279,6 +302,7 @@ class _$_CurrentUserProfileLoaded implements _CurrentUserProfileLoaded {
   TResult maybeMap<TResult extends Object>({
     TResult loadCurrentUserProfilePressed(_LoadCurrentUserProfilePressed value),
     TResult currentUserProfileLoaded(_CurrentUserProfileLoaded value),
+    TResult uploadProfilePhotoPressed(_UploadProfilePhotoPressed value),
     @required TResult orElse(),
   }) {
     assert(orElse != null);
@@ -300,14 +324,121 @@ abstract class _CurrentUserProfileLoaded
 }
 
 /// @nodoc
+abstract class _$UploadProfilePhotoPressedCopyWith<$Res> {
+  factory _$UploadProfilePhotoPressedCopyWith(_UploadProfilePhotoPressed value,
+          $Res Function(_UploadProfilePhotoPressed) then) =
+      __$UploadProfilePhotoPressedCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$UploadProfilePhotoPressedCopyWithImpl<$Res>
+    extends _$CurrentUserProfileInformationEventCopyWithImpl<$Res>
+    implements _$UploadProfilePhotoPressedCopyWith<$Res> {
+  __$UploadProfilePhotoPressedCopyWithImpl(_UploadProfilePhotoPressed _value,
+      $Res Function(_UploadProfilePhotoPressed) _then)
+      : super(_value, (v) => _then(v as _UploadProfilePhotoPressed));
+
+  @override
+  _UploadProfilePhotoPressed get _value =>
+      super._value as _UploadProfilePhotoPressed;
+}
+
+/// @nodoc
+class _$_UploadProfilePhotoPressed implements _UploadProfilePhotoPressed {
+  const _$_UploadProfilePhotoPressed();
+
+  @override
+  String toString() {
+    return 'CurrentUserProfileInformationEvent.uploadProfilePhotoPressed()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) || (other is _UploadProfilePhotoPressed);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object>({
+    @required TResult loadCurrentUserProfilePressed(),
+    @required TResult currentUserProfileLoaded(OurUser ourUser),
+    @required TResult uploadProfilePhotoPressed(),
+  }) {
+    assert(loadCurrentUserProfilePressed != null);
+    assert(currentUserProfileLoaded != null);
+    assert(uploadProfilePhotoPressed != null);
+    return uploadProfilePhotoPressed();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object>({
+    TResult loadCurrentUserProfilePressed(),
+    TResult currentUserProfileLoaded(OurUser ourUser),
+    TResult uploadProfilePhotoPressed(),
+    @required TResult orElse(),
+  }) {
+    assert(orElse != null);
+    if (uploadProfilePhotoPressed != null) {
+      return uploadProfilePhotoPressed();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object>({
+    @required
+        TResult loadCurrentUserProfilePressed(
+            _LoadCurrentUserProfilePressed value),
+    @required TResult currentUserProfileLoaded(_CurrentUserProfileLoaded value),
+    @required
+        TResult uploadProfilePhotoPressed(_UploadProfilePhotoPressed value),
+  }) {
+    assert(loadCurrentUserProfilePressed != null);
+    assert(currentUserProfileLoaded != null);
+    assert(uploadProfilePhotoPressed != null);
+    return uploadProfilePhotoPressed(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object>({
+    TResult loadCurrentUserProfilePressed(_LoadCurrentUserProfilePressed value),
+    TResult currentUserProfileLoaded(_CurrentUserProfileLoaded value),
+    TResult uploadProfilePhotoPressed(_UploadProfilePhotoPressed value),
+    @required TResult orElse(),
+  }) {
+    assert(orElse != null);
+    if (uploadProfilePhotoPressed != null) {
+      return uploadProfilePhotoPressed(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _UploadProfilePhotoPressed
+    implements CurrentUserProfileInformationEvent {
+  const factory _UploadProfilePhotoPressed() = _$_UploadProfilePhotoPressed;
+}
+
+/// @nodoc
 class _$CurrentUserProfileInformationStateTearOff {
   const _$CurrentUserProfileInformationStateTearOff();
 
 // ignore: unused_element
   _CurrentUserProfileInformationState call(
-      {@required bool isSearching, @required OurUser ourUser}) {
+      {@required bool isSearching,
+      @required bool isUploadingPhoto,
+      @required String errorMessage,
+      @required OurUser ourUser}) {
     return _CurrentUserProfileInformationState(
       isSearching: isSearching,
+      isUploadingPhoto: isUploadingPhoto,
+      errorMessage: errorMessage,
       ourUser: ourUser,
     );
   }
@@ -321,6 +452,8 @@ const $CurrentUserProfileInformationState =
 /// @nodoc
 mixin _$CurrentUserProfileInformationState {
   bool get isSearching;
+  bool get isUploadingPhoto;
+  String get errorMessage;
   OurUser get ourUser;
 
   @JsonKey(ignore: true)
@@ -334,7 +467,11 @@ abstract class $CurrentUserProfileInformationStateCopyWith<$Res> {
           CurrentUserProfileInformationState value,
           $Res Function(CurrentUserProfileInformationState) then) =
       _$CurrentUserProfileInformationStateCopyWithImpl<$Res>;
-  $Res call({bool isSearching, OurUser ourUser});
+  $Res call(
+      {bool isSearching,
+      bool isUploadingPhoto,
+      String errorMessage,
+      OurUser ourUser});
 }
 
 /// @nodoc
@@ -349,11 +486,19 @@ class _$CurrentUserProfileInformationStateCopyWithImpl<$Res>
   @override
   $Res call({
     Object isSearching = freezed,
+    Object isUploadingPhoto = freezed,
+    Object errorMessage = freezed,
     Object ourUser = freezed,
   }) {
     return _then(_value.copyWith(
       isSearching:
           isSearching == freezed ? _value.isSearching : isSearching as bool,
+      isUploadingPhoto: isUploadingPhoto == freezed
+          ? _value.isUploadingPhoto
+          : isUploadingPhoto as bool,
+      errorMessage: errorMessage == freezed
+          ? _value.errorMessage
+          : errorMessage as String,
       ourUser: ourUser == freezed ? _value.ourUser : ourUser as OurUser,
     ));
   }
@@ -367,7 +512,11 @@ abstract class _$CurrentUserProfileInformationStateCopyWith<$Res>
           $Res Function(_CurrentUserProfileInformationState) then) =
       __$CurrentUserProfileInformationStateCopyWithImpl<$Res>;
   @override
-  $Res call({bool isSearching, OurUser ourUser});
+  $Res call(
+      {bool isSearching,
+      bool isUploadingPhoto,
+      String errorMessage,
+      OurUser ourUser});
 }
 
 /// @nodoc
@@ -386,11 +535,19 @@ class __$CurrentUserProfileInformationStateCopyWithImpl<$Res>
   @override
   $Res call({
     Object isSearching = freezed,
+    Object isUploadingPhoto = freezed,
+    Object errorMessage = freezed,
     Object ourUser = freezed,
   }) {
     return _then(_CurrentUserProfileInformationState(
       isSearching:
           isSearching == freezed ? _value.isSearching : isSearching as bool,
+      isUploadingPhoto: isUploadingPhoto == freezed
+          ? _value.isUploadingPhoto
+          : isUploadingPhoto as bool,
+      errorMessage: errorMessage == freezed
+          ? _value.errorMessage
+          : errorMessage as String,
       ourUser: ourUser == freezed ? _value.ourUser : ourUser as OurUser,
     ));
   }
@@ -400,18 +557,27 @@ class __$CurrentUserProfileInformationStateCopyWithImpl<$Res>
 class _$_CurrentUserProfileInformationState
     implements _CurrentUserProfileInformationState {
   const _$_CurrentUserProfileInformationState(
-      {@required this.isSearching, @required this.ourUser})
+      {@required this.isSearching,
+      @required this.isUploadingPhoto,
+      @required this.errorMessage,
+      @required this.ourUser})
       : assert(isSearching != null),
+        assert(isUploadingPhoto != null),
+        assert(errorMessage != null),
         assert(ourUser != null);
 
   @override
   final bool isSearching;
   @override
+  final bool isUploadingPhoto;
+  @override
+  final String errorMessage;
+  @override
   final OurUser ourUser;
 
   @override
   String toString() {
-    return 'CurrentUserProfileInformationState(isSearching: $isSearching, ourUser: $ourUser)';
+    return 'CurrentUserProfileInformationState(isSearching: $isSearching, isUploadingPhoto: $isUploadingPhoto, errorMessage: $errorMessage, ourUser: $ourUser)';
   }
 
   @override
@@ -421,6 +587,12 @@ class _$_CurrentUserProfileInformationState
             (identical(other.isSearching, isSearching) ||
                 const DeepCollectionEquality()
                     .equals(other.isSearching, isSearching)) &&
+            (identical(other.isUploadingPhoto, isUploadingPhoto) ||
+                const DeepCollectionEquality()
+                    .equals(other.isUploadingPhoto, isUploadingPhoto)) &&
+            (identical(other.errorMessage, errorMessage) ||
+                const DeepCollectionEquality()
+                    .equals(other.errorMessage, errorMessage)) &&
             (identical(other.ourUser, ourUser) ||
                 const DeepCollectionEquality().equals(other.ourUser, ourUser)));
   }
@@ -429,6 +601,8 @@ class _$_CurrentUserProfileInformationState
   int get hashCode =>
       runtimeType.hashCode ^
       const DeepCollectionEquality().hash(isSearching) ^
+      const DeepCollectionEquality().hash(isUploadingPhoto) ^
+      const DeepCollectionEquality().hash(errorMessage) ^
       const DeepCollectionEquality().hash(ourUser);
 
   @JsonKey(ignore: true)
@@ -443,10 +617,16 @@ abstract class _CurrentUserProfileInformationState
     implements CurrentUserProfileInformationState {
   const factory _CurrentUserProfileInformationState(
       {@required bool isSearching,
+      @required bool isUploadingPhoto,
+      @required String errorMessage,
       @required OurUser ourUser}) = _$_CurrentUserProfileInformationState;
 
   @override
   bool get isSearching;
+  @override
+  bool get isUploadingPhoto;
+  @override
+  String get errorMessage;
   @override
   OurUser get ourUser;
   @override

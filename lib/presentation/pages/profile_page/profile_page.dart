@@ -1,8 +1,10 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:community_material_icon/community_material_icon.dart';
 import 'package:explovid/application/user_profile_information/current_user_profile_information/current_user_profile_information_bloc.dart';
 import 'package:explovid/application/user_profile_information/current_user_profile_information/current_user_profile_watchlist_watched/movie_lists/movie_lists_user_profile_bloc.dart';
 import 'package:explovid/application/user_profile_information/current_user_profile_information/current_user_profile_watchlist_watched/tv_show_lists/tv_show_lists_user_profile_bloc.dart';
 import 'package:explovid/presentation/pages/movie_details_page/movie_details_page.dart';
+import 'package:explovid/presentation/pages/profile_page/edit_profile_page.dart';
 import 'package:explovid/presentation/pages/profile_page/post_page.dart';
 import 'package:explovid/presentation/pages/profile_page/user_settings_page.dart';
 import 'package:explovid/presentation/pages/tv_show_details_page/tv_show_details_page.dart';
@@ -405,7 +407,17 @@ class _ProfilePageState extends State<ProfilePage> with TickerProviderStateMixin
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<CurrentUserProfileInformationBloc, CurrentUserProfileInformationState>(
+    return BlocConsumer<CurrentUserProfileInformationBloc, CurrentUserProfileInformationState>(
+      listener: (context, state) {
+        if (state.errorMessage.isNotEmpty) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(state.errorMessage),
+              duration: Duration(seconds: 2),
+            ),
+          );
+        }
+      },
       builder: (context, state) {
         return Scaffold(
           body: SafeArea(
@@ -453,16 +465,13 @@ class _ProfilePageState extends State<ProfilePage> with TickerProviderStateMixin
                             children: [
                               Expanded(
                                 flex: 1,
-                                child: CircleAvatar(
-                                  backgroundImage: NetworkImage(
-                                    state.isSearching ? "" : "https://miro.medium.com/max/1200/1*mk1-6aYaf_Bes1E3Imhc0A.jpeg",
-                                  ),
-                                  backgroundColor: Colors.black,
-                                  child: Text(
-                                    "USER PHOTO",
-                                    textAlign: TextAlign.center,
-                                  ),
-                                  radius: 40,
+                                child: GestureDetector(
+                                  onTap: () {
+                                    context.read<CurrentUserProfileInformationBloc>().add(
+                                          CurrentUserProfileInformationEvent.uploadProfilePhotoPressed(),
+                                        );
+                                  },
+                                  child: _profilePhoto(state),
                                 ),
                               ),
                               Expanded(
@@ -507,7 +516,9 @@ class _ProfilePageState extends State<ProfilePage> with TickerProviderStateMixin
                         ElevatedButton(
                           style: kWatchedButton,
                           onPressed: () {
-                            //TODO Implement Edit profile button
+                            Navigator.of(context).push(
+                              MaterialPageRoute(builder: (context) => EditProfilePage()),
+                            );
                           },
                           child: Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 48.0),
@@ -545,6 +556,48 @@ class _ProfilePageState extends State<ProfilePage> with TickerProviderStateMixin
         );
       },
     );
+  }
+
+  Widget _profilePhoto(CurrentUserProfileInformationState state) {
+    if (state.isUploadingPhoto || state.isSearching) {
+      return Padding(
+        padding: const EdgeInsets.only(top: 20.0),
+        child: Center(
+          child: CircularProgressIndicator(),
+        ),
+      );
+    } else {
+      return CachedNetworkImage(
+        imageUrl: state.ourUser.profilePhotoUrl,
+        imageBuilder: (context, imageProvider) => CircleAvatar(
+          foregroundImage: imageProvider,
+          backgroundColor: Colors.black,
+          radius: 40,
+        ),
+        placeholder: (context, url) => Padding(
+          padding: const EdgeInsets.only(top: 20.0),
+          child: Center(
+            child: CircularProgressIndicator(),
+          ),
+        ),
+        errorWidget: (context, url, error) {
+          return state.ourUser.profilePhotoUrl.isEmpty
+              ? CircleAvatar(
+                  backgroundColor: Colors.black,
+                  child: Text(
+                    "ADD PHOTO",
+                    textAlign: TextAlign.center,
+                  ),
+                  radius: 40,
+                )
+              : CircleAvatar(
+                  backgroundColor: Colors.black,
+                  child: Icon(Icons.error, color: Colors.white),
+                  radius: 40,
+                );
+        },
+      );
+    }
   }
 
   Widget _userInformationCard({String title, CurrentUserProfileInformationState state}) {

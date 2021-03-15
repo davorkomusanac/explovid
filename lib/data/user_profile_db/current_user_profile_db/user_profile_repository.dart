@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:explovid/data/models/firestore_models/firestore_movie_watched_details.dart';
 import 'package:explovid/data/models/firestore_models/firestore_movie_watchlist_details.dart';
@@ -7,6 +9,9 @@ import 'package:explovid/data/models/movie_details/movie_details.dart';
 import 'package:explovid/data/models/our_user/our_user.dart';
 import 'package:explovid/data/models/tv_show_details/tv_show_details.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:uuid/uuid.dart';
 
 class UserProfileRepository {
@@ -17,6 +22,63 @@ class UserProfileRepository {
     return _users.doc(_auth.currentUser.uid).snapshots().map(
           (documentSnap) => OurUser.fromSnapshot(documentSnap),
         );
+  }
+
+  Future<String> uploadProfilePhoto() async {
+    final _storage = FirebaseStorage.instance;
+    final _picker = ImagePicker();
+    PickedFile image;
+    String returnValue = "There was an error uploading the image, please try again";
+    PermissionStatus permissionStatus;
+    //Check Permission
+    try {
+      await Permission.photos.request();
+      permissionStatus = await Permission.photos.status;
+    } catch (e) {
+      print(e.toString());
+      return e.toString();
+    }
+
+    if (permissionStatus.isGranted) {
+      //Select Image
+      File file;
+      try {
+        image = await _picker.getImage(source: ImageSource.gallery, maxHeight: 400);
+        file = File(image.path);
+      } on NoSuchMethodError {
+        return "Choosing image canceled";
+      } catch (e) {
+        print(e.toString());
+        return e.toString();
+      }
+
+      if (image != null) {
+        //Upload to Firebase Storage
+        String downloadUrl;
+        try {
+          var snapshot = await _storage.ref().child('users/${_auth.currentUser.uid}/profilePhoto').putFile(file);
+          downloadUrl = await snapshot.ref.getDownloadURL();
+        } catch (e) {
+          print(e.toString());
+          return e.toString();
+        }
+        //Save downloadUrl to user profile
+        try {
+          _users.doc(_auth.currentUser.uid).update(
+            {
+              "profile_photo_url": downloadUrl,
+            },
+          );
+          returnValue = "Successfully uploaded profile photo";
+        } catch (e) {
+          print(e.toString());
+          return e.toString();
+        }
+      }
+    } else {
+      returnValue = "Unable to upload profile photo until permission is granted.";
+    }
+    return returnValue;
   }
 
   Future<String> addMovieToWatchlist(MovieDetails movieDetails) async {

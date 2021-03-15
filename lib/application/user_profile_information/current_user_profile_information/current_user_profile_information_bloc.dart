@@ -6,9 +6,9 @@ import 'package:explovid/data/user_profile_db/current_user_profile_db/user_profi
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:meta/meta.dart';
 
+part 'current_user_profile_information_bloc.freezed.dart';
 part 'current_user_profile_information_event.dart';
 part 'current_user_profile_information_state.dart';
-part 'current_user_profile_information_bloc.freezed.dart';
 
 class CurrentUserProfileInformationBloc extends Bloc<CurrentUserProfileInformationEvent, CurrentUserProfileInformationState> {
   final UserProfileRepository _userProfileRepository;
@@ -37,6 +37,17 @@ class CurrentUserProfileInformationBloc extends Bloc<CurrentUserProfileInformati
         yield state.copyWith(
           isSearching: false,
           ourUser: e.ourUser,
+        );
+      },
+      uploadProfilePhotoPressed: (e) async* {
+        yield state.copyWith(
+          errorMessage: '',
+          isUploadingPhoto: true,
+        );
+        String result = await _userProfileRepository.uploadProfilePhoto();
+        yield state.copyWith(
+          errorMessage: result,
+          isUploadingPhoto: false,
         );
       },
     );

@@ -4,11 +4,15 @@ part of 'current_user_profile_information_bloc.dart';
 abstract class CurrentUserProfileInformationState with _$CurrentUserProfileInformationState {
   const factory CurrentUserProfileInformationState({
     @required bool isSearching,
+    @required bool isUploadingPhoto,
+    @required String errorMessage,
     @required OurUser ourUser,
   }) = _CurrentUserProfileInformationState;
 
   factory CurrentUserProfileInformationState.initial() => CurrentUserProfileInformationState(
         isSearching: true,
+        isUploadingPhoto: false,
+        errorMessage: '',
         ourUser: OurUser(
           uid: '',
           email: '',
