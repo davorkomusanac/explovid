@@ -2,6 +2,9 @@ import 'package:community_material_icon/community_material_icon.dart';
 import 'package:explovid/application/search/movie_search/movie_details/movie_details_bloc.dart';
 import 'package:explovid/application/search/movie_search/movie_search_bloc.dart';
 import 'package:explovid/application/search/user_search/user_search_bloc.dart';
+import 'package:explovid/application/user_profile_information/current_user_profile_information/current_user_profile_information_bloc.dart';
+import 'package:explovid/application/user_profile_information/current_user_profile_information/current_user_profile_watchlist_watched/movie_lists/movie_lists_user_profile_bloc.dart';
+import 'package:explovid/application/user_profile_information/current_user_profile_information/current_user_profile_watchlist_watched/tv_show_lists/tv_show_lists_user_profile_bloc.dart';
 import 'package:explovid/application/user_profile_information/other_user_profile_information/other_user_profile_watchlist_watched/movie_lists/other_user_profile_movie_lists_bloc.dart';
 import 'package:explovid/application/user_profile_information/other_user_profile_information/other_user_profile_watchlist_watched/tv_show_lists/other_user_profile_tv_show_lists_bloc.dart';
 import 'package:explovid/data/search_db/movie_db/movie_repository.dart';
@@ -48,6 +51,14 @@ class _HomePageState extends State<HomePage> {
     _movieRepository = MovieRepository(client);
     _userActionsRepository = UserActionsRepository();
     _otherUserProfileRepository = OtherUserProfileRepository();
+    //Calling events here, since if they are called with BlocProvider initialization they don't get updated when the user logs out
+    context.read<MovieListsUserProfileBloc>().add(
+          MovieListsUserProfileEvent.loadMovieToListInitial(),
+        );
+    context.read<TvShowListsUserProfileBloc>().add(
+          TvShowListsUserProfileEvent.loadTvShowToListInitial(),
+        );
+    context.read<CurrentUserProfileInformationBloc>().add(CurrentUserProfileInformationEvent.loadCurrentUserProfilePressed());
   }
 
   @override

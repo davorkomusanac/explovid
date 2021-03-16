@@ -106,19 +106,13 @@ class _MyAppState extends State<MyApp> {
           ),
         ),
         BlocProvider(
-          create: (context) => MovieListsUserProfileBloc(
-            _userProfileRepository,
-          )..add(
-              MovieListsUserProfileEvent.loadMovieToListInitial(),
-            ),
-        ),
+            create: (context) => MovieListsUserProfileBloc(
+                  _userProfileRepository,
+                )),
         BlocProvider(
-          create: (context) => TvShowListsUserProfileBloc(
-            _userProfileRepository,
-          )..add(
-              TvShowListsUserProfileEvent.loadTvShowToListInitial(),
-            ),
-        ),
+            create: (context) => TvShowListsUserProfileBloc(
+                  _userProfileRepository,
+                )),
         BlocProvider(
           create: (context) => FeedbackBloc(
             _userFeedbackRepository,
@@ -127,9 +121,7 @@ class _MyAppState extends State<MyApp> {
         BlocProvider(
           create: (context) => CurrentUserProfileInformationBloc(
             _userProfileRepository,
-          )..add(
-              CurrentUserProfileInformationEvent.loadCurrentUserProfilePressed(),
-            ),
+          ),
         ),
         BlocProvider(
           create: (context) => DeleteAccountBloc(
