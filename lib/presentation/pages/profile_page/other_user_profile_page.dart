@@ -1,5 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:community_material_icon/community_material_icon.dart';
+import 'package:explovid/application/user_interactions/follow/follow_bloc.dart';
+import 'package:explovid/application/user_profile_information/current_user_profile_information/current_user_profile_information_bloc.dart';
 import 'package:explovid/application/user_profile_information/other_user_profile_information/other_user_profile_watchlist_watched/movie_lists/other_user_profile_movie_lists_bloc.dart';
 import 'package:explovid/application/user_profile_information/other_user_profile_information/other_user_profile_watchlist_watched/tv_show_lists/other_user_profile_tv_show_lists_bloc.dart';
 import 'package:explovid/data/models/our_user/our_user.dart';
@@ -67,6 +69,7 @@ class _OtherUserProfilePageState extends State<OtherUserProfilePage> with Ticker
     context.read<OtherUserProfileTvShowListsBloc>().add(
           OtherUserProfileTvShowListsEvent.loadTvShowToListInitial(userUid: widget.ourUser.uid),
         );
+    context.read<FollowBloc>().add(FollowEvent.checkIfFollowingUserPressed(otherUser: widget.ourUser));
   }
 
   @override
@@ -494,15 +497,52 @@ class _OtherUserProfilePageState extends State<OtherUserProfilePage> with Ticker
                         ),
                       ),
                     ),
-                    ElevatedButton(
-                      style: kNotWatchedButton,
-                      onPressed: () {
-                        //TODO Implement Follow and Unfollow button
+                    BlocBuilder<CurrentUserProfileInformationBloc, CurrentUserProfileInformationState>(
+                      builder: (context, state) {
+                        if (state.ourUser.uid != widget.ourUser.uid) {
+                          return BlocConsumer<FollowBloc, FollowState>(
+                            listener: (context, state) {
+                              if (state.errorMessage.isNotEmpty) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text(state.errorMessage),
+                                    duration: Duration(seconds: 2),
+                                  ),
+                                );
+                              }
+                            },
+                            builder: (context, state) {
+                              // ignore: close_sinks
+                              final followBloc = BlocProvider.of<FollowBloc>(context, listen: false);
+                              return state.isSubmitting
+                                  ? Center(child: CircularProgressIndicator())
+                                  : ElevatedButton(
+                                      style: state.isFollowing ? kWatchedButton : kNotWatchedButton,
+                                      onPressed: () {
+                                        state.isFollowing
+                                            ? showDialog(
+                                                context: context,
+                                                builder: (context) {
+                                                  return UnfollowUserDialog(ourUser: widget.ourUser, bloc: followBloc);
+                                                },
+                                              )
+                                            : context.read<FollowBloc>().add(
+                                                  FollowEvent.followUserPressed(otherUser: widget.ourUser),
+                                                );
+                                      },
+                                      child: Padding(
+                                        padding: const EdgeInsets.symmetric(horizontal: 48.0),
+                                        child: Text(
+                                          state.isFollowing ? "Following" : "Follow",
+                                        ),
+                                      ),
+                                    );
+                            },
+                          );
+                        } else {
+                          return Offstage();
+                        }
                       },
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 48.0),
-                        child: Text("Follow"),
-                      ),
                     ),
                   ],
                 ),
@@ -593,6 +633,48 @@ class _OtherUserProfilePageState extends State<OtherUserProfilePage> with Ticker
           ),
         ],
       ),
+    );
+  }
+}
+
+class UnfollowUserDialog extends StatefulWidget {
+  final OurUser ourUser;
+  final FollowBloc bloc;
+
+  UnfollowUserDialog({this.ourUser, this.bloc});
+
+  @override
+  _UnfollowUserDialogState createState() => _UnfollowUserDialogState();
+}
+
+class _UnfollowUserDialogState extends State<UnfollowUserDialog> {
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: Text("Are you sure you want to unfollow this user?"),
+      actions: [
+        TextButton(
+          onPressed: () {
+            Navigator.of(context, rootNavigator: true).pop();
+          },
+          style: TextButton.styleFrom(
+            primary: Colors.tealAccent[200],
+          ),
+          child: Text("No"),
+        ),
+        TextButton(
+          onPressed: () {
+            widget.bloc.add(
+              FollowEvent.unfollowUserPressed(otherUser: widget.ourUser),
+            );
+            Navigator.of(context, rootNavigator: true).pop();
+          },
+          style: TextButton.styleFrom(
+            primary: Colors.tealAccent[200],
+          ),
+          child: Text("Yes"),
+        ),
+      ],
     );
   }
 }

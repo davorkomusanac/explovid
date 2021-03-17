@@ -2,6 +2,7 @@ import 'package:community_material_icon/community_material_icon.dart';
 import 'package:explovid/application/search/movie_search/movie_details/movie_details_bloc.dart';
 import 'package:explovid/application/search/movie_search/movie_search_bloc.dart';
 import 'package:explovid/application/search/user_search/user_search_bloc.dart';
+import 'package:explovid/application/user_interactions/follow/follow_bloc.dart';
 import 'package:explovid/application/user_profile_information/current_user_profile_information/current_user_profile_information_bloc.dart';
 import 'package:explovid/application/user_profile_information/current_user_profile_information/current_user_profile_watchlist_watched/movie_lists/movie_lists_user_profile_bloc.dart';
 import 'package:explovid/application/user_profile_information/current_user_profile_information/current_user_profile_watchlist_watched/tv_show_lists/tv_show_lists_user_profile_bloc.dart';
@@ -142,6 +143,7 @@ class _HomePageState extends State<HomePage> {
                       _movieRepository,
                     ),
                   ),
+                  //TODO Add TV Show and Actor details Bloc here
                   BlocProvider(
                     create: (context) => OtherUserProfileMovieListsBloc(
                       _otherUserProfileRepository,
@@ -150,6 +152,11 @@ class _HomePageState extends State<HomePage> {
                   BlocProvider(
                     create: (context) => OtherUserProfileTvShowListsBloc(
                       _otherUserProfileRepository,
+                    ),
+                  ),
+                  BlocProvider(
+                    create: (context) => FollowBloc(
+                      _userActionsRepository,
                     ),
                   ),
                 ],
