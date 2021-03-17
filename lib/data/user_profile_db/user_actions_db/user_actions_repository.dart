@@ -8,10 +8,8 @@ class UserActionsRepository {
     List<OurUser> searchUsersResult = [];
     try {
       var querySnapshot = await _users
-          .where(
-            'username',
-            isGreaterThanOrEqualTo: usernameSearchTerm.toLowerCase(),
-          )
+          .orderBy('username', descending: false)
+          .where('username', isGreaterThanOrEqualTo: usernameSearchTerm.toLowerCase())
           .limit(10)
           .get();
       for (var userQueryDocSnap in querySnapshot.docs) {
@@ -30,7 +28,7 @@ class UserActionsRepository {
     List<OurUser> nextPageSearchUsersResult = [];
     try {
       var querySnapshot = await _users
-          .orderBy('username', descending: true)
+          .orderBy('username', descending: false)
           .where('username', isGreaterThanOrEqualTo: usernameSearchTerm.toLowerCase())
           .startAfter([lastUserInList.username])
           .limit(10)

@@ -6,9 +6,9 @@ import 'package:explovid/data/user_profile_db/user_actions_db/user_actions_repos
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:meta/meta.dart';
 
+part 'user_search_bloc.freezed.dart';
 part 'user_search_event.dart';
 part 'user_search_state.dart';
-part 'user_search_bloc.freezed.dart';
 
 class UserSearchBloc extends Bloc<UserSearchEvent, UserSearchState> {
   UserActionsRepository _userActionsRepository;
@@ -33,7 +33,7 @@ class UserSearchBloc extends Bloc<UserSearchEvent, UserSearchState> {
           );
           if (searchResults.isEmpty) {
             yield state.copyWith(
-              errorMessage: "No user found. Try again.",
+              errorMessage: "No users found by that username.",
               isSearching: false,
               isSearchCompleted: false,
             );

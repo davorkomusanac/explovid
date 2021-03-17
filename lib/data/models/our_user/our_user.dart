@@ -28,17 +28,17 @@ class OurUser {
   });
 
   factory OurUser.fromMap(Map<String, dynamic> data) => OurUser(
-        uid: data['uid'],
-        email: data['email'],
-        fullName: data['full_name'],
-        username: data['username'],
-        bio: data['bio'],
-        profilePhotoUrl: data['profile_photo_url'],
-        accountCreatedDate: data['account_created_date'],
-        followers: data['followers'],
-        following: data['following'],
-        watchedLength: data['watched_length'],
-        watchlistLength: data['watchlist_length'],
+        uid: data['uid'] as String ?? '',
+        email: data['email'] as String ?? '',
+        fullName: data['full_name'] as String ?? '',
+        username: data['username'] as String ?? '',
+        bio: data['bio'] as String ?? '',
+        profilePhotoUrl: data['profile_photo_url'] as String ?? '',
+        accountCreatedDate: data['account_created_date'] as Timestamp ?? Timestamp.now(),
+        followers: data['followers'] as int ?? 0,
+        following: data['following'] as int ?? 0,
+        watchedLength: data['watched_length'] as int ?? 0,
+        watchlistLength: data['watchlist_length'] as int ?? 0,
       );
 
   factory OurUser.fromSnapshot(DocumentSnapshot snapshot) => OurUser.fromMap(snapshot.data());

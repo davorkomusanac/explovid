@@ -1,9 +1,11 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:community_material_icon/community_material_icon.dart';
 import 'package:explovid/application/user_profile_information/other_user_profile_information/other_user_profile_watchlist_watched/movie_lists/other_user_profile_movie_lists_bloc.dart';
 import 'package:explovid/application/user_profile_information/other_user_profile_information/other_user_profile_watchlist_watched/tv_show_lists/other_user_profile_tv_show_lists_bloc.dart';
 import 'package:explovid/data/models/our_user/our_user.dart';
 import 'package:explovid/presentation/pages/movie_details_page/movie_details_page.dart';
 import 'package:explovid/presentation/pages/profile_page/post_page.dart';
+import 'package:explovid/presentation/pages/profile_page/profile_page.dart';
 import 'package:explovid/presentation/pages/tv_show_details_page/tv_show_details_page.dart';
 import 'package:explovid/presentation/utilities/utilities.dart';
 import 'package:flutter/material.dart';
@@ -57,9 +59,8 @@ class _OtherUserProfilePageState extends State<OtherUserProfilePage> with Ticker
   void initState() {
     super.initState();
     _watchTypeTabController = TabController(initialIndex: 0, vsync: this, length: _watchTypeTabs.length);
-    _moviesTabController = TabController(initialIndex: 0, vsync: this, length: _watchTypeTabs.length);
-    _tvShowsTabController = TabController(initialIndex: 0, vsync: this, length: _watchTypeTabs.length);
-    _scrollController = ScrollController();
+    _moviesTabController = TabController(initialIndex: 0, vsync: this, length: _moviesTabs.length);
+    _tvShowsTabController = TabController(initialIndex: 0, vsync: this, length: _tvShowsTabs.length);
     context.read<OtherUserProfileMovieListsBloc>().add(
           OtherUserProfileMovieListsEvent.loadMovieToListInitial(userUid: widget.ourUser.uid),
         );
@@ -73,7 +74,6 @@ class _OtherUserProfilePageState extends State<OtherUserProfilePage> with Ticker
     _watchTypeTabController.dispose();
     _moviesTabController.dispose();
     _tvShowsTabController.dispose();
-    _scrollController.dispose();
     super.dispose();
   }
 
@@ -203,7 +203,6 @@ class _OtherUserProfilePageState extends State<OtherUserProfilePage> with Ticker
               : NotificationListener<ScrollNotification>(
                   onNotification: _handleScrollNotification,
                   child: GridView.builder(
-                    controller: _scrollController,
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 3,
                       childAspectRatio: 0.69,
@@ -251,7 +250,6 @@ class _OtherUserProfilePageState extends State<OtherUserProfilePage> with Ticker
               : NotificationListener<ScrollNotification>(
                   onNotification: _handleScrollNotification,
                   child: GridView.builder(
-                    controller: _scrollController,
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 3,
                       childAspectRatio: 0.69,
@@ -299,7 +297,6 @@ class _OtherUserProfilePageState extends State<OtherUserProfilePage> with Ticker
               : NotificationListener<ScrollNotification>(
                   onNotification: _handleScrollNotification,
                   child: GridView.builder(
-                    controller: _scrollController,
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 3,
                       childAspectRatio: 0.69,
@@ -347,7 +344,6 @@ class _OtherUserProfilePageState extends State<OtherUserProfilePage> with Ticker
               : NotificationListener<ScrollNotification>(
                   onNotification: _handleScrollNotification,
                   child: GridView.builder(
-                    controller: _scrollController,
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 3,
                       childAspectRatio: 0.69,
@@ -420,160 +416,182 @@ class _OtherUserProfilePageState extends State<OtherUserProfilePage> with Ticker
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(left: 10.0, top: 2.0, right: 12.0, bottom: 0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  BackButton(),
-                  Text(
-                    widget.ourUser.username,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Expanded(
-                    flex: 1,
-                    child: CircleAvatar(
-                      backgroundImage: NetworkImage(
-                        "https://miro.medium.com/max/1200/1*mk1-6aYaf_Bes1E3Imhc0A.jpeg",
-                      ),
-                      backgroundColor: Colors.black,
-                      child: Text(
-                        "USER PHOTO",
-                        textAlign: TextAlign.center,
-                      ),
-                      radius: 40,
-                    ),
-                  ),
-                  Expanded(
-                    flex: 3,
-                    child: Container(
-                      height: 80,
-                      //ListView to stop overflow if user Font Size is very large
-                      child: ListView(
-                        shrinkWrap: true,
-                        scrollDirection: Axis.horizontal,
+        child: NestedScrollView(
+          physics: NeverScrollableScrollPhysics(),
+          headerSliverBuilder: (context, isScrolled) {
+            return [
+              SliverAppBar(
+                automaticallyImplyLeading: false,
+                backgroundColor: Colors.blueGrey[900],
+                collapsedHeight: 300,
+                expandedHeight: 300,
+                flexibleSpace: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(left: 10.0, top: 2.0, right: 12.0, bottom: 0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  widget.ourUser.watchedLength.toString(),
-                                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
-                                ),
-                                Text(
-                                  "Watched",
-                                  style: TextStyle(fontSize: 16),
-                                ),
-                              ],
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  widget.ourUser.followers.toString(),
-                                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
-                                ),
-                                Text(
-                                  "Followers",
-                                  style: TextStyle(fontSize: 16),
-                                ),
-                              ],
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  widget.ourUser.following.toString(),
-                                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
-                                ),
-                                Text(
-                                  "Following",
-                                  style: TextStyle(fontSize: 16),
-                                ),
-                              ],
+                          BackButton(),
+                          Text(
+                            widget.ourUser.username,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.w700,
                             ),
                           ),
                         ],
                       ),
                     ),
-                  ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 8.0, bottom: 4),
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  widget.ourUser.fullName,
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Expanded(
+                            flex: 1,
+                            child: _profilePhoto(),
+                          ),
+                          Expanded(
+                            flex: 3,
+                            child: Container(
+                              height: 80,
+                              //ListView to stop overflow if user Font Size is very large
+                              child: ListView(
+                                shrinkWrap: true,
+                                scrollDirection: Axis.horizontal,
+                                children: [
+                                  _userInformationCard(title: "Watched"),
+                                  _userInformationCard(title: "Followers"),
+                                  _userInformationCard(title: "Following"),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 8.0, bottom: 4),
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          widget.ourUser.fullName,
+                          style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 8.0, bottom: 10),
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          widget.ourUser.bio,
+                          maxLines: 3,
+                        ),
+                      ),
+                    ),
+                    ElevatedButton(
+                      style: kNotWatchedButton,
+                      onPressed: () {
+                        //TODO Implement Follow and Unfollow button
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 48.0),
+                        child: Text("Follow"),
+                      ),
+                    ),
+                  ],
                 ),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 8.0, bottom: 10),
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  widget.ourUser.bio,
-                  maxLines: 3,
-                ),
-              ),
-            ),
-            ElevatedButton(
-              style: kNotWatchedButton,
-              onPressed: () {
-                //TODO Implement Follow and Unfollow button
-              },
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 48.0),
-                child: Text("Follow"),
-              ),
-            ),
-            Expanded(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
+              SliverPersistentHeader(
+                floating: true,
+                pinned: true,
+                delegate: MyDelegate(
                   TabBar(
                     controller: _watchTypeTabController,
                     tabs: _watchTypeTabs,
                     labelColor: Colors.tealAccent,
                     unselectedLabelColor: Colors.grey,
                   ),
-                  Expanded(
-                    child: TabBarView(
-                      controller: _watchTypeTabController,
-                      children: _watchTypeTabViews(context),
-                    ),
-                  ),
-                ],
+                ),
               ),
-            ),
-          ],
+            ];
+          },
+          body: Builder(
+            builder: (context) {
+              _scrollController = PrimaryScrollController.of(context);
+              return TabBarView(
+                controller: _watchTypeTabController,
+                children: _watchTypeTabViews(context),
+              );
+            },
+          ),
         ),
+      ),
+    );
+  }
+
+  Widget _profilePhoto() {
+    return CachedNetworkImage(
+      imageUrl: widget.ourUser.profilePhotoUrl,
+      imageBuilder: (context, imageProvider) => CircleAvatar(
+        foregroundImage: imageProvider,
+        backgroundColor: Colors.black,
+        radius: 40,
+      ),
+      placeholder: (context, url) => Padding(
+        padding: const EdgeInsets.only(top: 20.0),
+        child: Center(
+          child: CircularProgressIndicator(),
+        ),
+      ),
+      errorWidget: (context, url, error) {
+        return widget.ourUser.profilePhotoUrl.isEmpty
+            ? CircleAvatar(
+                backgroundColor: Colors.black,
+                child: Text(
+                  "NO\nPHOTO",
+                  textAlign: TextAlign.center,
+                ),
+                radius: 40,
+              )
+            : CircleAvatar(
+                backgroundColor: Colors.black,
+                child: Icon(Icons.error, color: Colors.white),
+                radius: 40,
+              );
+      },
+    );
+  }
+
+  Widget _userInformationCard({String title}) {
+    String category = "";
+    if (title == "Watched") {
+      category = widget.ourUser.watchedLength.toString();
+    } else if (title == "Followers") {
+      category = widget.ourUser.followers.toString();
+    } else {
+      category = widget.ourUser.following.toString();
+    }
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 10.0),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            category,
+            style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+          ),
+          Text(
+            title,
+            style: TextStyle(fontSize: 16),
+          ),
+        ],
       ),
     );
   }

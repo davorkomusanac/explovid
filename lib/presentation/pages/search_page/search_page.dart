@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:explovid/application/search/actor_search/actor_search_bloc.dart';
 import 'package:explovid/application/search/movie_search/movie_search_bloc.dart';
 import 'package:explovid/application/search/tv_show_search/tv_show_search_bloc.dart';
@@ -324,9 +325,26 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
   Widget _buildUserSearchCard(BuildContext context, UserSearchState state, int index) {
     var user = state.userSearchResults[index];
     return ListTile(
-      leading: CircleAvatar(
-        //TODO update Search results UI
-        foregroundImage: NetworkImage(user.profilePhotoUrl),
+      leading: Container(
+        height: 60,
+        width: 60,
+        child: CachedNetworkImage(
+          imageUrl: user.profilePhotoUrl,
+          imageBuilder: (context, imageProvider) => CircleAvatar(
+            foregroundImage: imageProvider,
+            backgroundColor: Colors.black,
+            radius: 30,
+          ),
+          placeholder: (context, url) => const Center(
+            child: CircularProgressIndicator(),
+          ),
+          errorWidget: (context, url, error) {
+            return CircleAvatar(
+              backgroundColor: Colors.black,
+              radius: 30,
+            );
+          },
+        ),
       ),
       title: Text(user.username),
       subtitle: Text(user.fullName),
@@ -339,12 +357,6 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
           ),
         );
       },
-      // child: Padding(
-      //   padding: const EdgeInsets.all(8.0),
-      //   child: Center(
-      //     child: Text(state.userSearchResults[index].username),
-      //   ),
-      // ),
     );
   }
 
