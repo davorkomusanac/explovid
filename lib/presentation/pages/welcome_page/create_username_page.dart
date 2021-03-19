@@ -16,6 +16,7 @@ class _CreateUsernamePageState extends State<CreateUsernamePage> {
   bool isLoading = false;
 
   Widget getUsernameStatusIcon(SignInFormState state) {
+    //Todo update to not let user click register until checkmark is there
     if (state.isUserTypingUsername) {
       return Icon(null);
     } else {

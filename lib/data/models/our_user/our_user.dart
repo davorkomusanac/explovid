@@ -27,6 +27,9 @@ class OurUser {
     this.watchlistLength,
   });
 
+  ///Movie_watchlist, Movie_watched and TV Show arrays are not added here
+  ///since they are not needed when only showing basic user info for searching
+
   factory OurUser.fromMap(Map<String, dynamic> data) => OurUser(
         uid: data['uid'] as String ?? '',
         email: data['email'] as String ?? '',

@@ -4,9 +4,9 @@ import 'package:explovid/application/user_profile_information/current_user_profi
 import 'package:explovid/application/user_profile_information/current_user_profile_information/current_user_profile_watchlist_watched/movie_lists/movie_lists_user_profile_bloc.dart';
 import 'package:explovid/application/user_profile_information/current_user_profile_information/current_user_profile_watchlist_watched/tv_show_lists/tv_show_lists_user_profile_bloc.dart';
 import 'package:explovid/presentation/pages/movie_details_page/movie_details_page.dart';
-import 'package:explovid/presentation/pages/profile_page/edit_profile_page.dart';
+import 'package:explovid/presentation/pages/profile_page/current_user_page/edit_profile_page.dart';
 import 'package:explovid/presentation/pages/profile_page/post_page.dart';
-import 'package:explovid/presentation/pages/profile_page/user_settings_page.dart';
+import 'package:explovid/presentation/pages/profile_page/current_user_page/user_settings_page.dart';
 import 'package:explovid/presentation/pages/tv_show_details_page/tv_show_details_page.dart';
 import 'package:explovid/presentation/utilities/utilities.dart';
 import 'package:flutter/material.dart';
