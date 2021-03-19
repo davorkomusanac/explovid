@@ -1,11 +1,10 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:explovid/application/search/actor_search/actor_search_bloc.dart';
 import 'package:explovid/application/search/movie_search/movie_search_bloc.dart';
 import 'package:explovid/application/search/tv_show_search/tv_show_search_bloc.dart';
 import 'package:explovid/application/search/user_search/user_search_bloc.dart';
 import 'package:explovid/presentation/pages/actor_details_page/actor_details_page.dart';
 import 'package:explovid/presentation/pages/movie_details_page/movie_details_page.dart';
-import 'package:explovid/presentation/pages/profile_page/other_user_profile_page.dart';
+import 'package:explovid/presentation/pages/profile_page/other_user_page/other_user_profile_page.dart';
 import 'package:explovid/presentation/pages/tv_show_details_page/tv_show_details_page.dart';
 import 'package:explovid/presentation/utilities/utilities.dart';
 import 'package:flutter/cupertino.dart';
@@ -328,23 +327,7 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
       leading: Container(
         height: 60,
         width: 60,
-        child: CachedNetworkImage(
-          imageUrl: user.profilePhotoUrl,
-          imageBuilder: (context, imageProvider) => CircleAvatar(
-            foregroundImage: imageProvider,
-            backgroundColor: Colors.black,
-            radius: 30,
-          ),
-          placeholder: (context, url) => const Center(
-            child: CircularProgressIndicator(),
-          ),
-          errorWidget: (context, url, error) {
-            return CircleAvatar(
-              backgroundColor: Colors.black,
-              radius: 30,
-            );
-          },
-        ),
+        child: BuildProfilePhotoAvatar(profilePhotoUrl: user.profilePhotoUrl),
       ),
       title: Text(user.username),
       subtitle: Text(user.fullName),
@@ -352,7 +335,7 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
         Navigator.of(context, rootNavigator: false).push(
           MaterialPageRoute(
             builder: (context) => OtherUserProfilePage(
-              ourUser: user,
+              otherUserUid: user.uid,
             ),
           ),
         );

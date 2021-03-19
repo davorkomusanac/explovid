@@ -2,16 +2,20 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:community_material_icon/community_material_icon.dart';
 import 'package:explovid/application/user_interactions/follow/follow_bloc.dart';
 import 'package:explovid/application/user_profile_information/current_user_profile_information/current_user_profile_information_bloc.dart';
+import 'package:explovid/application/user_profile_information/other_user_profile_information/other_user_profile_information_bloc.dart';
 import 'package:explovid/application/user_profile_information/other_user_profile_information/other_user_profile_watchlist_watched/movie_lists/other_user_profile_movie_lists_bloc.dart';
 import 'package:explovid/application/user_profile_information/other_user_profile_information/other_user_profile_watchlist_watched/tv_show_lists/other_user_profile_tv_show_lists_bloc.dart';
 import 'package:explovid/data/models/our_user/our_user.dart';
 import 'package:explovid/presentation/pages/movie_details_page/movie_details_page.dart';
+import 'package:explovid/presentation/pages/profile_page/current_user_page/profile_page.dart';
+import 'package:explovid/presentation/pages/profile_page/other_user_page/other_user_followers_page.dart';
 import 'package:explovid/presentation/pages/profile_page/post_page.dart';
-import 'package:explovid/presentation/pages/profile_page/profile_page.dart';
 import 'package:explovid/presentation/pages/tv_show_details_page/tv_show_details_page.dart';
 import 'package:explovid/presentation/utilities/utilities.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'other_user_following_page.dart';
 
 enum VideoType {
   MOVIE_WATCHLIST,
@@ -21,9 +25,9 @@ enum VideoType {
 }
 
 class OtherUserProfilePage extends StatefulWidget {
-  final OurUser ourUser;
+  final String otherUserUid;
 
-  OtherUserProfilePage({this.ourUser});
+  OtherUserProfilePage({@required this.otherUserUid});
 
   @override
   _OtherUserProfilePageState createState() => _OtherUserProfilePageState();
@@ -63,13 +67,36 @@ class _OtherUserProfilePageState extends State<OtherUserProfilePage> with Ticker
     _watchTypeTabController = TabController(initialIndex: 0, vsync: this, length: _watchTypeTabs.length);
     _moviesTabController = TabController(initialIndex: 0, vsync: this, length: _moviesTabs.length);
     _tvShowsTabController = TabController(initialIndex: 0, vsync: this, length: _tvShowsTabs.length);
+  }
+
+  //Calling the event this way so that the bloc updates correctly when moving between several instances
+  @override
+  void didChangeDependencies() {
     context.read<OtherUserProfileMovieListsBloc>().add(
-          OtherUserProfileMovieListsEvent.loadMovieToListInitial(userUid: widget.ourUser.uid),
+          OtherUserProfileMovieListsEvent.loadMovieToListInitial(userUid: widget.otherUserUid),
         );
     context.read<OtherUserProfileTvShowListsBloc>().add(
-          OtherUserProfileTvShowListsEvent.loadTvShowToListInitial(userUid: widget.ourUser.uid),
+          OtherUserProfileTvShowListsEvent.loadTvShowToListInitial(userUid: widget.otherUserUid),
         );
-    context.read<FollowBloc>().add(FollowEvent.checkIfFollowingUserPressed(otherUser: widget.ourUser));
+    context.read<FollowBloc>().add(FollowEvent.checkIfFollowingUserPressed(otherUserUid: widget.otherUserUid));
+    context.read<OtherUserProfileInformationBloc>().add(
+          OtherUserProfileInformationEvent.otherUserProfileLoaded(otherUserUid: widget.otherUserUid),
+        );
+    super.didChangeDependencies();
+  }
+
+  //Method to call when Navigator.pop is called, to update the page
+  void sendEvent() {
+    context.read<OtherUserProfileMovieListsBloc>().add(
+          OtherUserProfileMovieListsEvent.loadMovieToListInitial(userUid: widget.otherUserUid),
+        );
+    context.read<OtherUserProfileTvShowListsBloc>().add(
+          OtherUserProfileTvShowListsEvent.loadTvShowToListInitial(userUid: widget.otherUserUid),
+        );
+    context.read<FollowBloc>().add(FollowEvent.checkIfFollowingUserPressed(otherUserUid: widget.otherUserUid));
+    context.read<OtherUserProfileInformationBloc>().add(
+          OtherUserProfileInformationEvent.otherUserProfileLoaded(otherUserUid: widget.otherUserUid),
+        );
   }
 
   @override
@@ -88,12 +115,12 @@ class _OtherUserProfilePageState extends State<OtherUserProfilePage> with Ticker
           switch (_moviesTabController.index) {
             case (0):
               context.read<OtherUserProfileMovieListsBloc>().add(
-                    OtherUserProfileMovieListsEvent.nextMovieWatchlistPageCalled(userUid: widget.ourUser.uid),
+                    OtherUserProfileMovieListsEvent.nextMovieWatchlistPageCalled(userUid: widget.otherUserUid),
                   );
               break;
             case (1):
               context.read<OtherUserProfileMovieListsBloc>().add(
-                    OtherUserProfileMovieListsEvent.nextMovieWatchedPageCalled(userUid: widget.ourUser.uid),
+                    OtherUserProfileMovieListsEvent.nextMovieWatchedPageCalled(userUid: widget.otherUserUid),
                   );
               break;
             default:
@@ -103,12 +130,12 @@ class _OtherUserProfilePageState extends State<OtherUserProfilePage> with Ticker
           switch (_tvShowsTabController.index) {
             case (0):
               context.read<OtherUserProfileTvShowListsBloc>().add(
-                    OtherUserProfileTvShowListsEvent.nextTvShowWatchlistPageCalled(userUid: widget.ourUser.uid),
+                    OtherUserProfileTvShowListsEvent.nextTvShowWatchlistPageCalled(userUid: widget.otherUserUid),
                   );
               break;
             case (1):
               context.read<OtherUserProfileTvShowListsBloc>().add(
-                    OtherUserProfileTvShowListsEvent.nextTvShowWatchedPageCalled(userUid: widget.ourUser.uid),
+                    OtherUserProfileTvShowListsEvent.nextTvShowWatchedPageCalled(userUid: widget.otherUserUid),
                   );
               break;
             default:
@@ -379,6 +406,7 @@ class _OtherUserProfilePageState extends State<OtherUserProfilePage> with Ticker
   Widget _buildGridImage({String posterPath, int id, VideoType videoType}) {
     return GestureDetector(
       onTap: () {
+        //Calling then and setState when Navigator is popped to update the page
         Navigator.of(context, rootNavigator: false).push(
           MaterialPageRoute(
             // ignore: missing_return
@@ -397,6 +425,12 @@ class _OtherUserProfilePageState extends State<OtherUserProfilePage> with Ticker
                   return PostPage();
                   break;
               }
+            },
+          ),
+        ).then(
+          (value) => setState(
+            () {
+              sendEvent();
             },
           ),
         );
@@ -419,165 +453,222 @@ class _OtherUserProfilePageState extends State<OtherUserProfilePage> with Ticker
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: NestedScrollView(
-          physics: NeverScrollableScrollPhysics(),
-          headerSliverBuilder: (context, isScrolled) {
-            return [
-              SliverAppBar(
-                automaticallyImplyLeading: false,
-                backgroundColor: Colors.blueGrey[900],
-                collapsedHeight: 300,
-                expandedHeight: 300,
-                flexibleSpace: Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(left: 10.0, top: 2.0, right: 12.0, bottom: 0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          BackButton(),
-                          Text(
-                            widget.ourUser.username,
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.w700,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Expanded(
-                            flex: 1,
-                            child: _profilePhoto(),
-                          ),
-                          Expanded(
-                            flex: 3,
-                            child: Container(
-                              height: 80,
-                              //ListView to stop overflow if user Font Size is very large
-                              child: ListView(
-                                shrinkWrap: true,
-                                scrollDirection: Axis.horizontal,
-                                children: [
-                                  _userInformationCard(title: "Watched"),
-                                  _userInformationCard(title: "Followers"),
-                                  _userInformationCard(title: "Following"),
-                                ],
+        child: BlocBuilder<OtherUserProfileInformationBloc, OtherUserProfileInformationState>(
+          builder: (context, userInfoState) {
+            return NestedScrollView(
+              physics: NeverScrollableScrollPhysics(),
+              headerSliverBuilder: (context, isScrolled) {
+                return [
+                  SliverAppBar(
+                    automaticallyImplyLeading: false,
+                    backgroundColor: Colors.blueGrey[900],
+                    collapsedHeight: 300,
+                    expandedHeight: 300,
+                    flexibleSpace: Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(left: 10.0, top: 2.0, right: 12.0, bottom: 0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              BackButton(),
+                              Text(
+                                userInfoState.isSearching ? "" : userInfoState.ourUser.username,
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w700,
+                                ),
                               ),
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Expanded(
+                                flex: 1,
+                                child: userInfoState.isSearching
+                                    ? Padding(
+                                        padding: const EdgeInsets.only(top: 20.0),
+                                        child: Center(
+                                          child: CircularProgressIndicator(),
+                                        ),
+                                      )
+                                    : _profilePhoto(userInfoState.ourUser.profilePhotoUrl),
+                              ),
+                              Expanded(
+                                flex: 3,
+                                child: Container(
+                                  height: 80,
+                                  //ListView to stop overflow if user Font Size is very large
+                                  child: userInfoState.isSearching
+                                      ? Center(
+                                          child: CircularProgressIndicator(),
+                                        )
+                                      : ListView(
+                                          shrinkWrap: true,
+                                          scrollDirection: Axis.horizontal,
+                                          children: [
+                                            _userInformationCard(title: "Watched", user: userInfoState.ourUser),
+                                            GestureDetector(
+                                              behavior: HitTestBehavior.opaque,
+                                              onTap: () {
+                                                //Calling then and setState when Navigator is popped to update the page
+                                                Navigator.of(context)
+                                                    .push(
+                                                      MaterialPageRoute(
+                                                        builder: (context) => OtherUserFollowersPage(
+                                                          profileOwnerUid: widget.otherUserUid,
+                                                        ),
+                                                      ),
+                                                    )
+                                                    .then(
+                                                      (value) => setState(
+                                                        () {
+                                                          sendEvent();
+                                                        },
+                                                      ),
+                                                    );
+                                              },
+                                              child: _userInformationCard(title: "Followers", user: userInfoState.ourUser),
+                                            ),
+                                            GestureDetector(
+                                              behavior: HitTestBehavior.opaque,
+                                              onTap: () {
+                                                Navigator.of(context)
+                                                    .push(
+                                                      MaterialPageRoute(
+                                                        builder: (context) => OtherUserFollowingPage(
+                                                          profileOwnerUid: widget.otherUserUid,
+                                                        ),
+                                                      ),
+                                                    )
+                                                    .then(
+                                                      (value) => setState(
+                                                        () {
+                                                          sendEvent();
+                                                        },
+                                                      ),
+                                                    );
+                                              },
+                                              child: _userInformationCard(title: "Following", user: userInfoState.ourUser),
+                                            ),
+                                          ],
+                                        ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 8.0, bottom: 4),
+                          child: Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              userInfoState.isSearching ? "" : userInfoState.ourUser.fullName,
+                              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                              overflow: TextOverflow.ellipsis,
                             ),
                           ),
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 8.0, bottom: 4),
-                      child: Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          widget.ourUser.fullName,
-                          style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
-                          overflow: TextOverflow.ellipsis,
                         ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 8.0, bottom: 10),
-                      child: Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          widget.ourUser.bio,
-                          maxLines: 3,
+                        Padding(
+                          padding: const EdgeInsets.only(left: 8.0, bottom: 10),
+                          child: Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              userInfoState.isSearching ? "" : userInfoState.ourUser.bio,
+                              maxLines: 3,
+                            ),
+                          ),
                         ),
-                      ),
-                    ),
-                    BlocBuilder<CurrentUserProfileInformationBloc, CurrentUserProfileInformationState>(
-                      builder: (context, state) {
-                        if (state.ourUser.uid != widget.ourUser.uid) {
-                          return BlocConsumer<FollowBloc, FollowState>(
-                            listener: (context, state) {
-                              if (state.errorMessage.isNotEmpty) {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                    content: Text(state.errorMessage),
-                                    duration: Duration(seconds: 2),
-                                  ),
-                                );
-                              }
-                            },
-                            builder: (context, state) {
-                              // ignore: close_sinks
-                              final followBloc = BlocProvider.of<FollowBloc>(context, listen: false);
-                              return state.isSubmitting
-                                  ? Center(child: CircularProgressIndicator())
-                                  : ElevatedButton(
-                                      style: state.isFollowing ? kWatchedButton : kNotWatchedButton,
-                                      onPressed: () {
-                                        state.isFollowing
-                                            ? showDialog(
-                                                context: context,
-                                                builder: (context) {
-                                                  return UnfollowUserDialog(ourUser: widget.ourUser, bloc: followBloc);
-                                                },
-                                              )
-                                            : context.read<FollowBloc>().add(
-                                                  FollowEvent.followUserPressed(otherUser: widget.ourUser),
-                                                );
-                                      },
-                                      child: Padding(
-                                        padding: const EdgeInsets.symmetric(horizontal: 48.0),
-                                        child: Text(
-                                          state.isFollowing ? "Following" : "Follow",
-                                        ),
+                        BlocBuilder<CurrentUserProfileInformationBloc, CurrentUserProfileInformationState>(
+                          builder: (context, state) {
+                            if (state.ourUser.uid != widget.otherUserUid) {
+                              return BlocConsumer<FollowBloc, FollowState>(
+                                listener: (context, state) {
+                                  if (state.errorMessage.isNotEmpty) {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                        content: Text(state.errorMessage),
+                                        duration: Duration(seconds: 2),
                                       ),
                                     );
-                            },
-                          );
-                        } else {
-                          return Offstage();
-                        }
-                      },
+                                  }
+                                },
+                                builder: (context, state) {
+                                  // ignore: close_sinks
+                                  final followBloc = BlocProvider.of<FollowBloc>(context, listen: false);
+                                  return state.isSubmitting
+                                      ? Center(child: CircularProgressIndicator())
+                                      : ElevatedButton(
+                                          style: state.isFollowing ? kWatchedButton : kNotWatchedButton,
+                                          onPressed: () {
+                                            state.isFollowing
+                                                ? showDialog(
+                                                    context: context,
+                                                    builder: (context) {
+                                                      return UnfollowUserDialog(
+                                                          otherUserUid: widget.otherUserUid, bloc: followBloc);
+                                                    },
+                                                  )
+                                                : context.read<FollowBloc>().add(
+                                                      FollowEvent.followUserPressed(otherUserUid: widget.otherUserUid),
+                                                    );
+                                          },
+                                          child: Padding(
+                                            padding: const EdgeInsets.symmetric(horizontal: 48.0),
+                                            child: Text(
+                                              state.isFollowing ? "Following" : "Follow",
+                                            ),
+                                          ),
+                                        );
+                                },
+                              );
+                            } else {
+                              return Offstage();
+                            }
+                          },
+                        ),
+                      ],
                     ),
-                  ],
-                ),
-              ),
-              SliverPersistentHeader(
-                floating: true,
-                pinned: true,
-                delegate: MyDelegate(
-                  TabBar(
-                    controller: _watchTypeTabController,
-                    tabs: _watchTypeTabs,
-                    labelColor: Colors.tealAccent,
-                    unselectedLabelColor: Colors.grey,
                   ),
-                ),
+                  SliverPersistentHeader(
+                    floating: true,
+                    pinned: true,
+                    delegate: MyDelegate(
+                      TabBar(
+                        controller: _watchTypeTabController,
+                        tabs: _watchTypeTabs,
+                        labelColor: Colors.tealAccent,
+                        unselectedLabelColor: Colors.grey,
+                      ),
+                    ),
+                  ),
+                ];
+              },
+              body: Builder(
+                builder: (context) {
+                  _scrollController = PrimaryScrollController.of(context);
+                  return TabBarView(
+                    controller: _watchTypeTabController,
+                    children: _watchTypeTabViews(context),
+                  );
+                },
               ),
-            ];
+            );
           },
-          body: Builder(
-            builder: (context) {
-              _scrollController = PrimaryScrollController.of(context);
-              return TabBarView(
-                controller: _watchTypeTabController,
-                children: _watchTypeTabViews(context),
-              );
-            },
-          ),
         ),
       ),
     );
   }
 
-  Widget _profilePhoto() {
+  Widget _profilePhoto(String profilePhotoUrl) {
     return CachedNetworkImage(
-      imageUrl: widget.ourUser.profilePhotoUrl,
+      imageUrl: profilePhotoUrl,
       imageBuilder: (context, imageProvider) => CircleAvatar(
         foregroundImage: imageProvider,
         backgroundColor: Colors.black,
@@ -590,7 +681,7 @@ class _OtherUserProfilePageState extends State<OtherUserProfilePage> with Ticker
         ),
       ),
       errorWidget: (context, url, error) {
-        return widget.ourUser.profilePhotoUrl.isEmpty
+        return profilePhotoUrl.isEmpty
             ? CircleAvatar(
                 backgroundColor: Colors.black,
                 child: Text(
@@ -608,14 +699,14 @@ class _OtherUserProfilePageState extends State<OtherUserProfilePage> with Ticker
     );
   }
 
-  Widget _userInformationCard({String title}) {
-    String category = "";
+  Widget _userInformationCard({@required String title, @required OurUser user}) {
+    String categoryCount = "";
     if (title == "Watched") {
-      category = widget.ourUser.watchedLength.toString();
+      categoryCount = user.watchedLength.toString();
     } else if (title == "Followers") {
-      category = widget.ourUser.followers.toString();
+      categoryCount = user.followers.toString();
     } else {
-      category = widget.ourUser.following.toString();
+      categoryCount = user.following.toString();
     }
 
     return Padding(
@@ -624,7 +715,7 @@ class _OtherUserProfilePageState extends State<OtherUserProfilePage> with Ticker
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
-            category,
+            categoryCount,
             style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
           ),
           Text(
@@ -638,10 +729,10 @@ class _OtherUserProfilePageState extends State<OtherUserProfilePage> with Ticker
 }
 
 class UnfollowUserDialog extends StatefulWidget {
-  final OurUser ourUser;
+  final String otherUserUid;
   final FollowBloc bloc;
 
-  UnfollowUserDialog({this.ourUser, this.bloc});
+  UnfollowUserDialog({this.otherUserUid, this.bloc});
 
   @override
   _UnfollowUserDialogState createState() => _UnfollowUserDialogState();
@@ -665,7 +756,7 @@ class _UnfollowUserDialogState extends State<UnfollowUserDialog> {
         TextButton(
           onPressed: () {
             widget.bloc.add(
-              FollowEvent.unfollowUserPressed(otherUser: widget.ourUser),
+              FollowEvent.unfollowUserPressed(otherUserUid: widget.otherUserUid),
             );
             Navigator.of(context, rootNavigator: true).pop();
           },

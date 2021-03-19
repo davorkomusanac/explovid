@@ -6,6 +6,7 @@ import 'package:explovid/application/user_interactions/follow/follow_bloc.dart';
 import 'package:explovid/application/user_profile_information/current_user_profile_information/current_user_profile_information_bloc.dart';
 import 'package:explovid/application/user_profile_information/current_user_profile_information/current_user_profile_watchlist_watched/movie_lists/movie_lists_user_profile_bloc.dart';
 import 'package:explovid/application/user_profile_information/current_user_profile_information/current_user_profile_watchlist_watched/tv_show_lists/tv_show_lists_user_profile_bloc.dart';
+import 'package:explovid/application/user_profile_information/other_user_profile_information/other_user_profile_information_bloc.dart';
 import 'package:explovid/application/user_profile_information/other_user_profile_information/other_user_profile_watchlist_watched/movie_lists/other_user_profile_movie_lists_bloc.dart';
 import 'package:explovid/application/user_profile_information/other_user_profile_information/other_user_profile_watchlist_watched/tv_show_lists/other_user_profile_tv_show_lists_bloc.dart';
 import 'package:explovid/data/search_db/movie_db/movie_repository.dart';
@@ -14,7 +15,7 @@ import 'package:explovid/data/user_profile_db/user_actions_db/user_actions_repos
 import 'package:explovid/presentation/pages/feedback_page/feedback_page.dart';
 import 'package:explovid/presentation/pages/home_page/four.dart';
 import 'package:explovid/presentation/pages/home_page/one.dart';
-import 'package:explovid/presentation/pages/profile_page/profile_page.dart';
+import 'package:explovid/presentation/pages/profile_page/current_user_page/profile_page.dart';
 import 'package:explovid/presentation/pages/search_page/search_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -151,6 +152,11 @@ class _HomePageState extends State<HomePage> {
                   ),
                   BlocProvider(
                     create: (context) => OtherUserProfileTvShowListsBloc(
+                      _otherUserProfileRepository,
+                    ),
+                  ),
+                  BlocProvider(
+                    create: (context) => OtherUserProfileInformationBloc(
                       _otherUserProfileRepository,
                     ),
                   ),

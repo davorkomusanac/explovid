@@ -14,9 +14,10 @@ class _$OtherUserProfileInformationEventTearOff {
   const _$OtherUserProfileInformationEventTearOff();
 
 // ignore: unused_element
-  _OtherUserProfileLoaded otherUserProfileLoaded(OurUser ourUser) {
+  _OtherUserProfileLoaded otherUserProfileLoaded(
+      {@required String otherUserUid}) {
     return _OtherUserProfileLoaded(
-      ourUser,
+      otherUserUid: otherUserUid,
     );
   }
 }
@@ -28,15 +29,15 @@ const $OtherUserProfileInformationEvent =
 
 /// @nodoc
 mixin _$OtherUserProfileInformationEvent {
-  OurUser get ourUser;
+  String get otherUserUid;
 
   @optionalTypeArgs
   TResult when<TResult extends Object>({
-    @required TResult otherUserProfileLoaded(OurUser ourUser),
+    @required TResult otherUserProfileLoaded(String otherUserUid),
   });
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object>({
-    TResult otherUserProfileLoaded(OurUser ourUser),
+    TResult otherUserProfileLoaded(String otherUserUid),
     @required TResult orElse(),
   });
   @optionalTypeArgs
@@ -60,7 +61,7 @@ abstract class $OtherUserProfileInformationEventCopyWith<$Res> {
           OtherUserProfileInformationEvent value,
           $Res Function(OtherUserProfileInformationEvent) then) =
       _$OtherUserProfileInformationEventCopyWithImpl<$Res>;
-  $Res call({OurUser ourUser});
+  $Res call({String otherUserUid});
 }
 
 /// @nodoc
@@ -74,10 +75,12 @@ class _$OtherUserProfileInformationEventCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object ourUser = freezed,
+    Object otherUserUid = freezed,
   }) {
     return _then(_value.copyWith(
-      ourUser: ourUser == freezed ? _value.ourUser : ourUser as OurUser,
+      otherUserUid: otherUserUid == freezed
+          ? _value.otherUserUid
+          : otherUserUid as String,
     ));
   }
 }
@@ -89,7 +92,7 @@ abstract class _$OtherUserProfileLoadedCopyWith<$Res>
           $Res Function(_OtherUserProfileLoaded) then) =
       __$OtherUserProfileLoadedCopyWithImpl<$Res>;
   @override
-  $Res call({OurUser ourUser});
+  $Res call({String otherUserUid});
 }
 
 /// @nodoc
@@ -105,37 +108,41 @@ class __$OtherUserProfileLoadedCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object ourUser = freezed,
+    Object otherUserUid = freezed,
   }) {
     return _then(_OtherUserProfileLoaded(
-      ourUser == freezed ? _value.ourUser : ourUser as OurUser,
+      otherUserUid: otherUserUid == freezed
+          ? _value.otherUserUid
+          : otherUserUid as String,
     ));
   }
 }
 
 /// @nodoc
 class _$_OtherUserProfileLoaded implements _OtherUserProfileLoaded {
-  const _$_OtherUserProfileLoaded(this.ourUser) : assert(ourUser != null);
+  const _$_OtherUserProfileLoaded({@required this.otherUserUid})
+      : assert(otherUserUid != null);
 
   @override
-  final OurUser ourUser;
+  final String otherUserUid;
 
   @override
   String toString() {
-    return 'OtherUserProfileInformationEvent.otherUserProfileLoaded(ourUser: $ourUser)';
+    return 'OtherUserProfileInformationEvent.otherUserProfileLoaded(otherUserUid: $otherUserUid)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is _OtherUserProfileLoaded &&
-            (identical(other.ourUser, ourUser) ||
-                const DeepCollectionEquality().equals(other.ourUser, ourUser)));
+            (identical(other.otherUserUid, otherUserUid) ||
+                const DeepCollectionEquality()
+                    .equals(other.otherUserUid, otherUserUid)));
   }
 
   @override
   int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(ourUser);
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(otherUserUid);
 
   @JsonKey(ignore: true)
   @override
@@ -146,21 +153,21 @@ class _$_OtherUserProfileLoaded implements _OtherUserProfileLoaded {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object>({
-    @required TResult otherUserProfileLoaded(OurUser ourUser),
+    @required TResult otherUserProfileLoaded(String otherUserUid),
   }) {
     assert(otherUserProfileLoaded != null);
-    return otherUserProfileLoaded(ourUser);
+    return otherUserProfileLoaded(otherUserUid);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object>({
-    TResult otherUserProfileLoaded(OurUser ourUser),
+    TResult otherUserProfileLoaded(String otherUserUid),
     @required TResult orElse(),
   }) {
     assert(orElse != null);
     if (otherUserProfileLoaded != null) {
-      return otherUserProfileLoaded(ourUser);
+      return otherUserProfileLoaded(otherUserUid);
     }
     return orElse();
   }
@@ -190,11 +197,11 @@ class _$_OtherUserProfileLoaded implements _OtherUserProfileLoaded {
 
 abstract class _OtherUserProfileLoaded
     implements OtherUserProfileInformationEvent {
-  const factory _OtherUserProfileLoaded(OurUser ourUser) =
+  const factory _OtherUserProfileLoaded({@required String otherUserUid}) =
       _$_OtherUserProfileLoaded;
 
   @override
-  OurUser get ourUser;
+  String get otherUserUid;
   @override
   @JsonKey(ignore: true)
   _$OtherUserProfileLoadedCopyWith<_OtherUserProfileLoaded> get copyWith;

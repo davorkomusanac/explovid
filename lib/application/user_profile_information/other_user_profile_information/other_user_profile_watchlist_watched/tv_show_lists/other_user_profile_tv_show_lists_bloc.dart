@@ -7,9 +7,9 @@ import 'package:explovid/data/user_profile_db/other_user_profile_db/other_user_p
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:meta/meta.dart';
 
+part 'other_user_profile_tv_show_lists_bloc.freezed.dart';
 part 'other_user_profile_tv_show_lists_event.dart';
 part 'other_user_profile_tv_show_lists_state.dart';
-part 'other_user_profile_tv_show_lists_bloc.freezed.dart';
 
 class OtherUserProfileTvShowListsBloc extends Bloc<OtherUserProfileTvShowListsEvent, OtherUserProfileTvShowListsState> {
   final OtherUserProfileRepository _userProfileRepository;
@@ -22,8 +22,13 @@ class OtherUserProfileTvShowListsBloc extends Bloc<OtherUserProfileTvShowListsEv
   ) async* {
     yield* event.map(
       loadTvShowToListInitial: (e) async* {
+        yield state.copyWith(
+          isLoading: true,
+        );
+
         var watchlist = await _userProfileRepository.getTvShowWatchlist(userUid: e.userUid);
         var watched = await _userProfileRepository.getTvShowWatched(userUid: e.userUid);
+
         yield state.copyWith(
           isLoading: false,
           tvShowWatchlist: watchlist,

@@ -7,9 +7,9 @@ import 'package:explovid/data/user_profile_db/other_user_profile_db/other_user_p
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:meta/meta.dart';
 
+part 'other_user_profile_movie_lists_bloc.freezed.dart';
 part 'other_user_profile_movie_lists_event.dart';
 part 'other_user_profile_movie_lists_state.dart';
-part 'other_user_profile_movie_lists_bloc.freezed.dart';
 
 class OtherUserProfileMovieListsBloc extends Bloc<OtherUserProfileMovieListsEvent, OtherUserProfileMovieListsState> {
   final OtherUserProfileRepository _userProfileRepository;
@@ -22,6 +22,10 @@ class OtherUserProfileMovieListsBloc extends Bloc<OtherUserProfileMovieListsEven
   ) async* {
     yield* event.map(
       loadMovieToListInitial: (e) async* {
+        yield state.copyWith(
+          isLoading: true,
+        );
+
         var watchlist = await _userProfileRepository.getMovieWatchlist(userUid: e.userUid);
         var watched = await _userProfileRepository.getMovieWatched(userUid: e.userUid);
 

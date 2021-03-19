@@ -251,11 +251,11 @@ class BuildPosterImage extends StatelessWidget {
   }
 }
 
-class WatchedStatsCard extends StatelessWidget {
+class BuildWatchedStatsCard extends StatelessWidget {
   final String category;
   final int quantity;
 
-  const WatchedStatsCard({
+  const BuildWatchedStatsCard({
     Key key,
     this.category,
     this.quantity,
@@ -287,6 +287,33 @@ class WatchedStatsCard extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+class BuildProfilePhotoAvatar extends StatelessWidget {
+  final String profilePhotoUrl;
+
+  BuildProfilePhotoAvatar({@required this.profilePhotoUrl});
+
+  @override
+  Widget build(BuildContext context) {
+    return CachedNetworkImage(
+      imageUrl: profilePhotoUrl,
+      imageBuilder: (context, imageProvider) => CircleAvatar(
+        foregroundImage: imageProvider,
+        backgroundColor: Colors.black,
+        radius: 30,
+      ),
+      placeholder: (context, url) => const Center(
+        child: CircularProgressIndicator(),
+      ),
+      errorWidget: (context, url, error) {
+        return CircleAvatar(
+          backgroundColor: Colors.black,
+          radius: 30,
+        );
+      },
     );
   }
 }
