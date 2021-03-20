@@ -36,6 +36,22 @@ class _$FollowEventTearOff {
   }
 
 // ignore: unused_element
+  _RemoveUserFollowerPressed removeUserFollowerPressed(
+      {@required String otherUserUid}) {
+    return _RemoveUserFollowerPressed(
+      otherUserUid: otherUserUid,
+    );
+  }
+
+// ignore: unused_element
+  _RemoveUserFollowingPressed removeUserFollowingPressed(
+      {@required String otherUserUid}) {
+    return _RemoveUserFollowingPressed(
+      otherUserUid: otherUserUid,
+    );
+  }
+
+// ignore: unused_element
   _ShowFollowersPressed showFollowersPressed(
       {@required String profileOwnerUid}) {
     return _ShowFollowersPressed(
@@ -79,6 +95,8 @@ mixin _$FollowEvent {
     @required TResult checkIfFollowingUserPressed(String otherUserUid),
     @required TResult followUserPressed(String otherUserUid),
     @required TResult unfollowUserPressed(String otherUserUid),
+    @required TResult removeUserFollowerPressed(String otherUserUid),
+    @required TResult removeUserFollowingPressed(String otherUserUid),
     @required TResult showFollowersPressed(String profileOwnerUid),
     @required TResult showFollowingPressed(String profileOwnerUid),
     @required TResult nextPageShowFollowersPressed(String profileOwnerUid),
@@ -89,6 +107,8 @@ mixin _$FollowEvent {
     TResult checkIfFollowingUserPressed(String otherUserUid),
     TResult followUserPressed(String otherUserUid),
     TResult unfollowUserPressed(String otherUserUid),
+    TResult removeUserFollowerPressed(String otherUserUid),
+    TResult removeUserFollowingPressed(String otherUserUid),
     TResult showFollowersPressed(String profileOwnerUid),
     TResult showFollowingPressed(String profileOwnerUid),
     TResult nextPageShowFollowersPressed(String profileOwnerUid),
@@ -101,6 +121,10 @@ mixin _$FollowEvent {
         TResult checkIfFollowingUserPressed(_CheckIfFollowingUserPressed value),
     @required TResult followUserPressed(_FollowUserPressed value),
     @required TResult unfollowUserPressed(_UnfollowUserPressed value),
+    @required
+        TResult removeUserFollowerPressed(_RemoveUserFollowerPressed value),
+    @required
+        TResult removeUserFollowingPressed(_RemoveUserFollowingPressed value),
     @required TResult showFollowersPressed(_ShowFollowersPressed value),
     @required TResult showFollowingPressed(_ShowFollowingPressed value),
     @required
@@ -115,6 +139,8 @@ mixin _$FollowEvent {
     TResult checkIfFollowingUserPressed(_CheckIfFollowingUserPressed value),
     TResult followUserPressed(_FollowUserPressed value),
     TResult unfollowUserPressed(_UnfollowUserPressed value),
+    TResult removeUserFollowerPressed(_RemoveUserFollowerPressed value),
+    TResult removeUserFollowingPressed(_RemoveUserFollowingPressed value),
     TResult showFollowersPressed(_ShowFollowersPressed value),
     TResult showFollowingPressed(_ShowFollowingPressed value),
     TResult nextPageShowFollowersPressed(_NextPageShowFollowersPressed value),
@@ -211,6 +237,8 @@ class _$_CheckIfFollowingUserPressed implements _CheckIfFollowingUserPressed {
     @required TResult checkIfFollowingUserPressed(String otherUserUid),
     @required TResult followUserPressed(String otherUserUid),
     @required TResult unfollowUserPressed(String otherUserUid),
+    @required TResult removeUserFollowerPressed(String otherUserUid),
+    @required TResult removeUserFollowingPressed(String otherUserUid),
     @required TResult showFollowersPressed(String profileOwnerUid),
     @required TResult showFollowingPressed(String profileOwnerUid),
     @required TResult nextPageShowFollowersPressed(String profileOwnerUid),
@@ -219,6 +247,8 @@ class _$_CheckIfFollowingUserPressed implements _CheckIfFollowingUserPressed {
     assert(checkIfFollowingUserPressed != null);
     assert(followUserPressed != null);
     assert(unfollowUserPressed != null);
+    assert(removeUserFollowerPressed != null);
+    assert(removeUserFollowingPressed != null);
     assert(showFollowersPressed != null);
     assert(showFollowingPressed != null);
     assert(nextPageShowFollowersPressed != null);
@@ -232,6 +262,8 @@ class _$_CheckIfFollowingUserPressed implements _CheckIfFollowingUserPressed {
     TResult checkIfFollowingUserPressed(String otherUserUid),
     TResult followUserPressed(String otherUserUid),
     TResult unfollowUserPressed(String otherUserUid),
+    TResult removeUserFollowerPressed(String otherUserUid),
+    TResult removeUserFollowingPressed(String otherUserUid),
     TResult showFollowersPressed(String profileOwnerUid),
     TResult showFollowingPressed(String profileOwnerUid),
     TResult nextPageShowFollowersPressed(String profileOwnerUid),
@@ -252,6 +284,10 @@ class _$_CheckIfFollowingUserPressed implements _CheckIfFollowingUserPressed {
         TResult checkIfFollowingUserPressed(_CheckIfFollowingUserPressed value),
     @required TResult followUserPressed(_FollowUserPressed value),
     @required TResult unfollowUserPressed(_UnfollowUserPressed value),
+    @required
+        TResult removeUserFollowerPressed(_RemoveUserFollowerPressed value),
+    @required
+        TResult removeUserFollowingPressed(_RemoveUserFollowingPressed value),
     @required TResult showFollowersPressed(_ShowFollowersPressed value),
     @required TResult showFollowingPressed(_ShowFollowingPressed value),
     @required
@@ -264,6 +300,8 @@ class _$_CheckIfFollowingUserPressed implements _CheckIfFollowingUserPressed {
     assert(checkIfFollowingUserPressed != null);
     assert(followUserPressed != null);
     assert(unfollowUserPressed != null);
+    assert(removeUserFollowerPressed != null);
+    assert(removeUserFollowingPressed != null);
     assert(showFollowersPressed != null);
     assert(showFollowingPressed != null);
     assert(nextPageShowFollowersPressed != null);
@@ -277,6 +315,8 @@ class _$_CheckIfFollowingUserPressed implements _CheckIfFollowingUserPressed {
     TResult checkIfFollowingUserPressed(_CheckIfFollowingUserPressed value),
     TResult followUserPressed(_FollowUserPressed value),
     TResult unfollowUserPressed(_UnfollowUserPressed value),
+    TResult removeUserFollowerPressed(_RemoveUserFollowerPressed value),
+    TResult removeUserFollowingPressed(_RemoveUserFollowingPressed value),
     TResult showFollowersPressed(_ShowFollowersPressed value),
     TResult showFollowingPressed(_ShowFollowingPressed value),
     TResult nextPageShowFollowersPressed(_NextPageShowFollowersPressed value),
@@ -369,6 +409,8 @@ class _$_FollowUserPressed implements _FollowUserPressed {
     @required TResult checkIfFollowingUserPressed(String otherUserUid),
     @required TResult followUserPressed(String otherUserUid),
     @required TResult unfollowUserPressed(String otherUserUid),
+    @required TResult removeUserFollowerPressed(String otherUserUid),
+    @required TResult removeUserFollowingPressed(String otherUserUid),
     @required TResult showFollowersPressed(String profileOwnerUid),
     @required TResult showFollowingPressed(String profileOwnerUid),
     @required TResult nextPageShowFollowersPressed(String profileOwnerUid),
@@ -377,6 +419,8 @@ class _$_FollowUserPressed implements _FollowUserPressed {
     assert(checkIfFollowingUserPressed != null);
     assert(followUserPressed != null);
     assert(unfollowUserPressed != null);
+    assert(removeUserFollowerPressed != null);
+    assert(removeUserFollowingPressed != null);
     assert(showFollowersPressed != null);
     assert(showFollowingPressed != null);
     assert(nextPageShowFollowersPressed != null);
@@ -390,6 +434,8 @@ class _$_FollowUserPressed implements _FollowUserPressed {
     TResult checkIfFollowingUserPressed(String otherUserUid),
     TResult followUserPressed(String otherUserUid),
     TResult unfollowUserPressed(String otherUserUid),
+    TResult removeUserFollowerPressed(String otherUserUid),
+    TResult removeUserFollowingPressed(String otherUserUid),
     TResult showFollowersPressed(String profileOwnerUid),
     TResult showFollowingPressed(String profileOwnerUid),
     TResult nextPageShowFollowersPressed(String profileOwnerUid),
@@ -410,6 +456,10 @@ class _$_FollowUserPressed implements _FollowUserPressed {
         TResult checkIfFollowingUserPressed(_CheckIfFollowingUserPressed value),
     @required TResult followUserPressed(_FollowUserPressed value),
     @required TResult unfollowUserPressed(_UnfollowUserPressed value),
+    @required
+        TResult removeUserFollowerPressed(_RemoveUserFollowerPressed value),
+    @required
+        TResult removeUserFollowingPressed(_RemoveUserFollowingPressed value),
     @required TResult showFollowersPressed(_ShowFollowersPressed value),
     @required TResult showFollowingPressed(_ShowFollowingPressed value),
     @required
@@ -422,6 +472,8 @@ class _$_FollowUserPressed implements _FollowUserPressed {
     assert(checkIfFollowingUserPressed != null);
     assert(followUserPressed != null);
     assert(unfollowUserPressed != null);
+    assert(removeUserFollowerPressed != null);
+    assert(removeUserFollowingPressed != null);
     assert(showFollowersPressed != null);
     assert(showFollowingPressed != null);
     assert(nextPageShowFollowersPressed != null);
@@ -435,6 +487,8 @@ class _$_FollowUserPressed implements _FollowUserPressed {
     TResult checkIfFollowingUserPressed(_CheckIfFollowingUserPressed value),
     TResult followUserPressed(_FollowUserPressed value),
     TResult unfollowUserPressed(_UnfollowUserPressed value),
+    TResult removeUserFollowerPressed(_RemoveUserFollowerPressed value),
+    TResult removeUserFollowingPressed(_RemoveUserFollowingPressed value),
     TResult showFollowersPressed(_ShowFollowersPressed value),
     TResult showFollowingPressed(_ShowFollowingPressed value),
     TResult nextPageShowFollowersPressed(_NextPageShowFollowersPressed value),
@@ -527,6 +581,8 @@ class _$_UnfollowUserPressed implements _UnfollowUserPressed {
     @required TResult checkIfFollowingUserPressed(String otherUserUid),
     @required TResult followUserPressed(String otherUserUid),
     @required TResult unfollowUserPressed(String otherUserUid),
+    @required TResult removeUserFollowerPressed(String otherUserUid),
+    @required TResult removeUserFollowingPressed(String otherUserUid),
     @required TResult showFollowersPressed(String profileOwnerUid),
     @required TResult showFollowingPressed(String profileOwnerUid),
     @required TResult nextPageShowFollowersPressed(String profileOwnerUid),
@@ -535,6 +591,8 @@ class _$_UnfollowUserPressed implements _UnfollowUserPressed {
     assert(checkIfFollowingUserPressed != null);
     assert(followUserPressed != null);
     assert(unfollowUserPressed != null);
+    assert(removeUserFollowerPressed != null);
+    assert(removeUserFollowingPressed != null);
     assert(showFollowersPressed != null);
     assert(showFollowingPressed != null);
     assert(nextPageShowFollowersPressed != null);
@@ -548,6 +606,8 @@ class _$_UnfollowUserPressed implements _UnfollowUserPressed {
     TResult checkIfFollowingUserPressed(String otherUserUid),
     TResult followUserPressed(String otherUserUid),
     TResult unfollowUserPressed(String otherUserUid),
+    TResult removeUserFollowerPressed(String otherUserUid),
+    TResult removeUserFollowingPressed(String otherUserUid),
     TResult showFollowersPressed(String profileOwnerUid),
     TResult showFollowingPressed(String profileOwnerUid),
     TResult nextPageShowFollowersPressed(String profileOwnerUid),
@@ -568,6 +628,10 @@ class _$_UnfollowUserPressed implements _UnfollowUserPressed {
         TResult checkIfFollowingUserPressed(_CheckIfFollowingUserPressed value),
     @required TResult followUserPressed(_FollowUserPressed value),
     @required TResult unfollowUserPressed(_UnfollowUserPressed value),
+    @required
+        TResult removeUserFollowerPressed(_RemoveUserFollowerPressed value),
+    @required
+        TResult removeUserFollowingPressed(_RemoveUserFollowingPressed value),
     @required TResult showFollowersPressed(_ShowFollowersPressed value),
     @required TResult showFollowingPressed(_ShowFollowingPressed value),
     @required
@@ -580,6 +644,8 @@ class _$_UnfollowUserPressed implements _UnfollowUserPressed {
     assert(checkIfFollowingUserPressed != null);
     assert(followUserPressed != null);
     assert(unfollowUserPressed != null);
+    assert(removeUserFollowerPressed != null);
+    assert(removeUserFollowingPressed != null);
     assert(showFollowersPressed != null);
     assert(showFollowingPressed != null);
     assert(nextPageShowFollowersPressed != null);
@@ -593,6 +659,8 @@ class _$_UnfollowUserPressed implements _UnfollowUserPressed {
     TResult checkIfFollowingUserPressed(_CheckIfFollowingUserPressed value),
     TResult followUserPressed(_FollowUserPressed value),
     TResult unfollowUserPressed(_UnfollowUserPressed value),
+    TResult removeUserFollowerPressed(_RemoveUserFollowerPressed value),
+    TResult removeUserFollowingPressed(_RemoveUserFollowingPressed value),
     TResult showFollowersPressed(_ShowFollowersPressed value),
     TResult showFollowingPressed(_ShowFollowingPressed value),
     TResult nextPageShowFollowersPressed(_NextPageShowFollowersPressed value),
@@ -614,6 +682,355 @@ abstract class _UnfollowUserPressed implements FollowEvent {
   String get otherUserUid;
   @JsonKey(ignore: true)
   _$UnfollowUserPressedCopyWith<_UnfollowUserPressed> get copyWith;
+}
+
+/// @nodoc
+abstract class _$RemoveUserFollowerPressedCopyWith<$Res> {
+  factory _$RemoveUserFollowerPressedCopyWith(_RemoveUserFollowerPressed value,
+          $Res Function(_RemoveUserFollowerPressed) then) =
+      __$RemoveUserFollowerPressedCopyWithImpl<$Res>;
+  $Res call({String otherUserUid});
+}
+
+/// @nodoc
+class __$RemoveUserFollowerPressedCopyWithImpl<$Res>
+    extends _$FollowEventCopyWithImpl<$Res>
+    implements _$RemoveUserFollowerPressedCopyWith<$Res> {
+  __$RemoveUserFollowerPressedCopyWithImpl(_RemoveUserFollowerPressed _value,
+      $Res Function(_RemoveUserFollowerPressed) _then)
+      : super(_value, (v) => _then(v as _RemoveUserFollowerPressed));
+
+  @override
+  _RemoveUserFollowerPressed get _value =>
+      super._value as _RemoveUserFollowerPressed;
+
+  @override
+  $Res call({
+    Object otherUserUid = freezed,
+  }) {
+    return _then(_RemoveUserFollowerPressed(
+      otherUserUid: otherUserUid == freezed
+          ? _value.otherUserUid
+          : otherUserUid as String,
+    ));
+  }
+}
+
+/// @nodoc
+class _$_RemoveUserFollowerPressed implements _RemoveUserFollowerPressed {
+  const _$_RemoveUserFollowerPressed({@required this.otherUserUid})
+      : assert(otherUserUid != null);
+
+  @override
+  final String otherUserUid;
+
+  @override
+  String toString() {
+    return 'FollowEvent.removeUserFollowerPressed(otherUserUid: $otherUserUid)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is _RemoveUserFollowerPressed &&
+            (identical(other.otherUserUid, otherUserUid) ||
+                const DeepCollectionEquality()
+                    .equals(other.otherUserUid, otherUserUid)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(otherUserUid);
+
+  @JsonKey(ignore: true)
+  @override
+  _$RemoveUserFollowerPressedCopyWith<_RemoveUserFollowerPressed>
+      get copyWith =>
+          __$RemoveUserFollowerPressedCopyWithImpl<_RemoveUserFollowerPressed>(
+              this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object>({
+    @required TResult checkIfFollowingUserPressed(String otherUserUid),
+    @required TResult followUserPressed(String otherUserUid),
+    @required TResult unfollowUserPressed(String otherUserUid),
+    @required TResult removeUserFollowerPressed(String otherUserUid),
+    @required TResult removeUserFollowingPressed(String otherUserUid),
+    @required TResult showFollowersPressed(String profileOwnerUid),
+    @required TResult showFollowingPressed(String profileOwnerUid),
+    @required TResult nextPageShowFollowersPressed(String profileOwnerUid),
+    @required TResult nextPageShowFollowingPressed(String profileOwnerUid),
+  }) {
+    assert(checkIfFollowingUserPressed != null);
+    assert(followUserPressed != null);
+    assert(unfollowUserPressed != null);
+    assert(removeUserFollowerPressed != null);
+    assert(removeUserFollowingPressed != null);
+    assert(showFollowersPressed != null);
+    assert(showFollowingPressed != null);
+    assert(nextPageShowFollowersPressed != null);
+    assert(nextPageShowFollowingPressed != null);
+    return removeUserFollowerPressed(otherUserUid);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object>({
+    TResult checkIfFollowingUserPressed(String otherUserUid),
+    TResult followUserPressed(String otherUserUid),
+    TResult unfollowUserPressed(String otherUserUid),
+    TResult removeUserFollowerPressed(String otherUserUid),
+    TResult removeUserFollowingPressed(String otherUserUid),
+    TResult showFollowersPressed(String profileOwnerUid),
+    TResult showFollowingPressed(String profileOwnerUid),
+    TResult nextPageShowFollowersPressed(String profileOwnerUid),
+    TResult nextPageShowFollowingPressed(String profileOwnerUid),
+    @required TResult orElse(),
+  }) {
+    assert(orElse != null);
+    if (removeUserFollowerPressed != null) {
+      return removeUserFollowerPressed(otherUserUid);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object>({
+    @required
+        TResult checkIfFollowingUserPressed(_CheckIfFollowingUserPressed value),
+    @required TResult followUserPressed(_FollowUserPressed value),
+    @required TResult unfollowUserPressed(_UnfollowUserPressed value),
+    @required
+        TResult removeUserFollowerPressed(_RemoveUserFollowerPressed value),
+    @required
+        TResult removeUserFollowingPressed(_RemoveUserFollowingPressed value),
+    @required TResult showFollowersPressed(_ShowFollowersPressed value),
+    @required TResult showFollowingPressed(_ShowFollowingPressed value),
+    @required
+        TResult nextPageShowFollowersPressed(
+            _NextPageShowFollowersPressed value),
+    @required
+        TResult nextPageShowFollowingPressed(
+            _NextPageShowFollowingPressed value),
+  }) {
+    assert(checkIfFollowingUserPressed != null);
+    assert(followUserPressed != null);
+    assert(unfollowUserPressed != null);
+    assert(removeUserFollowerPressed != null);
+    assert(removeUserFollowingPressed != null);
+    assert(showFollowersPressed != null);
+    assert(showFollowingPressed != null);
+    assert(nextPageShowFollowersPressed != null);
+    assert(nextPageShowFollowingPressed != null);
+    return removeUserFollowerPressed(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object>({
+    TResult checkIfFollowingUserPressed(_CheckIfFollowingUserPressed value),
+    TResult followUserPressed(_FollowUserPressed value),
+    TResult unfollowUserPressed(_UnfollowUserPressed value),
+    TResult removeUserFollowerPressed(_RemoveUserFollowerPressed value),
+    TResult removeUserFollowingPressed(_RemoveUserFollowingPressed value),
+    TResult showFollowersPressed(_ShowFollowersPressed value),
+    TResult showFollowingPressed(_ShowFollowingPressed value),
+    TResult nextPageShowFollowersPressed(_NextPageShowFollowersPressed value),
+    TResult nextPageShowFollowingPressed(_NextPageShowFollowingPressed value),
+    @required TResult orElse(),
+  }) {
+    assert(orElse != null);
+    if (removeUserFollowerPressed != null) {
+      return removeUserFollowerPressed(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _RemoveUserFollowerPressed implements FollowEvent {
+  const factory _RemoveUserFollowerPressed({@required String otherUserUid}) =
+      _$_RemoveUserFollowerPressed;
+
+  String get otherUserUid;
+  @JsonKey(ignore: true)
+  _$RemoveUserFollowerPressedCopyWith<_RemoveUserFollowerPressed> get copyWith;
+}
+
+/// @nodoc
+abstract class _$RemoveUserFollowingPressedCopyWith<$Res> {
+  factory _$RemoveUserFollowingPressedCopyWith(
+          _RemoveUserFollowingPressed value,
+          $Res Function(_RemoveUserFollowingPressed) then) =
+      __$RemoveUserFollowingPressedCopyWithImpl<$Res>;
+  $Res call({String otherUserUid});
+}
+
+/// @nodoc
+class __$RemoveUserFollowingPressedCopyWithImpl<$Res>
+    extends _$FollowEventCopyWithImpl<$Res>
+    implements _$RemoveUserFollowingPressedCopyWith<$Res> {
+  __$RemoveUserFollowingPressedCopyWithImpl(_RemoveUserFollowingPressed _value,
+      $Res Function(_RemoveUserFollowingPressed) _then)
+      : super(_value, (v) => _then(v as _RemoveUserFollowingPressed));
+
+  @override
+  _RemoveUserFollowingPressed get _value =>
+      super._value as _RemoveUserFollowingPressed;
+
+  @override
+  $Res call({
+    Object otherUserUid = freezed,
+  }) {
+    return _then(_RemoveUserFollowingPressed(
+      otherUserUid: otherUserUid == freezed
+          ? _value.otherUserUid
+          : otherUserUid as String,
+    ));
+  }
+}
+
+/// @nodoc
+class _$_RemoveUserFollowingPressed implements _RemoveUserFollowingPressed {
+  const _$_RemoveUserFollowingPressed({@required this.otherUserUid})
+      : assert(otherUserUid != null);
+
+  @override
+  final String otherUserUid;
+
+  @override
+  String toString() {
+    return 'FollowEvent.removeUserFollowingPressed(otherUserUid: $otherUserUid)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is _RemoveUserFollowingPressed &&
+            (identical(other.otherUserUid, otherUserUid) ||
+                const DeepCollectionEquality()
+                    .equals(other.otherUserUid, otherUserUid)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(otherUserUid);
+
+  @JsonKey(ignore: true)
+  @override
+  _$RemoveUserFollowingPressedCopyWith<_RemoveUserFollowingPressed>
+      get copyWith => __$RemoveUserFollowingPressedCopyWithImpl<
+          _RemoveUserFollowingPressed>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object>({
+    @required TResult checkIfFollowingUserPressed(String otherUserUid),
+    @required TResult followUserPressed(String otherUserUid),
+    @required TResult unfollowUserPressed(String otherUserUid),
+    @required TResult removeUserFollowerPressed(String otherUserUid),
+    @required TResult removeUserFollowingPressed(String otherUserUid),
+    @required TResult showFollowersPressed(String profileOwnerUid),
+    @required TResult showFollowingPressed(String profileOwnerUid),
+    @required TResult nextPageShowFollowersPressed(String profileOwnerUid),
+    @required TResult nextPageShowFollowingPressed(String profileOwnerUid),
+  }) {
+    assert(checkIfFollowingUserPressed != null);
+    assert(followUserPressed != null);
+    assert(unfollowUserPressed != null);
+    assert(removeUserFollowerPressed != null);
+    assert(removeUserFollowingPressed != null);
+    assert(showFollowersPressed != null);
+    assert(showFollowingPressed != null);
+    assert(nextPageShowFollowersPressed != null);
+    assert(nextPageShowFollowingPressed != null);
+    return removeUserFollowingPressed(otherUserUid);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object>({
+    TResult checkIfFollowingUserPressed(String otherUserUid),
+    TResult followUserPressed(String otherUserUid),
+    TResult unfollowUserPressed(String otherUserUid),
+    TResult removeUserFollowerPressed(String otherUserUid),
+    TResult removeUserFollowingPressed(String otherUserUid),
+    TResult showFollowersPressed(String profileOwnerUid),
+    TResult showFollowingPressed(String profileOwnerUid),
+    TResult nextPageShowFollowersPressed(String profileOwnerUid),
+    TResult nextPageShowFollowingPressed(String profileOwnerUid),
+    @required TResult orElse(),
+  }) {
+    assert(orElse != null);
+    if (removeUserFollowingPressed != null) {
+      return removeUserFollowingPressed(otherUserUid);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object>({
+    @required
+        TResult checkIfFollowingUserPressed(_CheckIfFollowingUserPressed value),
+    @required TResult followUserPressed(_FollowUserPressed value),
+    @required TResult unfollowUserPressed(_UnfollowUserPressed value),
+    @required
+        TResult removeUserFollowerPressed(_RemoveUserFollowerPressed value),
+    @required
+        TResult removeUserFollowingPressed(_RemoveUserFollowingPressed value),
+    @required TResult showFollowersPressed(_ShowFollowersPressed value),
+    @required TResult showFollowingPressed(_ShowFollowingPressed value),
+    @required
+        TResult nextPageShowFollowersPressed(
+            _NextPageShowFollowersPressed value),
+    @required
+        TResult nextPageShowFollowingPressed(
+            _NextPageShowFollowingPressed value),
+  }) {
+    assert(checkIfFollowingUserPressed != null);
+    assert(followUserPressed != null);
+    assert(unfollowUserPressed != null);
+    assert(removeUserFollowerPressed != null);
+    assert(removeUserFollowingPressed != null);
+    assert(showFollowersPressed != null);
+    assert(showFollowingPressed != null);
+    assert(nextPageShowFollowersPressed != null);
+    assert(nextPageShowFollowingPressed != null);
+    return removeUserFollowingPressed(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object>({
+    TResult checkIfFollowingUserPressed(_CheckIfFollowingUserPressed value),
+    TResult followUserPressed(_FollowUserPressed value),
+    TResult unfollowUserPressed(_UnfollowUserPressed value),
+    TResult removeUserFollowerPressed(_RemoveUserFollowerPressed value),
+    TResult removeUserFollowingPressed(_RemoveUserFollowingPressed value),
+    TResult showFollowersPressed(_ShowFollowersPressed value),
+    TResult showFollowingPressed(_ShowFollowingPressed value),
+    TResult nextPageShowFollowersPressed(_NextPageShowFollowersPressed value),
+    TResult nextPageShowFollowingPressed(_NextPageShowFollowingPressed value),
+    @required TResult orElse(),
+  }) {
+    assert(orElse != null);
+    if (removeUserFollowingPressed != null) {
+      return removeUserFollowingPressed(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _RemoveUserFollowingPressed implements FollowEvent {
+  const factory _RemoveUserFollowingPressed({@required String otherUserUid}) =
+      _$_RemoveUserFollowingPressed;
+
+  String get otherUserUid;
+  @JsonKey(ignore: true)
+  _$RemoveUserFollowingPressedCopyWith<_RemoveUserFollowingPressed>
+      get copyWith;
 }
 
 /// @nodoc
@@ -686,6 +1103,8 @@ class _$_ShowFollowersPressed implements _ShowFollowersPressed {
     @required TResult checkIfFollowingUserPressed(String otherUserUid),
     @required TResult followUserPressed(String otherUserUid),
     @required TResult unfollowUserPressed(String otherUserUid),
+    @required TResult removeUserFollowerPressed(String otherUserUid),
+    @required TResult removeUserFollowingPressed(String otherUserUid),
     @required TResult showFollowersPressed(String profileOwnerUid),
     @required TResult showFollowingPressed(String profileOwnerUid),
     @required TResult nextPageShowFollowersPressed(String profileOwnerUid),
@@ -694,6 +1113,8 @@ class _$_ShowFollowersPressed implements _ShowFollowersPressed {
     assert(checkIfFollowingUserPressed != null);
     assert(followUserPressed != null);
     assert(unfollowUserPressed != null);
+    assert(removeUserFollowerPressed != null);
+    assert(removeUserFollowingPressed != null);
     assert(showFollowersPressed != null);
     assert(showFollowingPressed != null);
     assert(nextPageShowFollowersPressed != null);
@@ -707,6 +1128,8 @@ class _$_ShowFollowersPressed implements _ShowFollowersPressed {
     TResult checkIfFollowingUserPressed(String otherUserUid),
     TResult followUserPressed(String otherUserUid),
     TResult unfollowUserPressed(String otherUserUid),
+    TResult removeUserFollowerPressed(String otherUserUid),
+    TResult removeUserFollowingPressed(String otherUserUid),
     TResult showFollowersPressed(String profileOwnerUid),
     TResult showFollowingPressed(String profileOwnerUid),
     TResult nextPageShowFollowersPressed(String profileOwnerUid),
@@ -727,6 +1150,10 @@ class _$_ShowFollowersPressed implements _ShowFollowersPressed {
         TResult checkIfFollowingUserPressed(_CheckIfFollowingUserPressed value),
     @required TResult followUserPressed(_FollowUserPressed value),
     @required TResult unfollowUserPressed(_UnfollowUserPressed value),
+    @required
+        TResult removeUserFollowerPressed(_RemoveUserFollowerPressed value),
+    @required
+        TResult removeUserFollowingPressed(_RemoveUserFollowingPressed value),
     @required TResult showFollowersPressed(_ShowFollowersPressed value),
     @required TResult showFollowingPressed(_ShowFollowingPressed value),
     @required
@@ -739,6 +1166,8 @@ class _$_ShowFollowersPressed implements _ShowFollowersPressed {
     assert(checkIfFollowingUserPressed != null);
     assert(followUserPressed != null);
     assert(unfollowUserPressed != null);
+    assert(removeUserFollowerPressed != null);
+    assert(removeUserFollowingPressed != null);
     assert(showFollowersPressed != null);
     assert(showFollowingPressed != null);
     assert(nextPageShowFollowersPressed != null);
@@ -752,6 +1181,8 @@ class _$_ShowFollowersPressed implements _ShowFollowersPressed {
     TResult checkIfFollowingUserPressed(_CheckIfFollowingUserPressed value),
     TResult followUserPressed(_FollowUserPressed value),
     TResult unfollowUserPressed(_UnfollowUserPressed value),
+    TResult removeUserFollowerPressed(_RemoveUserFollowerPressed value),
+    TResult removeUserFollowingPressed(_RemoveUserFollowingPressed value),
     TResult showFollowersPressed(_ShowFollowersPressed value),
     TResult showFollowingPressed(_ShowFollowingPressed value),
     TResult nextPageShowFollowersPressed(_NextPageShowFollowersPressed value),
@@ -845,6 +1276,8 @@ class _$_ShowFollowingPressed implements _ShowFollowingPressed {
     @required TResult checkIfFollowingUserPressed(String otherUserUid),
     @required TResult followUserPressed(String otherUserUid),
     @required TResult unfollowUserPressed(String otherUserUid),
+    @required TResult removeUserFollowerPressed(String otherUserUid),
+    @required TResult removeUserFollowingPressed(String otherUserUid),
     @required TResult showFollowersPressed(String profileOwnerUid),
     @required TResult showFollowingPressed(String profileOwnerUid),
     @required TResult nextPageShowFollowersPressed(String profileOwnerUid),
@@ -853,6 +1286,8 @@ class _$_ShowFollowingPressed implements _ShowFollowingPressed {
     assert(checkIfFollowingUserPressed != null);
     assert(followUserPressed != null);
     assert(unfollowUserPressed != null);
+    assert(removeUserFollowerPressed != null);
+    assert(removeUserFollowingPressed != null);
     assert(showFollowersPressed != null);
     assert(showFollowingPressed != null);
     assert(nextPageShowFollowersPressed != null);
@@ -866,6 +1301,8 @@ class _$_ShowFollowingPressed implements _ShowFollowingPressed {
     TResult checkIfFollowingUserPressed(String otherUserUid),
     TResult followUserPressed(String otherUserUid),
     TResult unfollowUserPressed(String otherUserUid),
+    TResult removeUserFollowerPressed(String otherUserUid),
+    TResult removeUserFollowingPressed(String otherUserUid),
     TResult showFollowersPressed(String profileOwnerUid),
     TResult showFollowingPressed(String profileOwnerUid),
     TResult nextPageShowFollowersPressed(String profileOwnerUid),
@@ -886,6 +1323,10 @@ class _$_ShowFollowingPressed implements _ShowFollowingPressed {
         TResult checkIfFollowingUserPressed(_CheckIfFollowingUserPressed value),
     @required TResult followUserPressed(_FollowUserPressed value),
     @required TResult unfollowUserPressed(_UnfollowUserPressed value),
+    @required
+        TResult removeUserFollowerPressed(_RemoveUserFollowerPressed value),
+    @required
+        TResult removeUserFollowingPressed(_RemoveUserFollowingPressed value),
     @required TResult showFollowersPressed(_ShowFollowersPressed value),
     @required TResult showFollowingPressed(_ShowFollowingPressed value),
     @required
@@ -898,6 +1339,8 @@ class _$_ShowFollowingPressed implements _ShowFollowingPressed {
     assert(checkIfFollowingUserPressed != null);
     assert(followUserPressed != null);
     assert(unfollowUserPressed != null);
+    assert(removeUserFollowerPressed != null);
+    assert(removeUserFollowingPressed != null);
     assert(showFollowersPressed != null);
     assert(showFollowingPressed != null);
     assert(nextPageShowFollowersPressed != null);
@@ -911,6 +1354,8 @@ class _$_ShowFollowingPressed implements _ShowFollowingPressed {
     TResult checkIfFollowingUserPressed(_CheckIfFollowingUserPressed value),
     TResult followUserPressed(_FollowUserPressed value),
     TResult unfollowUserPressed(_UnfollowUserPressed value),
+    TResult removeUserFollowerPressed(_RemoveUserFollowerPressed value),
+    TResult removeUserFollowingPressed(_RemoveUserFollowingPressed value),
     TResult showFollowersPressed(_ShowFollowersPressed value),
     TResult showFollowingPressed(_ShowFollowingPressed value),
     TResult nextPageShowFollowersPressed(_NextPageShowFollowersPressed value),
@@ -1007,6 +1452,8 @@ class _$_NextPageShowFollowersPressed implements _NextPageShowFollowersPressed {
     @required TResult checkIfFollowingUserPressed(String otherUserUid),
     @required TResult followUserPressed(String otherUserUid),
     @required TResult unfollowUserPressed(String otherUserUid),
+    @required TResult removeUserFollowerPressed(String otherUserUid),
+    @required TResult removeUserFollowingPressed(String otherUserUid),
     @required TResult showFollowersPressed(String profileOwnerUid),
     @required TResult showFollowingPressed(String profileOwnerUid),
     @required TResult nextPageShowFollowersPressed(String profileOwnerUid),
@@ -1015,6 +1462,8 @@ class _$_NextPageShowFollowersPressed implements _NextPageShowFollowersPressed {
     assert(checkIfFollowingUserPressed != null);
     assert(followUserPressed != null);
     assert(unfollowUserPressed != null);
+    assert(removeUserFollowerPressed != null);
+    assert(removeUserFollowingPressed != null);
     assert(showFollowersPressed != null);
     assert(showFollowingPressed != null);
     assert(nextPageShowFollowersPressed != null);
@@ -1028,6 +1477,8 @@ class _$_NextPageShowFollowersPressed implements _NextPageShowFollowersPressed {
     TResult checkIfFollowingUserPressed(String otherUserUid),
     TResult followUserPressed(String otherUserUid),
     TResult unfollowUserPressed(String otherUserUid),
+    TResult removeUserFollowerPressed(String otherUserUid),
+    TResult removeUserFollowingPressed(String otherUserUid),
     TResult showFollowersPressed(String profileOwnerUid),
     TResult showFollowingPressed(String profileOwnerUid),
     TResult nextPageShowFollowersPressed(String profileOwnerUid),
@@ -1048,6 +1499,10 @@ class _$_NextPageShowFollowersPressed implements _NextPageShowFollowersPressed {
         TResult checkIfFollowingUserPressed(_CheckIfFollowingUserPressed value),
     @required TResult followUserPressed(_FollowUserPressed value),
     @required TResult unfollowUserPressed(_UnfollowUserPressed value),
+    @required
+        TResult removeUserFollowerPressed(_RemoveUserFollowerPressed value),
+    @required
+        TResult removeUserFollowingPressed(_RemoveUserFollowingPressed value),
     @required TResult showFollowersPressed(_ShowFollowersPressed value),
     @required TResult showFollowingPressed(_ShowFollowingPressed value),
     @required
@@ -1060,6 +1515,8 @@ class _$_NextPageShowFollowersPressed implements _NextPageShowFollowersPressed {
     assert(checkIfFollowingUserPressed != null);
     assert(followUserPressed != null);
     assert(unfollowUserPressed != null);
+    assert(removeUserFollowerPressed != null);
+    assert(removeUserFollowingPressed != null);
     assert(showFollowersPressed != null);
     assert(showFollowingPressed != null);
     assert(nextPageShowFollowersPressed != null);
@@ -1073,6 +1530,8 @@ class _$_NextPageShowFollowersPressed implements _NextPageShowFollowersPressed {
     TResult checkIfFollowingUserPressed(_CheckIfFollowingUserPressed value),
     TResult followUserPressed(_FollowUserPressed value),
     TResult unfollowUserPressed(_UnfollowUserPressed value),
+    TResult removeUserFollowerPressed(_RemoveUserFollowerPressed value),
+    TResult removeUserFollowingPressed(_RemoveUserFollowingPressed value),
     TResult showFollowersPressed(_ShowFollowersPressed value),
     TResult showFollowingPressed(_ShowFollowingPressed value),
     TResult nextPageShowFollowersPressed(_NextPageShowFollowersPressed value),
@@ -1170,6 +1629,8 @@ class _$_NextPageShowFollowingPressed implements _NextPageShowFollowingPressed {
     @required TResult checkIfFollowingUserPressed(String otherUserUid),
     @required TResult followUserPressed(String otherUserUid),
     @required TResult unfollowUserPressed(String otherUserUid),
+    @required TResult removeUserFollowerPressed(String otherUserUid),
+    @required TResult removeUserFollowingPressed(String otherUserUid),
     @required TResult showFollowersPressed(String profileOwnerUid),
     @required TResult showFollowingPressed(String profileOwnerUid),
     @required TResult nextPageShowFollowersPressed(String profileOwnerUid),
@@ -1178,6 +1639,8 @@ class _$_NextPageShowFollowingPressed implements _NextPageShowFollowingPressed {
     assert(checkIfFollowingUserPressed != null);
     assert(followUserPressed != null);
     assert(unfollowUserPressed != null);
+    assert(removeUserFollowerPressed != null);
+    assert(removeUserFollowingPressed != null);
     assert(showFollowersPressed != null);
     assert(showFollowingPressed != null);
     assert(nextPageShowFollowersPressed != null);
@@ -1191,6 +1654,8 @@ class _$_NextPageShowFollowingPressed implements _NextPageShowFollowingPressed {
     TResult checkIfFollowingUserPressed(String otherUserUid),
     TResult followUserPressed(String otherUserUid),
     TResult unfollowUserPressed(String otherUserUid),
+    TResult removeUserFollowerPressed(String otherUserUid),
+    TResult removeUserFollowingPressed(String otherUserUid),
     TResult showFollowersPressed(String profileOwnerUid),
     TResult showFollowingPressed(String profileOwnerUid),
     TResult nextPageShowFollowersPressed(String profileOwnerUid),
@@ -1211,6 +1676,10 @@ class _$_NextPageShowFollowingPressed implements _NextPageShowFollowingPressed {
         TResult checkIfFollowingUserPressed(_CheckIfFollowingUserPressed value),
     @required TResult followUserPressed(_FollowUserPressed value),
     @required TResult unfollowUserPressed(_UnfollowUserPressed value),
+    @required
+        TResult removeUserFollowerPressed(_RemoveUserFollowerPressed value),
+    @required
+        TResult removeUserFollowingPressed(_RemoveUserFollowingPressed value),
     @required TResult showFollowersPressed(_ShowFollowersPressed value),
     @required TResult showFollowingPressed(_ShowFollowingPressed value),
     @required
@@ -1223,6 +1692,8 @@ class _$_NextPageShowFollowingPressed implements _NextPageShowFollowingPressed {
     assert(checkIfFollowingUserPressed != null);
     assert(followUserPressed != null);
     assert(unfollowUserPressed != null);
+    assert(removeUserFollowerPressed != null);
+    assert(removeUserFollowingPressed != null);
     assert(showFollowersPressed != null);
     assert(showFollowingPressed != null);
     assert(nextPageShowFollowersPressed != null);
@@ -1236,6 +1707,8 @@ class _$_NextPageShowFollowingPressed implements _NextPageShowFollowingPressed {
     TResult checkIfFollowingUserPressed(_CheckIfFollowingUserPressed value),
     TResult followUserPressed(_FollowUserPressed value),
     TResult unfollowUserPressed(_UnfollowUserPressed value),
+    TResult removeUserFollowerPressed(_RemoveUserFollowerPressed value),
+    TResult removeUserFollowingPressed(_RemoveUserFollowingPressed value),
     TResult showFollowersPressed(_ShowFollowersPressed value),
     TResult showFollowingPressed(_ShowFollowingPressed value),
     TResult nextPageShowFollowersPressed(_NextPageShowFollowersPressed value),
@@ -1268,6 +1741,8 @@ class _$FollowStateTearOff {
   _FollowState call(
       {@required bool isSubmitting,
       @required bool isFollowing,
+      @required String removedFollowerUid,
+      @required String removedFollowingUid,
       @required String errorMessage,
       @required List<OurUser> followers,
       @required List<OurUser> following,
@@ -1280,6 +1755,8 @@ class _$FollowStateTearOff {
     return _FollowState(
       isSubmitting: isSubmitting,
       isFollowing: isFollowing,
+      removedFollowerUid: removedFollowerUid,
+      removedFollowingUid: removedFollowingUid,
       errorMessage: errorMessage,
       followers: followers,
       following: following,
@@ -1300,7 +1777,10 @@ const $FollowState = _$FollowStateTearOff();
 /// @nodoc
 mixin _$FollowState {
   bool get isSubmitting;
-  bool get isFollowing;
+  bool
+      get isFollowing; //Follower UID when removing as follower, to show a progress indicator while removing
+  String get removedFollowerUid;
+  String get removedFollowingUid; //
   String get errorMessage;
   List<OurUser> get followers;
   List<OurUser> get following;
@@ -1323,6 +1803,8 @@ abstract class $FollowStateCopyWith<$Res> {
   $Res call(
       {bool isSubmitting,
       bool isFollowing,
+      String removedFollowerUid,
+      String removedFollowingUid,
       String errorMessage,
       List<OurUser> followers,
       List<OurUser> following,
@@ -1346,6 +1828,8 @@ class _$FollowStateCopyWithImpl<$Res> implements $FollowStateCopyWith<$Res> {
   $Res call({
     Object isSubmitting = freezed,
     Object isFollowing = freezed,
+    Object removedFollowerUid = freezed,
+    Object removedFollowingUid = freezed,
     Object errorMessage = freezed,
     Object followers = freezed,
     Object following = freezed,
@@ -1361,6 +1845,12 @@ class _$FollowStateCopyWithImpl<$Res> implements $FollowStateCopyWith<$Res> {
           isSubmitting == freezed ? _value.isSubmitting : isSubmitting as bool,
       isFollowing:
           isFollowing == freezed ? _value.isFollowing : isFollowing as bool,
+      removedFollowerUid: removedFollowerUid == freezed
+          ? _value.removedFollowerUid
+          : removedFollowerUid as String,
+      removedFollowingUid: removedFollowingUid == freezed
+          ? _value.removedFollowingUid
+          : removedFollowingUid as String,
       errorMessage: errorMessage == freezed
           ? _value.errorMessage
           : errorMessage as String,
@@ -1398,6 +1888,8 @@ abstract class _$FollowStateCopyWith<$Res>
   $Res call(
       {bool isSubmitting,
       bool isFollowing,
+      String removedFollowerUid,
+      String removedFollowingUid,
       String errorMessage,
       List<OurUser> followers,
       List<OurUser> following,
@@ -1423,6 +1915,8 @@ class __$FollowStateCopyWithImpl<$Res> extends _$FollowStateCopyWithImpl<$Res>
   $Res call({
     Object isSubmitting = freezed,
     Object isFollowing = freezed,
+    Object removedFollowerUid = freezed,
+    Object removedFollowingUid = freezed,
     Object errorMessage = freezed,
     Object followers = freezed,
     Object following = freezed,
@@ -1438,6 +1932,12 @@ class __$FollowStateCopyWithImpl<$Res> extends _$FollowStateCopyWithImpl<$Res>
           isSubmitting == freezed ? _value.isSubmitting : isSubmitting as bool,
       isFollowing:
           isFollowing == freezed ? _value.isFollowing : isFollowing as bool,
+      removedFollowerUid: removedFollowerUid == freezed
+          ? _value.removedFollowerUid
+          : removedFollowerUid as String,
+      removedFollowingUid: removedFollowingUid == freezed
+          ? _value.removedFollowingUid
+          : removedFollowingUid as String,
       errorMessage: errorMessage == freezed
           ? _value.errorMessage
           : errorMessage as String,
@@ -1470,6 +1970,8 @@ class _$_FollowState implements _FollowState {
   const _$_FollowState(
       {@required this.isSubmitting,
       @required this.isFollowing,
+      @required this.removedFollowerUid,
+      @required this.removedFollowingUid,
       @required this.errorMessage,
       @required this.followers,
       @required this.following,
@@ -1481,6 +1983,8 @@ class _$_FollowState implements _FollowState {
       @required this.isThereMoreFollowingPageToLoad})
       : assert(isSubmitting != null),
         assert(isFollowing != null),
+        assert(removedFollowerUid != null),
+        assert(removedFollowingUid != null),
         assert(errorMessage != null),
         assert(followers != null),
         assert(following != null),
@@ -1495,7 +1999,11 @@ class _$_FollowState implements _FollowState {
   final bool isSubmitting;
   @override
   final bool isFollowing;
+  @override //Follower UID when removing as follower, to show a progress indicator while removing
+  final String removedFollowerUid;
   @override
+  final String removedFollowingUid;
+  @override //
   final String errorMessage;
   @override
   final List<OurUser> followers;
@@ -1516,7 +2024,7 @@ class _$_FollowState implements _FollowState {
 
   @override
   String toString() {
-    return 'FollowState(isSubmitting: $isSubmitting, isFollowing: $isFollowing, errorMessage: $errorMessage, followers: $followers, following: $following, isLoadingFollowList: $isLoadingFollowList, followersLastInListTimestamp: $followersLastInListTimestamp, followingLastInListTimestamp: $followingLastInListTimestamp, nextPage: $nextPage, isThereMoreFollowersPageToLoad: $isThereMoreFollowersPageToLoad, isThereMoreFollowingPageToLoad: $isThereMoreFollowingPageToLoad)';
+    return 'FollowState(isSubmitting: $isSubmitting, isFollowing: $isFollowing, removedFollowerUid: $removedFollowerUid, removedFollowingUid: $removedFollowingUid, errorMessage: $errorMessage, followers: $followers, following: $following, isLoadingFollowList: $isLoadingFollowList, followersLastInListTimestamp: $followersLastInListTimestamp, followingLastInListTimestamp: $followingLastInListTimestamp, nextPage: $nextPage, isThereMoreFollowersPageToLoad: $isThereMoreFollowersPageToLoad, isThereMoreFollowingPageToLoad: $isThereMoreFollowingPageToLoad)';
   }
 
   @override
@@ -1529,6 +2037,12 @@ class _$_FollowState implements _FollowState {
             (identical(other.isFollowing, isFollowing) ||
                 const DeepCollectionEquality()
                     .equals(other.isFollowing, isFollowing)) &&
+            (identical(other.removedFollowerUid, removedFollowerUid) ||
+                const DeepCollectionEquality()
+                    .equals(other.removedFollowerUid, removedFollowerUid)) &&
+            (identical(other.removedFollowingUid, removedFollowingUid) ||
+                const DeepCollectionEquality()
+                    .equals(other.removedFollowingUid, removedFollowingUid)) &&
             (identical(other.errorMessage, errorMessage) ||
                 const DeepCollectionEquality()
                     .equals(other.errorMessage, errorMessage)) &&
@@ -1545,8 +2059,7 @@ class _$_FollowState implements _FollowState {
                 const DeepCollectionEquality().equals(
                     other.followersLastInListTimestamp,
                     followersLastInListTimestamp)) &&
-            (identical(other.followingLastInListTimestamp,
-                    followingLastInListTimestamp) ||
+            (identical(other.followingLastInListTimestamp, followingLastInListTimestamp) ||
                 const DeepCollectionEquality().equals(
                     other.followingLastInListTimestamp,
                     followingLastInListTimestamp)) &&
@@ -1570,6 +2083,8 @@ class _$_FollowState implements _FollowState {
       runtimeType.hashCode ^
       const DeepCollectionEquality().hash(isSubmitting) ^
       const DeepCollectionEquality().hash(isFollowing) ^
+      const DeepCollectionEquality().hash(removedFollowerUid) ^
+      const DeepCollectionEquality().hash(removedFollowingUid) ^
       const DeepCollectionEquality().hash(errorMessage) ^
       const DeepCollectionEquality().hash(followers) ^
       const DeepCollectionEquality().hash(following) ^
@@ -1590,6 +2105,8 @@ abstract class _FollowState implements FollowState {
   const factory _FollowState(
       {@required bool isSubmitting,
       @required bool isFollowing,
+      @required String removedFollowerUid,
+      @required String removedFollowingUid,
       @required String errorMessage,
       @required List<OurUser> followers,
       @required List<OurUser> following,
@@ -1604,7 +2121,11 @@ abstract class _FollowState implements FollowState {
   bool get isSubmitting;
   @override
   bool get isFollowing;
+  @override //Follower UID when removing as follower, to show a progress indicator while removing
+  String get removedFollowerUid;
   @override
+  String get removedFollowingUid;
+  @override //
   String get errorMessage;
   @override
   List<OurUser> get followers;

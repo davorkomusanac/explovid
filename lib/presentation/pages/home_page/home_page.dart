@@ -185,10 +185,34 @@ class _HomePageState extends State<HomePage> {
                 },
               );
             case 4:
-              return BlocProvider(
-                create: (context) => MovieDetailsBloc(
-                  _movieRepository,
-                ),
+              return MultiBlocProvider(
+                providers: [
+                  BlocProvider(
+                    create: (context) => OtherUserProfileMovieListsBloc(
+                      _otherUserProfileRepository,
+                    ),
+                  ),
+                  BlocProvider(
+                    create: (context) => OtherUserProfileTvShowListsBloc(
+                      _otherUserProfileRepository,
+                    ),
+                  ),
+                  BlocProvider(
+                    create: (context) => OtherUserProfileInformationBloc(
+                      _otherUserProfileRepository,
+                    ),
+                  ),
+                  BlocProvider(
+                    create: (context) => MovieDetailsBloc(
+                      _movieRepository,
+                    ),
+                  ),
+                  BlocProvider(
+                    create: (context) => FollowBloc(
+                      _userActionsRepository,
+                    ),
+                  ),
+                ],
                 child: CupertinoTabView(
                   navigatorKey: tabNavKeys[4],
                   builder: (context) {

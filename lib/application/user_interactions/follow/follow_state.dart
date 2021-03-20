@@ -5,6 +5,10 @@ abstract class FollowState with _$FollowState {
   const factory FollowState({
     @required bool isSubmitting,
     @required bool isFollowing,
+    //Follower UID when removing as follower, to show a progress indicator while removing
+    @required String removedFollowerUid,
+    @required String removedFollowingUid,
+    //
     @required String errorMessage,
     @required List<OurUser> followers,
     @required List<OurUser> following,
@@ -20,6 +24,8 @@ abstract class FollowState with _$FollowState {
   factory FollowState.initial() => FollowState(
         isSubmitting: false,
         isFollowing: false,
+        removedFollowerUid: '',
+        removedFollowingUid: '',
         errorMessage: '',
         followers: <OurUser>[],
         following: <OurUser>[],

@@ -4,9 +4,11 @@ import 'package:explovid/application/user_profile_information/current_user_profi
 import 'package:explovid/application/user_profile_information/current_user_profile_information/current_user_profile_watchlist_watched/movie_lists/movie_lists_user_profile_bloc.dart';
 import 'package:explovid/application/user_profile_information/current_user_profile_information/current_user_profile_watchlist_watched/tv_show_lists/tv_show_lists_user_profile_bloc.dart';
 import 'package:explovid/presentation/pages/movie_details_page/movie_details_page.dart';
+import 'package:explovid/presentation/pages/profile_page/current_user_page/current_user_followers_page.dart';
+import 'package:explovid/presentation/pages/profile_page/current_user_page/current_user_following_page.dart';
 import 'package:explovid/presentation/pages/profile_page/current_user_page/edit_profile_page.dart';
-import 'package:explovid/presentation/pages/profile_page/post_page.dart';
 import 'package:explovid/presentation/pages/profile_page/current_user_page/user_settings_page.dart';
+import 'package:explovid/presentation/pages/profile_page/post_page.dart';
 import 'package:explovid/presentation/pages/tv_show_details_page/tv_show_details_page.dart';
 import 'package:explovid/presentation/utilities/utilities.dart';
 import 'package:flutter/material.dart';
@@ -479,15 +481,43 @@ class _ProfilePageState extends State<ProfilePage> with TickerProviderStateMixin
                                 child: Container(
                                   height: 80,
                                   //Listview to stop overflow for larger fonts
-                                  child: ListView(
-                                    shrinkWrap: true,
-                                    scrollDirection: Axis.horizontal,
-                                    children: [
-                                      _userInformationCard(title: "Watched", state: state),
-                                      _userInformationCard(title: "Followers", state: state),
-                                      _userInformationCard(title: "Following", state: state),
-                                    ],
-                                  ),
+                                  child: state.isSearching
+                                      ? Center(
+                                          child: CircularProgressIndicator(),
+                                        )
+                                      : ListView(
+                                          shrinkWrap: true,
+                                          scrollDirection: Axis.horizontal,
+                                          children: [
+                                            _userInformationCard(title: "Watched", state: state),
+                                            GestureDetector(
+                                              behavior: HitTestBehavior.opaque,
+                                              onTap: () {
+                                                Navigator.of(context).push(
+                                                  MaterialPageRoute(
+                                                    builder: (context) => CurrentUserFollowersPage(
+                                                      profileOwnerUid: state.ourUser.uid,
+                                                    ),
+                                                  ),
+                                                );
+                                              },
+                                              child: _userInformationCard(title: "Followers", state: state),
+                                            ),
+                                            GestureDetector(
+                                              behavior: HitTestBehavior.opaque,
+                                              onTap: () {
+                                                Navigator.of(context).push(
+                                                  MaterialPageRoute(
+                                                    builder: (context) => CurrentUserFollowingPage(
+                                                      profileOwnerUid: state.ourUser.uid,
+                                                    ),
+                                                  ),
+                                                );
+                                              },
+                                              child: _userInformationCard(title: "Following", state: state),
+                                            ),
+                                          ],
+                                        ),
                                 ),
                               ),
                             ],
@@ -608,13 +638,13 @@ class _ProfilePageState extends State<ProfilePage> with TickerProviderStateMixin
   }
 
   Widget _userInformationCard({String title, CurrentUserProfileInformationState state}) {
-    String category = "";
+    String categoryCount = "";
     if (title == "Watched") {
-      category = state.ourUser.watchedLength.toString();
+      categoryCount = state.ourUser.watchedLength.toString();
     } else if (title == "Followers") {
-      category = state.ourUser.followers.toString();
+      categoryCount = state.ourUser.followers.toString();
     } else {
-      category = state.ourUser.following.toString();
+      categoryCount = state.ourUser.following.toString();
     }
 
     return Padding(
@@ -623,7 +653,7 @@ class _ProfilePageState extends State<ProfilePage> with TickerProviderStateMixin
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
-            state.isSearching ? "" : category,
+            categoryCount,
             style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
           ),
           Text(

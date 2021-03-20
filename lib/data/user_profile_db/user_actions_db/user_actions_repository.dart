@@ -146,6 +146,42 @@ class UserActionsRepository {
     return returnVal;
   }
 
+  Future<String> removeUserFollower({@required String otherUserUid}) async {
+    String returnVal = "";
+    WriteBatch batch = FirebaseFirestore.instance.batch();
+    try {
+      //decrement the number of followers the current user has
+      batch.set(
+        _users.doc(_auth.currentUser.uid),
+        {
+          "followers": FieldValue.increment(-1),
+        },
+        SetOptions(merge: true),
+      );
+      //decrement the number of following of the other user
+      batch.set(
+        _users.doc(otherUserUid),
+        {
+          "following": FieldValue.increment(-1),
+        },
+        SetOptions(merge: true),
+      );
+      //Remove the other user's data from the current user's collection of followers
+      batch.delete(
+        _followers.doc(_auth.currentUser.uid).collection("followers").doc(otherUserUid),
+      );
+      //Remove current user's data from the other user's collection of following
+      batch.delete(
+        _following.doc(otherUserUid).collection("following").doc(_auth.currentUser.uid),
+      );
+      await batch.commit();
+    } catch (error) {
+      print(error.toString());
+      returnVal = error.toString();
+    }
+    return returnVal;
+  }
+
   Future<List<dynamic>> showFollowersList({@required String profileOwnerUid}) async {
     List<dynamic> followersAndTime = [];
     List<OurUser> followers = [];

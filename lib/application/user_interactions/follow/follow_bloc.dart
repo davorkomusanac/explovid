@@ -53,6 +53,47 @@ class FollowBloc extends Bloc<FollowEvent, FollowState> {
           errorMessage: result,
         );
       },
+
+      ///Removing followers and following inside current user profile
+      removeUserFollowerPressed: (e) async* {
+        yield state.copyWith(
+          removedFollowerUid: e.otherUserUid,
+        );
+        String result = await _userActionsRepository.removeUserFollower(otherUserUid: e.otherUserUid);
+        int userIndex;
+        if (result.isEmpty) {
+          for (int i = 0; i < state.followers.length; i++) {
+            if (state.followers[i].uid == e.otherUserUid) userIndex = i;
+          }
+        }
+        if (userIndex != null) state.followers.removeAt(userIndex);
+        yield state.copyWith(
+          //increment nextPage to change state
+          nextPage: state.nextPage + 1,
+          removedFollowerUid: '',
+          errorMessage: result,
+        );
+      },
+      removeUserFollowingPressed: (e) async* {
+        yield state.copyWith(
+          removedFollowingUid: e.otherUserUid,
+        );
+        String result = await _userActionsRepository.unfollowUser(otherUserUid: e.otherUserUid);
+        int userIndex;
+        if (result.isEmpty) {
+          for (int i = 0; i < state.following.length; i++) {
+            if (state.following[i].uid == e.otherUserUid) userIndex = i;
+          }
+        }
+        if (userIndex != null) state.following.removeAt(userIndex);
+        yield state.copyWith(
+          //increment nextPage to change state
+          removedFollowingUid: '',
+          errorMessage: result,
+        );
+      },
+
+      ///
       showFollowersPressed: (e) async* {
         yield state.copyWith(
           isLoadingFollowList: true,
