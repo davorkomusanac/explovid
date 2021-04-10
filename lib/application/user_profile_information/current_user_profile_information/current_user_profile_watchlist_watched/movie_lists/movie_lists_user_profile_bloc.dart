@@ -111,14 +111,47 @@ class MovieListsUserProfileBloc extends Bloc<MovieListsUserProfileEvent, MovieLi
           isSubmittingWatched: true,
         );
         int indexNumberOfMovie;
-        String returnVal = await _userProfileRepository.removeMovieFromWatched(e.movieDetails);
-        if (returnVal.isEmpty) {
-          for (int i = 0; i < state.movieWatched.length; i++) {
-            if (state.movieWatched[i].title == e.movieDetails.title && state.movieWatched[i].id == e.movieDetails.id)
-              indexNumberOfMovie = i;
+        String returnVal = "";
+        //Changed order of calling, since for watched the postUid is needed for removing.
+        for (int i = 0; i < state.movieWatched.length; i++) {
+          if (state.movieWatched[i].title == e.movieTitle && state.movieWatched[i].id == e.movieId) indexNumberOfMovie = i;
+        }
+        if (indexNumberOfMovie != null) {
+          returnVal = await _userProfileRepository.removeMovieFromWatched(
+            movieTitle: e.movieTitle,
+            movieId: e.movieId,
+            postUid: state.movieWatched[indexNumberOfMovie].postUid,
+          );
+          if (returnVal.isEmpty) {
+            state.movieWatched.removeAt(indexNumberOfMovie);
+            state.movieWatchedArrayTitlesOnly.remove(e.movieTitle + "_" + e.movieId.toString());
           }
-          if (indexNumberOfMovie != null) state.movieWatched.removeAt(indexNumberOfMovie);
-          state.movieWatchedArrayTitlesOnly.remove(e.movieDetails.title + "_" + e.movieDetails.id.toString());
+        }
+        yield state.copyWith(
+          nextPage: state.nextPage + 1,
+          isSubmittingWatched: false,
+          errorMessage: returnVal,
+        );
+      },
+      updateMovieWatchedReviewPressed: (e) async* {
+        yield state.copyWith(
+          isSubmittingWatched: true,
+        );
+        int indexNumberOfMovie;
+        String returnVal = "";
+        //Changed order of calling, since for watched the postUid is needed for updating.
+        for (int i = 0; i < state.movieWatched.length; i++) {
+          if (state.movieWatched[i].title == e.movieTitle && state.movieWatched[i].id == e.movieId) indexNumberOfMovie = i;
+        }
+        if (indexNumberOfMovie != null) {
+          returnVal = await _userProfileRepository.updateMovieWatchedReview(
+            movieTitle: e.movieTitle,
+            movieId: e.movieId,
+            postUid: state.movieWatched[indexNumberOfMovie].postUid,
+            review: e.review,
+            rating: e.rating,
+            isSpoiler: e.isSpoiler,
+          );
         }
         yield state.copyWith(
           nextPage: state.nextPage + 1,

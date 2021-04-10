@@ -63,9 +63,26 @@ class _$TvShowListsUserProfileEventTearOff {
 
 // ignore: unused_element
   _RemoveTvShowFromWatchedPressed removeTvShowFromWatchedPressed(
-      TvShowDetails tvShowDetails) {
+      {String tvShowTitle, int tvShowId}) {
     return _RemoveTvShowFromWatchedPressed(
-      tvShowDetails,
+      tvShowTitle: tvShowTitle,
+      tvShowId: tvShowId,
+    );
+  }
+
+// ignore: unused_element
+  _UpdateTvShowWatchedReviewPressed updateTvShowWatchedReviewPressed(
+      {String tvShowTitle,
+      int tvShowId,
+      String review,
+      num rating,
+      bool isSpoiler}) {
+    return _UpdateTvShowWatchedReviewPressed(
+      tvShowTitle: tvShowTitle,
+      tvShowId: tvShowId,
+      review: review,
+      rating: rating,
+      isSpoiler: isSpoiler,
     );
   }
 
@@ -102,7 +119,11 @@ mixin _$TvShowListsUserProfileEvent {
         TResult addTvShowToWatchedPressed(TvShowDetails tvShowDetails,
             String review, num rating, bool isSpoiler),
     @required
-        TResult removeTvShowFromWatchedPressed(TvShowDetails tvShowDetails),
+        TResult removeTvShowFromWatchedPressed(
+            String tvShowTitle, int tvShowId),
+    @required
+        TResult updateTvShowWatchedReviewPressed(String tvShowTitle,
+            int tvShowId, String review, num rating, bool isSpoiler),
     @required TResult nextTvShowWatchlistPageCalled(),
     @required TResult nextTvShowWatchedPageCalled(),
   });
@@ -117,7 +138,9 @@ mixin _$TvShowListsUserProfileEvent {
     TResult removeTvShowFromWatchlistPressed(TvShowDetails tvShowDetails),
     TResult addTvShowToWatchedPressed(
         TvShowDetails tvShowDetails, String review, num rating, bool isSpoiler),
-    TResult removeTvShowFromWatchedPressed(TvShowDetails tvShowDetails),
+    TResult removeTvShowFromWatchedPressed(String tvShowTitle, int tvShowId),
+    TResult updateTvShowWatchedReviewPressed(String tvShowTitle, int tvShowId,
+        String review, num rating, bool isSpoiler),
     TResult nextTvShowWatchlistPageCalled(),
     TResult nextTvShowWatchedPageCalled(),
     @required TResult orElse(),
@@ -138,6 +161,9 @@ mixin _$TvShowListsUserProfileEvent {
         TResult removeTvShowFromWatchedPressed(
             _RemoveTvShowFromWatchedPressed value),
     @required
+        TResult updateTvShowWatchedReviewPressed(
+            _UpdateTvShowWatchedReviewPressed value),
+    @required
         TResult nextTvShowWatchlistPageCalled(
             _NextTvShowWatchlistPageCalled value),
     @required
@@ -154,6 +180,8 @@ mixin _$TvShowListsUserProfileEvent {
     TResult addTvShowToWatchedPressed(_AddTvShowToWatchedPressed value),
     TResult removeTvShowFromWatchedPressed(
         _RemoveTvShowFromWatchedPressed value),
+    TResult updateTvShowWatchedReviewPressed(
+        _UpdateTvShowWatchedReviewPressed value),
     TResult nextTvShowWatchlistPageCalled(_NextTvShowWatchlistPageCalled value),
     TResult nextTvShowWatchedPageCalled(_NextTvShowWatchedPageCalled value),
     @required TResult orElse(),
@@ -232,7 +260,11 @@ class _$_LoadTvShowToListInitial implements _LoadTvShowToListInitial {
         TResult addTvShowToWatchedPressed(TvShowDetails tvShowDetails,
             String review, num rating, bool isSpoiler),
     @required
-        TResult removeTvShowFromWatchedPressed(TvShowDetails tvShowDetails),
+        TResult removeTvShowFromWatchedPressed(
+            String tvShowTitle, int tvShowId),
+    @required
+        TResult updateTvShowWatchedReviewPressed(String tvShowTitle,
+            int tvShowId, String review, num rating, bool isSpoiler),
     @required TResult nextTvShowWatchlistPageCalled(),
     @required TResult nextTvShowWatchedPageCalled(),
   }) {
@@ -243,6 +275,7 @@ class _$_LoadTvShowToListInitial implements _LoadTvShowToListInitial {
     assert(removeTvShowFromWatchlistPressed != null);
     assert(addTvShowToWatchedPressed != null);
     assert(removeTvShowFromWatchedPressed != null);
+    assert(updateTvShowWatchedReviewPressed != null);
     assert(nextTvShowWatchlistPageCalled != null);
     assert(nextTvShowWatchedPageCalled != null);
     return loadTvShowToListInitial();
@@ -260,7 +293,9 @@ class _$_LoadTvShowToListInitial implements _LoadTvShowToListInitial {
     TResult removeTvShowFromWatchlistPressed(TvShowDetails tvShowDetails),
     TResult addTvShowToWatchedPressed(
         TvShowDetails tvShowDetails, String review, num rating, bool isSpoiler),
-    TResult removeTvShowFromWatchedPressed(TvShowDetails tvShowDetails),
+    TResult removeTvShowFromWatchedPressed(String tvShowTitle, int tvShowId),
+    TResult updateTvShowWatchedReviewPressed(String tvShowTitle, int tvShowId,
+        String review, num rating, bool isSpoiler),
     TResult nextTvShowWatchlistPageCalled(),
     TResult nextTvShowWatchedPageCalled(),
     @required TResult orElse(),
@@ -289,6 +324,9 @@ class _$_LoadTvShowToListInitial implements _LoadTvShowToListInitial {
         TResult removeTvShowFromWatchedPressed(
             _RemoveTvShowFromWatchedPressed value),
     @required
+        TResult updateTvShowWatchedReviewPressed(
+            _UpdateTvShowWatchedReviewPressed value),
+    @required
         TResult nextTvShowWatchlistPageCalled(
             _NextTvShowWatchlistPageCalled value),
     @required
@@ -301,6 +339,7 @@ class _$_LoadTvShowToListInitial implements _LoadTvShowToListInitial {
     assert(removeTvShowFromWatchlistPressed != null);
     assert(addTvShowToWatchedPressed != null);
     assert(removeTvShowFromWatchedPressed != null);
+    assert(updateTvShowWatchedReviewPressed != null);
     assert(nextTvShowWatchlistPageCalled != null);
     assert(nextTvShowWatchedPageCalled != null);
     return loadTvShowToListInitial(this);
@@ -318,6 +357,8 @@ class _$_LoadTvShowToListInitial implements _LoadTvShowToListInitial {
     TResult addTvShowToWatchedPressed(_AddTvShowToWatchedPressed value),
     TResult removeTvShowFromWatchedPressed(
         _RemoveTvShowFromWatchedPressed value),
+    TResult updateTvShowWatchedReviewPressed(
+        _UpdateTvShowWatchedReviewPressed value),
     TResult nextTvShowWatchlistPageCalled(_NextTvShowWatchlistPageCalled value),
     TResult nextTvShowWatchedPageCalled(_NextTvShowWatchedPageCalled value),
     @required TResult orElse(),
@@ -415,7 +456,11 @@ class _$_TvShowWatchlistUpdated implements _TvShowWatchlistUpdated {
         TResult addTvShowToWatchedPressed(TvShowDetails tvShowDetails,
             String review, num rating, bool isSpoiler),
     @required
-        TResult removeTvShowFromWatchedPressed(TvShowDetails tvShowDetails),
+        TResult removeTvShowFromWatchedPressed(
+            String tvShowTitle, int tvShowId),
+    @required
+        TResult updateTvShowWatchedReviewPressed(String tvShowTitle,
+            int tvShowId, String review, num rating, bool isSpoiler),
     @required TResult nextTvShowWatchlistPageCalled(),
     @required TResult nextTvShowWatchedPageCalled(),
   }) {
@@ -426,6 +471,7 @@ class _$_TvShowWatchlistUpdated implements _TvShowWatchlistUpdated {
     assert(removeTvShowFromWatchlistPressed != null);
     assert(addTvShowToWatchedPressed != null);
     assert(removeTvShowFromWatchedPressed != null);
+    assert(updateTvShowWatchedReviewPressed != null);
     assert(nextTvShowWatchlistPageCalled != null);
     assert(nextTvShowWatchedPageCalled != null);
     return tvShowWatchlistUpdated(tvShowWatchlist);
@@ -443,7 +489,9 @@ class _$_TvShowWatchlistUpdated implements _TvShowWatchlistUpdated {
     TResult removeTvShowFromWatchlistPressed(TvShowDetails tvShowDetails),
     TResult addTvShowToWatchedPressed(
         TvShowDetails tvShowDetails, String review, num rating, bool isSpoiler),
-    TResult removeTvShowFromWatchedPressed(TvShowDetails tvShowDetails),
+    TResult removeTvShowFromWatchedPressed(String tvShowTitle, int tvShowId),
+    TResult updateTvShowWatchedReviewPressed(String tvShowTitle, int tvShowId,
+        String review, num rating, bool isSpoiler),
     TResult nextTvShowWatchlistPageCalled(),
     TResult nextTvShowWatchedPageCalled(),
     @required TResult orElse(),
@@ -472,6 +520,9 @@ class _$_TvShowWatchlistUpdated implements _TvShowWatchlistUpdated {
         TResult removeTvShowFromWatchedPressed(
             _RemoveTvShowFromWatchedPressed value),
     @required
+        TResult updateTvShowWatchedReviewPressed(
+            _UpdateTvShowWatchedReviewPressed value),
+    @required
         TResult nextTvShowWatchlistPageCalled(
             _NextTvShowWatchlistPageCalled value),
     @required
@@ -484,6 +535,7 @@ class _$_TvShowWatchlistUpdated implements _TvShowWatchlistUpdated {
     assert(removeTvShowFromWatchlistPressed != null);
     assert(addTvShowToWatchedPressed != null);
     assert(removeTvShowFromWatchedPressed != null);
+    assert(updateTvShowWatchedReviewPressed != null);
     assert(nextTvShowWatchlistPageCalled != null);
     assert(nextTvShowWatchedPageCalled != null);
     return tvShowWatchlistUpdated(this);
@@ -501,6 +553,8 @@ class _$_TvShowWatchlistUpdated implements _TvShowWatchlistUpdated {
     TResult addTvShowToWatchedPressed(_AddTvShowToWatchedPressed value),
     TResult removeTvShowFromWatchedPressed(
         _RemoveTvShowFromWatchedPressed value),
+    TResult updateTvShowWatchedReviewPressed(
+        _UpdateTvShowWatchedReviewPressed value),
     TResult nextTvShowWatchlistPageCalled(_NextTvShowWatchlistPageCalled value),
     TResult nextTvShowWatchedPageCalled(_NextTvShowWatchedPageCalled value),
     @required TResult orElse(),
@@ -603,7 +657,11 @@ class _$_TvShowWatchedUpdated implements _TvShowWatchedUpdated {
         TResult addTvShowToWatchedPressed(TvShowDetails tvShowDetails,
             String review, num rating, bool isSpoiler),
     @required
-        TResult removeTvShowFromWatchedPressed(TvShowDetails tvShowDetails),
+        TResult removeTvShowFromWatchedPressed(
+            String tvShowTitle, int tvShowId),
+    @required
+        TResult updateTvShowWatchedReviewPressed(String tvShowTitle,
+            int tvShowId, String review, num rating, bool isSpoiler),
     @required TResult nextTvShowWatchlistPageCalled(),
     @required TResult nextTvShowWatchedPageCalled(),
   }) {
@@ -614,6 +672,7 @@ class _$_TvShowWatchedUpdated implements _TvShowWatchedUpdated {
     assert(removeTvShowFromWatchlistPressed != null);
     assert(addTvShowToWatchedPressed != null);
     assert(removeTvShowFromWatchedPressed != null);
+    assert(updateTvShowWatchedReviewPressed != null);
     assert(nextTvShowWatchlistPageCalled != null);
     assert(nextTvShowWatchedPageCalled != null);
     return tvShowWatchedUpdated(tvShowWatched);
@@ -631,7 +690,9 @@ class _$_TvShowWatchedUpdated implements _TvShowWatchedUpdated {
     TResult removeTvShowFromWatchlistPressed(TvShowDetails tvShowDetails),
     TResult addTvShowToWatchedPressed(
         TvShowDetails tvShowDetails, String review, num rating, bool isSpoiler),
-    TResult removeTvShowFromWatchedPressed(TvShowDetails tvShowDetails),
+    TResult removeTvShowFromWatchedPressed(String tvShowTitle, int tvShowId),
+    TResult updateTvShowWatchedReviewPressed(String tvShowTitle, int tvShowId,
+        String review, num rating, bool isSpoiler),
     TResult nextTvShowWatchlistPageCalled(),
     TResult nextTvShowWatchedPageCalled(),
     @required TResult orElse(),
@@ -660,6 +721,9 @@ class _$_TvShowWatchedUpdated implements _TvShowWatchedUpdated {
         TResult removeTvShowFromWatchedPressed(
             _RemoveTvShowFromWatchedPressed value),
     @required
+        TResult updateTvShowWatchedReviewPressed(
+            _UpdateTvShowWatchedReviewPressed value),
+    @required
         TResult nextTvShowWatchlistPageCalled(
             _NextTvShowWatchlistPageCalled value),
     @required
@@ -672,6 +736,7 @@ class _$_TvShowWatchedUpdated implements _TvShowWatchedUpdated {
     assert(removeTvShowFromWatchlistPressed != null);
     assert(addTvShowToWatchedPressed != null);
     assert(removeTvShowFromWatchedPressed != null);
+    assert(updateTvShowWatchedReviewPressed != null);
     assert(nextTvShowWatchlistPageCalled != null);
     assert(nextTvShowWatchedPageCalled != null);
     return tvShowWatchedUpdated(this);
@@ -689,6 +754,8 @@ class _$_TvShowWatchedUpdated implements _TvShowWatchedUpdated {
     TResult addTvShowToWatchedPressed(_AddTvShowToWatchedPressed value),
     TResult removeTvShowFromWatchedPressed(
         _RemoveTvShowFromWatchedPressed value),
+    TResult updateTvShowWatchedReviewPressed(
+        _UpdateTvShowWatchedReviewPressed value),
     TResult nextTvShowWatchlistPageCalled(_NextTvShowWatchlistPageCalled value),
     TResult nextTvShowWatchedPageCalled(_NextTvShowWatchedPageCalled value),
     @required TResult orElse(),
@@ -794,7 +861,11 @@ class _$_AddTvShowToWatchlistPressed implements _AddTvShowToWatchlistPressed {
         TResult addTvShowToWatchedPressed(TvShowDetails tvShowDetails,
             String review, num rating, bool isSpoiler),
     @required
-        TResult removeTvShowFromWatchedPressed(TvShowDetails tvShowDetails),
+        TResult removeTvShowFromWatchedPressed(
+            String tvShowTitle, int tvShowId),
+    @required
+        TResult updateTvShowWatchedReviewPressed(String tvShowTitle,
+            int tvShowId, String review, num rating, bool isSpoiler),
     @required TResult nextTvShowWatchlistPageCalled(),
     @required TResult nextTvShowWatchedPageCalled(),
   }) {
@@ -805,6 +876,7 @@ class _$_AddTvShowToWatchlistPressed implements _AddTvShowToWatchlistPressed {
     assert(removeTvShowFromWatchlistPressed != null);
     assert(addTvShowToWatchedPressed != null);
     assert(removeTvShowFromWatchedPressed != null);
+    assert(updateTvShowWatchedReviewPressed != null);
     assert(nextTvShowWatchlistPageCalled != null);
     assert(nextTvShowWatchedPageCalled != null);
     return addTvShowToWatchlistPressed(tvShowDetails);
@@ -822,7 +894,9 @@ class _$_AddTvShowToWatchlistPressed implements _AddTvShowToWatchlistPressed {
     TResult removeTvShowFromWatchlistPressed(TvShowDetails tvShowDetails),
     TResult addTvShowToWatchedPressed(
         TvShowDetails tvShowDetails, String review, num rating, bool isSpoiler),
-    TResult removeTvShowFromWatchedPressed(TvShowDetails tvShowDetails),
+    TResult removeTvShowFromWatchedPressed(String tvShowTitle, int tvShowId),
+    TResult updateTvShowWatchedReviewPressed(String tvShowTitle, int tvShowId,
+        String review, num rating, bool isSpoiler),
     TResult nextTvShowWatchlistPageCalled(),
     TResult nextTvShowWatchedPageCalled(),
     @required TResult orElse(),
@@ -851,6 +925,9 @@ class _$_AddTvShowToWatchlistPressed implements _AddTvShowToWatchlistPressed {
         TResult removeTvShowFromWatchedPressed(
             _RemoveTvShowFromWatchedPressed value),
     @required
+        TResult updateTvShowWatchedReviewPressed(
+            _UpdateTvShowWatchedReviewPressed value),
+    @required
         TResult nextTvShowWatchlistPageCalled(
             _NextTvShowWatchlistPageCalled value),
     @required
@@ -863,6 +940,7 @@ class _$_AddTvShowToWatchlistPressed implements _AddTvShowToWatchlistPressed {
     assert(removeTvShowFromWatchlistPressed != null);
     assert(addTvShowToWatchedPressed != null);
     assert(removeTvShowFromWatchedPressed != null);
+    assert(updateTvShowWatchedReviewPressed != null);
     assert(nextTvShowWatchlistPageCalled != null);
     assert(nextTvShowWatchedPageCalled != null);
     return addTvShowToWatchlistPressed(this);
@@ -880,6 +958,8 @@ class _$_AddTvShowToWatchlistPressed implements _AddTvShowToWatchlistPressed {
     TResult addTvShowToWatchedPressed(_AddTvShowToWatchedPressed value),
     TResult removeTvShowFromWatchedPressed(
         _RemoveTvShowFromWatchedPressed value),
+    TResult updateTvShowWatchedReviewPressed(
+        _UpdateTvShowWatchedReviewPressed value),
     TResult nextTvShowWatchlistPageCalled(_NextTvShowWatchlistPageCalled value),
     TResult nextTvShowWatchedPageCalled(_NextTvShowWatchedPageCalled value),
     @required TResult orElse(),
@@ -987,7 +1067,11 @@ class _$_RemoveTvShowFromWatchlistPressed
         TResult addTvShowToWatchedPressed(TvShowDetails tvShowDetails,
             String review, num rating, bool isSpoiler),
     @required
-        TResult removeTvShowFromWatchedPressed(TvShowDetails tvShowDetails),
+        TResult removeTvShowFromWatchedPressed(
+            String tvShowTitle, int tvShowId),
+    @required
+        TResult updateTvShowWatchedReviewPressed(String tvShowTitle,
+            int tvShowId, String review, num rating, bool isSpoiler),
     @required TResult nextTvShowWatchlistPageCalled(),
     @required TResult nextTvShowWatchedPageCalled(),
   }) {
@@ -998,6 +1082,7 @@ class _$_RemoveTvShowFromWatchlistPressed
     assert(removeTvShowFromWatchlistPressed != null);
     assert(addTvShowToWatchedPressed != null);
     assert(removeTvShowFromWatchedPressed != null);
+    assert(updateTvShowWatchedReviewPressed != null);
     assert(nextTvShowWatchlistPageCalled != null);
     assert(nextTvShowWatchedPageCalled != null);
     return removeTvShowFromWatchlistPressed(tvShowDetails);
@@ -1015,7 +1100,9 @@ class _$_RemoveTvShowFromWatchlistPressed
     TResult removeTvShowFromWatchlistPressed(TvShowDetails tvShowDetails),
     TResult addTvShowToWatchedPressed(
         TvShowDetails tvShowDetails, String review, num rating, bool isSpoiler),
-    TResult removeTvShowFromWatchedPressed(TvShowDetails tvShowDetails),
+    TResult removeTvShowFromWatchedPressed(String tvShowTitle, int tvShowId),
+    TResult updateTvShowWatchedReviewPressed(String tvShowTitle, int tvShowId,
+        String review, num rating, bool isSpoiler),
     TResult nextTvShowWatchlistPageCalled(),
     TResult nextTvShowWatchedPageCalled(),
     @required TResult orElse(),
@@ -1044,6 +1131,9 @@ class _$_RemoveTvShowFromWatchlistPressed
         TResult removeTvShowFromWatchedPressed(
             _RemoveTvShowFromWatchedPressed value),
     @required
+        TResult updateTvShowWatchedReviewPressed(
+            _UpdateTvShowWatchedReviewPressed value),
+    @required
         TResult nextTvShowWatchlistPageCalled(
             _NextTvShowWatchlistPageCalled value),
     @required
@@ -1056,6 +1146,7 @@ class _$_RemoveTvShowFromWatchlistPressed
     assert(removeTvShowFromWatchlistPressed != null);
     assert(addTvShowToWatchedPressed != null);
     assert(removeTvShowFromWatchedPressed != null);
+    assert(updateTvShowWatchedReviewPressed != null);
     assert(nextTvShowWatchlistPageCalled != null);
     assert(nextTvShowWatchedPageCalled != null);
     return removeTvShowFromWatchlistPressed(this);
@@ -1073,6 +1164,8 @@ class _$_RemoveTvShowFromWatchlistPressed
     TResult addTvShowToWatchedPressed(_AddTvShowToWatchedPressed value),
     TResult removeTvShowFromWatchedPressed(
         _RemoveTvShowFromWatchedPressed value),
+    TResult updateTvShowWatchedReviewPressed(
+        _UpdateTvShowWatchedReviewPressed value),
     TResult nextTvShowWatchlistPageCalled(_NextTvShowWatchlistPageCalled value),
     TResult nextTvShowWatchedPageCalled(_NextTvShowWatchedPageCalled value),
     @required TResult orElse(),
@@ -1206,7 +1299,11 @@ class _$_AddTvShowToWatchedPressed implements _AddTvShowToWatchedPressed {
         TResult addTvShowToWatchedPressed(TvShowDetails tvShowDetails,
             String review, num rating, bool isSpoiler),
     @required
-        TResult removeTvShowFromWatchedPressed(TvShowDetails tvShowDetails),
+        TResult removeTvShowFromWatchedPressed(
+            String tvShowTitle, int tvShowId),
+    @required
+        TResult updateTvShowWatchedReviewPressed(String tvShowTitle,
+            int tvShowId, String review, num rating, bool isSpoiler),
     @required TResult nextTvShowWatchlistPageCalled(),
     @required TResult nextTvShowWatchedPageCalled(),
   }) {
@@ -1217,6 +1314,7 @@ class _$_AddTvShowToWatchedPressed implements _AddTvShowToWatchedPressed {
     assert(removeTvShowFromWatchlistPressed != null);
     assert(addTvShowToWatchedPressed != null);
     assert(removeTvShowFromWatchedPressed != null);
+    assert(updateTvShowWatchedReviewPressed != null);
     assert(nextTvShowWatchlistPageCalled != null);
     assert(nextTvShowWatchedPageCalled != null);
     return addTvShowToWatchedPressed(tvShowDetails, review, rating, isSpoiler);
@@ -1234,7 +1332,9 @@ class _$_AddTvShowToWatchedPressed implements _AddTvShowToWatchedPressed {
     TResult removeTvShowFromWatchlistPressed(TvShowDetails tvShowDetails),
     TResult addTvShowToWatchedPressed(
         TvShowDetails tvShowDetails, String review, num rating, bool isSpoiler),
-    TResult removeTvShowFromWatchedPressed(TvShowDetails tvShowDetails),
+    TResult removeTvShowFromWatchedPressed(String tvShowTitle, int tvShowId),
+    TResult updateTvShowWatchedReviewPressed(String tvShowTitle, int tvShowId,
+        String review, num rating, bool isSpoiler),
     TResult nextTvShowWatchlistPageCalled(),
     TResult nextTvShowWatchedPageCalled(),
     @required TResult orElse(),
@@ -1264,6 +1364,9 @@ class _$_AddTvShowToWatchedPressed implements _AddTvShowToWatchedPressed {
         TResult removeTvShowFromWatchedPressed(
             _RemoveTvShowFromWatchedPressed value),
     @required
+        TResult updateTvShowWatchedReviewPressed(
+            _UpdateTvShowWatchedReviewPressed value),
+    @required
         TResult nextTvShowWatchlistPageCalled(
             _NextTvShowWatchlistPageCalled value),
     @required
@@ -1276,6 +1379,7 @@ class _$_AddTvShowToWatchedPressed implements _AddTvShowToWatchedPressed {
     assert(removeTvShowFromWatchlistPressed != null);
     assert(addTvShowToWatchedPressed != null);
     assert(removeTvShowFromWatchedPressed != null);
+    assert(updateTvShowWatchedReviewPressed != null);
     assert(nextTvShowWatchlistPageCalled != null);
     assert(nextTvShowWatchedPageCalled != null);
     return addTvShowToWatchedPressed(this);
@@ -1293,6 +1397,8 @@ class _$_AddTvShowToWatchedPressed implements _AddTvShowToWatchedPressed {
     TResult addTvShowToWatchedPressed(_AddTvShowToWatchedPressed value),
     TResult removeTvShowFromWatchedPressed(
         _RemoveTvShowFromWatchedPressed value),
+    TResult updateTvShowWatchedReviewPressed(
+        _UpdateTvShowWatchedReviewPressed value),
     TResult nextTvShowWatchlistPageCalled(_NextTvShowWatchlistPageCalled value),
     TResult nextTvShowWatchedPageCalled(_NextTvShowWatchedPageCalled value),
     @required TResult orElse(),
@@ -1324,7 +1430,7 @@ abstract class _$RemoveTvShowFromWatchedPressedCopyWith<$Res> {
           _RemoveTvShowFromWatchedPressed value,
           $Res Function(_RemoveTvShowFromWatchedPressed) then) =
       __$RemoveTvShowFromWatchedPressedCopyWithImpl<$Res>;
-  $Res call({TvShowDetails tvShowDetails});
+  $Res call({String tvShowTitle, int tvShowId});
 }
 
 /// @nodoc
@@ -1342,12 +1448,13 @@ class __$RemoveTvShowFromWatchedPressedCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object tvShowDetails = freezed,
+    Object tvShowTitle = freezed,
+    Object tvShowId = freezed,
   }) {
     return _then(_RemoveTvShowFromWatchedPressed(
-      tvShowDetails == freezed
-          ? _value.tvShowDetails
-          : tvShowDetails as TvShowDetails,
+      tvShowTitle:
+          tvShowTitle == freezed ? _value.tvShowTitle : tvShowTitle as String,
+      tvShowId: tvShowId == freezed ? _value.tvShowId : tvShowId as int,
     ));
   }
 }
@@ -1355,29 +1462,35 @@ class __$RemoveTvShowFromWatchedPressedCopyWithImpl<$Res>
 /// @nodoc
 class _$_RemoveTvShowFromWatchedPressed
     implements _RemoveTvShowFromWatchedPressed {
-  const _$_RemoveTvShowFromWatchedPressed(this.tvShowDetails)
-      : assert(tvShowDetails != null);
+  const _$_RemoveTvShowFromWatchedPressed({this.tvShowTitle, this.tvShowId});
 
   @override
-  final TvShowDetails tvShowDetails;
+  final String tvShowTitle;
+  @override
+  final int tvShowId;
 
   @override
   String toString() {
-    return 'TvShowListsUserProfileEvent.removeTvShowFromWatchedPressed(tvShowDetails: $tvShowDetails)';
+    return 'TvShowListsUserProfileEvent.removeTvShowFromWatchedPressed(tvShowTitle: $tvShowTitle, tvShowId: $tvShowId)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is _RemoveTvShowFromWatchedPressed &&
-            (identical(other.tvShowDetails, tvShowDetails) ||
+            (identical(other.tvShowTitle, tvShowTitle) ||
                 const DeepCollectionEquality()
-                    .equals(other.tvShowDetails, tvShowDetails)));
+                    .equals(other.tvShowTitle, tvShowTitle)) &&
+            (identical(other.tvShowId, tvShowId) ||
+                const DeepCollectionEquality()
+                    .equals(other.tvShowId, tvShowId)));
   }
 
   @override
   int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(tvShowDetails);
+      runtimeType.hashCode ^
+      const DeepCollectionEquality().hash(tvShowTitle) ^
+      const DeepCollectionEquality().hash(tvShowId);
 
   @JsonKey(ignore: true)
   @override
@@ -1402,7 +1515,11 @@ class _$_RemoveTvShowFromWatchedPressed
         TResult addTvShowToWatchedPressed(TvShowDetails tvShowDetails,
             String review, num rating, bool isSpoiler),
     @required
-        TResult removeTvShowFromWatchedPressed(TvShowDetails tvShowDetails),
+        TResult removeTvShowFromWatchedPressed(
+            String tvShowTitle, int tvShowId),
+    @required
+        TResult updateTvShowWatchedReviewPressed(String tvShowTitle,
+            int tvShowId, String review, num rating, bool isSpoiler),
     @required TResult nextTvShowWatchlistPageCalled(),
     @required TResult nextTvShowWatchedPageCalled(),
   }) {
@@ -1413,9 +1530,10 @@ class _$_RemoveTvShowFromWatchedPressed
     assert(removeTvShowFromWatchlistPressed != null);
     assert(addTvShowToWatchedPressed != null);
     assert(removeTvShowFromWatchedPressed != null);
+    assert(updateTvShowWatchedReviewPressed != null);
     assert(nextTvShowWatchlistPageCalled != null);
     assert(nextTvShowWatchedPageCalled != null);
-    return removeTvShowFromWatchedPressed(tvShowDetails);
+    return removeTvShowFromWatchedPressed(tvShowTitle, tvShowId);
   }
 
   @override
@@ -1430,14 +1548,16 @@ class _$_RemoveTvShowFromWatchedPressed
     TResult removeTvShowFromWatchlistPressed(TvShowDetails tvShowDetails),
     TResult addTvShowToWatchedPressed(
         TvShowDetails tvShowDetails, String review, num rating, bool isSpoiler),
-    TResult removeTvShowFromWatchedPressed(TvShowDetails tvShowDetails),
+    TResult removeTvShowFromWatchedPressed(String tvShowTitle, int tvShowId),
+    TResult updateTvShowWatchedReviewPressed(String tvShowTitle, int tvShowId,
+        String review, num rating, bool isSpoiler),
     TResult nextTvShowWatchlistPageCalled(),
     TResult nextTvShowWatchedPageCalled(),
     @required TResult orElse(),
   }) {
     assert(orElse != null);
     if (removeTvShowFromWatchedPressed != null) {
-      return removeTvShowFromWatchedPressed(tvShowDetails);
+      return removeTvShowFromWatchedPressed(tvShowTitle, tvShowId);
     }
     return orElse();
   }
@@ -1459,6 +1579,9 @@ class _$_RemoveTvShowFromWatchedPressed
         TResult removeTvShowFromWatchedPressed(
             _RemoveTvShowFromWatchedPressed value),
     @required
+        TResult updateTvShowWatchedReviewPressed(
+            _UpdateTvShowWatchedReviewPressed value),
+    @required
         TResult nextTvShowWatchlistPageCalled(
             _NextTvShowWatchlistPageCalled value),
     @required
@@ -1471,6 +1594,7 @@ class _$_RemoveTvShowFromWatchedPressed
     assert(removeTvShowFromWatchlistPressed != null);
     assert(addTvShowToWatchedPressed != null);
     assert(removeTvShowFromWatchedPressed != null);
+    assert(updateTvShowWatchedReviewPressed != null);
     assert(nextTvShowWatchlistPageCalled != null);
     assert(nextTvShowWatchedPageCalled != null);
     return removeTvShowFromWatchedPressed(this);
@@ -1488,6 +1612,8 @@ class _$_RemoveTvShowFromWatchedPressed
     TResult addTvShowToWatchedPressed(_AddTvShowToWatchedPressed value),
     TResult removeTvShowFromWatchedPressed(
         _RemoveTvShowFromWatchedPressed value),
+    TResult updateTvShowWatchedReviewPressed(
+        _UpdateTvShowWatchedReviewPressed value),
     TResult nextTvShowWatchlistPageCalled(_NextTvShowWatchlistPageCalled value),
     TResult nextTvShowWatchedPageCalled(_NextTvShowWatchedPageCalled value),
     @required TResult orElse(),
@@ -1502,12 +1628,268 @@ class _$_RemoveTvShowFromWatchedPressed
 
 abstract class _RemoveTvShowFromWatchedPressed
     implements TvShowListsUserProfileEvent {
-  const factory _RemoveTvShowFromWatchedPressed(TvShowDetails tvShowDetails) =
-      _$_RemoveTvShowFromWatchedPressed;
+  const factory _RemoveTvShowFromWatchedPressed(
+      {String tvShowTitle, int tvShowId}) = _$_RemoveTvShowFromWatchedPressed;
 
-  TvShowDetails get tvShowDetails;
+  String get tvShowTitle;
+  int get tvShowId;
   @JsonKey(ignore: true)
   _$RemoveTvShowFromWatchedPressedCopyWith<_RemoveTvShowFromWatchedPressed>
+      get copyWith;
+}
+
+/// @nodoc
+abstract class _$UpdateTvShowWatchedReviewPressedCopyWith<$Res> {
+  factory _$UpdateTvShowWatchedReviewPressedCopyWith(
+          _UpdateTvShowWatchedReviewPressed value,
+          $Res Function(_UpdateTvShowWatchedReviewPressed) then) =
+      __$UpdateTvShowWatchedReviewPressedCopyWithImpl<$Res>;
+  $Res call(
+      {String tvShowTitle,
+      int tvShowId,
+      String review,
+      num rating,
+      bool isSpoiler});
+}
+
+/// @nodoc
+class __$UpdateTvShowWatchedReviewPressedCopyWithImpl<$Res>
+    extends _$TvShowListsUserProfileEventCopyWithImpl<$Res>
+    implements _$UpdateTvShowWatchedReviewPressedCopyWith<$Res> {
+  __$UpdateTvShowWatchedReviewPressedCopyWithImpl(
+      _UpdateTvShowWatchedReviewPressed _value,
+      $Res Function(_UpdateTvShowWatchedReviewPressed) _then)
+      : super(_value, (v) => _then(v as _UpdateTvShowWatchedReviewPressed));
+
+  @override
+  _UpdateTvShowWatchedReviewPressed get _value =>
+      super._value as _UpdateTvShowWatchedReviewPressed;
+
+  @override
+  $Res call({
+    Object tvShowTitle = freezed,
+    Object tvShowId = freezed,
+    Object review = freezed,
+    Object rating = freezed,
+    Object isSpoiler = freezed,
+  }) {
+    return _then(_UpdateTvShowWatchedReviewPressed(
+      tvShowTitle:
+          tvShowTitle == freezed ? _value.tvShowTitle : tvShowTitle as String,
+      tvShowId: tvShowId == freezed ? _value.tvShowId : tvShowId as int,
+      review: review == freezed ? _value.review : review as String,
+      rating: rating == freezed ? _value.rating : rating as num,
+      isSpoiler: isSpoiler == freezed ? _value.isSpoiler : isSpoiler as bool,
+    ));
+  }
+}
+
+/// @nodoc
+class _$_UpdateTvShowWatchedReviewPressed
+    implements _UpdateTvShowWatchedReviewPressed {
+  const _$_UpdateTvShowWatchedReviewPressed(
+      {this.tvShowTitle,
+      this.tvShowId,
+      this.review,
+      this.rating,
+      this.isSpoiler});
+
+  @override
+  final String tvShowTitle;
+  @override
+  final int tvShowId;
+  @override
+  final String review;
+  @override
+  final num rating;
+  @override
+  final bool isSpoiler;
+
+  @override
+  String toString() {
+    return 'TvShowListsUserProfileEvent.updateTvShowWatchedReviewPressed(tvShowTitle: $tvShowTitle, tvShowId: $tvShowId, review: $review, rating: $rating, isSpoiler: $isSpoiler)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is _UpdateTvShowWatchedReviewPressed &&
+            (identical(other.tvShowTitle, tvShowTitle) ||
+                const DeepCollectionEquality()
+                    .equals(other.tvShowTitle, tvShowTitle)) &&
+            (identical(other.tvShowId, tvShowId) ||
+                const DeepCollectionEquality()
+                    .equals(other.tvShowId, tvShowId)) &&
+            (identical(other.review, review) ||
+                const DeepCollectionEquality().equals(other.review, review)) &&
+            (identical(other.rating, rating) ||
+                const DeepCollectionEquality().equals(other.rating, rating)) &&
+            (identical(other.isSpoiler, isSpoiler) ||
+                const DeepCollectionEquality()
+                    .equals(other.isSpoiler, isSpoiler)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^
+      const DeepCollectionEquality().hash(tvShowTitle) ^
+      const DeepCollectionEquality().hash(tvShowId) ^
+      const DeepCollectionEquality().hash(review) ^
+      const DeepCollectionEquality().hash(rating) ^
+      const DeepCollectionEquality().hash(isSpoiler);
+
+  @JsonKey(ignore: true)
+  @override
+  _$UpdateTvShowWatchedReviewPressedCopyWith<_UpdateTvShowWatchedReviewPressed>
+      get copyWith => __$UpdateTvShowWatchedReviewPressedCopyWithImpl<
+          _UpdateTvShowWatchedReviewPressed>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object>({
+    @required TResult loadTvShowToListInitial(),
+    @required
+        TResult tvShowWatchlistUpdated(
+            List<FirestoreTvShowWatchlistDetails> tvShowWatchlist),
+    @required
+        TResult tvShowWatchedUpdated(
+            List<FirestoreTvShowWatchedDetails> tvShowWatched),
+    @required TResult addTvShowToWatchlistPressed(TvShowDetails tvShowDetails),
+    @required
+        TResult removeTvShowFromWatchlistPressed(TvShowDetails tvShowDetails),
+    @required
+        TResult addTvShowToWatchedPressed(TvShowDetails tvShowDetails,
+            String review, num rating, bool isSpoiler),
+    @required
+        TResult removeTvShowFromWatchedPressed(
+            String tvShowTitle, int tvShowId),
+    @required
+        TResult updateTvShowWatchedReviewPressed(String tvShowTitle,
+            int tvShowId, String review, num rating, bool isSpoiler),
+    @required TResult nextTvShowWatchlistPageCalled(),
+    @required TResult nextTvShowWatchedPageCalled(),
+  }) {
+    assert(loadTvShowToListInitial != null);
+    assert(tvShowWatchlistUpdated != null);
+    assert(tvShowWatchedUpdated != null);
+    assert(addTvShowToWatchlistPressed != null);
+    assert(removeTvShowFromWatchlistPressed != null);
+    assert(addTvShowToWatchedPressed != null);
+    assert(removeTvShowFromWatchedPressed != null);
+    assert(updateTvShowWatchedReviewPressed != null);
+    assert(nextTvShowWatchlistPageCalled != null);
+    assert(nextTvShowWatchedPageCalled != null);
+    return updateTvShowWatchedReviewPressed(
+        tvShowTitle, tvShowId, review, rating, isSpoiler);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object>({
+    TResult loadTvShowToListInitial(),
+    TResult tvShowWatchlistUpdated(
+        List<FirestoreTvShowWatchlistDetails> tvShowWatchlist),
+    TResult tvShowWatchedUpdated(
+        List<FirestoreTvShowWatchedDetails> tvShowWatched),
+    TResult addTvShowToWatchlistPressed(TvShowDetails tvShowDetails),
+    TResult removeTvShowFromWatchlistPressed(TvShowDetails tvShowDetails),
+    TResult addTvShowToWatchedPressed(
+        TvShowDetails tvShowDetails, String review, num rating, bool isSpoiler),
+    TResult removeTvShowFromWatchedPressed(String tvShowTitle, int tvShowId),
+    TResult updateTvShowWatchedReviewPressed(String tvShowTitle, int tvShowId,
+        String review, num rating, bool isSpoiler),
+    TResult nextTvShowWatchlistPageCalled(),
+    TResult nextTvShowWatchedPageCalled(),
+    @required TResult orElse(),
+  }) {
+    assert(orElse != null);
+    if (updateTvShowWatchedReviewPressed != null) {
+      return updateTvShowWatchedReviewPressed(
+          tvShowTitle, tvShowId, review, rating, isSpoiler);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object>({
+    @required TResult loadTvShowToListInitial(_LoadTvShowToListInitial value),
+    @required TResult tvShowWatchlistUpdated(_TvShowWatchlistUpdated value),
+    @required TResult tvShowWatchedUpdated(_TvShowWatchedUpdated value),
+    @required
+        TResult addTvShowToWatchlistPressed(_AddTvShowToWatchlistPressed value),
+    @required
+        TResult removeTvShowFromWatchlistPressed(
+            _RemoveTvShowFromWatchlistPressed value),
+    @required
+        TResult addTvShowToWatchedPressed(_AddTvShowToWatchedPressed value),
+    @required
+        TResult removeTvShowFromWatchedPressed(
+            _RemoveTvShowFromWatchedPressed value),
+    @required
+        TResult updateTvShowWatchedReviewPressed(
+            _UpdateTvShowWatchedReviewPressed value),
+    @required
+        TResult nextTvShowWatchlistPageCalled(
+            _NextTvShowWatchlistPageCalled value),
+    @required
+        TResult nextTvShowWatchedPageCalled(_NextTvShowWatchedPageCalled value),
+  }) {
+    assert(loadTvShowToListInitial != null);
+    assert(tvShowWatchlistUpdated != null);
+    assert(tvShowWatchedUpdated != null);
+    assert(addTvShowToWatchlistPressed != null);
+    assert(removeTvShowFromWatchlistPressed != null);
+    assert(addTvShowToWatchedPressed != null);
+    assert(removeTvShowFromWatchedPressed != null);
+    assert(updateTvShowWatchedReviewPressed != null);
+    assert(nextTvShowWatchlistPageCalled != null);
+    assert(nextTvShowWatchedPageCalled != null);
+    return updateTvShowWatchedReviewPressed(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object>({
+    TResult loadTvShowToListInitial(_LoadTvShowToListInitial value),
+    TResult tvShowWatchlistUpdated(_TvShowWatchlistUpdated value),
+    TResult tvShowWatchedUpdated(_TvShowWatchedUpdated value),
+    TResult addTvShowToWatchlistPressed(_AddTvShowToWatchlistPressed value),
+    TResult removeTvShowFromWatchlistPressed(
+        _RemoveTvShowFromWatchlistPressed value),
+    TResult addTvShowToWatchedPressed(_AddTvShowToWatchedPressed value),
+    TResult removeTvShowFromWatchedPressed(
+        _RemoveTvShowFromWatchedPressed value),
+    TResult updateTvShowWatchedReviewPressed(
+        _UpdateTvShowWatchedReviewPressed value),
+    TResult nextTvShowWatchlistPageCalled(_NextTvShowWatchlistPageCalled value),
+    TResult nextTvShowWatchedPageCalled(_NextTvShowWatchedPageCalled value),
+    @required TResult orElse(),
+  }) {
+    assert(orElse != null);
+    if (updateTvShowWatchedReviewPressed != null) {
+      return updateTvShowWatchedReviewPressed(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _UpdateTvShowWatchedReviewPressed
+    implements TvShowListsUserProfileEvent {
+  const factory _UpdateTvShowWatchedReviewPressed(
+      {String tvShowTitle,
+      int tvShowId,
+      String review,
+      num rating,
+      bool isSpoiler}) = _$_UpdateTvShowWatchedReviewPressed;
+
+  String get tvShowTitle;
+  int get tvShowId;
+  String get review;
+  num get rating;
+  bool get isSpoiler;
+  @JsonKey(ignore: true)
+  _$UpdateTvShowWatchedReviewPressedCopyWith<_UpdateTvShowWatchedReviewPressed>
       get copyWith;
 }
 
@@ -1568,7 +1950,11 @@ class _$_NextTvShowWatchlistPageCalled
         TResult addTvShowToWatchedPressed(TvShowDetails tvShowDetails,
             String review, num rating, bool isSpoiler),
     @required
-        TResult removeTvShowFromWatchedPressed(TvShowDetails tvShowDetails),
+        TResult removeTvShowFromWatchedPressed(
+            String tvShowTitle, int tvShowId),
+    @required
+        TResult updateTvShowWatchedReviewPressed(String tvShowTitle,
+            int tvShowId, String review, num rating, bool isSpoiler),
     @required TResult nextTvShowWatchlistPageCalled(),
     @required TResult nextTvShowWatchedPageCalled(),
   }) {
@@ -1579,6 +1965,7 @@ class _$_NextTvShowWatchlistPageCalled
     assert(removeTvShowFromWatchlistPressed != null);
     assert(addTvShowToWatchedPressed != null);
     assert(removeTvShowFromWatchedPressed != null);
+    assert(updateTvShowWatchedReviewPressed != null);
     assert(nextTvShowWatchlistPageCalled != null);
     assert(nextTvShowWatchedPageCalled != null);
     return nextTvShowWatchlistPageCalled();
@@ -1596,7 +1983,9 @@ class _$_NextTvShowWatchlistPageCalled
     TResult removeTvShowFromWatchlistPressed(TvShowDetails tvShowDetails),
     TResult addTvShowToWatchedPressed(
         TvShowDetails tvShowDetails, String review, num rating, bool isSpoiler),
-    TResult removeTvShowFromWatchedPressed(TvShowDetails tvShowDetails),
+    TResult removeTvShowFromWatchedPressed(String tvShowTitle, int tvShowId),
+    TResult updateTvShowWatchedReviewPressed(String tvShowTitle, int tvShowId,
+        String review, num rating, bool isSpoiler),
     TResult nextTvShowWatchlistPageCalled(),
     TResult nextTvShowWatchedPageCalled(),
     @required TResult orElse(),
@@ -1625,6 +2014,9 @@ class _$_NextTvShowWatchlistPageCalled
         TResult removeTvShowFromWatchedPressed(
             _RemoveTvShowFromWatchedPressed value),
     @required
+        TResult updateTvShowWatchedReviewPressed(
+            _UpdateTvShowWatchedReviewPressed value),
+    @required
         TResult nextTvShowWatchlistPageCalled(
             _NextTvShowWatchlistPageCalled value),
     @required
@@ -1637,6 +2029,7 @@ class _$_NextTvShowWatchlistPageCalled
     assert(removeTvShowFromWatchlistPressed != null);
     assert(addTvShowToWatchedPressed != null);
     assert(removeTvShowFromWatchedPressed != null);
+    assert(updateTvShowWatchedReviewPressed != null);
     assert(nextTvShowWatchlistPageCalled != null);
     assert(nextTvShowWatchedPageCalled != null);
     return nextTvShowWatchlistPageCalled(this);
@@ -1654,6 +2047,8 @@ class _$_NextTvShowWatchlistPageCalled
     TResult addTvShowToWatchedPressed(_AddTvShowToWatchedPressed value),
     TResult removeTvShowFromWatchedPressed(
         _RemoveTvShowFromWatchedPressed value),
+    TResult updateTvShowWatchedReviewPressed(
+        _UpdateTvShowWatchedReviewPressed value),
     TResult nextTvShowWatchlistPageCalled(_NextTvShowWatchlistPageCalled value),
     TResult nextTvShowWatchedPageCalled(_NextTvShowWatchedPageCalled value),
     @required TResult orElse(),
@@ -1728,7 +2123,11 @@ class _$_NextTvShowWatchedPageCalled implements _NextTvShowWatchedPageCalled {
         TResult addTvShowToWatchedPressed(TvShowDetails tvShowDetails,
             String review, num rating, bool isSpoiler),
     @required
-        TResult removeTvShowFromWatchedPressed(TvShowDetails tvShowDetails),
+        TResult removeTvShowFromWatchedPressed(
+            String tvShowTitle, int tvShowId),
+    @required
+        TResult updateTvShowWatchedReviewPressed(String tvShowTitle,
+            int tvShowId, String review, num rating, bool isSpoiler),
     @required TResult nextTvShowWatchlistPageCalled(),
     @required TResult nextTvShowWatchedPageCalled(),
   }) {
@@ -1739,6 +2138,7 @@ class _$_NextTvShowWatchedPageCalled implements _NextTvShowWatchedPageCalled {
     assert(removeTvShowFromWatchlistPressed != null);
     assert(addTvShowToWatchedPressed != null);
     assert(removeTvShowFromWatchedPressed != null);
+    assert(updateTvShowWatchedReviewPressed != null);
     assert(nextTvShowWatchlistPageCalled != null);
     assert(nextTvShowWatchedPageCalled != null);
     return nextTvShowWatchedPageCalled();
@@ -1756,7 +2156,9 @@ class _$_NextTvShowWatchedPageCalled implements _NextTvShowWatchedPageCalled {
     TResult removeTvShowFromWatchlistPressed(TvShowDetails tvShowDetails),
     TResult addTvShowToWatchedPressed(
         TvShowDetails tvShowDetails, String review, num rating, bool isSpoiler),
-    TResult removeTvShowFromWatchedPressed(TvShowDetails tvShowDetails),
+    TResult removeTvShowFromWatchedPressed(String tvShowTitle, int tvShowId),
+    TResult updateTvShowWatchedReviewPressed(String tvShowTitle, int tvShowId,
+        String review, num rating, bool isSpoiler),
     TResult nextTvShowWatchlistPageCalled(),
     TResult nextTvShowWatchedPageCalled(),
     @required TResult orElse(),
@@ -1785,6 +2187,9 @@ class _$_NextTvShowWatchedPageCalled implements _NextTvShowWatchedPageCalled {
         TResult removeTvShowFromWatchedPressed(
             _RemoveTvShowFromWatchedPressed value),
     @required
+        TResult updateTvShowWatchedReviewPressed(
+            _UpdateTvShowWatchedReviewPressed value),
+    @required
         TResult nextTvShowWatchlistPageCalled(
             _NextTvShowWatchlistPageCalled value),
     @required
@@ -1797,6 +2202,7 @@ class _$_NextTvShowWatchedPageCalled implements _NextTvShowWatchedPageCalled {
     assert(removeTvShowFromWatchlistPressed != null);
     assert(addTvShowToWatchedPressed != null);
     assert(removeTvShowFromWatchedPressed != null);
+    assert(updateTvShowWatchedReviewPressed != null);
     assert(nextTvShowWatchlistPageCalled != null);
     assert(nextTvShowWatchedPageCalled != null);
     return nextTvShowWatchedPageCalled(this);
@@ -1814,6 +2220,8 @@ class _$_NextTvShowWatchedPageCalled implements _NextTvShowWatchedPageCalled {
     TResult addTvShowToWatchedPressed(_AddTvShowToWatchedPressed value),
     TResult removeTvShowFromWatchedPressed(
         _RemoveTvShowFromWatchedPressed value),
+    TResult updateTvShowWatchedReviewPressed(
+        _UpdateTvShowWatchedReviewPressed value),
     TResult nextTvShowWatchlistPageCalled(_NextTvShowWatchlistPageCalled value),
     TResult nextTvShowWatchedPageCalled(_NextTvShowWatchedPageCalled value),
     @required TResult orElse(),

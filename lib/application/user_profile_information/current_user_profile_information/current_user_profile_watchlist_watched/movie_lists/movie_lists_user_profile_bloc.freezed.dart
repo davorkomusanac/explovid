@@ -63,9 +63,26 @@ class _$MovieListsUserProfileEventTearOff {
 
 // ignore: unused_element
   _RemoveMovieFromWatchedPressed removeMovieFromWatchedPressed(
-      MovieDetails movieDetails) {
+      {String movieTitle, int movieId}) {
     return _RemoveMovieFromWatchedPressed(
-      movieDetails,
+      movieTitle: movieTitle,
+      movieId: movieId,
+    );
+  }
+
+// ignore: unused_element
+  _UpdateMovieWatchedReviewPressed updateMovieWatchedReviewPressed(
+      {String movieTitle,
+      int movieId,
+      String review,
+      num rating,
+      bool isSpoiler}) {
+    return _UpdateMovieWatchedReviewPressed(
+      movieTitle: movieTitle,
+      movieId: movieId,
+      review: review,
+      rating: rating,
+      isSpoiler: isSpoiler,
     );
   }
 
@@ -101,7 +118,11 @@ mixin _$MovieListsUserProfileEvent {
     @required
         TResult addMovieToWatchedPressed(MovieDetails movieDetails,
             String review, num rating, bool isSpoiler),
-    @required TResult removeMovieFromWatchedPressed(MovieDetails movieDetails),
+    @required
+        TResult removeMovieFromWatchedPressed(String movieTitle, int movieId),
+    @required
+        TResult updateMovieWatchedReviewPressed(String movieTitle, int movieId,
+            String review, num rating, bool isSpoiler),
     @required TResult nextMovieWatchlistPageCalled(),
     @required TResult nextMovieWatchedPageCalled(),
   });
@@ -116,7 +137,9 @@ mixin _$MovieListsUserProfileEvent {
     TResult removeMovieFromWatchlistPressed(MovieDetails movieDetails),
     TResult addMovieToWatchedPressed(
         MovieDetails movieDetails, String review, num rating, bool isSpoiler),
-    TResult removeMovieFromWatchedPressed(MovieDetails movieDetails),
+    TResult removeMovieFromWatchedPressed(String movieTitle, int movieId),
+    TResult updateMovieWatchedReviewPressed(String movieTitle, int movieId,
+        String review, num rating, bool isSpoiler),
     TResult nextMovieWatchlistPageCalled(),
     TResult nextMovieWatchedPageCalled(),
     @required TResult orElse(),
@@ -136,6 +159,9 @@ mixin _$MovieListsUserProfileEvent {
         TResult removeMovieFromWatchedPressed(
             _RemoveMovieFromWatchedPressed value),
     @required
+        TResult updateMovieWatchedReviewPressed(
+            _UpdateMovieWatchedReviewPressed value),
+    @required
         TResult nextMovieWatchlistPageCalled(
             _NextMovieWatchlistPageCalled value),
     @required
@@ -151,6 +177,8 @@ mixin _$MovieListsUserProfileEvent {
         _RemoveMovieFromWatchlistPressed value),
     TResult addMovieToWatchedPressed(_AddMovieToWatchedPressed value),
     TResult removeMovieFromWatchedPressed(_RemoveMovieFromWatchedPressed value),
+    TResult updateMovieWatchedReviewPressed(
+        _UpdateMovieWatchedReviewPressed value),
     TResult nextMovieWatchlistPageCalled(_NextMovieWatchlistPageCalled value),
     TResult nextMovieWatchedPageCalled(_NextMovieWatchedPageCalled value),
     @required TResult orElse(),
@@ -226,7 +254,11 @@ class _$_LoadMovieToListInitial implements _LoadMovieToListInitial {
     @required
         TResult addMovieToWatchedPressed(MovieDetails movieDetails,
             String review, num rating, bool isSpoiler),
-    @required TResult removeMovieFromWatchedPressed(MovieDetails movieDetails),
+    @required
+        TResult removeMovieFromWatchedPressed(String movieTitle, int movieId),
+    @required
+        TResult updateMovieWatchedReviewPressed(String movieTitle, int movieId,
+            String review, num rating, bool isSpoiler),
     @required TResult nextMovieWatchlistPageCalled(),
     @required TResult nextMovieWatchedPageCalled(),
   }) {
@@ -237,6 +269,7 @@ class _$_LoadMovieToListInitial implements _LoadMovieToListInitial {
     assert(removeMovieFromWatchlistPressed != null);
     assert(addMovieToWatchedPressed != null);
     assert(removeMovieFromWatchedPressed != null);
+    assert(updateMovieWatchedReviewPressed != null);
     assert(nextMovieWatchlistPageCalled != null);
     assert(nextMovieWatchedPageCalled != null);
     return loadMovieToListInitial();
@@ -254,7 +287,9 @@ class _$_LoadMovieToListInitial implements _LoadMovieToListInitial {
     TResult removeMovieFromWatchlistPressed(MovieDetails movieDetails),
     TResult addMovieToWatchedPressed(
         MovieDetails movieDetails, String review, num rating, bool isSpoiler),
-    TResult removeMovieFromWatchedPressed(MovieDetails movieDetails),
+    TResult removeMovieFromWatchedPressed(String movieTitle, int movieId),
+    TResult updateMovieWatchedReviewPressed(String movieTitle, int movieId,
+        String review, num rating, bool isSpoiler),
     TResult nextMovieWatchlistPageCalled(),
     TResult nextMovieWatchedPageCalled(),
     @required TResult orElse(),
@@ -282,6 +317,9 @@ class _$_LoadMovieToListInitial implements _LoadMovieToListInitial {
         TResult removeMovieFromWatchedPressed(
             _RemoveMovieFromWatchedPressed value),
     @required
+        TResult updateMovieWatchedReviewPressed(
+            _UpdateMovieWatchedReviewPressed value),
+    @required
         TResult nextMovieWatchlistPageCalled(
             _NextMovieWatchlistPageCalled value),
     @required
@@ -294,6 +332,7 @@ class _$_LoadMovieToListInitial implements _LoadMovieToListInitial {
     assert(removeMovieFromWatchlistPressed != null);
     assert(addMovieToWatchedPressed != null);
     assert(removeMovieFromWatchedPressed != null);
+    assert(updateMovieWatchedReviewPressed != null);
     assert(nextMovieWatchlistPageCalled != null);
     assert(nextMovieWatchedPageCalled != null);
     return loadMovieToListInitial(this);
@@ -310,6 +349,8 @@ class _$_LoadMovieToListInitial implements _LoadMovieToListInitial {
         _RemoveMovieFromWatchlistPressed value),
     TResult addMovieToWatchedPressed(_AddMovieToWatchedPressed value),
     TResult removeMovieFromWatchedPressed(_RemoveMovieFromWatchedPressed value),
+    TResult updateMovieWatchedReviewPressed(
+        _UpdateMovieWatchedReviewPressed value),
     TResult nextMovieWatchlistPageCalled(_NextMovieWatchlistPageCalled value),
     TResult nextMovieWatchedPageCalled(_NextMovieWatchedPageCalled value),
     @required TResult orElse(),
@@ -406,7 +447,11 @@ class _$_MovieWatchlistUpdated implements _MovieWatchlistUpdated {
     @required
         TResult addMovieToWatchedPressed(MovieDetails movieDetails,
             String review, num rating, bool isSpoiler),
-    @required TResult removeMovieFromWatchedPressed(MovieDetails movieDetails),
+    @required
+        TResult removeMovieFromWatchedPressed(String movieTitle, int movieId),
+    @required
+        TResult updateMovieWatchedReviewPressed(String movieTitle, int movieId,
+            String review, num rating, bool isSpoiler),
     @required TResult nextMovieWatchlistPageCalled(),
     @required TResult nextMovieWatchedPageCalled(),
   }) {
@@ -417,6 +462,7 @@ class _$_MovieWatchlistUpdated implements _MovieWatchlistUpdated {
     assert(removeMovieFromWatchlistPressed != null);
     assert(addMovieToWatchedPressed != null);
     assert(removeMovieFromWatchedPressed != null);
+    assert(updateMovieWatchedReviewPressed != null);
     assert(nextMovieWatchlistPageCalled != null);
     assert(nextMovieWatchedPageCalled != null);
     return movieWatchlistUpdated(moviesWatchlist);
@@ -434,7 +480,9 @@ class _$_MovieWatchlistUpdated implements _MovieWatchlistUpdated {
     TResult removeMovieFromWatchlistPressed(MovieDetails movieDetails),
     TResult addMovieToWatchedPressed(
         MovieDetails movieDetails, String review, num rating, bool isSpoiler),
-    TResult removeMovieFromWatchedPressed(MovieDetails movieDetails),
+    TResult removeMovieFromWatchedPressed(String movieTitle, int movieId),
+    TResult updateMovieWatchedReviewPressed(String movieTitle, int movieId,
+        String review, num rating, bool isSpoiler),
     TResult nextMovieWatchlistPageCalled(),
     TResult nextMovieWatchedPageCalled(),
     @required TResult orElse(),
@@ -462,6 +510,9 @@ class _$_MovieWatchlistUpdated implements _MovieWatchlistUpdated {
         TResult removeMovieFromWatchedPressed(
             _RemoveMovieFromWatchedPressed value),
     @required
+        TResult updateMovieWatchedReviewPressed(
+            _UpdateMovieWatchedReviewPressed value),
+    @required
         TResult nextMovieWatchlistPageCalled(
             _NextMovieWatchlistPageCalled value),
     @required
@@ -474,6 +525,7 @@ class _$_MovieWatchlistUpdated implements _MovieWatchlistUpdated {
     assert(removeMovieFromWatchlistPressed != null);
     assert(addMovieToWatchedPressed != null);
     assert(removeMovieFromWatchedPressed != null);
+    assert(updateMovieWatchedReviewPressed != null);
     assert(nextMovieWatchlistPageCalled != null);
     assert(nextMovieWatchedPageCalled != null);
     return movieWatchlistUpdated(this);
@@ -490,6 +542,8 @@ class _$_MovieWatchlistUpdated implements _MovieWatchlistUpdated {
         _RemoveMovieFromWatchlistPressed value),
     TResult addMovieToWatchedPressed(_AddMovieToWatchedPressed value),
     TResult removeMovieFromWatchedPressed(_RemoveMovieFromWatchedPressed value),
+    TResult updateMovieWatchedReviewPressed(
+        _UpdateMovieWatchedReviewPressed value),
     TResult nextMovieWatchlistPageCalled(_NextMovieWatchlistPageCalled value),
     TResult nextMovieWatchedPageCalled(_NextMovieWatchedPageCalled value),
     @required TResult orElse(),
@@ -591,7 +645,11 @@ class _$_MovieWatchedUpdated implements _MovieWatchedUpdated {
     @required
         TResult addMovieToWatchedPressed(MovieDetails movieDetails,
             String review, num rating, bool isSpoiler),
-    @required TResult removeMovieFromWatchedPressed(MovieDetails movieDetails),
+    @required
+        TResult removeMovieFromWatchedPressed(String movieTitle, int movieId),
+    @required
+        TResult updateMovieWatchedReviewPressed(String movieTitle, int movieId,
+            String review, num rating, bool isSpoiler),
     @required TResult nextMovieWatchlistPageCalled(),
     @required TResult nextMovieWatchedPageCalled(),
   }) {
@@ -602,6 +660,7 @@ class _$_MovieWatchedUpdated implements _MovieWatchedUpdated {
     assert(removeMovieFromWatchlistPressed != null);
     assert(addMovieToWatchedPressed != null);
     assert(removeMovieFromWatchedPressed != null);
+    assert(updateMovieWatchedReviewPressed != null);
     assert(nextMovieWatchlistPageCalled != null);
     assert(nextMovieWatchedPageCalled != null);
     return movieWatchedUpdated(moviesWatched);
@@ -619,7 +678,9 @@ class _$_MovieWatchedUpdated implements _MovieWatchedUpdated {
     TResult removeMovieFromWatchlistPressed(MovieDetails movieDetails),
     TResult addMovieToWatchedPressed(
         MovieDetails movieDetails, String review, num rating, bool isSpoiler),
-    TResult removeMovieFromWatchedPressed(MovieDetails movieDetails),
+    TResult removeMovieFromWatchedPressed(String movieTitle, int movieId),
+    TResult updateMovieWatchedReviewPressed(String movieTitle, int movieId,
+        String review, num rating, bool isSpoiler),
     TResult nextMovieWatchlistPageCalled(),
     TResult nextMovieWatchedPageCalled(),
     @required TResult orElse(),
@@ -647,6 +708,9 @@ class _$_MovieWatchedUpdated implements _MovieWatchedUpdated {
         TResult removeMovieFromWatchedPressed(
             _RemoveMovieFromWatchedPressed value),
     @required
+        TResult updateMovieWatchedReviewPressed(
+            _UpdateMovieWatchedReviewPressed value),
+    @required
         TResult nextMovieWatchlistPageCalled(
             _NextMovieWatchlistPageCalled value),
     @required
@@ -659,6 +723,7 @@ class _$_MovieWatchedUpdated implements _MovieWatchedUpdated {
     assert(removeMovieFromWatchlistPressed != null);
     assert(addMovieToWatchedPressed != null);
     assert(removeMovieFromWatchedPressed != null);
+    assert(updateMovieWatchedReviewPressed != null);
     assert(nextMovieWatchlistPageCalled != null);
     assert(nextMovieWatchedPageCalled != null);
     return movieWatchedUpdated(this);
@@ -675,6 +740,8 @@ class _$_MovieWatchedUpdated implements _MovieWatchedUpdated {
         _RemoveMovieFromWatchlistPressed value),
     TResult addMovieToWatchedPressed(_AddMovieToWatchedPressed value),
     TResult removeMovieFromWatchedPressed(_RemoveMovieFromWatchedPressed value),
+    TResult updateMovieWatchedReviewPressed(
+        _UpdateMovieWatchedReviewPressed value),
     TResult nextMovieWatchlistPageCalled(_NextMovieWatchlistPageCalled value),
     TResult nextMovieWatchedPageCalled(_NextMovieWatchedPageCalled value),
     @required TResult orElse(),
@@ -778,7 +845,11 @@ class _$_AddMovieToWatchlistPressed implements _AddMovieToWatchlistPressed {
     @required
         TResult addMovieToWatchedPressed(MovieDetails movieDetails,
             String review, num rating, bool isSpoiler),
-    @required TResult removeMovieFromWatchedPressed(MovieDetails movieDetails),
+    @required
+        TResult removeMovieFromWatchedPressed(String movieTitle, int movieId),
+    @required
+        TResult updateMovieWatchedReviewPressed(String movieTitle, int movieId,
+            String review, num rating, bool isSpoiler),
     @required TResult nextMovieWatchlistPageCalled(),
     @required TResult nextMovieWatchedPageCalled(),
   }) {
@@ -789,6 +860,7 @@ class _$_AddMovieToWatchlistPressed implements _AddMovieToWatchlistPressed {
     assert(removeMovieFromWatchlistPressed != null);
     assert(addMovieToWatchedPressed != null);
     assert(removeMovieFromWatchedPressed != null);
+    assert(updateMovieWatchedReviewPressed != null);
     assert(nextMovieWatchlistPageCalled != null);
     assert(nextMovieWatchedPageCalled != null);
     return addMovieToWatchlistPressed(movieDetails);
@@ -806,7 +878,9 @@ class _$_AddMovieToWatchlistPressed implements _AddMovieToWatchlistPressed {
     TResult removeMovieFromWatchlistPressed(MovieDetails movieDetails),
     TResult addMovieToWatchedPressed(
         MovieDetails movieDetails, String review, num rating, bool isSpoiler),
-    TResult removeMovieFromWatchedPressed(MovieDetails movieDetails),
+    TResult removeMovieFromWatchedPressed(String movieTitle, int movieId),
+    TResult updateMovieWatchedReviewPressed(String movieTitle, int movieId,
+        String review, num rating, bool isSpoiler),
     TResult nextMovieWatchlistPageCalled(),
     TResult nextMovieWatchedPageCalled(),
     @required TResult orElse(),
@@ -834,6 +908,9 @@ class _$_AddMovieToWatchlistPressed implements _AddMovieToWatchlistPressed {
         TResult removeMovieFromWatchedPressed(
             _RemoveMovieFromWatchedPressed value),
     @required
+        TResult updateMovieWatchedReviewPressed(
+            _UpdateMovieWatchedReviewPressed value),
+    @required
         TResult nextMovieWatchlistPageCalled(
             _NextMovieWatchlistPageCalled value),
     @required
@@ -846,6 +923,7 @@ class _$_AddMovieToWatchlistPressed implements _AddMovieToWatchlistPressed {
     assert(removeMovieFromWatchlistPressed != null);
     assert(addMovieToWatchedPressed != null);
     assert(removeMovieFromWatchedPressed != null);
+    assert(updateMovieWatchedReviewPressed != null);
     assert(nextMovieWatchlistPageCalled != null);
     assert(nextMovieWatchedPageCalled != null);
     return addMovieToWatchlistPressed(this);
@@ -862,6 +940,8 @@ class _$_AddMovieToWatchlistPressed implements _AddMovieToWatchlistPressed {
         _RemoveMovieFromWatchlistPressed value),
     TResult addMovieToWatchedPressed(_AddMovieToWatchedPressed value),
     TResult removeMovieFromWatchedPressed(_RemoveMovieFromWatchedPressed value),
+    TResult updateMovieWatchedReviewPressed(
+        _UpdateMovieWatchedReviewPressed value),
     TResult nextMovieWatchlistPageCalled(_NextMovieWatchlistPageCalled value),
     TResult nextMovieWatchedPageCalled(_NextMovieWatchedPageCalled value),
     @required TResult orElse(),
@@ -968,7 +1048,11 @@ class _$_RemoveMovieFromWatchlistPressed
     @required
         TResult addMovieToWatchedPressed(MovieDetails movieDetails,
             String review, num rating, bool isSpoiler),
-    @required TResult removeMovieFromWatchedPressed(MovieDetails movieDetails),
+    @required
+        TResult removeMovieFromWatchedPressed(String movieTitle, int movieId),
+    @required
+        TResult updateMovieWatchedReviewPressed(String movieTitle, int movieId,
+            String review, num rating, bool isSpoiler),
     @required TResult nextMovieWatchlistPageCalled(),
     @required TResult nextMovieWatchedPageCalled(),
   }) {
@@ -979,6 +1063,7 @@ class _$_RemoveMovieFromWatchlistPressed
     assert(removeMovieFromWatchlistPressed != null);
     assert(addMovieToWatchedPressed != null);
     assert(removeMovieFromWatchedPressed != null);
+    assert(updateMovieWatchedReviewPressed != null);
     assert(nextMovieWatchlistPageCalled != null);
     assert(nextMovieWatchedPageCalled != null);
     return removeMovieFromWatchlistPressed(movieDetails);
@@ -996,7 +1081,9 @@ class _$_RemoveMovieFromWatchlistPressed
     TResult removeMovieFromWatchlistPressed(MovieDetails movieDetails),
     TResult addMovieToWatchedPressed(
         MovieDetails movieDetails, String review, num rating, bool isSpoiler),
-    TResult removeMovieFromWatchedPressed(MovieDetails movieDetails),
+    TResult removeMovieFromWatchedPressed(String movieTitle, int movieId),
+    TResult updateMovieWatchedReviewPressed(String movieTitle, int movieId,
+        String review, num rating, bool isSpoiler),
     TResult nextMovieWatchlistPageCalled(),
     TResult nextMovieWatchedPageCalled(),
     @required TResult orElse(),
@@ -1024,6 +1111,9 @@ class _$_RemoveMovieFromWatchlistPressed
         TResult removeMovieFromWatchedPressed(
             _RemoveMovieFromWatchedPressed value),
     @required
+        TResult updateMovieWatchedReviewPressed(
+            _UpdateMovieWatchedReviewPressed value),
+    @required
         TResult nextMovieWatchlistPageCalled(
             _NextMovieWatchlistPageCalled value),
     @required
@@ -1036,6 +1126,7 @@ class _$_RemoveMovieFromWatchlistPressed
     assert(removeMovieFromWatchlistPressed != null);
     assert(addMovieToWatchedPressed != null);
     assert(removeMovieFromWatchedPressed != null);
+    assert(updateMovieWatchedReviewPressed != null);
     assert(nextMovieWatchlistPageCalled != null);
     assert(nextMovieWatchedPageCalled != null);
     return removeMovieFromWatchlistPressed(this);
@@ -1052,6 +1143,8 @@ class _$_RemoveMovieFromWatchlistPressed
         _RemoveMovieFromWatchlistPressed value),
     TResult addMovieToWatchedPressed(_AddMovieToWatchedPressed value),
     TResult removeMovieFromWatchedPressed(_RemoveMovieFromWatchedPressed value),
+    TResult updateMovieWatchedReviewPressed(
+        _UpdateMovieWatchedReviewPressed value),
     TResult nextMovieWatchlistPageCalled(_NextMovieWatchlistPageCalled value),
     TResult nextMovieWatchedPageCalled(_NextMovieWatchedPageCalled value),
     @required TResult orElse(),
@@ -1183,7 +1276,11 @@ class _$_AddMovieToWatchedPressed implements _AddMovieToWatchedPressed {
     @required
         TResult addMovieToWatchedPressed(MovieDetails movieDetails,
             String review, num rating, bool isSpoiler),
-    @required TResult removeMovieFromWatchedPressed(MovieDetails movieDetails),
+    @required
+        TResult removeMovieFromWatchedPressed(String movieTitle, int movieId),
+    @required
+        TResult updateMovieWatchedReviewPressed(String movieTitle, int movieId,
+            String review, num rating, bool isSpoiler),
     @required TResult nextMovieWatchlistPageCalled(),
     @required TResult nextMovieWatchedPageCalled(),
   }) {
@@ -1194,6 +1291,7 @@ class _$_AddMovieToWatchedPressed implements _AddMovieToWatchedPressed {
     assert(removeMovieFromWatchlistPressed != null);
     assert(addMovieToWatchedPressed != null);
     assert(removeMovieFromWatchedPressed != null);
+    assert(updateMovieWatchedReviewPressed != null);
     assert(nextMovieWatchlistPageCalled != null);
     assert(nextMovieWatchedPageCalled != null);
     return addMovieToWatchedPressed(movieDetails, review, rating, isSpoiler);
@@ -1211,7 +1309,9 @@ class _$_AddMovieToWatchedPressed implements _AddMovieToWatchedPressed {
     TResult removeMovieFromWatchlistPressed(MovieDetails movieDetails),
     TResult addMovieToWatchedPressed(
         MovieDetails movieDetails, String review, num rating, bool isSpoiler),
-    TResult removeMovieFromWatchedPressed(MovieDetails movieDetails),
+    TResult removeMovieFromWatchedPressed(String movieTitle, int movieId),
+    TResult updateMovieWatchedReviewPressed(String movieTitle, int movieId,
+        String review, num rating, bool isSpoiler),
     TResult nextMovieWatchlistPageCalled(),
     TResult nextMovieWatchedPageCalled(),
     @required TResult orElse(),
@@ -1239,6 +1339,9 @@ class _$_AddMovieToWatchedPressed implements _AddMovieToWatchedPressed {
         TResult removeMovieFromWatchedPressed(
             _RemoveMovieFromWatchedPressed value),
     @required
+        TResult updateMovieWatchedReviewPressed(
+            _UpdateMovieWatchedReviewPressed value),
+    @required
         TResult nextMovieWatchlistPageCalled(
             _NextMovieWatchlistPageCalled value),
     @required
@@ -1251,6 +1354,7 @@ class _$_AddMovieToWatchedPressed implements _AddMovieToWatchedPressed {
     assert(removeMovieFromWatchlistPressed != null);
     assert(addMovieToWatchedPressed != null);
     assert(removeMovieFromWatchedPressed != null);
+    assert(updateMovieWatchedReviewPressed != null);
     assert(nextMovieWatchlistPageCalled != null);
     assert(nextMovieWatchedPageCalled != null);
     return addMovieToWatchedPressed(this);
@@ -1267,6 +1371,8 @@ class _$_AddMovieToWatchedPressed implements _AddMovieToWatchedPressed {
         _RemoveMovieFromWatchlistPressed value),
     TResult addMovieToWatchedPressed(_AddMovieToWatchedPressed value),
     TResult removeMovieFromWatchedPressed(_RemoveMovieFromWatchedPressed value),
+    TResult updateMovieWatchedReviewPressed(
+        _UpdateMovieWatchedReviewPressed value),
     TResult nextMovieWatchlistPageCalled(_NextMovieWatchlistPageCalled value),
     TResult nextMovieWatchedPageCalled(_NextMovieWatchedPageCalled value),
     @required TResult orElse(),
@@ -1297,7 +1403,7 @@ abstract class _$RemoveMovieFromWatchedPressedCopyWith<$Res> {
           _RemoveMovieFromWatchedPressed value,
           $Res Function(_RemoveMovieFromWatchedPressed) then) =
       __$RemoveMovieFromWatchedPressedCopyWithImpl<$Res>;
-  $Res call({MovieDetails movieDetails});
+  $Res call({String movieTitle, int movieId});
 }
 
 /// @nodoc
@@ -1315,12 +1421,13 @@ class __$RemoveMovieFromWatchedPressedCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object movieDetails = freezed,
+    Object movieTitle = freezed,
+    Object movieId = freezed,
   }) {
     return _then(_RemoveMovieFromWatchedPressed(
-      movieDetails == freezed
-          ? _value.movieDetails
-          : movieDetails as MovieDetails,
+      movieTitle:
+          movieTitle == freezed ? _value.movieTitle : movieTitle as String,
+      movieId: movieId == freezed ? _value.movieId : movieId as int,
     ));
   }
 }
@@ -1328,29 +1435,34 @@ class __$RemoveMovieFromWatchedPressedCopyWithImpl<$Res>
 /// @nodoc
 class _$_RemoveMovieFromWatchedPressed
     implements _RemoveMovieFromWatchedPressed {
-  const _$_RemoveMovieFromWatchedPressed(this.movieDetails)
-      : assert(movieDetails != null);
+  const _$_RemoveMovieFromWatchedPressed({this.movieTitle, this.movieId});
 
   @override
-  final MovieDetails movieDetails;
+  final String movieTitle;
+  @override
+  final int movieId;
 
   @override
   String toString() {
-    return 'MovieListsUserProfileEvent.removeMovieFromWatchedPressed(movieDetails: $movieDetails)';
+    return 'MovieListsUserProfileEvent.removeMovieFromWatchedPressed(movieTitle: $movieTitle, movieId: $movieId)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is _RemoveMovieFromWatchedPressed &&
-            (identical(other.movieDetails, movieDetails) ||
+            (identical(other.movieTitle, movieTitle) ||
                 const DeepCollectionEquality()
-                    .equals(other.movieDetails, movieDetails)));
+                    .equals(other.movieTitle, movieTitle)) &&
+            (identical(other.movieId, movieId) ||
+                const DeepCollectionEquality().equals(other.movieId, movieId)));
   }
 
   @override
   int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(movieDetails);
+      runtimeType.hashCode ^
+      const DeepCollectionEquality().hash(movieTitle) ^
+      const DeepCollectionEquality().hash(movieId);
 
   @JsonKey(ignore: true)
   @override
@@ -1374,7 +1486,11 @@ class _$_RemoveMovieFromWatchedPressed
     @required
         TResult addMovieToWatchedPressed(MovieDetails movieDetails,
             String review, num rating, bool isSpoiler),
-    @required TResult removeMovieFromWatchedPressed(MovieDetails movieDetails),
+    @required
+        TResult removeMovieFromWatchedPressed(String movieTitle, int movieId),
+    @required
+        TResult updateMovieWatchedReviewPressed(String movieTitle, int movieId,
+            String review, num rating, bool isSpoiler),
     @required TResult nextMovieWatchlistPageCalled(),
     @required TResult nextMovieWatchedPageCalled(),
   }) {
@@ -1385,9 +1501,10 @@ class _$_RemoveMovieFromWatchedPressed
     assert(removeMovieFromWatchlistPressed != null);
     assert(addMovieToWatchedPressed != null);
     assert(removeMovieFromWatchedPressed != null);
+    assert(updateMovieWatchedReviewPressed != null);
     assert(nextMovieWatchlistPageCalled != null);
     assert(nextMovieWatchedPageCalled != null);
-    return removeMovieFromWatchedPressed(movieDetails);
+    return removeMovieFromWatchedPressed(movieTitle, movieId);
   }
 
   @override
@@ -1402,14 +1519,16 @@ class _$_RemoveMovieFromWatchedPressed
     TResult removeMovieFromWatchlistPressed(MovieDetails movieDetails),
     TResult addMovieToWatchedPressed(
         MovieDetails movieDetails, String review, num rating, bool isSpoiler),
-    TResult removeMovieFromWatchedPressed(MovieDetails movieDetails),
+    TResult removeMovieFromWatchedPressed(String movieTitle, int movieId),
+    TResult updateMovieWatchedReviewPressed(String movieTitle, int movieId,
+        String review, num rating, bool isSpoiler),
     TResult nextMovieWatchlistPageCalled(),
     TResult nextMovieWatchedPageCalled(),
     @required TResult orElse(),
   }) {
     assert(orElse != null);
     if (removeMovieFromWatchedPressed != null) {
-      return removeMovieFromWatchedPressed(movieDetails);
+      return removeMovieFromWatchedPressed(movieTitle, movieId);
     }
     return orElse();
   }
@@ -1430,6 +1549,9 @@ class _$_RemoveMovieFromWatchedPressed
         TResult removeMovieFromWatchedPressed(
             _RemoveMovieFromWatchedPressed value),
     @required
+        TResult updateMovieWatchedReviewPressed(
+            _UpdateMovieWatchedReviewPressed value),
+    @required
         TResult nextMovieWatchlistPageCalled(
             _NextMovieWatchlistPageCalled value),
     @required
@@ -1442,6 +1564,7 @@ class _$_RemoveMovieFromWatchedPressed
     assert(removeMovieFromWatchlistPressed != null);
     assert(addMovieToWatchedPressed != null);
     assert(removeMovieFromWatchedPressed != null);
+    assert(updateMovieWatchedReviewPressed != null);
     assert(nextMovieWatchlistPageCalled != null);
     assert(nextMovieWatchedPageCalled != null);
     return removeMovieFromWatchedPressed(this);
@@ -1458,6 +1581,8 @@ class _$_RemoveMovieFromWatchedPressed
         _RemoveMovieFromWatchlistPressed value),
     TResult addMovieToWatchedPressed(_AddMovieToWatchedPressed value),
     TResult removeMovieFromWatchedPressed(_RemoveMovieFromWatchedPressed value),
+    TResult updateMovieWatchedReviewPressed(
+        _UpdateMovieWatchedReviewPressed value),
     TResult nextMovieWatchlistPageCalled(_NextMovieWatchlistPageCalled value),
     TResult nextMovieWatchedPageCalled(_NextMovieWatchedPageCalled value),
     @required TResult orElse(),
@@ -1472,12 +1597,265 @@ class _$_RemoveMovieFromWatchedPressed
 
 abstract class _RemoveMovieFromWatchedPressed
     implements MovieListsUserProfileEvent {
-  const factory _RemoveMovieFromWatchedPressed(MovieDetails movieDetails) =
-      _$_RemoveMovieFromWatchedPressed;
+  const factory _RemoveMovieFromWatchedPressed(
+      {String movieTitle, int movieId}) = _$_RemoveMovieFromWatchedPressed;
 
-  MovieDetails get movieDetails;
+  String get movieTitle;
+  int get movieId;
   @JsonKey(ignore: true)
   _$RemoveMovieFromWatchedPressedCopyWith<_RemoveMovieFromWatchedPressed>
+      get copyWith;
+}
+
+/// @nodoc
+abstract class _$UpdateMovieWatchedReviewPressedCopyWith<$Res> {
+  factory _$UpdateMovieWatchedReviewPressedCopyWith(
+          _UpdateMovieWatchedReviewPressed value,
+          $Res Function(_UpdateMovieWatchedReviewPressed) then) =
+      __$UpdateMovieWatchedReviewPressedCopyWithImpl<$Res>;
+  $Res call(
+      {String movieTitle,
+      int movieId,
+      String review,
+      num rating,
+      bool isSpoiler});
+}
+
+/// @nodoc
+class __$UpdateMovieWatchedReviewPressedCopyWithImpl<$Res>
+    extends _$MovieListsUserProfileEventCopyWithImpl<$Res>
+    implements _$UpdateMovieWatchedReviewPressedCopyWith<$Res> {
+  __$UpdateMovieWatchedReviewPressedCopyWithImpl(
+      _UpdateMovieWatchedReviewPressed _value,
+      $Res Function(_UpdateMovieWatchedReviewPressed) _then)
+      : super(_value, (v) => _then(v as _UpdateMovieWatchedReviewPressed));
+
+  @override
+  _UpdateMovieWatchedReviewPressed get _value =>
+      super._value as _UpdateMovieWatchedReviewPressed;
+
+  @override
+  $Res call({
+    Object movieTitle = freezed,
+    Object movieId = freezed,
+    Object review = freezed,
+    Object rating = freezed,
+    Object isSpoiler = freezed,
+  }) {
+    return _then(_UpdateMovieWatchedReviewPressed(
+      movieTitle:
+          movieTitle == freezed ? _value.movieTitle : movieTitle as String,
+      movieId: movieId == freezed ? _value.movieId : movieId as int,
+      review: review == freezed ? _value.review : review as String,
+      rating: rating == freezed ? _value.rating : rating as num,
+      isSpoiler: isSpoiler == freezed ? _value.isSpoiler : isSpoiler as bool,
+    ));
+  }
+}
+
+/// @nodoc
+class _$_UpdateMovieWatchedReviewPressed
+    implements _UpdateMovieWatchedReviewPressed {
+  const _$_UpdateMovieWatchedReviewPressed(
+      {this.movieTitle,
+      this.movieId,
+      this.review,
+      this.rating,
+      this.isSpoiler});
+
+  @override
+  final String movieTitle;
+  @override
+  final int movieId;
+  @override
+  final String review;
+  @override
+  final num rating;
+  @override
+  final bool isSpoiler;
+
+  @override
+  String toString() {
+    return 'MovieListsUserProfileEvent.updateMovieWatchedReviewPressed(movieTitle: $movieTitle, movieId: $movieId, review: $review, rating: $rating, isSpoiler: $isSpoiler)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is _UpdateMovieWatchedReviewPressed &&
+            (identical(other.movieTitle, movieTitle) ||
+                const DeepCollectionEquality()
+                    .equals(other.movieTitle, movieTitle)) &&
+            (identical(other.movieId, movieId) ||
+                const DeepCollectionEquality()
+                    .equals(other.movieId, movieId)) &&
+            (identical(other.review, review) ||
+                const DeepCollectionEquality().equals(other.review, review)) &&
+            (identical(other.rating, rating) ||
+                const DeepCollectionEquality().equals(other.rating, rating)) &&
+            (identical(other.isSpoiler, isSpoiler) ||
+                const DeepCollectionEquality()
+                    .equals(other.isSpoiler, isSpoiler)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^
+      const DeepCollectionEquality().hash(movieTitle) ^
+      const DeepCollectionEquality().hash(movieId) ^
+      const DeepCollectionEquality().hash(review) ^
+      const DeepCollectionEquality().hash(rating) ^
+      const DeepCollectionEquality().hash(isSpoiler);
+
+  @JsonKey(ignore: true)
+  @override
+  _$UpdateMovieWatchedReviewPressedCopyWith<_UpdateMovieWatchedReviewPressed>
+      get copyWith => __$UpdateMovieWatchedReviewPressedCopyWithImpl<
+          _UpdateMovieWatchedReviewPressed>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object>({
+    @required TResult loadMovieToListInitial(),
+    @required
+        TResult movieWatchlistUpdated(
+            List<FirestoreMovieWatchlistDetails> moviesWatchlist),
+    @required
+        TResult movieWatchedUpdated(
+            List<FirestoreMovieWatchedDetails> moviesWatched),
+    @required TResult addMovieToWatchlistPressed(MovieDetails movieDetails),
+    @required
+        TResult removeMovieFromWatchlistPressed(MovieDetails movieDetails),
+    @required
+        TResult addMovieToWatchedPressed(MovieDetails movieDetails,
+            String review, num rating, bool isSpoiler),
+    @required
+        TResult removeMovieFromWatchedPressed(String movieTitle, int movieId),
+    @required
+        TResult updateMovieWatchedReviewPressed(String movieTitle, int movieId,
+            String review, num rating, bool isSpoiler),
+    @required TResult nextMovieWatchlistPageCalled(),
+    @required TResult nextMovieWatchedPageCalled(),
+  }) {
+    assert(loadMovieToListInitial != null);
+    assert(movieWatchlistUpdated != null);
+    assert(movieWatchedUpdated != null);
+    assert(addMovieToWatchlistPressed != null);
+    assert(removeMovieFromWatchlistPressed != null);
+    assert(addMovieToWatchedPressed != null);
+    assert(removeMovieFromWatchedPressed != null);
+    assert(updateMovieWatchedReviewPressed != null);
+    assert(nextMovieWatchlistPageCalled != null);
+    assert(nextMovieWatchedPageCalled != null);
+    return updateMovieWatchedReviewPressed(
+        movieTitle, movieId, review, rating, isSpoiler);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object>({
+    TResult loadMovieToListInitial(),
+    TResult movieWatchlistUpdated(
+        List<FirestoreMovieWatchlistDetails> moviesWatchlist),
+    TResult movieWatchedUpdated(
+        List<FirestoreMovieWatchedDetails> moviesWatched),
+    TResult addMovieToWatchlistPressed(MovieDetails movieDetails),
+    TResult removeMovieFromWatchlistPressed(MovieDetails movieDetails),
+    TResult addMovieToWatchedPressed(
+        MovieDetails movieDetails, String review, num rating, bool isSpoiler),
+    TResult removeMovieFromWatchedPressed(String movieTitle, int movieId),
+    TResult updateMovieWatchedReviewPressed(String movieTitle, int movieId,
+        String review, num rating, bool isSpoiler),
+    TResult nextMovieWatchlistPageCalled(),
+    TResult nextMovieWatchedPageCalled(),
+    @required TResult orElse(),
+  }) {
+    assert(orElse != null);
+    if (updateMovieWatchedReviewPressed != null) {
+      return updateMovieWatchedReviewPressed(
+          movieTitle, movieId, review, rating, isSpoiler);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object>({
+    @required TResult loadMovieToListInitial(_LoadMovieToListInitial value),
+    @required TResult movieWatchlistUpdated(_MovieWatchlistUpdated value),
+    @required TResult movieWatchedUpdated(_MovieWatchedUpdated value),
+    @required
+        TResult addMovieToWatchlistPressed(_AddMovieToWatchlistPressed value),
+    @required
+        TResult removeMovieFromWatchlistPressed(
+            _RemoveMovieFromWatchlistPressed value),
+    @required TResult addMovieToWatchedPressed(_AddMovieToWatchedPressed value),
+    @required
+        TResult removeMovieFromWatchedPressed(
+            _RemoveMovieFromWatchedPressed value),
+    @required
+        TResult updateMovieWatchedReviewPressed(
+            _UpdateMovieWatchedReviewPressed value),
+    @required
+        TResult nextMovieWatchlistPageCalled(
+            _NextMovieWatchlistPageCalled value),
+    @required
+        TResult nextMovieWatchedPageCalled(_NextMovieWatchedPageCalled value),
+  }) {
+    assert(loadMovieToListInitial != null);
+    assert(movieWatchlistUpdated != null);
+    assert(movieWatchedUpdated != null);
+    assert(addMovieToWatchlistPressed != null);
+    assert(removeMovieFromWatchlistPressed != null);
+    assert(addMovieToWatchedPressed != null);
+    assert(removeMovieFromWatchedPressed != null);
+    assert(updateMovieWatchedReviewPressed != null);
+    assert(nextMovieWatchlistPageCalled != null);
+    assert(nextMovieWatchedPageCalled != null);
+    return updateMovieWatchedReviewPressed(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object>({
+    TResult loadMovieToListInitial(_LoadMovieToListInitial value),
+    TResult movieWatchlistUpdated(_MovieWatchlistUpdated value),
+    TResult movieWatchedUpdated(_MovieWatchedUpdated value),
+    TResult addMovieToWatchlistPressed(_AddMovieToWatchlistPressed value),
+    TResult removeMovieFromWatchlistPressed(
+        _RemoveMovieFromWatchlistPressed value),
+    TResult addMovieToWatchedPressed(_AddMovieToWatchedPressed value),
+    TResult removeMovieFromWatchedPressed(_RemoveMovieFromWatchedPressed value),
+    TResult updateMovieWatchedReviewPressed(
+        _UpdateMovieWatchedReviewPressed value),
+    TResult nextMovieWatchlistPageCalled(_NextMovieWatchlistPageCalled value),
+    TResult nextMovieWatchedPageCalled(_NextMovieWatchedPageCalled value),
+    @required TResult orElse(),
+  }) {
+    assert(orElse != null);
+    if (updateMovieWatchedReviewPressed != null) {
+      return updateMovieWatchedReviewPressed(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _UpdateMovieWatchedReviewPressed
+    implements MovieListsUserProfileEvent {
+  const factory _UpdateMovieWatchedReviewPressed(
+      {String movieTitle,
+      int movieId,
+      String review,
+      num rating,
+      bool isSpoiler}) = _$_UpdateMovieWatchedReviewPressed;
+
+  String get movieTitle;
+  int get movieId;
+  String get review;
+  num get rating;
+  bool get isSpoiler;
+  @JsonKey(ignore: true)
+  _$UpdateMovieWatchedReviewPressedCopyWith<_UpdateMovieWatchedReviewPressed>
       get copyWith;
 }
 
@@ -1536,7 +1914,11 @@ class _$_NextMovieWatchlistPageCalled implements _NextMovieWatchlistPageCalled {
     @required
         TResult addMovieToWatchedPressed(MovieDetails movieDetails,
             String review, num rating, bool isSpoiler),
-    @required TResult removeMovieFromWatchedPressed(MovieDetails movieDetails),
+    @required
+        TResult removeMovieFromWatchedPressed(String movieTitle, int movieId),
+    @required
+        TResult updateMovieWatchedReviewPressed(String movieTitle, int movieId,
+            String review, num rating, bool isSpoiler),
     @required TResult nextMovieWatchlistPageCalled(),
     @required TResult nextMovieWatchedPageCalled(),
   }) {
@@ -1547,6 +1929,7 @@ class _$_NextMovieWatchlistPageCalled implements _NextMovieWatchlistPageCalled {
     assert(removeMovieFromWatchlistPressed != null);
     assert(addMovieToWatchedPressed != null);
     assert(removeMovieFromWatchedPressed != null);
+    assert(updateMovieWatchedReviewPressed != null);
     assert(nextMovieWatchlistPageCalled != null);
     assert(nextMovieWatchedPageCalled != null);
     return nextMovieWatchlistPageCalled();
@@ -1564,7 +1947,9 @@ class _$_NextMovieWatchlistPageCalled implements _NextMovieWatchlistPageCalled {
     TResult removeMovieFromWatchlistPressed(MovieDetails movieDetails),
     TResult addMovieToWatchedPressed(
         MovieDetails movieDetails, String review, num rating, bool isSpoiler),
-    TResult removeMovieFromWatchedPressed(MovieDetails movieDetails),
+    TResult removeMovieFromWatchedPressed(String movieTitle, int movieId),
+    TResult updateMovieWatchedReviewPressed(String movieTitle, int movieId,
+        String review, num rating, bool isSpoiler),
     TResult nextMovieWatchlistPageCalled(),
     TResult nextMovieWatchedPageCalled(),
     @required TResult orElse(),
@@ -1592,6 +1977,9 @@ class _$_NextMovieWatchlistPageCalled implements _NextMovieWatchlistPageCalled {
         TResult removeMovieFromWatchedPressed(
             _RemoveMovieFromWatchedPressed value),
     @required
+        TResult updateMovieWatchedReviewPressed(
+            _UpdateMovieWatchedReviewPressed value),
+    @required
         TResult nextMovieWatchlistPageCalled(
             _NextMovieWatchlistPageCalled value),
     @required
@@ -1604,6 +1992,7 @@ class _$_NextMovieWatchlistPageCalled implements _NextMovieWatchlistPageCalled {
     assert(removeMovieFromWatchlistPressed != null);
     assert(addMovieToWatchedPressed != null);
     assert(removeMovieFromWatchedPressed != null);
+    assert(updateMovieWatchedReviewPressed != null);
     assert(nextMovieWatchlistPageCalled != null);
     assert(nextMovieWatchedPageCalled != null);
     return nextMovieWatchlistPageCalled(this);
@@ -1620,6 +2009,8 @@ class _$_NextMovieWatchlistPageCalled implements _NextMovieWatchlistPageCalled {
         _RemoveMovieFromWatchlistPressed value),
     TResult addMovieToWatchedPressed(_AddMovieToWatchedPressed value),
     TResult removeMovieFromWatchedPressed(_RemoveMovieFromWatchedPressed value),
+    TResult updateMovieWatchedReviewPressed(
+        _UpdateMovieWatchedReviewPressed value),
     TResult nextMovieWatchlistPageCalled(_NextMovieWatchlistPageCalled value),
     TResult nextMovieWatchedPageCalled(_NextMovieWatchedPageCalled value),
     @required TResult orElse(),
@@ -1692,7 +2083,11 @@ class _$_NextMovieWatchedPageCalled implements _NextMovieWatchedPageCalled {
     @required
         TResult addMovieToWatchedPressed(MovieDetails movieDetails,
             String review, num rating, bool isSpoiler),
-    @required TResult removeMovieFromWatchedPressed(MovieDetails movieDetails),
+    @required
+        TResult removeMovieFromWatchedPressed(String movieTitle, int movieId),
+    @required
+        TResult updateMovieWatchedReviewPressed(String movieTitle, int movieId,
+            String review, num rating, bool isSpoiler),
     @required TResult nextMovieWatchlistPageCalled(),
     @required TResult nextMovieWatchedPageCalled(),
   }) {
@@ -1703,6 +2098,7 @@ class _$_NextMovieWatchedPageCalled implements _NextMovieWatchedPageCalled {
     assert(removeMovieFromWatchlistPressed != null);
     assert(addMovieToWatchedPressed != null);
     assert(removeMovieFromWatchedPressed != null);
+    assert(updateMovieWatchedReviewPressed != null);
     assert(nextMovieWatchlistPageCalled != null);
     assert(nextMovieWatchedPageCalled != null);
     return nextMovieWatchedPageCalled();
@@ -1720,7 +2116,9 @@ class _$_NextMovieWatchedPageCalled implements _NextMovieWatchedPageCalled {
     TResult removeMovieFromWatchlistPressed(MovieDetails movieDetails),
     TResult addMovieToWatchedPressed(
         MovieDetails movieDetails, String review, num rating, bool isSpoiler),
-    TResult removeMovieFromWatchedPressed(MovieDetails movieDetails),
+    TResult removeMovieFromWatchedPressed(String movieTitle, int movieId),
+    TResult updateMovieWatchedReviewPressed(String movieTitle, int movieId,
+        String review, num rating, bool isSpoiler),
     TResult nextMovieWatchlistPageCalled(),
     TResult nextMovieWatchedPageCalled(),
     @required TResult orElse(),
@@ -1748,6 +2146,9 @@ class _$_NextMovieWatchedPageCalled implements _NextMovieWatchedPageCalled {
         TResult removeMovieFromWatchedPressed(
             _RemoveMovieFromWatchedPressed value),
     @required
+        TResult updateMovieWatchedReviewPressed(
+            _UpdateMovieWatchedReviewPressed value),
+    @required
         TResult nextMovieWatchlistPageCalled(
             _NextMovieWatchlistPageCalled value),
     @required
@@ -1760,6 +2161,7 @@ class _$_NextMovieWatchedPageCalled implements _NextMovieWatchedPageCalled {
     assert(removeMovieFromWatchlistPressed != null);
     assert(addMovieToWatchedPressed != null);
     assert(removeMovieFromWatchedPressed != null);
+    assert(updateMovieWatchedReviewPressed != null);
     assert(nextMovieWatchlistPageCalled != null);
     assert(nextMovieWatchedPageCalled != null);
     return nextMovieWatchedPageCalled(this);
@@ -1776,6 +2178,8 @@ class _$_NextMovieWatchedPageCalled implements _NextMovieWatchedPageCalled {
         _RemoveMovieFromWatchlistPressed value),
     TResult addMovieToWatchedPressed(_AddMovieToWatchedPressed value),
     TResult removeMovieFromWatchedPressed(_RemoveMovieFromWatchedPressed value),
+    TResult updateMovieWatchedReviewPressed(
+        _UpdateMovieWatchedReviewPressed value),
     TResult nextMovieWatchlistPageCalled(_NextMovieWatchlistPageCalled value),
     TResult nextMovieWatchedPageCalled(_NextMovieWatchedPageCalled value),
     @required TResult orElse(),

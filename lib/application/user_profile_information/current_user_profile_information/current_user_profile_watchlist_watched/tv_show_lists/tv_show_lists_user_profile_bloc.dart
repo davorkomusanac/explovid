@@ -112,14 +112,47 @@ class TvShowListsUserProfileBloc extends Bloc<TvShowListsUserProfileEvent, TvSho
           isSubmittingWatched: true,
         );
         int indexNumberOfTvShow;
-        String returnVal = await _userProfileRepository.removeTvShowFromWatched(e.tvShowDetails);
-        if (returnVal.isEmpty) {
-          for (int i = 0; i < state.tvShowWatched.length; i++) {
-            if (state.tvShowWatched[i].name == e.tvShowDetails.name && state.tvShowWatched[i].id == e.tvShowDetails.id)
-              indexNumberOfTvShow = i;
+        String returnVal = "";
+        //Changed order of calling, since for watched the postUid is needed for removing.
+        for (int i = 0; i < state.tvShowWatched.length; i++) {
+          if (state.tvShowWatched[i].name == e.tvShowTitle && state.tvShowWatched[i].id == e.tvShowId) indexNumberOfTvShow = i;
+        }
+        if (indexNumberOfTvShow != null) {
+          returnVal = await _userProfileRepository.removeTvShowFromWatched(
+            tvShowTitle: e.tvShowTitle,
+            tvShowId: e.tvShowId,
+            postUid: state.tvShowWatched[indexNumberOfTvShow].postUid,
+          );
+          if (returnVal.isEmpty) {
+            state.tvShowWatched.removeAt(indexNumberOfTvShow);
+            state.tvShowWatchedArrayTitlesOnly.remove(e.tvShowTitle + "_" + e.tvShowId.toString());
           }
-          if (indexNumberOfTvShow != null) state.tvShowWatched.removeAt(indexNumberOfTvShow);
-          state.tvShowWatchedArrayTitlesOnly.remove(e.tvShowDetails.name + "_" + e.tvShowDetails.id.toString());
+        }
+        yield state.copyWith(
+          nextPage: state.nextPage + 1,
+          isSubmittingWatched: false,
+          errorMessage: returnVal,
+        );
+      },
+      updateTvShowWatchedReviewPressed: (e) async* {
+        yield state.copyWith(
+          isSubmittingWatched: true,
+        );
+        int indexNumberOfTvShow;
+        String returnVal = "";
+        //Changed order of calling, since for watched the postUid is needed for removing.
+        for (int i = 0; i < state.tvShowWatched.length; i++) {
+          if (state.tvShowWatched[i].name == e.tvShowTitle && state.tvShowWatched[i].id == e.tvShowId) indexNumberOfTvShow = i;
+        }
+        if (indexNumberOfTvShow != null) {
+          returnVal = await _userProfileRepository.updateTvShowWatchedReview(
+            tvShowTitle: e.tvShowTitle,
+            tvShowId: e.tvShowId,
+            postUid: state.tvShowWatched[indexNumberOfTvShow].postUid,
+            review: e.review,
+            rating: e.rating,
+            isSpoiler: e.isSpoiler,
+          );
         }
         yield state.copyWith(
           nextPage: state.nextPage + 1,
