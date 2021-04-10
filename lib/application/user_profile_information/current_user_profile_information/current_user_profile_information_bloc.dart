@@ -28,6 +28,7 @@ class CurrentUserProfileInformationBloc extends Bloc<CurrentUserProfileInformati
   ) async* {
     yield* event.map(
       loadCurrentUserProfilePressed: (e) async* {
+        //TODO put isSearching to True to update
         _streamSubscription?.cancel();
         _streamSubscription = _userProfileRepository.getCurrentUserProfileInformation().listen(
               (ourUser) => add(CurrentUserProfileInformationEvent.currentUserProfileLoaded(ourUser)),

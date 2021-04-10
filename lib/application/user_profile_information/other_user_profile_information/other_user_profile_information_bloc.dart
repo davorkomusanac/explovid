@@ -29,6 +29,7 @@ class OtherUserProfileInformationBloc extends Bloc<OtherUserProfileInformationEv
           isSearching: false,
           ourUser: user,
         );
+        //TODO Add here followers and following Number to update UI when user follows someone
       },
     );
   }
