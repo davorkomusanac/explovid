@@ -674,7 +674,10 @@ class _MovieRemoveReviewDialogState extends State<MovieRemoveReviewDialog> {
         TextButton(
           onPressed: () {
             context.read<MovieListsUserProfileBloc>().add(
-                  MovieListsUserProfileEvent.removeMovieFromWatchedPressed(widget.movieDetails),
+                  MovieListsUserProfileEvent.removeMovieFromWatchedPressed(
+                    movieTitle: widget.movieDetails.title,
+                    movieId: widget.movieDetails.id,
+                  ),
                 );
             Navigator.of(context, rootNavigator: true).pop();
           },

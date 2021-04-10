@@ -669,7 +669,10 @@ class _TvShowRemoveReviewDialogState extends State<TvShowRemoveReviewDialog> {
         TextButton(
           onPressed: () {
             context.read<TvShowListsUserProfileBloc>().add(
-                  TvShowListsUserProfileEvent.removeTvShowFromWatchedPressed(widget.tvShowDetails),
+                  TvShowListsUserProfileEvent.removeTvShowFromWatchedPressed(
+                    tvShowTitle: widget.tvShowDetails.name,
+                    tvShowId: widget.tvShowDetails.id,
+                  ),
                 );
             Navigator.of(context, rootNavigator: true).pop();
           },

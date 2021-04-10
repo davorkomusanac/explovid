@@ -14,7 +14,18 @@ class OtherUserProfileRepository {
       var doc = await _users.doc(userUid).get();
       user = OurUser.fromSnapshot(doc);
     } catch (e) {
-      user = OurUser();
+      user = OurUser(
+        uid: '',
+        email: '',
+        fullName: '',
+        username: '',
+        profilePhotoUrl: '',
+        bio: '',
+        followers: 0,
+        following: 0,
+        watchedLength: 0,
+        watchlistLength: 0,
+      );
       print(e.toString());
     }
     return user;

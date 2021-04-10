@@ -3,11 +3,10 @@ import 'package:explovid/application/auth/sign_in_form/delete_account/delete_acc
 import 'package:explovid/application/auth/sign_in_form/edit_profile/edit_profile_bloc.dart';
 import 'package:explovid/application/auth/sign_in_form/sign_in_form_bloc.dart';
 import 'package:explovid/application/feedback/feedback_bloc.dart';
-import 'package:explovid/application/search/actor_search/actor_details/actor_details_bloc.dart';
 import 'package:explovid/application/search/actor_search/actor_search_bloc.dart';
 import 'package:explovid/application/search/movie_search/movie_search_bloc.dart';
-import 'package:explovid/application/search/tv_show_search/tv_show_details/tv_show_details_bloc.dart';
 import 'package:explovid/application/search/tv_show_search/tv_show_search_bloc.dart';
+import 'package:explovid/application/search/user_search/user_search_bloc.dart';
 import 'package:explovid/application/user_profile_information/current_user_profile_information/current_user_profile_information_bloc.dart';
 import 'package:explovid/application/user_profile_information/current_user_profile_information/current_user_profile_watchlist_watched/movie_lists/movie_lists_user_profile_bloc.dart';
 import 'package:explovid/application/user_profile_information/current_user_profile_information/current_user_profile_watchlist_watched/tv_show_lists/tv_show_lists_user_profile_bloc.dart';
@@ -17,6 +16,7 @@ import 'package:explovid/data/search_db/movie_db/movie_repository.dart';
 import 'package:explovid/data/search_db/tv_show_db/tv_show_repository.dart';
 import 'package:explovid/data/user_profile_db/current_user_profile_db/user_feedback_repository.dart';
 import 'package:explovid/data/user_profile_db/current_user_profile_db/user_profile_repository.dart';
+import 'package:explovid/data/user_profile_db/user_actions_db/user_actions_repository.dart';
 import 'package:explovid/presentation/pages/splash_page/splash_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -42,11 +42,12 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   AuthRepository _authRepository;
+  UserProfileRepository _userProfileRepository;
+  UserFeedbackRepository _userFeedbackRepository;
   MovieRepository _movieRepository;
   TvShowRepository _tvShowRepository;
   ActorRepository _actorRepository;
-  UserProfileRepository _userProfileRepository;
-  UserFeedbackRepository _userFeedbackRepository;
+  UserActionsRepository _userActionsRepository;
   http.Client client;
 
   @override
@@ -54,11 +55,12 @@ class _MyAppState extends State<MyApp> {
     super.initState();
     client = http.Client();
     _authRepository = AuthRepository();
+    _userProfileRepository = UserProfileRepository();
+    _userFeedbackRepository = UserFeedbackRepository();
     _movieRepository = MovieRepository(client);
     _tvShowRepository = TvShowRepository(client);
     _actorRepository = ActorRepository(client);
-    _userProfileRepository = UserProfileRepository();
-    _userFeedbackRepository = UserFeedbackRepository();
+    _userActionsRepository = UserActionsRepository();
   }
 
   @override
@@ -75,23 +77,15 @@ class _MyAppState extends State<MyApp> {
             _authRepository,
           ),
         ),
+
+        ///Search
         BlocProvider(
           create: (context) => MovieSearchBloc(
             _movieRepository,
           ),
         ),
-        // BlocProvider(
-        //   create: (context) => MovieDetailsBloc(
-        //     _movieRepository,
-        //   ),
-        // ),
         BlocProvider(
           create: (context) => TvShowSearchBloc(
-            _tvShowRepository,
-          ),
-        ),
-        BlocProvider(
-          create: (context) => TvShowDetailsBloc(
             _tvShowRepository,
           ),
         ),
@@ -101,10 +95,12 @@ class _MyAppState extends State<MyApp> {
           ),
         ),
         BlocProvider(
-          create: (context) => ActorDetailsBloc(
-            _actorRepository,
+          create: (context) => UserSearchBloc(
+            _userActionsRepository,
           ),
         ),
+
+        ///Current user info blocs
         BlocProvider(
             create: (context) => MovieListsUserProfileBloc(
                   _userProfileRepository,
