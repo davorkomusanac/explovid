@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 String convertToReleaseYear(String text) {
@@ -86,7 +87,7 @@ String convertBirthDeathDate(String text) {
         month = "May";
         break;
       case (6):
-        month = "June";
+        month = "Jun";
         break;
       case (7):
         month = "Jul";
@@ -124,6 +125,119 @@ String convertRuntime(int runtimeInMin) {
   } else {
     return minutes.toString() + "m";
   }
+}
+
+String convertPostCreationDate(Timestamp timestamp) {
+  DateTime currentTime = Timestamp.now().toDate();
+  DateTime postCreationTime = timestamp.toDate();
+  String month = convertMonth(postCreationTime.month);
+  var days = currentTime.difference(postCreationTime).inDays;
+  var hours = currentTime.difference(postCreationTime).inHours;
+  var minutes = currentTime.difference(postCreationTime).inMinutes;
+
+  if (postCreationTime.year < currentTime.year) {
+    return month + " " + postCreationTime.day.toString() + ", " + postCreationTime.year.toString();
+  } else if (days > 7) {
+    return month + " " + postCreationTime.day.toString();
+  } else if (days > 1) {
+    return days.toString() + " days ago";
+  } else if (hours > 23) {
+    return "A day ago";
+  } else if (minutes > 120) {
+    return hours.toString() + " hours ago";
+  } else if (minutes > 60) {
+    return "An hour ago";
+  } else if (minutes > 1) {
+    return minutes.toString() + " minutes ago";
+  } else {
+    return "Just now";
+  }
+}
+
+String convertCommentCreationDate(Timestamp timestamp) {
+  DateTime currentTime = Timestamp.now().toDate();
+  DateTime postCreationTime = timestamp.toDate();
+  String month = convertMonth(postCreationTime.month);
+  var days = currentTime.difference(postCreationTime).inDays;
+  var hours = currentTime.difference(postCreationTime).inHours;
+  var minutes = currentTime.difference(postCreationTime).inMinutes;
+
+  if (postCreationTime.year < currentTime.year) {
+    return month + " " + postCreationTime.day.toString() + ", " + postCreationTime.year.toString();
+  } else if (days > 7) {
+    return month + " " + postCreationTime.day.toString();
+  } else if (days > 1) {
+    return days.toString() + "d";
+  } else if (hours > 23) {
+    return "1d";
+  } else if (minutes > 120) {
+    return hours.toString() + "h";
+  } else if (minutes > 60) {
+    return "1h";
+  } else if (minutes > 1) {
+    return minutes.toString() + "m";
+  } else {
+    return "Just now";
+  }
+}
+
+String convertNumberOfLikesAndComments(num countNumber) {
+  if (countNumber == 0) {
+    return "";
+  } else if (countNumber < 1000) {
+    return countNumber.toString();
+  } else if (countNumber < 10000) {
+    var result = countNumber.toString();
+    return result.substring(0, 1) + "," + result.substring(1);
+  } else if (countNumber < 1000000) {
+    return (countNumber ~/ 1000).toString() + " K";
+  } else {
+    return (countNumber ~/ 1000000).toString() + " M";
+  }
+}
+
+String convertMonth(int monthNum) {
+  String month = "";
+  switch (monthNum) {
+    case (1):
+      month = "Jan";
+      break;
+    case (2):
+      month = "Feb";
+      break;
+    case (3):
+      month = "Mar";
+      break;
+    case (4):
+      month = "Apr";
+      break;
+    case (5):
+      month = "May";
+      break;
+    case (6):
+      month = "Jun";
+      break;
+    case (7):
+      month = "Jul";
+      break;
+    case (8):
+      month = "Aug";
+      break;
+    case (9):
+      month = "Sep";
+      break;
+    case (10):
+      month = "Oct";
+      break;
+    case (11):
+      month = "Nov";
+      break;
+    case (12):
+      month = "Dec";
+      break;
+    default:
+  }
+  return month;
 }
 
 //Debouncer to stop making unnecessary network calls
@@ -204,8 +318,9 @@ class BuildPosterImage extends StatelessWidget {
   final String imagePath;
   final double height;
   final double width;
+  final String resolution;
 
-  BuildPosterImage({this.imagePath, this.height, this.width});
+  BuildPosterImage({this.imagePath, this.height, this.width, this.resolution = "w185"});
 
   @override
   Widget build(BuildContext context) {
@@ -220,7 +335,7 @@ class BuildPosterImage extends StatelessWidget {
           height: height,
           width: width,
           child: CachedNetworkImage(
-            imageUrl: "https://image.tmdb.org/t/p/w185/$imagePath",
+            imageUrl: "https://image.tmdb.org/t/p/$resolution/$imagePath",
             fit: BoxFit.cover,
             placeholder: (context, url) => Container(
               color: Colors.green,
@@ -293,8 +408,9 @@ class BuildWatchedStatsCard extends StatelessWidget {
 
 class BuildProfilePhotoAvatar extends StatelessWidget {
   final String profilePhotoUrl;
+  final double radius;
 
-  BuildProfilePhotoAvatar({@required this.profilePhotoUrl});
+  BuildProfilePhotoAvatar({@required this.profilePhotoUrl, this.radius = 30});
 
   @override
   Widget build(BuildContext context) {
@@ -303,7 +419,7 @@ class BuildProfilePhotoAvatar extends StatelessWidget {
       imageBuilder: (context, imageProvider) => CircleAvatar(
         foregroundImage: imageProvider,
         backgroundColor: Colors.black,
-        radius: 30,
+        radius: radius,
       ),
       placeholder: (context, url) => const Center(
         child: CircularProgressIndicator(),
@@ -311,7 +427,7 @@ class BuildProfilePhotoAvatar extends StatelessWidget {
       errorWidget: (context, url, error) {
         return CircleAvatar(
           backgroundColor: Colors.black,
-          radius: 30,
+          radius: radius,
         );
       },
     );

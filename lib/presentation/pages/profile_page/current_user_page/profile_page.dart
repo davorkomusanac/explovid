@@ -8,7 +8,7 @@ import 'package:explovid/presentation/pages/profile_page/current_user_page/curre
 import 'package:explovid/presentation/pages/profile_page/current_user_page/current_user_following_page.dart';
 import 'package:explovid/presentation/pages/profile_page/current_user_page/edit_profile_page.dart';
 import 'package:explovid/presentation/pages/profile_page/current_user_page/user_settings_page.dart';
-import 'package:explovid/presentation/pages/profile_page/post_page.dart';
+import 'package:explovid/presentation/pages/profile_page/post_page/post_page.dart';
 import 'package:explovid/presentation/pages/tv_show_details_page/tv_show_details_page.dart';
 import 'package:explovid/presentation/utilities/utilities.dart';
 import 'package:flutter/material.dart';
@@ -255,6 +255,7 @@ class _ProfilePageState extends State<ProfilePage> with TickerProviderStateMixin
                               posterPath: movieWatched[index].posterPath,
                               id: movieWatched[index].id,
                               videoType: VideoType.MOVIE_WATCHED,
+                              postUid: movieWatched[index].postUid,
                             );
                     },
                   ),
@@ -351,6 +352,7 @@ class _ProfilePageState extends State<ProfilePage> with TickerProviderStateMixin
                               posterPath: tvShowWatched[index].posterPath,
                               id: tvShowWatched[index].id,
                               videoType: VideoType.TV_SHOW_WATCHED,
+                              postUid: tvShowWatched[index].postUid,
                             );
                     },
                   ),
@@ -368,42 +370,52 @@ class _ProfilePageState extends State<ProfilePage> with TickerProviderStateMixin
     }
   }
 
-  Widget _buildGridImage({String posterPath, int id, VideoType videoType}) {
-    return GestureDetector(
-      onTap: () {
-        Navigator.of(context, rootNavigator: false).push(
-          MaterialPageRoute(
-            // ignore: missing_return
-            builder: (context) {
-              switch (videoType) {
-                case VideoType.MOVIE_WATCHLIST:
-                  return MovieDetailsPage(id);
-                  break;
-                case VideoType.MOVIE_WATCHED:
-                  return PostPage();
-                  break;
-                case VideoType.TV_SHOW_WATCHLIST:
-                  return TvShowDetailsPage(id);
-                  break;
-                case VideoType.TV_SHOW_WATCHED:
-                  return PostPage();
-                  break;
-              }
-            },
+  Widget _buildGridImage({String posterPath, int id, VideoType videoType, String postUid = ""}) {
+    return BlocBuilder<CurrentUserProfileInformationBloc, CurrentUserProfileInformationState>(
+      builder: (context, state) {
+        return GestureDetector(
+          onTap: () {
+            Navigator.of(context, rootNavigator: false).push(
+              MaterialPageRoute(
+                // ignore: missing_return
+                builder: (context) {
+                  switch (videoType) {
+                    case VideoType.MOVIE_WATCHLIST:
+                      return MovieDetailsPage(id);
+                      break;
+                    case VideoType.MOVIE_WATCHED:
+                      return PostPage(
+                        postOwnerUid: state.ourUser.uid,
+                        postUid: postUid,
+                      );
+                      break;
+                    case VideoType.TV_SHOW_WATCHLIST:
+                      return TvShowDetailsPage(id);
+                      break;
+                    case VideoType.TV_SHOW_WATCHED:
+                      return PostPage(
+                        postOwnerUid: state.ourUser.uid,
+                        postUid: postUid,
+                      );
+                      break;
+                  }
+                },
+              ),
+            );
+          },
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: AspectRatio(
+              aspectRatio: 0.69,
+              child: BuildPosterImage(
+                height: 135,
+                width: 90,
+                imagePath: posterPath,
+              ),
+            ),
           ),
         );
       },
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: AspectRatio(
-          aspectRatio: 0.69,
-          child: BuildPosterImage(
-            height: 135,
-            width: 90,
-            imagePath: posterPath,
-          ),
-        ),
-      ),
     );
   }
 

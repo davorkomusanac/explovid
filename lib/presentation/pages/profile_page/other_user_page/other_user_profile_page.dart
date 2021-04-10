@@ -9,7 +9,7 @@ import 'package:explovid/data/models/our_user/our_user.dart';
 import 'package:explovid/presentation/pages/movie_details_page/movie_details_page.dart';
 import 'package:explovid/presentation/pages/profile_page/current_user_page/profile_page.dart';
 import 'package:explovid/presentation/pages/profile_page/other_user_page/other_user_followers_page.dart';
-import 'package:explovid/presentation/pages/profile_page/post_page.dart';
+import 'package:explovid/presentation/pages/profile_page/post_page/post_page.dart';
 import 'package:explovid/presentation/pages/tv_show_details_page/tv_show_details_page.dart';
 import 'package:explovid/presentation/utilities/utilities.dart';
 import 'package:flutter/material.dart';
@@ -67,11 +67,7 @@ class _OtherUserProfilePageState extends State<OtherUserProfilePage> with Ticker
     _watchTypeTabController = TabController(initialIndex: 0, vsync: this, length: _watchTypeTabs.length);
     _moviesTabController = TabController(initialIndex: 0, vsync: this, length: _moviesTabs.length);
     _tvShowsTabController = TabController(initialIndex: 0, vsync: this, length: _tvShowsTabs.length);
-  }
-
-  //Calling the event this way so that the bloc updates correctly when moving between several instances
-  @override
-  void didChangeDependencies() {
+    //Load user profile
     context.read<OtherUserProfileMovieListsBloc>().add(
           OtherUserProfileMovieListsEvent.loadMovieToListInitial(userUid: widget.otherUserUid),
         );
@@ -82,7 +78,6 @@ class _OtherUserProfilePageState extends State<OtherUserProfilePage> with Ticker
     context.read<OtherUserProfileInformationBloc>().add(
           OtherUserProfileInformationEvent.otherUserProfileLoaded(otherUserUid: widget.otherUserUid),
         );
-    super.didChangeDependencies();
   }
 
   //Method to call when Navigator.pop is called, to update the page
@@ -292,6 +287,7 @@ class _OtherUserProfilePageState extends State<OtherUserProfilePage> with Ticker
                               posterPath: movieWatched[index].posterPath,
                               id: movieWatched[index].id,
                               videoType: VideoType.MOVIE_WATCHED,
+                              postUid: movieWatched[index].postUid,
                             );
                     },
                   ),
@@ -386,6 +382,7 @@ class _OtherUserProfilePageState extends State<OtherUserProfilePage> with Ticker
                               posterPath: tvShowWatched[index].posterPath,
                               id: tvShowWatched[index].id,
                               videoType: VideoType.TV_SHOW_WATCHED,
+                              postUid: tvShowWatched[index].postUid,
                             );
                     },
                   ),
@@ -403,7 +400,7 @@ class _OtherUserProfilePageState extends State<OtherUserProfilePage> with Ticker
     }
   }
 
-  Widget _buildGridImage({String posterPath, int id, VideoType videoType}) {
+  Widget _buildGridImage({String posterPath, int id, VideoType videoType, String postUid = ""}) {
     return GestureDetector(
       onTap: () {
         //Calling then and setState when Navigator is popped to update the page
@@ -416,13 +413,19 @@ class _OtherUserProfilePageState extends State<OtherUserProfilePage> with Ticker
                   return MovieDetailsPage(id);
                   break;
                 case VideoType.MOVIE_WATCHED:
-                  return PostPage();
+                  return PostPage(
+                    postOwnerUid: widget.otherUserUid,
+                    postUid: postUid,
+                  );
                   break;
                 case VideoType.TV_SHOW_WATCHLIST:
                   return TvShowDetailsPage(id);
                   break;
                 case VideoType.TV_SHOW_WATCHED:
-                  return PostPage();
+                  return PostPage(
+                    postOwnerUid: widget.otherUserUid,
+                    postUid: postUid,
+                  );
                   break;
               }
             },
