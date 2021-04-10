@@ -7,15 +7,18 @@ import 'package:explovid/data/models/firestore_models/firestore_tv_show_watched_
 import 'package:explovid/data/models/firestore_models/firestore_tv_show_watchlist_details.dart';
 import 'package:explovid/data/models/movie_details/movie_details.dart';
 import 'package:explovid/data/models/our_user/our_user.dart';
+import 'package:explovid/data/models/our_user_post/our_user_post.dart';
 import 'package:explovid/data/models/tv_show_details/tv_show_details.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:uuid/uuid.dart';
 
 class UserProfileRepository {
   CollectionReference _users = FirebaseFirestore.instance.collection('users');
+  CollectionReference _posts = FirebaseFirestore.instance.collection('posts');
   FirebaseAuth _auth = FirebaseAuth.instance;
 
   Stream<OurUser> getCurrentUserProfileInformation() {
@@ -126,6 +129,8 @@ class UserProfileRepository {
 
   Future<String> addMovieToWatched(MovieDetails movieDetails, String review, num rating, bool isSpoiler) async {
     String returnVal = "";
+    String postUid = Uuid().v4();
+    Timestamp timestamp = Timestamp.now();
     FirestoreMovieWatchedDetails firestoreMovieDetails = FirestoreMovieWatchedDetails(
       id: movieDetails.id,
       title: movieDetails.title,
@@ -133,11 +138,26 @@ class UserProfileRepository {
       popularity: movieDetails.popularity,
       voteAverage: movieDetails.voteAverage,
       releaseDate: movieDetails.releaseDate,
-      timestampAddedToFirestore: Timestamp.now(),
+      timestampAddedToFirestore: timestamp,
       review: review,
       rating: rating,
       isSpoiler: isSpoiler,
-      postUid: Uuid().v4(),
+      postUid: postUid,
+    );
+    //Creating Post model for newsFeed
+    OurUserPost ourUserPost = OurUserPost(
+      tmdbId: movieDetails.id,
+      title: movieDetails.title,
+      posterPath: movieDetails.posterPath,
+      isOfTypeMovie: true,
+      isSpoiler: isSpoiler,
+      review: review,
+      rating: rating,
+      postUid: postUid,
+      postOwnerUid: _auth.currentUser.uid,
+      postCreationDate: timestamp,
+      numberOfLikes: 0,
+      numberOfComments: 0,
     );
     WriteBatch batch = FirebaseFirestore.instance.batch();
 
@@ -158,6 +178,10 @@ class UserProfileRepository {
           "watched_length": FieldValue.increment(1),
         },
         SetOptions(merge: true),
+      );
+      batch.set(
+        _posts.doc(_auth.currentUser.uid).collection("user_posts").doc(ourUserPost.postUid),
+        ourUserPost.toDocument(),
       );
       await batch.commit();
       print("successfully added movie to array watched");
@@ -195,23 +219,23 @@ class UserProfileRepository {
     return returnVal;
   }
 
-  Future<String> removeMovieFromWatched(MovieDetails movieDetails) async {
+  Future<String> removeMovieFromWatched({@required String movieTitle, @required int movieId, @required String postUid}) async {
     WriteBatch batch = FirebaseFirestore.instance.batch();
     String returnVal = "";
     try {
-      batch.delete(_users
-          .doc(_auth.currentUser.uid)
-          .collection("movie_watched")
-          .doc(movieDetails.title + "_" + movieDetails.id.toString()));
+      batch.delete(_users.doc(_auth.currentUser.uid).collection("movie_watched").doc(movieTitle + "_" + movieId.toString()));
       batch.set(
         _users.doc(_auth.currentUser.uid),
         {
           "movie_watched": FieldValue.arrayRemove([
-            movieDetails.title + "_" + movieDetails.id.toString(),
+            movieTitle + "_" + movieId.toString(),
           ]),
           "watched_length": FieldValue.increment(-1),
         },
         SetOptions(merge: true),
+      );
+      batch.delete(
+        _posts.doc(_auth.currentUser.uid).collection("user_posts").doc(postUid),
       );
       await batch.commit();
       print("successfully removed  movie from watched array");
@@ -222,9 +246,45 @@ class UserProfileRepository {
     return returnVal;
   }
 
-  ///TODO update Reviews
-  Future<void> updateMovieWatchedReview() async {}
-  Future<void> updateTvShowWatchedReview() async {}
+  Future<String> updateMovieWatchedReview({
+    @required String movieTitle,
+    @required int movieId,
+    @required String postUid,
+    String review,
+    num rating,
+    bool isSpoiler,
+  }) async {
+    String returnVal = "";
+    WriteBatch batch = FirebaseFirestore.instance.batch();
+    try {
+      batch.set(
+        _users.doc(_auth.currentUser.uid).collection("movie_watched").doc(
+              movieTitle + "_" + movieId.toString(),
+            ),
+        {
+          "review": review,
+          "rating": rating,
+          "is_spoiler": isSpoiler,
+        },
+        SetOptions(merge: true),
+      );
+      batch.set(
+        _posts.doc(_auth.currentUser.uid).collection("user_posts").doc(postUid),
+        {
+          "review": review,
+          "rating": rating,
+          "is_spoiler": isSpoiler,
+        },
+        SetOptions(merge: true),
+      );
+      await batch.commit();
+      print("successfully updated movie in watched array");
+    } catch (error) {
+      print(error.toString());
+      return error.toString();
+    }
+    return returnVal;
+  }
 
   Future<String> addTvShowToWatchlist(TvShowDetails tvShowDetails) async {
     String returnVal = "";
@@ -267,6 +327,8 @@ class UserProfileRepository {
 
   Future<String> addTvShowToWatched(TvShowDetails tvShowDetails, String review, num rating, bool isSpoiler) async {
     String returnVal = "";
+    String postUid = Uuid().v4();
+    Timestamp timestamp = Timestamp.now();
     FirestoreTvShowWatchedDetails firestoreTvShowWatchedDetails = FirestoreTvShowWatchedDetails(
       id: tvShowDetails.id,
       name: tvShowDetails.name,
@@ -274,11 +336,25 @@ class UserProfileRepository {
       popularity: tvShowDetails.popularity,
       voteAverage: tvShowDetails.voteAverage,
       firstAirDate: tvShowDetails.firstAirDate,
-      timestampAddedToFirestore: Timestamp.now(),
+      timestampAddedToFirestore: timestamp,
       review: review,
       rating: rating,
       isSpoiler: isSpoiler,
-      postUid: Uuid().v4(),
+      postUid: postUid,
+    );
+    OurUserPost ourUserPost = OurUserPost(
+      tmdbId: tvShowDetails.id,
+      title: tvShowDetails.name,
+      posterPath: tvShowDetails.posterPath,
+      isOfTypeMovie: false,
+      isSpoiler: isSpoiler,
+      review: review,
+      rating: rating,
+      postUid: postUid,
+      postOwnerUid: _auth.currentUser.uid,
+      postCreationDate: timestamp,
+      numberOfLikes: 0,
+      numberOfComments: 0,
     );
     WriteBatch batch = FirebaseFirestore.instance.batch();
 
@@ -299,6 +375,10 @@ class UserProfileRepository {
           "watched_length": FieldValue.increment(1),
         },
         SetOptions(merge: true),
+      );
+      batch.set(
+        _posts.doc(_auth.currentUser.uid).collection("user_posts").doc(ourUserPost.postUid),
+        ourUserPost.toDocument(),
       );
       await batch.commit();
       print("successfully added tv show to array watched");
@@ -336,23 +416,23 @@ class UserProfileRepository {
     return returnVal;
   }
 
-  Future<String> removeTvShowFromWatched(TvShowDetails tvShowDetails) async {
+  Future<String> removeTvShowFromWatched({@required String tvShowTitle, @required int tvShowId, @required String postUid}) async {
     String returnVal = "";
     WriteBatch batch = FirebaseFirestore.instance.batch();
     try {
-      batch.delete(_users
-          .doc(_auth.currentUser.uid)
-          .collection("tv_show_watched")
-          .doc(tvShowDetails.name + "_" + tvShowDetails.id.toString()));
+      batch.delete(_users.doc(_auth.currentUser.uid).collection("tv_show_watched").doc(tvShowTitle + "_" + tvShowId.toString()));
       batch.set(
         _users.doc(_auth.currentUser.uid),
         {
           "tv_show_watched": FieldValue.arrayRemove([
-            tvShowDetails.name + "_" + tvShowDetails.id.toString(),
+            tvShowTitle + "_" + tvShowId.toString(),
           ]),
           "watched_length": FieldValue.increment(-1),
         },
         SetOptions(merge: true),
+      );
+      batch.delete(
+        _posts.doc(_auth.currentUser.uid).collection("user_posts").doc(postUid),
       );
       await batch.commit();
       print("successfully removed tv show from watched array");
@@ -363,7 +443,47 @@ class UserProfileRepository {
     return returnVal;
   }
 
-  //Get a Stream of Lists from Firestore
+  Future<String> updateTvShowWatchedReview({
+    @required String tvShowTitle,
+    @required int tvShowId,
+    @required String postUid,
+    @required String review,
+    @required num rating,
+    @required bool isSpoiler,
+  }) async {
+    String returnVal = "";
+    WriteBatch batch = FirebaseFirestore.instance.batch();
+    try {
+      batch.set(
+        _users.doc(_auth.currentUser.uid).collection("tv_show_watched").doc(
+              tvShowTitle + "_" + tvShowId.toString(),
+            ),
+        {
+          "review": review,
+          "rating": rating,
+          "is_spoiler": isSpoiler,
+        },
+        SetOptions(merge: true),
+      );
+      batch.set(
+        _posts.doc(_auth.currentUser.uid).collection("user_posts").doc(postUid),
+        {
+          "review": review,
+          "rating": rating,
+          "is_spoiler": isSpoiler,
+        },
+        SetOptions(merge: true),
+      );
+      await batch.commit();
+      print("successfully updated tv show in watched array");
+    } catch (error) {
+      print(error.toString());
+      return error.toString();
+    }
+    return returnVal;
+  }
+
+  ///Get a Stream of Lists from Firestore
   Stream<List<FirestoreMovieWatchlistDetails>> getMovieWatchlist() {
     return _users
         .doc(_auth.currentUser.uid)
