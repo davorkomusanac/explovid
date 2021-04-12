@@ -39,7 +39,8 @@ class OurUserPost {
         review: data['review'],
         rating: data['rating'],
         postUid: data['post_uid'],
-        postOwnerUid: data['post_owner_uid'],
+        //Changed postOwnerUid to user_uid for easier convention since in repo it is called that
+        postOwnerUid: data['user_uid'],
         postCreationDate: data['post_creation_date'],
         numberOfLikes: data['number_of_likes'],
         numberOfComments: data['number_of_comments'],
@@ -56,7 +57,8 @@ class OurUserPost {
         'review': review,
         'rating': rating,
         'post_uid': postUid,
-        'post_owner_uid': postOwnerUid,
+        //Changed postOwnerUid to user_uid
+        'user_uid': postOwnerUid,
         'post_creation_date': postCreationDate,
         'number_of_likes': numberOfLikes,
         'number_of_comments': numberOfComments,
