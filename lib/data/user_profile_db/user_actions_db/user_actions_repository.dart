@@ -14,6 +14,7 @@ class UserActionsRepository {
   CollectionReference _following = FirebaseFirestore.instance.collection('user_following');
   CollectionReference _followers = FirebaseFirestore.instance.collection('user_followers');
   CollectionReference _posts = FirebaseFirestore.instance.collection('posts');
+  CollectionReference _reviews = FirebaseFirestore.instance.collection('reviews');
   FirebaseAuth _auth = FirebaseAuth.instance;
 
   /// //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1237,5 +1238,279 @@ class UserActionsRepository {
     return commentLikesAndTime;
   }
 
-  // TODO Implement notification feed
+  /// //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  /// //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  /// //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  /// All Reviews for a Movie or Tv Show /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  /// //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  /// //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  /// //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  Future<List<dynamic>> showMovieReviews({@required String movieTitle, @required int movieId}) async {
+    List<dynamic> reviewsAndTime = [];
+    List<OurUserPost> reviews = [];
+    Timestamp time = Timestamp.now();
+    try {
+      var querySnapshot = await _reviews
+          .doc("reviews")
+          .collection("movie_reviews")
+          .doc("movie_reviews")
+          .collection(movieTitle + "_" + movieId.toString())
+          .orderBy("post_creation_date", descending: true)
+          .limit(15)
+          .get();
+
+      if (querySnapshot.docs.isNotEmpty) time = querySnapshot.docs.last.data()["post_creation_date"];
+      for (var query in querySnapshot.docs)
+        reviews.add(
+          OurUserPost(
+              tmdbId: 0,
+              title: '',
+              posterPath: '',
+              isOfTypeMovie: true,
+              isSpoiler: true,
+              review: '',
+              rating: 0,
+              postUid: query.data()["post_uid"],
+              postOwnerUid: query.data()["user_uid"],
+              postCreationDate: time,
+              numberOfLikes: 0,
+              numberOfComments: 0),
+        );
+    } catch (error) {
+      print(error.toString());
+    }
+    reviewsAndTime.add(reviews);
+    reviewsAndTime.add(time);
+    return reviewsAndTime;
+  }
+
+  //Pagination
+  Future<List<dynamic>> showMovieReviewsNextPage({
+    @required String movieTitle,
+    @required int movieId,
+    @required Timestamp lastReviewTimestamp,
+  }) async {
+    List<dynamic> reviewsAndTime = [];
+    List<OurUserPost> reviews = [];
+    Timestamp time = Timestamp.now();
+    try {
+      var querySnapshot = await _reviews
+          .doc("reviews")
+          .collection("movie_reviews")
+          .doc("movie_reviews")
+          .collection(movieTitle + "_" + movieId.toString())
+          .orderBy("post_creation_date", descending: true)
+          .limit(15)
+          .startAfter([lastReviewTimestamp]).get();
+
+      if (querySnapshot.docs.isNotEmpty) time = querySnapshot.docs.last.data()["post_creation_date"];
+      for (var query in querySnapshot.docs)
+        reviews.add(
+          OurUserPost(
+              tmdbId: 0,
+              title: '',
+              posterPath: '',
+              isOfTypeMovie: true,
+              isSpoiler: true,
+              review: '',
+              rating: 0,
+              postUid: query.data()["post_uid"],
+              postOwnerUid: query.data()["user_uid"],
+              postCreationDate: time,
+              numberOfLikes: 0,
+              numberOfComments: 0),
+        );
+    } catch (error) {
+      print(error.toString());
+    }
+    reviewsAndTime.add(reviews);
+    reviewsAndTime.add(time);
+    return reviewsAndTime;
+  }
+
+  Future<List<dynamic>> showTvShowReviews({@required String tvShowName, @required int tvShowId}) async {
+    List<dynamic> reviewsAndTime = [];
+    List<OurUserPost> reviews = [];
+    Timestamp time = Timestamp.now();
+    try {
+      var querySnapshot = await _reviews
+          .doc("reviews")
+          .collection("tv_show_reviews")
+          .doc("tv_show_reviews")
+          .collection(tvShowName + "_" + tvShowId.toString())
+          .orderBy("post_creation_date", descending: true)
+          .limit(15)
+          .get();
+
+      if (querySnapshot.docs.isNotEmpty) time = querySnapshot.docs.last.data()["post_creation_date"];
+      for (var query in querySnapshot.docs)
+        reviews.add(
+          OurUserPost(
+              tmdbId: 0,
+              title: '',
+              posterPath: '',
+              isOfTypeMovie: false,
+              isSpoiler: true,
+              review: '',
+              rating: 0,
+              postUid: query.data()["post_uid"],
+              postOwnerUid: query.data()["user_uid"],
+              postCreationDate: time,
+              numberOfLikes: 0,
+              numberOfComments: 0),
+        );
+    } catch (error) {
+      print(error.toString());
+    }
+    reviewsAndTime.add(reviews);
+    reviewsAndTime.add(time);
+    return reviewsAndTime;
+  }
+
+  Future<List<dynamic>> showTvShowReviewsNextPage({
+    @required String tvShowName,
+    @required int tvShowId,
+    @required Timestamp lastReviewTimestamp,
+  }) async {
+    List<dynamic> reviewsAndTime = [];
+    List<OurUserPost> reviews = [];
+    Timestamp time = Timestamp.now();
+    try {
+      var querySnapshot = await _reviews
+          .doc("reviews")
+          .collection("tv_show_reviews")
+          .doc("tv_show_reviews")
+          .collection(tvShowName + "_" + tvShowId.toString())
+          .orderBy("post_creation_date", descending: true)
+          .limit(15)
+          .startAfter([lastReviewTimestamp]).get();
+
+      if (querySnapshot.docs.isNotEmpty) time = querySnapshot.docs.last.data()["post_creation_date"];
+      for (var query in querySnapshot.docs)
+        reviews.add(
+          OurUserPost(
+              tmdbId: 0,
+              title: '',
+              posterPath: '',
+              isOfTypeMovie: false,
+              isSpoiler: true,
+              review: '',
+              rating: 0,
+              postUid: query.data()["post_uid"],
+              postOwnerUid: query.data()["user_uid"],
+              postCreationDate: time,
+              numberOfLikes: 0,
+              numberOfComments: 0),
+        );
+    } catch (error) {
+      print(error.toString());
+    }
+    reviewsAndTime.add(reviews);
+    reviewsAndTime.add(time);
+    return reviewsAndTime;
+  }
+
+  //Get current User Review for Movie or TvShow when in Details Page (if there is a review)
+  Future<OurUserPost> showUserMovieReview({@required String movieTitle, @required int movieId}) async {
+    OurUserPost post;
+    try {
+      var querySnapshot = await _reviews
+          .doc("reviews")
+          .collection("movie_reviews")
+          .doc("movie_reviews")
+          .collection(movieTitle + "_" + movieId.toString())
+          .where("user_uid", isEqualTo: _auth.currentUser.uid)
+          .limit(1)
+          .get();
+
+      if (querySnapshot.docs.isNotEmpty) {
+        post = OurUserPost.fromSnapshot(querySnapshot.docs.first);
+      } else {
+        post = OurUserPost(
+          tmdbId: 0,
+          title: '',
+          posterPath: '',
+          isOfTypeMovie: true,
+          isSpoiler: true,
+          review: '',
+          rating: 0,
+          postUid: '',
+          postOwnerUid: '',
+          postCreationDate: Timestamp.now(),
+          numberOfLikes: 0,
+          numberOfComments: 0,
+        );
+      }
+    } catch (error) {
+      print(error.toString());
+      post = OurUserPost(
+        tmdbId: 0,
+        title: '',
+        posterPath: '',
+        isOfTypeMovie: true,
+        isSpoiler: true,
+        review: '',
+        rating: 0,
+        postUid: '',
+        postOwnerUid: '',
+        postCreationDate: Timestamp.now(),
+        numberOfLikes: 0,
+        numberOfComments: 0,
+      );
+    }
+    return post;
+  }
+
+  Future<OurUserPost> showUserTvShowReview({@required String tvShowName, @required int tvShowId}) async {
+    OurUserPost post;
+    try {
+      var querySnapshot = await _reviews
+          .doc("reviews")
+          .collection("tv_show_reviews")
+          .doc("tv_show_reviews")
+          .collection(tvShowName + "_" + tvShowId.toString())
+          .where("user_uid", isEqualTo: _auth.currentUser.uid)
+          .limit(1)
+          .get();
+
+      if (querySnapshot.docs.isNotEmpty) {
+        post = OurUserPost.fromSnapshot(querySnapshot.docs.first);
+      } else {
+        post = OurUserPost(
+          tmdbId: 0,
+          title: '',
+          posterPath: '',
+          isOfTypeMovie: true,
+          isSpoiler: true,
+          review: '',
+          rating: 0,
+          postUid: '',
+          postOwnerUid: '',
+          postCreationDate: Timestamp.now(),
+          numberOfLikes: 0,
+          numberOfComments: 0,
+        );
+      }
+    } catch (error) {
+      print(error.toString());
+      post = OurUserPost(
+        tmdbId: 0,
+        title: '',
+        posterPath: '',
+        isOfTypeMovie: true,
+        isSpoiler: true,
+        review: '',
+        rating: 0,
+        postUid: '',
+        postOwnerUid: '',
+        postCreationDate: Timestamp.now(),
+        numberOfLikes: 0,
+        numberOfComments: 0,
+      );
+    }
+    return post;
+  }
+
+// TODO Implement notification feed
 }

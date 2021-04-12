@@ -19,6 +19,7 @@ import 'package:uuid/uuid.dart';
 class UserProfileRepository {
   CollectionReference _users = FirebaseFirestore.instance.collection('users');
   CollectionReference _posts = FirebaseFirestore.instance.collection('posts');
+  CollectionReference _reviews = FirebaseFirestore.instance.collection('reviews');
   FirebaseAuth _auth = FirebaseAuth.instance;
 
   Stream<OurUser> getCurrentUserProfileInformation() {
@@ -183,6 +184,20 @@ class UserProfileRepository {
         _posts.doc(_auth.currentUser.uid).collection("user_posts").doc(ourUserPost.postUid),
         ourUserPost.toDocument(),
       );
+      //Add movie review to reviews collection to show reviews under MovieDetails page from all users
+      batch.set(
+        _reviews
+            .doc("reviews")
+            .collection("movie_reviews")
+            .doc("movie_reviews")
+            .collection(firestoreMovieDetails.title + "_" + firestoreMovieDetails.id.toString())
+            .doc(ourUserPost.postUid),
+        {
+          "user_uid": _auth.currentUser.uid,
+          "post_uid": ourUserPost.postUid,
+          "post_creation_date": ourUserPost.postCreationDate,
+        },
+      );
       await batch.commit();
       print("successfully added movie to array watched");
     } catch (error) {
@@ -236,6 +251,15 @@ class UserProfileRepository {
       );
       batch.delete(
         _posts.doc(_auth.currentUser.uid).collection("user_posts").doc(postUid),
+      );
+      //Remove review from list of all reviews for that movie
+      batch.delete(
+        _reviews
+            .doc("reviews")
+            .collection("movie_reviews")
+            .doc("movie_reviews")
+            .collection(movieTitle + "_" + movieId.toString())
+            .doc(postUid),
       );
       await batch.commit();
       print("successfully removed  movie from watched array");
@@ -380,6 +404,20 @@ class UserProfileRepository {
         _posts.doc(_auth.currentUser.uid).collection("user_posts").doc(ourUserPost.postUid),
         ourUserPost.toDocument(),
       );
+      //Add tv show review to reviews collection to show reviews under TvShowDetails page from all users
+      batch.set(
+        _reviews
+            .doc("reviews")
+            .collection("tv_show_reviews")
+            .doc("tv_show_reviews")
+            .collection(firestoreTvShowWatchedDetails.name + "_" + firestoreTvShowWatchedDetails.id.toString())
+            .doc(ourUserPost.postUid),
+        {
+          "user_uid": _auth.currentUser.uid,
+          "post_uid": ourUserPost.postUid,
+          "post_creation_date": ourUserPost.postCreationDate,
+        },
+      );
       await batch.commit();
       print("successfully added tv show to array watched");
     } catch (error) {
@@ -433,6 +471,14 @@ class UserProfileRepository {
       );
       batch.delete(
         _posts.doc(_auth.currentUser.uid).collection("user_posts").doc(postUid),
+      );
+      batch.delete(
+        _reviews
+            .doc("reviews")
+            .collection("tv_show_reviews")
+            .doc("tv_show_reviews")
+            .collection(tvShowTitle + "_" + tvShowId.toString())
+            .doc(postUid),
       );
       await batch.commit();
       print("successfully removed tv show from watched array");
