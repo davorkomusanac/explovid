@@ -1,9 +1,16 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:explovid/application/search/movie_search/movie_details/movie_details_bloc.dart';
+import 'package:explovid/application/user_post/reviews_posts/reviews_posts_bloc.dart';
+import 'package:explovid/application/user_post/user_post_bloc.dart';
 import 'package:explovid/application/user_profile_information/current_user_profile_information/current_user_profile_watchlist_watched/movie_lists/movie_lists_user_profile_bloc.dart';
+import 'package:explovid/application/user_profile_information/other_user_profile_information/other_user_profile_information_bloc.dart';
 import 'package:explovid/data/models/movie_details/movie_details.dart';
+import 'package:explovid/data/user_profile_db/other_user_profile_db/other_user_profile_repository.dart';
+import 'package:explovid/data/user_profile_db/user_actions_db/user_actions_repository.dart';
 import 'package:explovid/presentation/pages/actor_details_page/actor_details_page.dart';
 import 'package:explovid/presentation/pages/movie_details_page/full_movie_cast_page.dart';
+import 'package:explovid/presentation/pages/reviews/current_user_review.dart';
+import 'package:explovid/presentation/pages/reviews/other_user_review.dart';
 import 'package:explovid/presentation/utilities/utilities.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -11,8 +18,12 @@ import 'package:url_launcher/url_launcher.dart';
 
 class MovieDetailsPage extends StatefulWidget {
   final int movieId;
+  final String movieTitle;
 
-  MovieDetailsPage(this.movieId);
+  MovieDetailsPage({
+    @required this.movieId,
+    @required this.movieTitle,
+  });
 
   @override
   _MovieDetailsPageState createState() => _MovieDetailsPageState();
@@ -20,16 +31,42 @@ class MovieDetailsPage extends StatefulWidget {
 
 class _MovieDetailsPageState extends State<MovieDetailsPage> {
   bool isOverviewExpanded = false;
+  UserActionsRepository _userActionsRepository;
+  OtherUserProfileRepository _otherUserProfileRepository;
+  ScrollController _scrollController;
 
   @override
   void initState() {
     super.initState();
+    _userActionsRepository = UserActionsRepository();
+    _otherUserProfileRepository = OtherUserProfileRepository();
+    _scrollController = ScrollController();
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
   }
 
   @override
   void didChangeDependencies() {
     context.read<MovieDetailsBloc>().add(
           MovieDetailsEvent.movieDetailsPressed(widget.movieId),
+        );
+    context.read<ReviewsPostsBloc>().add(
+          ReviewsPostsEvent.loadReviewsPressed(
+            isOfTypeMovie: true,
+            title: widget.movieTitle,
+            tmdbId: widget.movieId,
+          ),
+        );
+    context.read<ReviewsPostsBloc>().add(
+          ReviewsPostsEvent.loadCurrentUserReviewPressed(
+            isOfTypeMovie: true,
+            title: widget.movieTitle,
+            tmdbId: widget.movieId,
+          ),
         );
     super.didChangeDependencies();
   }
@@ -38,6 +75,20 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
   void sendEvent() {
     context.read<MovieDetailsBloc>().add(
           MovieDetailsEvent.movieDetailsPressed(widget.movieId),
+        );
+    context.read<ReviewsPostsBloc>().add(
+          ReviewsPostsEvent.loadReviewsPressed(
+            isOfTypeMovie: true,
+            title: widget.movieTitle,
+            tmdbId: widget.movieId,
+          ),
+        );
+    context.read<ReviewsPostsBloc>().add(
+          ReviewsPostsEvent.loadCurrentUserReviewPressed(
+            isOfTypeMovie: true,
+            title: widget.movieTitle,
+            tmdbId: widget.movieId,
+          ),
         );
   }
 
@@ -65,6 +116,21 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
         ),
       );
     }
+  }
+
+  //If at end of the Listview, search for more reviews
+  bool _handleScrollNotification(ScrollNotification notification) {
+    if (notification is ScrollEndNotification && _scrollController.position.extentAfter == 0) {
+      print("Calling fetch next movie reviews");
+      context.read<ReviewsPostsBloc>().add(
+            ReviewsPostsEvent.loadReviewsPressedNextPage(
+              isOfTypeMovie: true,
+              title: widget.movieTitle,
+              tmdbId: widget.movieId,
+            ),
+          );
+    }
+    return false;
   }
 
   @override
@@ -318,6 +384,32 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
                               );
                             },
                           ),
+                          BlocBuilder<ReviewsPostsBloc, ReviewsPostsState>(
+                            builder: (context, userReviewState) {
+                              if (!userReviewState.isLoadingCurrentUserReview) {
+                                if (userReviewState.currentUserReview.postOwnerUid.isNotEmpty) {
+                                  return BlocProvider(
+                                    create: (context) => UserPostBloc(
+                                      _userActionsRepository,
+                                    ),
+                                    child: BlocProvider(
+                                      create: (context) => OtherUserProfileInformationBloc(
+                                        _otherUserProfileRepository,
+                                      ),
+                                      child: CurrentUserReview(
+                                        postOwnerUid: userReviewState.currentUserReview.postOwnerUid,
+                                        postUid: userReviewState.currentUserReview.postUid,
+                                      ),
+                                    ),
+                                  );
+                                } else {
+                                  return Offstage();
+                                }
+                              } else {
+                                return Offstage();
+                              }
+                            },
+                          ),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -532,7 +624,9 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
                                           .push(
                                             MaterialPageRoute(
                                               builder: (context) => MovieDetailsPage(
-                                                  state.movieDetails.movieSearchResults.movieSummaries[index].id),
+                                                movieId: state.movieDetails.movieSearchResults.movieSummaries[index].id,
+                                                movieTitle: state.movieDetails.movieSearchResults.movieSummaries[index].title,
+                                              ),
                                             ),
                                           )
                                           .then(
@@ -587,6 +681,80 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
                               },
                             ),
                           ),
+
+                          /// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                          /// OTHER USERS REVIEWS ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                          /// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                          BlocBuilder<ReviewsPostsBloc, ReviewsPostsState>(
+                            builder: (context, state) {
+                              if (state.reviews.length > 0) {
+                                return Padding(
+                                  padding: const EdgeInsets.only(bottom: 16.0),
+                                  child: Container(
+                                    color: Colors.tealAccent[700],
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        Expanded(
+                                          child: Padding(
+                                            padding: const EdgeInsets.symmetric(vertical: 16.0),
+                                            child: Text(
+                                              "Other User's reviews below!\nMight contain spoilers!",
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(
+                                                fontSize: 16,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                );
+                              } else {
+                                return Offstage();
+                              }
+                            },
+                          ),
+                          BlocBuilder<ReviewsPostsBloc, ReviewsPostsState>(
+                            builder: (context, state) {
+                              return state.isLoadingReviews
+                                  ? Center(
+                                      child: CircularProgressIndicator(),
+                                    )
+                                  : NotificationListener<ScrollNotification>(
+                                      onNotification: _handleScrollNotification,
+                                      child: ListView.builder(
+                                        shrinkWrap: true,
+                                        controller: _scrollController,
+                                        itemCount: _calculateOtherUsersReviewsListLength(state),
+                                        itemBuilder: (context, index) {
+                                          if (index >= state.reviews.length) {
+                                            return BuildLoaderNextPage();
+                                          } else {
+                                            String postOwnerUid = state.reviews[index].postOwnerUid;
+                                            String postUid = state.reviews[index].postUid;
+                                            //Have to give a new BlocProvider instance to each item since each items needs its own state
+                                            return BlocProvider(
+                                              create: (context) => UserPostBloc(
+                                                _userActionsRepository,
+                                              ),
+                                              child: BlocProvider(
+                                                create: (context) => OtherUserProfileInformationBloc(
+                                                  _otherUserProfileRepository,
+                                                ),
+                                                child: OtherUserReview(
+                                                  postOwnerUid: postOwnerUid,
+                                                  postUid: postUid,
+                                                ),
+                                              ),
+                                            );
+                                          }
+                                        },
+                                      ),
+                                    );
+                            },
+                          ),
                         ],
                       ),
                     ),
@@ -597,6 +765,14 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
         ),
       ),
     );
+  }
+
+  int _calculateOtherUsersReviewsListLength(ReviewsPostsState state) {
+    if (state.isThereMoreReviewsToLoad) {
+      return state.reviews.length + 1;
+    } else {
+      return state.reviews.length;
+    }
   }
 }
 

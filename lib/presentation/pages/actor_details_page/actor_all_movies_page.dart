@@ -120,7 +120,8 @@ class _ActorAllMoviesPageState extends State<ActorAllMoviesPage> with TickerProv
           Navigator.of(context, rootNavigator: false).push(
             MaterialPageRoute(
               builder: (context) => MovieDetailsPage(
-                movieSummary.id,
+                movieId: movieSummary.id,
+                movieTitle: movieSummary.title,
               ),
             ),
           );

@@ -4,6 +4,7 @@ import 'package:explovid/application/search/movie_search/movie_details/movie_det
 import 'package:explovid/application/search/movie_search/movie_search_bloc.dart';
 import 'package:explovid/application/search/tv_show_search/tv_show_details/tv_show_details_bloc.dart';
 import 'package:explovid/application/user_interactions/follow/follow_bloc.dart';
+import 'package:explovid/application/user_post/reviews_posts/reviews_posts_bloc.dart';
 import 'package:explovid/application/user_post/user_post_bloc.dart';
 import 'package:explovid/application/user_profile_information/current_user_profile_information/current_user_profile_information_bloc.dart';
 import 'package:explovid/application/user_profile_information/current_user_profile_information/current_user_profile_watchlist_watched/movie_lists/movie_lists_user_profile_bloc.dart';
@@ -166,6 +167,12 @@ class _HomePageState extends State<HomePage> {
                       _userActionsRepository,
                     ),
                   ),
+                  ///Reviews
+                  BlocProvider(
+                    create: (context) => ReviewsPostsBloc(
+                      _userActionsRepository,
+                    ),
+                  ),
                 ],
                 child: CupertinoTabView(
                   navigatorKey: tabNavKeys[0],
@@ -235,6 +242,13 @@ class _HomePageState extends State<HomePage> {
                       _userActionsRepository,
                     ),
                   ),
+
+                  ///Reviews
+                  BlocProvider(
+                    create: (context) => ReviewsPostsBloc(
+                      _userActionsRepository,
+                    ),
+                  ),
                 ],
                 child: CupertinoTabView(
                   navigatorKey: tabNavKeys[2],
@@ -288,6 +302,12 @@ class _HomePageState extends State<HomePage> {
                       _userActionsRepository,
                     ),
                   ),
+                  ///Reviews
+                  BlocProvider(
+                    create: (context) => ReviewsPostsBloc(
+                      _userActionsRepository,
+                    ),
+                  ),
                 ],
                 child: CupertinoTabView(
                   navigatorKey: tabNavKeys[3],
@@ -338,6 +358,13 @@ class _HomePageState extends State<HomePage> {
                   ),
                   BlocProvider(
                     create: (context) => UserPostBloc(
+                      _userActionsRepository,
+                    ),
+                  ),
+
+                  ///Reviews
+                  BlocProvider(
+                    create: (context) => ReviewsPostsBloc(
                       _userActionsRepository,
                     ),
                   ),

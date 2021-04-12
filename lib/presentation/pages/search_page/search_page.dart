@@ -541,7 +541,8 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
                                     Navigator.of(context, rootNavigator: false).push(
                                       MaterialPageRoute(
                                         builder: (context) => TvShowDetailsPage(
-                                          state.popularTvShows.tvShowSummaries[index].id,
+                                          tvShowName: state.popularTvShows.tvShowSummaries[index].name,
+                                          tvShowId: state.popularTvShows.tvShowSummaries[index].id,
                                         ),
                                       ),
                                     );
@@ -628,7 +629,10 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
         onTap: () {
           Navigator.of(context, rootNavigator: false).push(
             MaterialPageRoute(
-              builder: (context) => TvShowDetailsPage(state.tvShowSearchResults.tvShowSummaries[index].id),
+              builder: (context) => TvShowDetailsPage(
+                tvShowName: state.tvShowSearchResults.tvShowSummaries[index].name,
+                tvShowId: state.tvShowSearchResults.tvShowSummaries[index].id,
+              ),
             ),
           );
         },
@@ -721,7 +725,8 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
                                     Navigator.of(context, rootNavigator: false).push(
                                       MaterialPageRoute(
                                         builder: (context) => MovieDetailsPage(
-                                          state.popularMovies.movieSummaries[index].id,
+                                          movieId: state.popularMovies.movieSummaries[index].id,
+                                          movieTitle: state.popularMovies.movieSummaries[index].title,
                                         ),
                                       ),
                                     );
@@ -808,7 +813,10 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
         onTap: () {
           Navigator.of(context, rootNavigator: false).push(
             MaterialPageRoute(
-              builder: (context) => MovieDetailsPage(state.movieSearchResults.movieSummaries[index].id),
+              builder: (context) => MovieDetailsPage(
+                movieId: state.movieSearchResults.movieSummaries[index].id,
+                movieTitle: state.movieSearchResults.movieSummaries[index].title,
+              ),
             ),
           );
         },

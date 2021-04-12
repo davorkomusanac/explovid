@@ -206,6 +206,7 @@ class _ProfilePageState extends State<ProfilePage> with TickerProviderStateMixin
                           ? BuildLoaderNextPage()
                           : _buildGridImage(
                               posterPath: movieWatchlist[index].posterPath,
+                              title: movieWatchlist[index].title,
                               id: movieWatchlist[index].id,
                               videoType: VideoType.MOVIE_WATCHLIST,
                             );
@@ -253,6 +254,7 @@ class _ProfilePageState extends State<ProfilePage> with TickerProviderStateMixin
                           ? BuildLoaderNextPage()
                           : _buildGridImage(
                               posterPath: movieWatched[index].posterPath,
+                              title: movieWatched[index].title,
                               id: movieWatched[index].id,
                               videoType: VideoType.MOVIE_WATCHED,
                               postUid: movieWatched[index].postUid,
@@ -301,6 +303,7 @@ class _ProfilePageState extends State<ProfilePage> with TickerProviderStateMixin
                           ? BuildLoaderNextPage()
                           : _buildGridImage(
                               posterPath: tvShowWatchlist[index].posterPath,
+                              title: tvShowWatchlist[index].name,
                               id: tvShowWatchlist[index].id,
                               videoType: VideoType.TV_SHOW_WATCHLIST,
                             );
@@ -350,6 +353,7 @@ class _ProfilePageState extends State<ProfilePage> with TickerProviderStateMixin
                           ? BuildLoaderNextPage()
                           : _buildGridImage(
                               posterPath: tvShowWatched[index].posterPath,
+                              title: tvShowWatched[index].name,
                               id: tvShowWatched[index].id,
                               videoType: VideoType.TV_SHOW_WATCHED,
                               postUid: tvShowWatched[index].postUid,
@@ -370,7 +374,13 @@ class _ProfilePageState extends State<ProfilePage> with TickerProviderStateMixin
     }
   }
 
-  Widget _buildGridImage({String posterPath, int id, VideoType videoType, String postUid = ""}) {
+  Widget _buildGridImage({
+    @required String posterPath,
+    @required String title,
+    @required int id,
+    @required VideoType videoType,
+    String postUid = "",
+  }) {
     return BlocBuilder<CurrentUserProfileInformationBloc, CurrentUserProfileInformationState>(
       builder: (context, state) {
         return GestureDetector(
@@ -381,7 +391,10 @@ class _ProfilePageState extends State<ProfilePage> with TickerProviderStateMixin
                 builder: (context) {
                   switch (videoType) {
                     case VideoType.MOVIE_WATCHLIST:
-                      return MovieDetailsPage(id);
+                      return MovieDetailsPage(
+                        movieId: id,
+                        movieTitle: title,
+                      );
                       break;
                     case VideoType.MOVIE_WATCHED:
                       return PostPage(
@@ -390,7 +403,10 @@ class _ProfilePageState extends State<ProfilePage> with TickerProviderStateMixin
                       );
                       break;
                     case VideoType.TV_SHOW_WATCHLIST:
-                      return TvShowDetailsPage(id);
+                      return TvShowDetailsPage(
+                        tvShowId: id,
+                        tvShowName: title,
+                      );
                       break;
                     case VideoType.TV_SHOW_WATCHED:
                       return PostPage(

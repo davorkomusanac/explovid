@@ -1,8 +1,15 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:explovid/application/search/tv_show_search/tv_show_details/tv_show_details_bloc.dart';
+import 'package:explovid/application/user_post/reviews_posts/reviews_posts_bloc.dart';
+import 'package:explovid/application/user_post/user_post_bloc.dart';
 import 'package:explovid/application/user_profile_information/current_user_profile_information/current_user_profile_watchlist_watched/tv_show_lists/tv_show_lists_user_profile_bloc.dart';
+import 'package:explovid/application/user_profile_information/other_user_profile_information/other_user_profile_information_bloc.dart';
 import 'package:explovid/data/models/tv_show_details/tv_show_details.dart';
+import 'package:explovid/data/user_profile_db/other_user_profile_db/other_user_profile_repository.dart';
+import 'package:explovid/data/user_profile_db/user_actions_db/user_actions_repository.dart';
 import 'package:explovid/presentation/pages/actor_details_page/actor_details_page.dart';
+import 'package:explovid/presentation/pages/reviews/current_user_review.dart';
+import 'package:explovid/presentation/pages/reviews/other_user_review.dart';
 import 'package:explovid/presentation/pages/tv_show_details_page/full_tv_show_cast_page.dart';
 import 'package:explovid/presentation/utilities/utilities.dart';
 import 'package:flutter/material.dart';
@@ -11,8 +18,12 @@ import 'package:url_launcher/url_launcher.dart';
 
 class TvShowDetailsPage extends StatefulWidget {
   final int tvShowId;
+  final String tvShowName;
 
-  TvShowDetailsPage(this.tvShowId);
+  TvShowDetailsPage({
+    @required this.tvShowId,
+    @required this.tvShowName,
+  });
 
   @override
   _TvShowDetailsPageState createState() => _TvShowDetailsPageState();
@@ -20,16 +31,42 @@ class TvShowDetailsPage extends StatefulWidget {
 
 class _TvShowDetailsPageState extends State<TvShowDetailsPage> {
   bool isOverviewExpanded = false;
+  UserActionsRepository _userActionsRepository;
+  OtherUserProfileRepository _otherUserProfileRepository;
+  ScrollController _scrollController;
 
   @override
   void initState() {
     super.initState();
+    _userActionsRepository = UserActionsRepository();
+    _otherUserProfileRepository = OtherUserProfileRepository();
+    _scrollController = ScrollController();
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
   }
 
   @override
   void didChangeDependencies() {
     context.read<TvShowDetailsBloc>().add(
           TvShowDetailsEvent.tvShowDetailsPressed(widget.tvShowId),
+        );
+    context.read<ReviewsPostsBloc>().add(
+          ReviewsPostsEvent.loadReviewsPressed(
+            isOfTypeMovie: false,
+            title: widget.tvShowName,
+            tmdbId: widget.tvShowId,
+          ),
+        );
+    context.read<ReviewsPostsBloc>().add(
+          ReviewsPostsEvent.loadCurrentUserReviewPressed(
+            isOfTypeMovie: false,
+            title: widget.tvShowName,
+            tmdbId: widget.tvShowId,
+          ),
         );
     super.didChangeDependencies();
   }
@@ -38,6 +75,20 @@ class _TvShowDetailsPageState extends State<TvShowDetailsPage> {
   void sendEvent() {
     context.read<TvShowDetailsBloc>().add(
           TvShowDetailsEvent.tvShowDetailsPressed(widget.tvShowId),
+        );
+    context.read<ReviewsPostsBloc>().add(
+          ReviewsPostsEvent.loadReviewsPressed(
+            isOfTypeMovie: false,
+            title: widget.tvShowName,
+            tmdbId: widget.tvShowId,
+          ),
+        );
+    context.read<ReviewsPostsBloc>().add(
+          ReviewsPostsEvent.loadCurrentUserReviewPressed(
+            isOfTypeMovie: false,
+            title: widget.tvShowName,
+            tmdbId: widget.tvShowId,
+          ),
         );
   }
 
@@ -65,6 +116,21 @@ class _TvShowDetailsPageState extends State<TvShowDetailsPage> {
         ),
       );
     }
+  }
+
+  //If at end of the Listview, search for more reviews
+  bool _handleScrollNotification(ScrollNotification notification) {
+    if (notification is ScrollEndNotification && _scrollController.position.extentAfter == 0) {
+      print("Calling fetch next tv show reviews");
+      context.read<ReviewsPostsBloc>().add(
+            ReviewsPostsEvent.loadReviewsPressedNextPage(
+              isOfTypeMovie: false,
+              title: widget.tvShowName,
+              tmdbId: widget.tvShowId,
+            ),
+          );
+    }
+    return false;
   }
 
   @override
@@ -313,6 +379,32 @@ class _TvShowDetailsPageState extends State<TvShowDetailsPage> {
                               );
                             },
                           ),
+                          BlocBuilder<ReviewsPostsBloc, ReviewsPostsState>(
+                            builder: (context, userReviewState) {
+                              if (!userReviewState.isLoadingCurrentUserReview) {
+                                if (userReviewState.currentUserReview.postOwnerUid.isNotEmpty) {
+                                  return BlocProvider(
+                                    create: (context) => UserPostBloc(
+                                      _userActionsRepository,
+                                    ),
+                                    child: BlocProvider(
+                                      create: (context) => OtherUserProfileInformationBloc(
+                                        _otherUserProfileRepository,
+                                      ),
+                                      child: CurrentUserReview(
+                                        postOwnerUid: userReviewState.currentUserReview.postOwnerUid,
+                                        postUid: userReviewState.currentUserReview.postUid,
+                                      ),
+                                    ),
+                                  );
+                                } else {
+                                  return Offstage();
+                                }
+                              } else {
+                                return Offstage();
+                              }
+                            },
+                          ),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -527,7 +619,9 @@ class _TvShowDetailsPageState extends State<TvShowDetailsPage> {
                                           .push(
                                             MaterialPageRoute(
                                               builder: (context) => TvShowDetailsPage(
-                                                  state.tvShowDetails.tvShowSearchResults.tvShowSummaries[index].id),
+                                                tvShowName: state.tvShowDetails.tvShowSearchResults.tvShowSummaries[index].name,
+                                                tvShowId: state.tvShowDetails.tvShowSearchResults.tvShowSummaries[index].id,
+                                              ),
                                             ),
                                           )
                                           .then(
@@ -582,6 +676,80 @@ class _TvShowDetailsPageState extends State<TvShowDetailsPage> {
                               },
                             ),
                           ),
+
+                          /// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                          /// OTHER USERS REVIEWS ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                          /// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                          BlocBuilder<ReviewsPostsBloc, ReviewsPostsState>(
+                            builder: (context, state) {
+                              if (state.reviews.length > 0) {
+                                return Padding(
+                                  padding: const EdgeInsets.only(bottom: 16.0),
+                                  child: Container(
+                                    color: Colors.tealAccent[700],
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        Expanded(
+                                          child: Padding(
+                                            padding: const EdgeInsets.symmetric(vertical: 16.0),
+                                            child: Text(
+                                              "Other User's reviews below!\nMight contain spoilers!",
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(
+                                                fontSize: 16,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                );
+                              } else {
+                                return Offstage();
+                              }
+                            },
+                          ),
+                          BlocBuilder<ReviewsPostsBloc, ReviewsPostsState>(
+                            builder: (context, state) {
+                              return state.isLoadingReviews
+                                  ? Center(
+                                      child: CircularProgressIndicator(),
+                                    )
+                                  : NotificationListener<ScrollNotification>(
+                                      onNotification: _handleScrollNotification,
+                                      child: ListView.builder(
+                                        shrinkWrap: true,
+                                        controller: _scrollController,
+                                        itemCount: _calculateOtherUsersReviewsListLength(state),
+                                        itemBuilder: (context, index) {
+                                          if (index >= state.reviews.length) {
+                                            return BuildLoaderNextPage();
+                                          } else {
+                                            String postOwnerUid = state.reviews[index].postOwnerUid;
+                                            String postUid = state.reviews[index].postUid;
+                                            //Have to give a new BlocProvider instance to each item since each items needs its own state
+                                            return BlocProvider(
+                                              create: (context) => UserPostBloc(
+                                                _userActionsRepository,
+                                              ),
+                                              child: BlocProvider(
+                                                create: (context) => OtherUserProfileInformationBloc(
+                                                  _otherUserProfileRepository,
+                                                ),
+                                                child: OtherUserReview(
+                                                  postOwnerUid: postOwnerUid,
+                                                  postUid: postUid,
+                                                ),
+                                              ),
+                                            );
+                                          }
+                                        },
+                                      ),
+                                    );
+                            },
+                          ),
                         ],
                       ),
                     ),
@@ -592,6 +760,14 @@ class _TvShowDetailsPageState extends State<TvShowDetailsPage> {
         ),
       ),
     );
+  }
+
+  int _calculateOtherUsersReviewsListLength(ReviewsPostsState state) {
+    if (state.isThereMoreReviewsToLoad) {
+      return state.reviews.length + 1;
+    } else {
+      return state.reviews.length;
+    }
   }
 }
 

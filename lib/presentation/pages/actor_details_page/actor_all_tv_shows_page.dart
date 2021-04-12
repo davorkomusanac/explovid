@@ -120,7 +120,8 @@ class _ActorAllTvShowsPageState extends State<ActorAllTvShowsPage> with TickerPr
           Navigator.of(context, rootNavigator: false).push(
             MaterialPageRoute(
               builder: (context) => TvShowDetailsPage(
-                tvShowSummary.id,
+                tvShowName: tvShowSummary.name,
+                tvShowId: tvShowSummary.id,
               ),
             ),
           );

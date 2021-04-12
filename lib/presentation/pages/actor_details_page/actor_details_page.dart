@@ -176,7 +176,9 @@ class _ActorDetailsPageState extends State<ActorDetailsPage> {
                                               .push(
                                                 MaterialPageRoute(
                                                   builder: (context) => MovieDetailsPage(
-                                                      state.actorDetails.movieCredits.cast[index].movieSummary.id),
+                                                    movieId: state.actorDetails.movieCredits.cast[index].movieSummary.id,
+                                                    movieTitle: state.actorDetails.movieCredits.cast[index].movieSummary.title,
+                                                  ),
                                                 ),
                                               )
                                               .then(
@@ -247,7 +249,9 @@ class _ActorDetailsPageState extends State<ActorDetailsPage> {
                                               .push(
                                                 MaterialPageRoute(
                                                   builder: (context) => MovieDetailsPage(
-                                                      state.actorDetails.movieCredits.crew[index].movieSummary.id),
+                                                    movieId: state.actorDetails.movieCredits.crew[index].movieSummary.id,
+                                                    movieTitle: state.actorDetails.movieCredits.crew[index].movieSummary.title,
+                                                  ),
                                                 ),
                                               )
                                               .then(
@@ -356,7 +360,9 @@ class _ActorDetailsPageState extends State<ActorDetailsPage> {
                                               .push(
                                                 MaterialPageRoute(
                                                   builder: (context) => TvShowDetailsPage(
-                                                      state.actorDetails.tvCredits.cast[index].tvShowSummary.id),
+                                                    tvShowName: state.actorDetails.tvCredits.cast[index].tvShowSummary.name,
+                                                    tvShowId: state.actorDetails.tvCredits.cast[index].tvShowSummary.id,
+                                                  ),
                                                 ),
                                               )
                                               .then(
@@ -426,7 +432,9 @@ class _ActorDetailsPageState extends State<ActorDetailsPage> {
                                               .push(
                                                 MaterialPageRoute(
                                                   builder: (context) => TvShowDetailsPage(
-                                                      state.actorDetails.tvCredits.crew[index].tvShowSummary.id),
+                                                    tvShowName: state.actorDetails.tvCredits.crew[index].tvShowSummary.name,
+                                                    tvShowId: state.actorDetails.tvCredits.crew[index].tvShowSummary.id,
+                                                  ),
                                                 ),
                                               )
                                               .then(

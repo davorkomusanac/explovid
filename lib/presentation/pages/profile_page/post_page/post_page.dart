@@ -111,7 +111,7 @@ class _PostPageState extends State<PostPage> with TickerProviderStateMixin {
             showDialog(
               context: context,
               builder: (context) {
-                return BuildUpdateReviewDialog(
+                return _BuildUpdateReviewDialog(
                   state: state,
                   movieListsBloc: movieListsUserProfileBloc,
                   tvShowListsUserProfileBloc: tvShowListsUserProfileBloc,
@@ -473,13 +473,19 @@ class _PostPageState extends State<PostPage> with TickerProviderStateMixin {
                                       state.userPost.isOfTypeMovie
                                           ? Navigator.of(context).push(
                                               MaterialPageRoute(
-                                                builder: (context) => MovieDetailsPage(state.userPost.tmdbId),
+                                                builder: (context) => MovieDetailsPage(
+                                                  movieId: state.userPost.tmdbId,
+                                                  movieTitle: state.userPost.title,
+                                                ),
                                               ),
                                             )
                                           : Navigator.of(context)
                                               .push(
                                                 MaterialPageRoute(
-                                                  builder: (context) => TvShowDetailsPage(state.userPost.tmdbId),
+                                                  builder: (context) => TvShowDetailsPage(
+                                                    tvShowName: state.userPost.title,
+                                                    tvShowId: state.userPost.tmdbId,
+                                                  ),
                                                 ),
                                               )
                                               .then(
@@ -624,22 +630,22 @@ class _PostPageState extends State<PostPage> with TickerProviderStateMixin {
   }
 }
 
-class BuildUpdateReviewDialog extends StatefulWidget {
+class _BuildUpdateReviewDialog extends StatefulWidget {
   final MovieListsUserProfileBloc movieListsBloc;
   final TvShowListsUserProfileBloc tvShowListsUserProfileBloc;
   final UserPostState state;
 
-  BuildUpdateReviewDialog({
+  _BuildUpdateReviewDialog({
     this.movieListsBloc,
     this.tvShowListsUserProfileBloc,
     this.state,
   });
 
   @override
-  _BuildUpdateReviewDialogState createState() => _BuildUpdateReviewDialogState();
+  __BuildUpdateReviewDialogState createState() => __BuildUpdateReviewDialogState();
 }
 
-class _BuildUpdateReviewDialogState extends State<BuildUpdateReviewDialog> {
+class __BuildUpdateReviewDialogState extends State<_BuildUpdateReviewDialog> {
   double rating;
   bool isSpoiler;
   TextEditingController _controller;
