@@ -20,6 +20,7 @@ class PostCommentsPage extends StatefulWidget {
   final bool isPostSpoiler;
   final Timestamp postCreationDate;
   final bool isKeyboardFocused;
+  final String postPhotoUrl;
 
   PostCommentsPage({
     @required this.postOwnerUid,
@@ -31,6 +32,7 @@ class PostCommentsPage extends StatefulWidget {
     @required this.isPostSpoiler,
     @required this.postCreationDate,
     @required this.isKeyboardFocused,
+    @required this.postPhotoUrl,
   });
 
   @override
@@ -47,7 +49,7 @@ class _PostCommentsPageState extends State<PostCommentsPage> {
   String parentUserBeingRepliedTo = "";
   bool isCommentReplyOrStandAlone = false;
   String parentCommentUid = "";
-  String siblingReplyCommentUid = "";
+  String uidOfTheCommentOwnerBeingRepliedTo = "";
 
   @override
   void initState() {
@@ -384,7 +386,8 @@ class _PostCommentsPageState extends State<PostCommentsPage> {
                                                 parentCommentUid: parentCommentUid,
                                                 commentText: _textEditingController.text,
                                                 isCommentSpoiler: isCommentSpoiler,
-                                                //todo siblingCommentUid
+                                                uidOfTheCommentOwnerBeingRepliedTo: uidOfTheCommentOwnerBeingRepliedTo,
+                                                postPhotoUrl: widget.postPhotoUrl,
                                               ),
                                             );
                                       } else {
@@ -394,6 +397,7 @@ class _PostCommentsPageState extends State<PostCommentsPage> {
                                                 postUid: widget.postUid,
                                                 commentText: _textEditingController.text,
                                                 isCommentSpoiler: isCommentSpoiler,
+                                                postPhotoUrl: widget.postPhotoUrl,
                                               ),
                                             );
                                       }
@@ -455,7 +459,11 @@ class _PostCommentsPageState extends State<PostCommentsPage> {
                 showDialog(
                   context: context,
                   builder: (context) {
-                    return _buildDeleteCommentDialog(bloc: bloc, commentUid: comment.commentUid);
+                    return _buildDeleteCommentDialog(
+                      bloc: bloc,
+                      commentUid: comment.commentUid,
+                      commentOwnerUid: user.uid,
+                    );
                   },
                 );
               }
@@ -464,7 +472,13 @@ class _PostCommentsPageState extends State<PostCommentsPage> {
               if (!isCommentLiked)
                 context.read<UserPostBloc>().add(
                       UserPostEvent.likePostCommentPressed(
-                          postOwnerUid: widget.postOwnerUid, postUid: widget.postUid, commentUid: comment.commentUid),
+                        postOwnerUid: widget.postOwnerUid,
+                        postUid: widget.postUid,
+                        commentUid: comment.commentUid,
+                        commentText: comment.commentText,
+                        postPhotoUrl: widget.postPhotoUrl,
+                        commentOwnerUid: user.uid,
+                      ),
                     );
             },
             child: Row(
@@ -646,7 +660,7 @@ class _PostCommentsPageState extends State<PostCommentsPage> {
                                         isCommentReplyOrStandAlone = true;
                                         parentUserBeingRepliedTo = user.username;
                                         parentCommentUid = comment.commentUid;
-                                        siblingReplyCommentUid = "";
+                                        uidOfTheCommentOwnerBeingRepliedTo = user.uid;
                                       });
                                       //Have to call here show comment Replies when first replying, since otherwise if user presses reply
                                       //and sends something, he will not be able to load older replies without reloading the page
@@ -688,11 +702,21 @@ class _PostCommentsPageState extends State<PostCommentsPage> {
                         isCommentLiked
                             ? context.read<UserPostBloc>().add(
                                   UserPostEvent.unlikePostCommentPressed(
-                                      postOwnerUid: widget.postOwnerUid, postUid: widget.postUid, commentUid: comment.commentUid),
+                                    postOwnerUid: widget.postOwnerUid,
+                                    postUid: widget.postUid,
+                                    commentUid: comment.commentUid,
+                                    commentOwnerUid: user.uid,
+                                  ),
                                 )
                             : context.read<UserPostBloc>().add(
                                   UserPostEvent.likePostCommentPressed(
-                                      postOwnerUid: widget.postOwnerUid, postUid: widget.postUid, commentUid: comment.commentUid),
+                                    postOwnerUid: widget.postOwnerUid,
+                                    postUid: widget.postUid,
+                                    commentUid: comment.commentUid,
+                                    commentText: comment.commentText,
+                                    commentOwnerUid: user.uid,
+                                    postPhotoUrl: widget.postPhotoUrl,
+                                  ),
                                 );
                       },
                       child: isCommentLiked
@@ -721,8 +745,8 @@ class _PostCommentsPageState extends State<PostCommentsPage> {
             _buildCommentRepliesList(
               context: context,
               state: state,
-              index2: index,
               parentCommentUid: comment.commentUid,
+              parentCommentOwnerUid: user.uid,
             ),
         ],
       ),
@@ -737,8 +761,8 @@ class _PostCommentsPageState extends State<PostCommentsPage> {
   Widget _buildCommentRepliesList({
     @required BuildContext context,
     @required UserPostState state,
-    @required int index2,
     @required String parentCommentUid,
+    @required String parentCommentOwnerUid,
   }) {
     //Had to check each for null, since they are initialized as empty maps
     if (state.isLoadingCommentReplies[parentCommentUid] != null &&
@@ -777,6 +801,8 @@ class _PostCommentsPageState extends State<PostCommentsPage> {
                         commentUid: comment.commentUid,
                         parentCommentUid: parentCommentUid,
                         isCommentAReplyToAnotherComment: true,
+                        commentOwnerUid: user.uid,
+                        parentCommentOwnerUid: parentCommentOwnerUid,
                       );
                     },
                   );
@@ -790,6 +816,9 @@ class _PostCommentsPageState extends State<PostCommentsPage> {
                           postUid: widget.postUid,
                           parentCommentUid: parentCommentUid,
                           commentUid: comment.commentUid,
+                          commentOwnerUid: user.uid,
+                          postPhotoUrl: widget.postPhotoUrl,
+                          commentText: comment.commentText,
                         ),
                       );
               },
@@ -978,7 +1007,7 @@ class _PostCommentsPageState extends State<PostCommentsPage> {
                                           isCommentReplyOrStandAlone = true;
                                           parentUserBeingRepliedTo = user.username;
                                           this.parentCommentUid = parentCommentUid;
-                                          siblingReplyCommentUid = comment.commentUid;
+                                          uidOfTheCommentOwnerBeingRepliedTo = user.uid;
                                         });
                                       },
                                       child: Text(
@@ -1012,6 +1041,7 @@ class _PostCommentsPageState extends State<PostCommentsPage> {
                                       postUid: widget.postUid,
                                       parentCommentUid: parentCommentUid,
                                       commentUid: comment.commentUid,
+                                      commentOwnerUid: user.uid,
                                     ),
                                   )
                               : context.read<UserPostBloc>().add(
@@ -1020,6 +1050,9 @@ class _PostCommentsPageState extends State<PostCommentsPage> {
                                       postUid: widget.postUid,
                                       parentCommentUid: parentCommentUid,
                                       commentUid: comment.commentUid,
+                                      commentText: comment.commentText,
+                                      postPhotoUrl: widget.postPhotoUrl,
+                                      commentOwnerUid: user.uid,
                                     ),
                                   );
                         },
@@ -1062,6 +1095,8 @@ class _PostCommentsPageState extends State<PostCommentsPage> {
   Widget _buildDeleteCommentDialog({
     @required UserPostBloc bloc,
     @required String commentUid,
+    @required String commentOwnerUid,
+    String parentCommentOwnerUid = "",
     String parentCommentUid = "",
     bool isCommentAReplyToAnotherComment = false,
   }) {
@@ -1087,6 +1122,8 @@ class _PostCommentsPageState extends State<PostCommentsPage> {
                   commentUid: commentUid,
                   parentCommentUid: parentCommentUid,
                   isCommentAReplyToAnotherComment: isCommentAReplyToAnotherComment,
+                  parentCommentOwnerUid: parentCommentOwnerUid,
+                  commentOwnerUid: commentOwnerUid,
                 );
               },
             );
@@ -1103,7 +1140,9 @@ class _PostCommentsPageState extends State<PostCommentsPage> {
   Widget _buildConfirmDeleteCommentDialog({
     @required UserPostBloc bloc,
     @required String commentUid,
+    @required String commentOwnerUid,
     @required String parentCommentUid,
+    @required String parentCommentOwnerUid,
     @required bool isCommentAReplyToAnotherComment,
   }) {
     return AlertDialog(
@@ -1128,11 +1167,14 @@ class _PostCommentsPageState extends State<PostCommentsPage> {
                       postUid: widget.postUid,
                       commentUid: commentUid,
                       parentCommentUid: parentCommentUid,
+                      parentCommentOwnerUid: parentCommentOwnerUid,
+                      commentOwnerUid: commentOwnerUid,
                     )
                   : UserPostEvent.deleteCommentPostPressed(
                       postOwnerUid: widget.postOwnerUid,
                       postUid: widget.postUid,
                       commentUid: commentUid,
+                      commentOwnerUid: commentOwnerUid,
                     ),
             );
             Navigator.of(context, rootNavigator: true).pop();

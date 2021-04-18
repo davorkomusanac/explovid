@@ -7,6 +7,7 @@ import 'package:explovid/application/search/actor_search/actor_search_bloc.dart'
 import 'package:explovid/application/search/movie_search/movie_search_bloc.dart';
 import 'package:explovid/application/search/tv_show_search/tv_show_search_bloc.dart';
 import 'package:explovid/application/search/user_search/user_search_bloc.dart';
+import 'package:explovid/application/user_interactions/notifications/notifications_bloc.dart';
 import 'package:explovid/application/user_profile_information/current_user_profile_information/current_user_profile_information_bloc.dart';
 import 'package:explovid/application/user_profile_information/current_user_profile_information/current_user_profile_watchlist_watched/movie_lists/movie_lists_user_profile_bloc.dart';
 import 'package:explovid/application/user_profile_information/current_user_profile_information/current_user_profile_watchlist_watched/tv_show_lists/tv_show_lists_user_profile_bloc.dart';
@@ -127,6 +128,11 @@ class _MyAppState extends State<MyApp> {
         BlocProvider(
           create: (context) => EditProfileBloc(
             _authRepository,
+          ),
+        ),
+        BlocProvider(
+          create: (context) => NotificationsBloc(
+            _userActionsRepository,
           ),
         ),
       ],

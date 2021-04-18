@@ -29,10 +29,13 @@ class _$UserPostEventTearOff {
 
 // ignore: unused_element
   _LikePostPressed likePostPressed(
-      {@required String postOwnerUid, @required String postUid}) {
+      {@required String postOwnerUid,
+      @required String postUid,
+      @required String postPhotoUrl}) {
     return _LikePostPressed(
       postOwnerUid: postOwnerUid,
       postUid: postUid,
+      postPhotoUrl: postPhotoUrl,
     );
   }
 
@@ -68,12 +71,14 @@ class _$UserPostEventTearOff {
       {@required String postOwnerUid,
       @required String postUid,
       @required String commentText,
-      @required bool isCommentSpoiler}) {
+      @required bool isCommentSpoiler,
+      @required String postPhotoUrl}) {
     return _CommentPostPressed(
       postOwnerUid: postOwnerUid,
       postUid: postUid,
       commentText: commentText,
       isCommentSpoiler: isCommentSpoiler,
+      postPhotoUrl: postPhotoUrl,
     );
   }
 
@@ -81,11 +86,13 @@ class _$UserPostEventTearOff {
   _DeleteCommentPostPressed deleteCommentPostPressed(
       {@required String postOwnerUid,
       @required String postUid,
-      @required String commentUid}) {
+      @required String commentUid,
+      @required String commentOwnerUid}) {
     return _DeleteCommentPostPressed(
       postOwnerUid: postOwnerUid,
       postUid: postUid,
       commentUid: commentUid,
+      commentOwnerUid: commentOwnerUid,
     );
   }
 
@@ -116,11 +123,17 @@ class _$UserPostEventTearOff {
   _LikePostCommentPressed likePostCommentPressed(
       {@required String postOwnerUid,
       @required String postUid,
-      @required String commentUid}) {
+      @required String commentUid,
+      @required String commentOwnerUid,
+      @required String commentText,
+      @required String postPhotoUrl}) {
     return _LikePostCommentPressed(
       postOwnerUid: postOwnerUid,
       postUid: postUid,
       commentUid: commentUid,
+      commentOwnerUid: commentOwnerUid,
+      commentText: commentText,
+      postPhotoUrl: postPhotoUrl,
     );
   }
 
@@ -128,11 +141,13 @@ class _$UserPostEventTearOff {
   _UnlikePostCommentPressed unlikePostCommentPressed(
       {@required String postOwnerUid,
       @required String postUid,
-      @required String commentUid}) {
+      @required String commentUid,
+      @required String commentOwnerUid}) {
     return _UnlikePostCommentPressed(
       postOwnerUid: postOwnerUid,
       postUid: postUid,
       commentUid: commentUid,
+      commentOwnerUid: commentOwnerUid,
     );
   }
 
@@ -166,13 +181,17 @@ class _$UserPostEventTearOff {
       @required String postUid,
       @required String parentCommentUid,
       @required String commentText,
-      @required bool isCommentSpoiler}) {
+      @required bool isCommentSpoiler,
+      @required String postPhotoUrl,
+      @required String uidOfTheCommentOwnerBeingRepliedTo}) {
     return _ReplyToCommentPressed(
       postOwnerUid: postOwnerUid,
       postUid: postUid,
       parentCommentUid: parentCommentUid,
       commentText: commentText,
       isCommentSpoiler: isCommentSpoiler,
+      postPhotoUrl: postPhotoUrl,
+      uidOfTheCommentOwnerBeingRepliedTo: uidOfTheCommentOwnerBeingRepliedTo,
     );
   }
 
@@ -181,12 +200,16 @@ class _$UserPostEventTearOff {
       {@required String postOwnerUid,
       @required String postUid,
       @required String parentCommentUid,
-      @required String commentUid}) {
+      @required String commentUid,
+      @required String commentOwnerUid,
+      @required String parentCommentOwnerUid}) {
     return _DeleteReplyToCommentPressed(
       postOwnerUid: postOwnerUid,
       postUid: postUid,
       parentCommentUid: parentCommentUid,
       commentUid: commentUid,
+      commentOwnerUid: commentOwnerUid,
+      parentCommentOwnerUid: parentCommentOwnerUid,
     );
   }
 
@@ -235,12 +258,18 @@ class _$UserPostEventTearOff {
       {@required String postOwnerUid,
       @required String postUid,
       @required String parentCommentUid,
-      @required String commentUid}) {
+      @required String commentUid,
+      @required String commentOwnerUid,
+      @required String commentText,
+      @required String postPhotoUrl}) {
     return _LikeReplyToCommentPressed(
       postOwnerUid: postOwnerUid,
       postUid: postUid,
       parentCommentUid: parentCommentUid,
       commentUid: commentUid,
+      commentOwnerUid: commentOwnerUid,
+      commentText: commentText,
+      postPhotoUrl: postPhotoUrl,
     );
   }
 
@@ -249,12 +278,14 @@ class _$UserPostEventTearOff {
       {@required String postOwnerUid,
       @required String postUid,
       @required String parentCommentUid,
-      @required String commentUid}) {
+      @required String commentUid,
+      @required String commentOwnerUid}) {
     return _UnlikeReplyToCommentPressed(
       postOwnerUid: postOwnerUid,
       postUid: postUid,
       parentCommentUid: parentCommentUid,
       commentUid: commentUid,
+      commentOwnerUid: commentOwnerUid,
     );
   }
 
@@ -297,7 +328,9 @@ mixin _$UserPostEvent {
   TResult when<TResult extends Object>({
     @required TResult loadPostPressed(String postOwnerUid, String postUid),
     @required TResult showSpoilerPressed(),
-    @required TResult likePostPressed(String postOwnerUid, String postUid),
+    @required
+        TResult likePostPressed(
+            String postOwnerUid, String postUid, String postPhotoUrl),
     @required TResult unlikePostPressed(String postOwnerUid, String postUid),
     @required
         TResult showPostLikersPressed(String postOwnerUid, String postUid),
@@ -306,10 +339,10 @@ mixin _$UserPostEvent {
             String postOwnerUid, String postUid),
     @required
         TResult commentPostPressed(String postOwnerUid, String postUid,
-            String commentText, bool isCommentSpoiler),
+            String commentText, bool isCommentSpoiler, String postPhotoUrl),
     @required
-        TResult deleteCommentPostPressed(
-            String postOwnerUid, String postUid, String commentUid),
+        TResult deleteCommentPostPressed(String postOwnerUid, String postUid,
+            String commentUid, String commentOwnerUid),
     @required
         TResult showPostCommentsPressed(String postOwnerUid, String postUid),
     @required
@@ -318,10 +351,15 @@ mixin _$UserPostEvent {
     @required TResult showAllSpoilersInCommentsPressed(),
     @required
         TResult likePostCommentPressed(
-            String postOwnerUid, String postUid, String commentUid),
+            String postOwnerUid,
+            String postUid,
+            String commentUid,
+            String commentOwnerUid,
+            String commentText,
+            String postPhotoUrl),
     @required
-        TResult unlikePostCommentPressed(
-            String postOwnerUid, String postUid, String commentUid),
+        TResult unlikePostCommentPressed(String postOwnerUid, String postUid,
+            String commentUid, String commentOwnerUid),
     @required
         TResult showCommentLikersPressed(
             String postOwnerUid, String postUid, String commentUid),
@@ -329,11 +367,22 @@ mixin _$UserPostEvent {
         TResult nextPageShowCommentLikersPressed(
             String postOwnerUid, String postUid, String commentUid),
     @required
-        TResult replyToCommentPressed(String postOwnerUid, String postUid,
-            String parentCommentUid, String commentText, bool isCommentSpoiler),
+        TResult replyToCommentPressed(
+            String postOwnerUid,
+            String postUid,
+            String parentCommentUid,
+            String commentText,
+            bool isCommentSpoiler,
+            String postPhotoUrl,
+            String uidOfTheCommentOwnerBeingRepliedTo),
     @required
-        TResult deleteReplyToCommentPressed(String postOwnerUid, String postUid,
-            String parentCommentUid, String commentUid),
+        TResult deleteReplyToCommentPressed(
+            String postOwnerUid,
+            String postUid,
+            String parentCommentUid,
+            String commentUid,
+            String commentOwnerUid,
+            String parentCommentOwnerUid),
     @required
         TResult showCommentRepliesPressed(
             String postOwnerUid, String postUid, String parentCommentUid),
@@ -343,11 +392,17 @@ mixin _$UserPostEvent {
     @required TResult hideCommentRepliesPressed(String parentCommentUid),
     @required TResult unHideCommentRepliesPressed(String parentCommentUid),
     @required
-        TResult likeReplyToCommentPressed(String postOwnerUid, String postUid,
-            String parentCommentUid, String commentUid),
+        TResult likeReplyToCommentPressed(
+            String postOwnerUid,
+            String postUid,
+            String parentCommentUid,
+            String commentUid,
+            String commentOwnerUid,
+            String commentText,
+            String postPhotoUrl),
     @required
         TResult unlikeReplyToCommentPressed(String postOwnerUid, String postUid,
-            String parentCommentUid, String commentUid),
+            String parentCommentUid, String commentUid, String commentOwnerUid),
     @required
         TResult showReplyLikersPressed(String postOwnerUid, String postUid,
             String parentCommentUid, String commentUid),
@@ -359,40 +414,63 @@ mixin _$UserPostEvent {
   TResult maybeWhen<TResult extends Object>({
     TResult loadPostPressed(String postOwnerUid, String postUid),
     TResult showSpoilerPressed(),
-    TResult likePostPressed(String postOwnerUid, String postUid),
+    TResult likePostPressed(
+        String postOwnerUid, String postUid, String postPhotoUrl),
     TResult unlikePostPressed(String postOwnerUid, String postUid),
     TResult showPostLikersPressed(String postOwnerUid, String postUid),
     TResult nextPageShowPostLikersPressed(String postOwnerUid, String postUid),
     TResult commentPostPressed(String postOwnerUid, String postUid,
-        String commentText, bool isCommentSpoiler),
-    TResult deleteCommentPostPressed(
-        String postOwnerUid, String postUid, String commentUid),
+        String commentText, bool isCommentSpoiler, String postPhotoUrl),
+    TResult deleteCommentPostPressed(String postOwnerUid, String postUid,
+        String commentUid, String commentOwnerUid),
     TResult showPostCommentsPressed(String postOwnerUid, String postUid),
     TResult nextPageShowPostCommentsPressed(
         String postOwnerUid, String postUid),
     TResult showAllSpoilersInCommentsPressed(),
     TResult likePostCommentPressed(
-        String postOwnerUid, String postUid, String commentUid),
-    TResult unlikePostCommentPressed(
-        String postOwnerUid, String postUid, String commentUid),
+        String postOwnerUid,
+        String postUid,
+        String commentUid,
+        String commentOwnerUid,
+        String commentText,
+        String postPhotoUrl),
+    TResult unlikePostCommentPressed(String postOwnerUid, String postUid,
+        String commentUid, String commentOwnerUid),
     TResult showCommentLikersPressed(
         String postOwnerUid, String postUid, String commentUid),
     TResult nextPageShowCommentLikersPressed(
         String postOwnerUid, String postUid, String commentUid),
-    TResult replyToCommentPressed(String postOwnerUid, String postUid,
-        String parentCommentUid, String commentText, bool isCommentSpoiler),
-    TResult deleteReplyToCommentPressed(String postOwnerUid, String postUid,
-        String parentCommentUid, String commentUid),
+    TResult replyToCommentPressed(
+        String postOwnerUid,
+        String postUid,
+        String parentCommentUid,
+        String commentText,
+        bool isCommentSpoiler,
+        String postPhotoUrl,
+        String uidOfTheCommentOwnerBeingRepliedTo),
+    TResult deleteReplyToCommentPressed(
+        String postOwnerUid,
+        String postUid,
+        String parentCommentUid,
+        String commentUid,
+        String commentOwnerUid,
+        String parentCommentOwnerUid),
     TResult showCommentRepliesPressed(
         String postOwnerUid, String postUid, String parentCommentUid),
     TResult nextPageShowCommentRepliesPressed(
         String postOwnerUid, String postUid, String parentCommentUid),
     TResult hideCommentRepliesPressed(String parentCommentUid),
     TResult unHideCommentRepliesPressed(String parentCommentUid),
-    TResult likeReplyToCommentPressed(String postOwnerUid, String postUid,
-        String parentCommentUid, String commentUid),
+    TResult likeReplyToCommentPressed(
+        String postOwnerUid,
+        String postUid,
+        String parentCommentUid,
+        String commentUid,
+        String commentOwnerUid,
+        String commentText,
+        String postPhotoUrl),
     TResult unlikeReplyToCommentPressed(String postOwnerUid, String postUid,
-        String parentCommentUid, String commentUid),
+        String parentCommentUid, String commentUid, String commentOwnerUid),
     TResult showReplyLikersPressed(String postOwnerUid, String postUid,
         String parentCommentUid, String commentUid),
     TResult nextPageShowReplyLikersPressed(String postOwnerUid, String postUid,
@@ -573,7 +651,9 @@ class _$_LoadPostPressed implements _LoadPostPressed {
   TResult when<TResult extends Object>({
     @required TResult loadPostPressed(String postOwnerUid, String postUid),
     @required TResult showSpoilerPressed(),
-    @required TResult likePostPressed(String postOwnerUid, String postUid),
+    @required
+        TResult likePostPressed(
+            String postOwnerUid, String postUid, String postPhotoUrl),
     @required TResult unlikePostPressed(String postOwnerUid, String postUid),
     @required
         TResult showPostLikersPressed(String postOwnerUid, String postUid),
@@ -582,10 +662,10 @@ class _$_LoadPostPressed implements _LoadPostPressed {
             String postOwnerUid, String postUid),
     @required
         TResult commentPostPressed(String postOwnerUid, String postUid,
-            String commentText, bool isCommentSpoiler),
+            String commentText, bool isCommentSpoiler, String postPhotoUrl),
     @required
-        TResult deleteCommentPostPressed(
-            String postOwnerUid, String postUid, String commentUid),
+        TResult deleteCommentPostPressed(String postOwnerUid, String postUid,
+            String commentUid, String commentOwnerUid),
     @required
         TResult showPostCommentsPressed(String postOwnerUid, String postUid),
     @required
@@ -594,10 +674,15 @@ class _$_LoadPostPressed implements _LoadPostPressed {
     @required TResult showAllSpoilersInCommentsPressed(),
     @required
         TResult likePostCommentPressed(
-            String postOwnerUid, String postUid, String commentUid),
+            String postOwnerUid,
+            String postUid,
+            String commentUid,
+            String commentOwnerUid,
+            String commentText,
+            String postPhotoUrl),
     @required
-        TResult unlikePostCommentPressed(
-            String postOwnerUid, String postUid, String commentUid),
+        TResult unlikePostCommentPressed(String postOwnerUid, String postUid,
+            String commentUid, String commentOwnerUid),
     @required
         TResult showCommentLikersPressed(
             String postOwnerUid, String postUid, String commentUid),
@@ -605,11 +690,22 @@ class _$_LoadPostPressed implements _LoadPostPressed {
         TResult nextPageShowCommentLikersPressed(
             String postOwnerUid, String postUid, String commentUid),
     @required
-        TResult replyToCommentPressed(String postOwnerUid, String postUid,
-            String parentCommentUid, String commentText, bool isCommentSpoiler),
+        TResult replyToCommentPressed(
+            String postOwnerUid,
+            String postUid,
+            String parentCommentUid,
+            String commentText,
+            bool isCommentSpoiler,
+            String postPhotoUrl,
+            String uidOfTheCommentOwnerBeingRepliedTo),
     @required
-        TResult deleteReplyToCommentPressed(String postOwnerUid, String postUid,
-            String parentCommentUid, String commentUid),
+        TResult deleteReplyToCommentPressed(
+            String postOwnerUid,
+            String postUid,
+            String parentCommentUid,
+            String commentUid,
+            String commentOwnerUid,
+            String parentCommentOwnerUid),
     @required
         TResult showCommentRepliesPressed(
             String postOwnerUid, String postUid, String parentCommentUid),
@@ -619,11 +715,17 @@ class _$_LoadPostPressed implements _LoadPostPressed {
     @required TResult hideCommentRepliesPressed(String parentCommentUid),
     @required TResult unHideCommentRepliesPressed(String parentCommentUid),
     @required
-        TResult likeReplyToCommentPressed(String postOwnerUid, String postUid,
-            String parentCommentUid, String commentUid),
+        TResult likeReplyToCommentPressed(
+            String postOwnerUid,
+            String postUid,
+            String parentCommentUid,
+            String commentUid,
+            String commentOwnerUid,
+            String commentText,
+            String postPhotoUrl),
     @required
         TResult unlikeReplyToCommentPressed(String postOwnerUid, String postUid,
-            String parentCommentUid, String commentUid),
+            String parentCommentUid, String commentUid, String commentOwnerUid),
     @required
         TResult showReplyLikersPressed(String postOwnerUid, String postUid,
             String parentCommentUid, String commentUid),
@@ -664,40 +766,63 @@ class _$_LoadPostPressed implements _LoadPostPressed {
   TResult maybeWhen<TResult extends Object>({
     TResult loadPostPressed(String postOwnerUid, String postUid),
     TResult showSpoilerPressed(),
-    TResult likePostPressed(String postOwnerUid, String postUid),
+    TResult likePostPressed(
+        String postOwnerUid, String postUid, String postPhotoUrl),
     TResult unlikePostPressed(String postOwnerUid, String postUid),
     TResult showPostLikersPressed(String postOwnerUid, String postUid),
     TResult nextPageShowPostLikersPressed(String postOwnerUid, String postUid),
     TResult commentPostPressed(String postOwnerUid, String postUid,
-        String commentText, bool isCommentSpoiler),
-    TResult deleteCommentPostPressed(
-        String postOwnerUid, String postUid, String commentUid),
+        String commentText, bool isCommentSpoiler, String postPhotoUrl),
+    TResult deleteCommentPostPressed(String postOwnerUid, String postUid,
+        String commentUid, String commentOwnerUid),
     TResult showPostCommentsPressed(String postOwnerUid, String postUid),
     TResult nextPageShowPostCommentsPressed(
         String postOwnerUid, String postUid),
     TResult showAllSpoilersInCommentsPressed(),
     TResult likePostCommentPressed(
-        String postOwnerUid, String postUid, String commentUid),
-    TResult unlikePostCommentPressed(
-        String postOwnerUid, String postUid, String commentUid),
+        String postOwnerUid,
+        String postUid,
+        String commentUid,
+        String commentOwnerUid,
+        String commentText,
+        String postPhotoUrl),
+    TResult unlikePostCommentPressed(String postOwnerUid, String postUid,
+        String commentUid, String commentOwnerUid),
     TResult showCommentLikersPressed(
         String postOwnerUid, String postUid, String commentUid),
     TResult nextPageShowCommentLikersPressed(
         String postOwnerUid, String postUid, String commentUid),
-    TResult replyToCommentPressed(String postOwnerUid, String postUid,
-        String parentCommentUid, String commentText, bool isCommentSpoiler),
-    TResult deleteReplyToCommentPressed(String postOwnerUid, String postUid,
-        String parentCommentUid, String commentUid),
+    TResult replyToCommentPressed(
+        String postOwnerUid,
+        String postUid,
+        String parentCommentUid,
+        String commentText,
+        bool isCommentSpoiler,
+        String postPhotoUrl,
+        String uidOfTheCommentOwnerBeingRepliedTo),
+    TResult deleteReplyToCommentPressed(
+        String postOwnerUid,
+        String postUid,
+        String parentCommentUid,
+        String commentUid,
+        String commentOwnerUid,
+        String parentCommentOwnerUid),
     TResult showCommentRepliesPressed(
         String postOwnerUid, String postUid, String parentCommentUid),
     TResult nextPageShowCommentRepliesPressed(
         String postOwnerUid, String postUid, String parentCommentUid),
     TResult hideCommentRepliesPressed(String parentCommentUid),
     TResult unHideCommentRepliesPressed(String parentCommentUid),
-    TResult likeReplyToCommentPressed(String postOwnerUid, String postUid,
-        String parentCommentUid, String commentUid),
+    TResult likeReplyToCommentPressed(
+        String postOwnerUid,
+        String postUid,
+        String parentCommentUid,
+        String commentUid,
+        String commentOwnerUid,
+        String commentText,
+        String postPhotoUrl),
     TResult unlikeReplyToCommentPressed(String postOwnerUid, String postUid,
-        String parentCommentUid, String commentUid),
+        String parentCommentUid, String commentUid, String commentOwnerUid),
     TResult showReplyLikersPressed(String postOwnerUid, String postUid,
         String parentCommentUid, String commentUid),
     TResult nextPageShowReplyLikersPressed(String postOwnerUid, String postUid,
@@ -879,7 +1004,9 @@ class _$_ShowSpoilerPressed implements _ShowSpoilerPressed {
   TResult when<TResult extends Object>({
     @required TResult loadPostPressed(String postOwnerUid, String postUid),
     @required TResult showSpoilerPressed(),
-    @required TResult likePostPressed(String postOwnerUid, String postUid),
+    @required
+        TResult likePostPressed(
+            String postOwnerUid, String postUid, String postPhotoUrl),
     @required TResult unlikePostPressed(String postOwnerUid, String postUid),
     @required
         TResult showPostLikersPressed(String postOwnerUid, String postUid),
@@ -888,10 +1015,10 @@ class _$_ShowSpoilerPressed implements _ShowSpoilerPressed {
             String postOwnerUid, String postUid),
     @required
         TResult commentPostPressed(String postOwnerUid, String postUid,
-            String commentText, bool isCommentSpoiler),
+            String commentText, bool isCommentSpoiler, String postPhotoUrl),
     @required
-        TResult deleteCommentPostPressed(
-            String postOwnerUid, String postUid, String commentUid),
+        TResult deleteCommentPostPressed(String postOwnerUid, String postUid,
+            String commentUid, String commentOwnerUid),
     @required
         TResult showPostCommentsPressed(String postOwnerUid, String postUid),
     @required
@@ -900,10 +1027,15 @@ class _$_ShowSpoilerPressed implements _ShowSpoilerPressed {
     @required TResult showAllSpoilersInCommentsPressed(),
     @required
         TResult likePostCommentPressed(
-            String postOwnerUid, String postUid, String commentUid),
+            String postOwnerUid,
+            String postUid,
+            String commentUid,
+            String commentOwnerUid,
+            String commentText,
+            String postPhotoUrl),
     @required
-        TResult unlikePostCommentPressed(
-            String postOwnerUid, String postUid, String commentUid),
+        TResult unlikePostCommentPressed(String postOwnerUid, String postUid,
+            String commentUid, String commentOwnerUid),
     @required
         TResult showCommentLikersPressed(
             String postOwnerUid, String postUid, String commentUid),
@@ -911,11 +1043,22 @@ class _$_ShowSpoilerPressed implements _ShowSpoilerPressed {
         TResult nextPageShowCommentLikersPressed(
             String postOwnerUid, String postUid, String commentUid),
     @required
-        TResult replyToCommentPressed(String postOwnerUid, String postUid,
-            String parentCommentUid, String commentText, bool isCommentSpoiler),
+        TResult replyToCommentPressed(
+            String postOwnerUid,
+            String postUid,
+            String parentCommentUid,
+            String commentText,
+            bool isCommentSpoiler,
+            String postPhotoUrl,
+            String uidOfTheCommentOwnerBeingRepliedTo),
     @required
-        TResult deleteReplyToCommentPressed(String postOwnerUid, String postUid,
-            String parentCommentUid, String commentUid),
+        TResult deleteReplyToCommentPressed(
+            String postOwnerUid,
+            String postUid,
+            String parentCommentUid,
+            String commentUid,
+            String commentOwnerUid,
+            String parentCommentOwnerUid),
     @required
         TResult showCommentRepliesPressed(
             String postOwnerUid, String postUid, String parentCommentUid),
@@ -925,11 +1068,17 @@ class _$_ShowSpoilerPressed implements _ShowSpoilerPressed {
     @required TResult hideCommentRepliesPressed(String parentCommentUid),
     @required TResult unHideCommentRepliesPressed(String parentCommentUid),
     @required
-        TResult likeReplyToCommentPressed(String postOwnerUid, String postUid,
-            String parentCommentUid, String commentUid),
+        TResult likeReplyToCommentPressed(
+            String postOwnerUid,
+            String postUid,
+            String parentCommentUid,
+            String commentUid,
+            String commentOwnerUid,
+            String commentText,
+            String postPhotoUrl),
     @required
         TResult unlikeReplyToCommentPressed(String postOwnerUid, String postUid,
-            String parentCommentUid, String commentUid),
+            String parentCommentUid, String commentUid, String commentOwnerUid),
     @required
         TResult showReplyLikersPressed(String postOwnerUid, String postUid,
             String parentCommentUid, String commentUid),
@@ -970,40 +1119,63 @@ class _$_ShowSpoilerPressed implements _ShowSpoilerPressed {
   TResult maybeWhen<TResult extends Object>({
     TResult loadPostPressed(String postOwnerUid, String postUid),
     TResult showSpoilerPressed(),
-    TResult likePostPressed(String postOwnerUid, String postUid),
+    TResult likePostPressed(
+        String postOwnerUid, String postUid, String postPhotoUrl),
     TResult unlikePostPressed(String postOwnerUid, String postUid),
     TResult showPostLikersPressed(String postOwnerUid, String postUid),
     TResult nextPageShowPostLikersPressed(String postOwnerUid, String postUid),
     TResult commentPostPressed(String postOwnerUid, String postUid,
-        String commentText, bool isCommentSpoiler),
-    TResult deleteCommentPostPressed(
-        String postOwnerUid, String postUid, String commentUid),
+        String commentText, bool isCommentSpoiler, String postPhotoUrl),
+    TResult deleteCommentPostPressed(String postOwnerUid, String postUid,
+        String commentUid, String commentOwnerUid),
     TResult showPostCommentsPressed(String postOwnerUid, String postUid),
     TResult nextPageShowPostCommentsPressed(
         String postOwnerUid, String postUid),
     TResult showAllSpoilersInCommentsPressed(),
     TResult likePostCommentPressed(
-        String postOwnerUid, String postUid, String commentUid),
-    TResult unlikePostCommentPressed(
-        String postOwnerUid, String postUid, String commentUid),
+        String postOwnerUid,
+        String postUid,
+        String commentUid,
+        String commentOwnerUid,
+        String commentText,
+        String postPhotoUrl),
+    TResult unlikePostCommentPressed(String postOwnerUid, String postUid,
+        String commentUid, String commentOwnerUid),
     TResult showCommentLikersPressed(
         String postOwnerUid, String postUid, String commentUid),
     TResult nextPageShowCommentLikersPressed(
         String postOwnerUid, String postUid, String commentUid),
-    TResult replyToCommentPressed(String postOwnerUid, String postUid,
-        String parentCommentUid, String commentText, bool isCommentSpoiler),
-    TResult deleteReplyToCommentPressed(String postOwnerUid, String postUid,
-        String parentCommentUid, String commentUid),
+    TResult replyToCommentPressed(
+        String postOwnerUid,
+        String postUid,
+        String parentCommentUid,
+        String commentText,
+        bool isCommentSpoiler,
+        String postPhotoUrl,
+        String uidOfTheCommentOwnerBeingRepliedTo),
+    TResult deleteReplyToCommentPressed(
+        String postOwnerUid,
+        String postUid,
+        String parentCommentUid,
+        String commentUid,
+        String commentOwnerUid,
+        String parentCommentOwnerUid),
     TResult showCommentRepliesPressed(
         String postOwnerUid, String postUid, String parentCommentUid),
     TResult nextPageShowCommentRepliesPressed(
         String postOwnerUid, String postUid, String parentCommentUid),
     TResult hideCommentRepliesPressed(String parentCommentUid),
     TResult unHideCommentRepliesPressed(String parentCommentUid),
-    TResult likeReplyToCommentPressed(String postOwnerUid, String postUid,
-        String parentCommentUid, String commentUid),
+    TResult likeReplyToCommentPressed(
+        String postOwnerUid,
+        String postUid,
+        String parentCommentUid,
+        String commentUid,
+        String commentOwnerUid,
+        String commentText,
+        String postPhotoUrl),
     TResult unlikeReplyToCommentPressed(String postOwnerUid, String postUid,
-        String parentCommentUid, String commentUid),
+        String parentCommentUid, String commentUid, String commentOwnerUid),
     TResult showReplyLikersPressed(String postOwnerUid, String postUid,
         String parentCommentUid, String commentUid),
     TResult nextPageShowReplyLikersPressed(String postOwnerUid, String postUid,
@@ -1142,7 +1314,7 @@ abstract class _$LikePostPressedCopyWith<$Res> {
   factory _$LikePostPressedCopyWith(
           _LikePostPressed value, $Res Function(_LikePostPressed) then) =
       __$LikePostPressedCopyWithImpl<$Res>;
-  $Res call({String postOwnerUid, String postUid});
+  $Res call({String postOwnerUid, String postUid, String postPhotoUrl});
 }
 
 /// @nodoc
@@ -1160,12 +1332,16 @@ class __$LikePostPressedCopyWithImpl<$Res>
   $Res call({
     Object postOwnerUid = freezed,
     Object postUid = freezed,
+    Object postPhotoUrl = freezed,
   }) {
     return _then(_LikePostPressed(
       postOwnerUid: postOwnerUid == freezed
           ? _value.postOwnerUid
           : postOwnerUid as String,
       postUid: postUid == freezed ? _value.postUid : postUid as String,
+      postPhotoUrl: postPhotoUrl == freezed
+          ? _value.postPhotoUrl
+          : postPhotoUrl as String,
     ));
   }
 }
@@ -1173,18 +1349,23 @@ class __$LikePostPressedCopyWithImpl<$Res>
 /// @nodoc
 class _$_LikePostPressed implements _LikePostPressed {
   const _$_LikePostPressed(
-      {@required this.postOwnerUid, @required this.postUid})
+      {@required this.postOwnerUid,
+      @required this.postUid,
+      @required this.postPhotoUrl})
       : assert(postOwnerUid != null),
-        assert(postUid != null);
+        assert(postUid != null),
+        assert(postPhotoUrl != null);
 
   @override
   final String postOwnerUid;
   @override
   final String postUid;
+  @override
+  final String postPhotoUrl;
 
   @override
   String toString() {
-    return 'UserPostEvent.likePostPressed(postOwnerUid: $postOwnerUid, postUid: $postUid)';
+    return 'UserPostEvent.likePostPressed(postOwnerUid: $postOwnerUid, postUid: $postUid, postPhotoUrl: $postPhotoUrl)';
   }
 
   @override
@@ -1195,14 +1376,19 @@ class _$_LikePostPressed implements _LikePostPressed {
                 const DeepCollectionEquality()
                     .equals(other.postOwnerUid, postOwnerUid)) &&
             (identical(other.postUid, postUid) ||
-                const DeepCollectionEquality().equals(other.postUid, postUid)));
+                const DeepCollectionEquality()
+                    .equals(other.postUid, postUid)) &&
+            (identical(other.postPhotoUrl, postPhotoUrl) ||
+                const DeepCollectionEquality()
+                    .equals(other.postPhotoUrl, postPhotoUrl)));
   }
 
   @override
   int get hashCode =>
       runtimeType.hashCode ^
       const DeepCollectionEquality().hash(postOwnerUid) ^
-      const DeepCollectionEquality().hash(postUid);
+      const DeepCollectionEquality().hash(postUid) ^
+      const DeepCollectionEquality().hash(postPhotoUrl);
 
   @JsonKey(ignore: true)
   @override
@@ -1214,7 +1400,9 @@ class _$_LikePostPressed implements _LikePostPressed {
   TResult when<TResult extends Object>({
     @required TResult loadPostPressed(String postOwnerUid, String postUid),
     @required TResult showSpoilerPressed(),
-    @required TResult likePostPressed(String postOwnerUid, String postUid),
+    @required
+        TResult likePostPressed(
+            String postOwnerUid, String postUid, String postPhotoUrl),
     @required TResult unlikePostPressed(String postOwnerUid, String postUid),
     @required
         TResult showPostLikersPressed(String postOwnerUid, String postUid),
@@ -1223,10 +1411,10 @@ class _$_LikePostPressed implements _LikePostPressed {
             String postOwnerUid, String postUid),
     @required
         TResult commentPostPressed(String postOwnerUid, String postUid,
-            String commentText, bool isCommentSpoiler),
+            String commentText, bool isCommentSpoiler, String postPhotoUrl),
     @required
-        TResult deleteCommentPostPressed(
-            String postOwnerUid, String postUid, String commentUid),
+        TResult deleteCommentPostPressed(String postOwnerUid, String postUid,
+            String commentUid, String commentOwnerUid),
     @required
         TResult showPostCommentsPressed(String postOwnerUid, String postUid),
     @required
@@ -1235,10 +1423,15 @@ class _$_LikePostPressed implements _LikePostPressed {
     @required TResult showAllSpoilersInCommentsPressed(),
     @required
         TResult likePostCommentPressed(
-            String postOwnerUid, String postUid, String commentUid),
+            String postOwnerUid,
+            String postUid,
+            String commentUid,
+            String commentOwnerUid,
+            String commentText,
+            String postPhotoUrl),
     @required
-        TResult unlikePostCommentPressed(
-            String postOwnerUid, String postUid, String commentUid),
+        TResult unlikePostCommentPressed(String postOwnerUid, String postUid,
+            String commentUid, String commentOwnerUid),
     @required
         TResult showCommentLikersPressed(
             String postOwnerUid, String postUid, String commentUid),
@@ -1246,11 +1439,22 @@ class _$_LikePostPressed implements _LikePostPressed {
         TResult nextPageShowCommentLikersPressed(
             String postOwnerUid, String postUid, String commentUid),
     @required
-        TResult replyToCommentPressed(String postOwnerUid, String postUid,
-            String parentCommentUid, String commentText, bool isCommentSpoiler),
+        TResult replyToCommentPressed(
+            String postOwnerUid,
+            String postUid,
+            String parentCommentUid,
+            String commentText,
+            bool isCommentSpoiler,
+            String postPhotoUrl,
+            String uidOfTheCommentOwnerBeingRepliedTo),
     @required
-        TResult deleteReplyToCommentPressed(String postOwnerUid, String postUid,
-            String parentCommentUid, String commentUid),
+        TResult deleteReplyToCommentPressed(
+            String postOwnerUid,
+            String postUid,
+            String parentCommentUid,
+            String commentUid,
+            String commentOwnerUid,
+            String parentCommentOwnerUid),
     @required
         TResult showCommentRepliesPressed(
             String postOwnerUid, String postUid, String parentCommentUid),
@@ -1260,11 +1464,17 @@ class _$_LikePostPressed implements _LikePostPressed {
     @required TResult hideCommentRepliesPressed(String parentCommentUid),
     @required TResult unHideCommentRepliesPressed(String parentCommentUid),
     @required
-        TResult likeReplyToCommentPressed(String postOwnerUid, String postUid,
-            String parentCommentUid, String commentUid),
+        TResult likeReplyToCommentPressed(
+            String postOwnerUid,
+            String postUid,
+            String parentCommentUid,
+            String commentUid,
+            String commentOwnerUid,
+            String commentText,
+            String postPhotoUrl),
     @required
         TResult unlikeReplyToCommentPressed(String postOwnerUid, String postUid,
-            String parentCommentUid, String commentUid),
+            String parentCommentUid, String commentUid, String commentOwnerUid),
     @required
         TResult showReplyLikersPressed(String postOwnerUid, String postUid,
             String parentCommentUid, String commentUid),
@@ -1297,7 +1507,7 @@ class _$_LikePostPressed implements _LikePostPressed {
     assert(unlikeReplyToCommentPressed != null);
     assert(showReplyLikersPressed != null);
     assert(nextPageShowReplyLikersPressed != null);
-    return likePostPressed(postOwnerUid, postUid);
+    return likePostPressed(postOwnerUid, postUid, postPhotoUrl);
   }
 
   @override
@@ -1305,40 +1515,63 @@ class _$_LikePostPressed implements _LikePostPressed {
   TResult maybeWhen<TResult extends Object>({
     TResult loadPostPressed(String postOwnerUid, String postUid),
     TResult showSpoilerPressed(),
-    TResult likePostPressed(String postOwnerUid, String postUid),
+    TResult likePostPressed(
+        String postOwnerUid, String postUid, String postPhotoUrl),
     TResult unlikePostPressed(String postOwnerUid, String postUid),
     TResult showPostLikersPressed(String postOwnerUid, String postUid),
     TResult nextPageShowPostLikersPressed(String postOwnerUid, String postUid),
     TResult commentPostPressed(String postOwnerUid, String postUid,
-        String commentText, bool isCommentSpoiler),
-    TResult deleteCommentPostPressed(
-        String postOwnerUid, String postUid, String commentUid),
+        String commentText, bool isCommentSpoiler, String postPhotoUrl),
+    TResult deleteCommentPostPressed(String postOwnerUid, String postUid,
+        String commentUid, String commentOwnerUid),
     TResult showPostCommentsPressed(String postOwnerUid, String postUid),
     TResult nextPageShowPostCommentsPressed(
         String postOwnerUid, String postUid),
     TResult showAllSpoilersInCommentsPressed(),
     TResult likePostCommentPressed(
-        String postOwnerUid, String postUid, String commentUid),
-    TResult unlikePostCommentPressed(
-        String postOwnerUid, String postUid, String commentUid),
+        String postOwnerUid,
+        String postUid,
+        String commentUid,
+        String commentOwnerUid,
+        String commentText,
+        String postPhotoUrl),
+    TResult unlikePostCommentPressed(String postOwnerUid, String postUid,
+        String commentUid, String commentOwnerUid),
     TResult showCommentLikersPressed(
         String postOwnerUid, String postUid, String commentUid),
     TResult nextPageShowCommentLikersPressed(
         String postOwnerUid, String postUid, String commentUid),
-    TResult replyToCommentPressed(String postOwnerUid, String postUid,
-        String parentCommentUid, String commentText, bool isCommentSpoiler),
-    TResult deleteReplyToCommentPressed(String postOwnerUid, String postUid,
-        String parentCommentUid, String commentUid),
+    TResult replyToCommentPressed(
+        String postOwnerUid,
+        String postUid,
+        String parentCommentUid,
+        String commentText,
+        bool isCommentSpoiler,
+        String postPhotoUrl,
+        String uidOfTheCommentOwnerBeingRepliedTo),
+    TResult deleteReplyToCommentPressed(
+        String postOwnerUid,
+        String postUid,
+        String parentCommentUid,
+        String commentUid,
+        String commentOwnerUid,
+        String parentCommentOwnerUid),
     TResult showCommentRepliesPressed(
         String postOwnerUid, String postUid, String parentCommentUid),
     TResult nextPageShowCommentRepliesPressed(
         String postOwnerUid, String postUid, String parentCommentUid),
     TResult hideCommentRepliesPressed(String parentCommentUid),
     TResult unHideCommentRepliesPressed(String parentCommentUid),
-    TResult likeReplyToCommentPressed(String postOwnerUid, String postUid,
-        String parentCommentUid, String commentUid),
+    TResult likeReplyToCommentPressed(
+        String postOwnerUid,
+        String postUid,
+        String parentCommentUid,
+        String commentUid,
+        String commentOwnerUid,
+        String commentText,
+        String postPhotoUrl),
     TResult unlikeReplyToCommentPressed(String postOwnerUid, String postUid,
-        String parentCommentUid, String commentUid),
+        String parentCommentUid, String commentUid, String commentOwnerUid),
     TResult showReplyLikersPressed(String postOwnerUid, String postUid,
         String parentCommentUid, String commentUid),
     TResult nextPageShowReplyLikersPressed(String postOwnerUid, String postUid,
@@ -1347,7 +1580,7 @@ class _$_LikePostPressed implements _LikePostPressed {
   }) {
     assert(orElse != null);
     if (likePostPressed != null) {
-      return likePostPressed(postOwnerUid, postUid);
+      return likePostPressed(postOwnerUid, postUid, postPhotoUrl);
     }
     return orElse();
   }
@@ -1471,10 +1704,12 @@ class _$_LikePostPressed implements _LikePostPressed {
 abstract class _LikePostPressed implements UserPostEvent {
   const factory _LikePostPressed(
       {@required String postOwnerUid,
-      @required String postUid}) = _$_LikePostPressed;
+      @required String postUid,
+      @required String postPhotoUrl}) = _$_LikePostPressed;
 
   String get postOwnerUid;
   String get postUid;
+  String get postPhotoUrl;
   @JsonKey(ignore: true)
   _$LikePostPressedCopyWith<_LikePostPressed> get copyWith;
 }
@@ -1556,7 +1791,9 @@ class _$_UnlikePostPressed implements _UnlikePostPressed {
   TResult when<TResult extends Object>({
     @required TResult loadPostPressed(String postOwnerUid, String postUid),
     @required TResult showSpoilerPressed(),
-    @required TResult likePostPressed(String postOwnerUid, String postUid),
+    @required
+        TResult likePostPressed(
+            String postOwnerUid, String postUid, String postPhotoUrl),
     @required TResult unlikePostPressed(String postOwnerUid, String postUid),
     @required
         TResult showPostLikersPressed(String postOwnerUid, String postUid),
@@ -1565,10 +1802,10 @@ class _$_UnlikePostPressed implements _UnlikePostPressed {
             String postOwnerUid, String postUid),
     @required
         TResult commentPostPressed(String postOwnerUid, String postUid,
-            String commentText, bool isCommentSpoiler),
+            String commentText, bool isCommentSpoiler, String postPhotoUrl),
     @required
-        TResult deleteCommentPostPressed(
-            String postOwnerUid, String postUid, String commentUid),
+        TResult deleteCommentPostPressed(String postOwnerUid, String postUid,
+            String commentUid, String commentOwnerUid),
     @required
         TResult showPostCommentsPressed(String postOwnerUid, String postUid),
     @required
@@ -1577,10 +1814,15 @@ class _$_UnlikePostPressed implements _UnlikePostPressed {
     @required TResult showAllSpoilersInCommentsPressed(),
     @required
         TResult likePostCommentPressed(
-            String postOwnerUid, String postUid, String commentUid),
+            String postOwnerUid,
+            String postUid,
+            String commentUid,
+            String commentOwnerUid,
+            String commentText,
+            String postPhotoUrl),
     @required
-        TResult unlikePostCommentPressed(
-            String postOwnerUid, String postUid, String commentUid),
+        TResult unlikePostCommentPressed(String postOwnerUid, String postUid,
+            String commentUid, String commentOwnerUid),
     @required
         TResult showCommentLikersPressed(
             String postOwnerUid, String postUid, String commentUid),
@@ -1588,11 +1830,22 @@ class _$_UnlikePostPressed implements _UnlikePostPressed {
         TResult nextPageShowCommentLikersPressed(
             String postOwnerUid, String postUid, String commentUid),
     @required
-        TResult replyToCommentPressed(String postOwnerUid, String postUid,
-            String parentCommentUid, String commentText, bool isCommentSpoiler),
+        TResult replyToCommentPressed(
+            String postOwnerUid,
+            String postUid,
+            String parentCommentUid,
+            String commentText,
+            bool isCommentSpoiler,
+            String postPhotoUrl,
+            String uidOfTheCommentOwnerBeingRepliedTo),
     @required
-        TResult deleteReplyToCommentPressed(String postOwnerUid, String postUid,
-            String parentCommentUid, String commentUid),
+        TResult deleteReplyToCommentPressed(
+            String postOwnerUid,
+            String postUid,
+            String parentCommentUid,
+            String commentUid,
+            String commentOwnerUid,
+            String parentCommentOwnerUid),
     @required
         TResult showCommentRepliesPressed(
             String postOwnerUid, String postUid, String parentCommentUid),
@@ -1602,11 +1855,17 @@ class _$_UnlikePostPressed implements _UnlikePostPressed {
     @required TResult hideCommentRepliesPressed(String parentCommentUid),
     @required TResult unHideCommentRepliesPressed(String parentCommentUid),
     @required
-        TResult likeReplyToCommentPressed(String postOwnerUid, String postUid,
-            String parentCommentUid, String commentUid),
+        TResult likeReplyToCommentPressed(
+            String postOwnerUid,
+            String postUid,
+            String parentCommentUid,
+            String commentUid,
+            String commentOwnerUid,
+            String commentText,
+            String postPhotoUrl),
     @required
         TResult unlikeReplyToCommentPressed(String postOwnerUid, String postUid,
-            String parentCommentUid, String commentUid),
+            String parentCommentUid, String commentUid, String commentOwnerUid),
     @required
         TResult showReplyLikersPressed(String postOwnerUid, String postUid,
             String parentCommentUid, String commentUid),
@@ -1647,40 +1906,63 @@ class _$_UnlikePostPressed implements _UnlikePostPressed {
   TResult maybeWhen<TResult extends Object>({
     TResult loadPostPressed(String postOwnerUid, String postUid),
     TResult showSpoilerPressed(),
-    TResult likePostPressed(String postOwnerUid, String postUid),
+    TResult likePostPressed(
+        String postOwnerUid, String postUid, String postPhotoUrl),
     TResult unlikePostPressed(String postOwnerUid, String postUid),
     TResult showPostLikersPressed(String postOwnerUid, String postUid),
     TResult nextPageShowPostLikersPressed(String postOwnerUid, String postUid),
     TResult commentPostPressed(String postOwnerUid, String postUid,
-        String commentText, bool isCommentSpoiler),
-    TResult deleteCommentPostPressed(
-        String postOwnerUid, String postUid, String commentUid),
+        String commentText, bool isCommentSpoiler, String postPhotoUrl),
+    TResult deleteCommentPostPressed(String postOwnerUid, String postUid,
+        String commentUid, String commentOwnerUid),
     TResult showPostCommentsPressed(String postOwnerUid, String postUid),
     TResult nextPageShowPostCommentsPressed(
         String postOwnerUid, String postUid),
     TResult showAllSpoilersInCommentsPressed(),
     TResult likePostCommentPressed(
-        String postOwnerUid, String postUid, String commentUid),
-    TResult unlikePostCommentPressed(
-        String postOwnerUid, String postUid, String commentUid),
+        String postOwnerUid,
+        String postUid,
+        String commentUid,
+        String commentOwnerUid,
+        String commentText,
+        String postPhotoUrl),
+    TResult unlikePostCommentPressed(String postOwnerUid, String postUid,
+        String commentUid, String commentOwnerUid),
     TResult showCommentLikersPressed(
         String postOwnerUid, String postUid, String commentUid),
     TResult nextPageShowCommentLikersPressed(
         String postOwnerUid, String postUid, String commentUid),
-    TResult replyToCommentPressed(String postOwnerUid, String postUid,
-        String parentCommentUid, String commentText, bool isCommentSpoiler),
-    TResult deleteReplyToCommentPressed(String postOwnerUid, String postUid,
-        String parentCommentUid, String commentUid),
+    TResult replyToCommentPressed(
+        String postOwnerUid,
+        String postUid,
+        String parentCommentUid,
+        String commentText,
+        bool isCommentSpoiler,
+        String postPhotoUrl,
+        String uidOfTheCommentOwnerBeingRepliedTo),
+    TResult deleteReplyToCommentPressed(
+        String postOwnerUid,
+        String postUid,
+        String parentCommentUid,
+        String commentUid,
+        String commentOwnerUid,
+        String parentCommentOwnerUid),
     TResult showCommentRepliesPressed(
         String postOwnerUid, String postUid, String parentCommentUid),
     TResult nextPageShowCommentRepliesPressed(
         String postOwnerUid, String postUid, String parentCommentUid),
     TResult hideCommentRepliesPressed(String parentCommentUid),
     TResult unHideCommentRepliesPressed(String parentCommentUid),
-    TResult likeReplyToCommentPressed(String postOwnerUid, String postUid,
-        String parentCommentUid, String commentUid),
+    TResult likeReplyToCommentPressed(
+        String postOwnerUid,
+        String postUid,
+        String parentCommentUid,
+        String commentUid,
+        String commentOwnerUid,
+        String commentText,
+        String postPhotoUrl),
     TResult unlikeReplyToCommentPressed(String postOwnerUid, String postUid,
-        String parentCommentUid, String commentUid),
+        String parentCommentUid, String commentUid, String commentOwnerUid),
     TResult showReplyLikersPressed(String postOwnerUid, String postUid,
         String parentCommentUid, String commentUid),
     TResult nextPageShowReplyLikersPressed(String postOwnerUid, String postUid,
@@ -1899,7 +2181,9 @@ class _$_ShowPostLikersPressed implements _ShowPostLikersPressed {
   TResult when<TResult extends Object>({
     @required TResult loadPostPressed(String postOwnerUid, String postUid),
     @required TResult showSpoilerPressed(),
-    @required TResult likePostPressed(String postOwnerUid, String postUid),
+    @required
+        TResult likePostPressed(
+            String postOwnerUid, String postUid, String postPhotoUrl),
     @required TResult unlikePostPressed(String postOwnerUid, String postUid),
     @required
         TResult showPostLikersPressed(String postOwnerUid, String postUid),
@@ -1908,10 +2192,10 @@ class _$_ShowPostLikersPressed implements _ShowPostLikersPressed {
             String postOwnerUid, String postUid),
     @required
         TResult commentPostPressed(String postOwnerUid, String postUid,
-            String commentText, bool isCommentSpoiler),
+            String commentText, bool isCommentSpoiler, String postPhotoUrl),
     @required
-        TResult deleteCommentPostPressed(
-            String postOwnerUid, String postUid, String commentUid),
+        TResult deleteCommentPostPressed(String postOwnerUid, String postUid,
+            String commentUid, String commentOwnerUid),
     @required
         TResult showPostCommentsPressed(String postOwnerUid, String postUid),
     @required
@@ -1920,10 +2204,15 @@ class _$_ShowPostLikersPressed implements _ShowPostLikersPressed {
     @required TResult showAllSpoilersInCommentsPressed(),
     @required
         TResult likePostCommentPressed(
-            String postOwnerUid, String postUid, String commentUid),
+            String postOwnerUid,
+            String postUid,
+            String commentUid,
+            String commentOwnerUid,
+            String commentText,
+            String postPhotoUrl),
     @required
-        TResult unlikePostCommentPressed(
-            String postOwnerUid, String postUid, String commentUid),
+        TResult unlikePostCommentPressed(String postOwnerUid, String postUid,
+            String commentUid, String commentOwnerUid),
     @required
         TResult showCommentLikersPressed(
             String postOwnerUid, String postUid, String commentUid),
@@ -1931,11 +2220,22 @@ class _$_ShowPostLikersPressed implements _ShowPostLikersPressed {
         TResult nextPageShowCommentLikersPressed(
             String postOwnerUid, String postUid, String commentUid),
     @required
-        TResult replyToCommentPressed(String postOwnerUid, String postUid,
-            String parentCommentUid, String commentText, bool isCommentSpoiler),
+        TResult replyToCommentPressed(
+            String postOwnerUid,
+            String postUid,
+            String parentCommentUid,
+            String commentText,
+            bool isCommentSpoiler,
+            String postPhotoUrl,
+            String uidOfTheCommentOwnerBeingRepliedTo),
     @required
-        TResult deleteReplyToCommentPressed(String postOwnerUid, String postUid,
-            String parentCommentUid, String commentUid),
+        TResult deleteReplyToCommentPressed(
+            String postOwnerUid,
+            String postUid,
+            String parentCommentUid,
+            String commentUid,
+            String commentOwnerUid,
+            String parentCommentOwnerUid),
     @required
         TResult showCommentRepliesPressed(
             String postOwnerUid, String postUid, String parentCommentUid),
@@ -1945,11 +2245,17 @@ class _$_ShowPostLikersPressed implements _ShowPostLikersPressed {
     @required TResult hideCommentRepliesPressed(String parentCommentUid),
     @required TResult unHideCommentRepliesPressed(String parentCommentUid),
     @required
-        TResult likeReplyToCommentPressed(String postOwnerUid, String postUid,
-            String parentCommentUid, String commentUid),
+        TResult likeReplyToCommentPressed(
+            String postOwnerUid,
+            String postUid,
+            String parentCommentUid,
+            String commentUid,
+            String commentOwnerUid,
+            String commentText,
+            String postPhotoUrl),
     @required
         TResult unlikeReplyToCommentPressed(String postOwnerUid, String postUid,
-            String parentCommentUid, String commentUid),
+            String parentCommentUid, String commentUid, String commentOwnerUid),
     @required
         TResult showReplyLikersPressed(String postOwnerUid, String postUid,
             String parentCommentUid, String commentUid),
@@ -1990,40 +2296,63 @@ class _$_ShowPostLikersPressed implements _ShowPostLikersPressed {
   TResult maybeWhen<TResult extends Object>({
     TResult loadPostPressed(String postOwnerUid, String postUid),
     TResult showSpoilerPressed(),
-    TResult likePostPressed(String postOwnerUid, String postUid),
+    TResult likePostPressed(
+        String postOwnerUid, String postUid, String postPhotoUrl),
     TResult unlikePostPressed(String postOwnerUid, String postUid),
     TResult showPostLikersPressed(String postOwnerUid, String postUid),
     TResult nextPageShowPostLikersPressed(String postOwnerUid, String postUid),
     TResult commentPostPressed(String postOwnerUid, String postUid,
-        String commentText, bool isCommentSpoiler),
-    TResult deleteCommentPostPressed(
-        String postOwnerUid, String postUid, String commentUid),
+        String commentText, bool isCommentSpoiler, String postPhotoUrl),
+    TResult deleteCommentPostPressed(String postOwnerUid, String postUid,
+        String commentUid, String commentOwnerUid),
     TResult showPostCommentsPressed(String postOwnerUid, String postUid),
     TResult nextPageShowPostCommentsPressed(
         String postOwnerUid, String postUid),
     TResult showAllSpoilersInCommentsPressed(),
     TResult likePostCommentPressed(
-        String postOwnerUid, String postUid, String commentUid),
-    TResult unlikePostCommentPressed(
-        String postOwnerUid, String postUid, String commentUid),
+        String postOwnerUid,
+        String postUid,
+        String commentUid,
+        String commentOwnerUid,
+        String commentText,
+        String postPhotoUrl),
+    TResult unlikePostCommentPressed(String postOwnerUid, String postUid,
+        String commentUid, String commentOwnerUid),
     TResult showCommentLikersPressed(
         String postOwnerUid, String postUid, String commentUid),
     TResult nextPageShowCommentLikersPressed(
         String postOwnerUid, String postUid, String commentUid),
-    TResult replyToCommentPressed(String postOwnerUid, String postUid,
-        String parentCommentUid, String commentText, bool isCommentSpoiler),
-    TResult deleteReplyToCommentPressed(String postOwnerUid, String postUid,
-        String parentCommentUid, String commentUid),
+    TResult replyToCommentPressed(
+        String postOwnerUid,
+        String postUid,
+        String parentCommentUid,
+        String commentText,
+        bool isCommentSpoiler,
+        String postPhotoUrl,
+        String uidOfTheCommentOwnerBeingRepliedTo),
+    TResult deleteReplyToCommentPressed(
+        String postOwnerUid,
+        String postUid,
+        String parentCommentUid,
+        String commentUid,
+        String commentOwnerUid,
+        String parentCommentOwnerUid),
     TResult showCommentRepliesPressed(
         String postOwnerUid, String postUid, String parentCommentUid),
     TResult nextPageShowCommentRepliesPressed(
         String postOwnerUid, String postUid, String parentCommentUid),
     TResult hideCommentRepliesPressed(String parentCommentUid),
     TResult unHideCommentRepliesPressed(String parentCommentUid),
-    TResult likeReplyToCommentPressed(String postOwnerUid, String postUid,
-        String parentCommentUid, String commentUid),
+    TResult likeReplyToCommentPressed(
+        String postOwnerUid,
+        String postUid,
+        String parentCommentUid,
+        String commentUid,
+        String commentOwnerUid,
+        String commentText,
+        String postPhotoUrl),
     TResult unlikeReplyToCommentPressed(String postOwnerUid, String postUid,
-        String parentCommentUid, String commentUid),
+        String parentCommentUid, String commentUid, String commentOwnerUid),
     TResult showReplyLikersPressed(String postOwnerUid, String postUid,
         String parentCommentUid, String commentUid),
     TResult nextPageShowReplyLikersPressed(String postOwnerUid, String postUid,
@@ -2246,7 +2575,9 @@ class _$_NextPageShowPostLikersPressed
   TResult when<TResult extends Object>({
     @required TResult loadPostPressed(String postOwnerUid, String postUid),
     @required TResult showSpoilerPressed(),
-    @required TResult likePostPressed(String postOwnerUid, String postUid),
+    @required
+        TResult likePostPressed(
+            String postOwnerUid, String postUid, String postPhotoUrl),
     @required TResult unlikePostPressed(String postOwnerUid, String postUid),
     @required
         TResult showPostLikersPressed(String postOwnerUid, String postUid),
@@ -2255,10 +2586,10 @@ class _$_NextPageShowPostLikersPressed
             String postOwnerUid, String postUid),
     @required
         TResult commentPostPressed(String postOwnerUid, String postUid,
-            String commentText, bool isCommentSpoiler),
+            String commentText, bool isCommentSpoiler, String postPhotoUrl),
     @required
-        TResult deleteCommentPostPressed(
-            String postOwnerUid, String postUid, String commentUid),
+        TResult deleteCommentPostPressed(String postOwnerUid, String postUid,
+            String commentUid, String commentOwnerUid),
     @required
         TResult showPostCommentsPressed(String postOwnerUid, String postUid),
     @required
@@ -2267,10 +2598,15 @@ class _$_NextPageShowPostLikersPressed
     @required TResult showAllSpoilersInCommentsPressed(),
     @required
         TResult likePostCommentPressed(
-            String postOwnerUid, String postUid, String commentUid),
+            String postOwnerUid,
+            String postUid,
+            String commentUid,
+            String commentOwnerUid,
+            String commentText,
+            String postPhotoUrl),
     @required
-        TResult unlikePostCommentPressed(
-            String postOwnerUid, String postUid, String commentUid),
+        TResult unlikePostCommentPressed(String postOwnerUid, String postUid,
+            String commentUid, String commentOwnerUid),
     @required
         TResult showCommentLikersPressed(
             String postOwnerUid, String postUid, String commentUid),
@@ -2278,11 +2614,22 @@ class _$_NextPageShowPostLikersPressed
         TResult nextPageShowCommentLikersPressed(
             String postOwnerUid, String postUid, String commentUid),
     @required
-        TResult replyToCommentPressed(String postOwnerUid, String postUid,
-            String parentCommentUid, String commentText, bool isCommentSpoiler),
+        TResult replyToCommentPressed(
+            String postOwnerUid,
+            String postUid,
+            String parentCommentUid,
+            String commentText,
+            bool isCommentSpoiler,
+            String postPhotoUrl,
+            String uidOfTheCommentOwnerBeingRepliedTo),
     @required
-        TResult deleteReplyToCommentPressed(String postOwnerUid, String postUid,
-            String parentCommentUid, String commentUid),
+        TResult deleteReplyToCommentPressed(
+            String postOwnerUid,
+            String postUid,
+            String parentCommentUid,
+            String commentUid,
+            String commentOwnerUid,
+            String parentCommentOwnerUid),
     @required
         TResult showCommentRepliesPressed(
             String postOwnerUid, String postUid, String parentCommentUid),
@@ -2292,11 +2639,17 @@ class _$_NextPageShowPostLikersPressed
     @required TResult hideCommentRepliesPressed(String parentCommentUid),
     @required TResult unHideCommentRepliesPressed(String parentCommentUid),
     @required
-        TResult likeReplyToCommentPressed(String postOwnerUid, String postUid,
-            String parentCommentUid, String commentUid),
+        TResult likeReplyToCommentPressed(
+            String postOwnerUid,
+            String postUid,
+            String parentCommentUid,
+            String commentUid,
+            String commentOwnerUid,
+            String commentText,
+            String postPhotoUrl),
     @required
         TResult unlikeReplyToCommentPressed(String postOwnerUid, String postUid,
-            String parentCommentUid, String commentUid),
+            String parentCommentUid, String commentUid, String commentOwnerUid),
     @required
         TResult showReplyLikersPressed(String postOwnerUid, String postUid,
             String parentCommentUid, String commentUid),
@@ -2337,40 +2690,63 @@ class _$_NextPageShowPostLikersPressed
   TResult maybeWhen<TResult extends Object>({
     TResult loadPostPressed(String postOwnerUid, String postUid),
     TResult showSpoilerPressed(),
-    TResult likePostPressed(String postOwnerUid, String postUid),
+    TResult likePostPressed(
+        String postOwnerUid, String postUid, String postPhotoUrl),
     TResult unlikePostPressed(String postOwnerUid, String postUid),
     TResult showPostLikersPressed(String postOwnerUid, String postUid),
     TResult nextPageShowPostLikersPressed(String postOwnerUid, String postUid),
     TResult commentPostPressed(String postOwnerUid, String postUid,
-        String commentText, bool isCommentSpoiler),
-    TResult deleteCommentPostPressed(
-        String postOwnerUid, String postUid, String commentUid),
+        String commentText, bool isCommentSpoiler, String postPhotoUrl),
+    TResult deleteCommentPostPressed(String postOwnerUid, String postUid,
+        String commentUid, String commentOwnerUid),
     TResult showPostCommentsPressed(String postOwnerUid, String postUid),
     TResult nextPageShowPostCommentsPressed(
         String postOwnerUid, String postUid),
     TResult showAllSpoilersInCommentsPressed(),
     TResult likePostCommentPressed(
-        String postOwnerUid, String postUid, String commentUid),
-    TResult unlikePostCommentPressed(
-        String postOwnerUid, String postUid, String commentUid),
+        String postOwnerUid,
+        String postUid,
+        String commentUid,
+        String commentOwnerUid,
+        String commentText,
+        String postPhotoUrl),
+    TResult unlikePostCommentPressed(String postOwnerUid, String postUid,
+        String commentUid, String commentOwnerUid),
     TResult showCommentLikersPressed(
         String postOwnerUid, String postUid, String commentUid),
     TResult nextPageShowCommentLikersPressed(
         String postOwnerUid, String postUid, String commentUid),
-    TResult replyToCommentPressed(String postOwnerUid, String postUid,
-        String parentCommentUid, String commentText, bool isCommentSpoiler),
-    TResult deleteReplyToCommentPressed(String postOwnerUid, String postUid,
-        String parentCommentUid, String commentUid),
+    TResult replyToCommentPressed(
+        String postOwnerUid,
+        String postUid,
+        String parentCommentUid,
+        String commentText,
+        bool isCommentSpoiler,
+        String postPhotoUrl,
+        String uidOfTheCommentOwnerBeingRepliedTo),
+    TResult deleteReplyToCommentPressed(
+        String postOwnerUid,
+        String postUid,
+        String parentCommentUid,
+        String commentUid,
+        String commentOwnerUid,
+        String parentCommentOwnerUid),
     TResult showCommentRepliesPressed(
         String postOwnerUid, String postUid, String parentCommentUid),
     TResult nextPageShowCommentRepliesPressed(
         String postOwnerUid, String postUid, String parentCommentUid),
     TResult hideCommentRepliesPressed(String parentCommentUid),
     TResult unHideCommentRepliesPressed(String parentCommentUid),
-    TResult likeReplyToCommentPressed(String postOwnerUid, String postUid,
-        String parentCommentUid, String commentUid),
+    TResult likeReplyToCommentPressed(
+        String postOwnerUid,
+        String postUid,
+        String parentCommentUid,
+        String commentUid,
+        String commentOwnerUid,
+        String commentText,
+        String postPhotoUrl),
     TResult unlikeReplyToCommentPressed(String postOwnerUid, String postUid,
-        String parentCommentUid, String commentUid),
+        String parentCommentUid, String commentUid, String commentOwnerUid),
     TResult showReplyLikersPressed(String postOwnerUid, String postUid,
         String parentCommentUid, String commentUid),
     TResult nextPageShowReplyLikersPressed(String postOwnerUid, String postUid,
@@ -2521,7 +2897,8 @@ abstract class _$CommentPostPressedCopyWith<$Res> {
       {String postOwnerUid,
       String postUid,
       String commentText,
-      bool isCommentSpoiler});
+      bool isCommentSpoiler,
+      String postPhotoUrl});
 }
 
 /// @nodoc
@@ -2541,6 +2918,7 @@ class __$CommentPostPressedCopyWithImpl<$Res>
     Object postUid = freezed,
     Object commentText = freezed,
     Object isCommentSpoiler = freezed,
+    Object postPhotoUrl = freezed,
   }) {
     return _then(_CommentPostPressed(
       postOwnerUid: postOwnerUid == freezed
@@ -2552,6 +2930,9 @@ class __$CommentPostPressedCopyWithImpl<$Res>
       isCommentSpoiler: isCommentSpoiler == freezed
           ? _value.isCommentSpoiler
           : isCommentSpoiler as bool,
+      postPhotoUrl: postPhotoUrl == freezed
+          ? _value.postPhotoUrl
+          : postPhotoUrl as String,
     ));
   }
 }
@@ -2562,11 +2943,13 @@ class _$_CommentPostPressed implements _CommentPostPressed {
       {@required this.postOwnerUid,
       @required this.postUid,
       @required this.commentText,
-      @required this.isCommentSpoiler})
+      @required this.isCommentSpoiler,
+      @required this.postPhotoUrl})
       : assert(postOwnerUid != null),
         assert(postUid != null),
         assert(commentText != null),
-        assert(isCommentSpoiler != null);
+        assert(isCommentSpoiler != null),
+        assert(postPhotoUrl != null);
 
   @override
   final String postOwnerUid;
@@ -2576,10 +2959,12 @@ class _$_CommentPostPressed implements _CommentPostPressed {
   final String commentText;
   @override
   final bool isCommentSpoiler;
+  @override
+  final String postPhotoUrl;
 
   @override
   String toString() {
-    return 'UserPostEvent.commentPostPressed(postOwnerUid: $postOwnerUid, postUid: $postUid, commentText: $commentText, isCommentSpoiler: $isCommentSpoiler)';
+    return 'UserPostEvent.commentPostPressed(postOwnerUid: $postOwnerUid, postUid: $postUid, commentText: $commentText, isCommentSpoiler: $isCommentSpoiler, postPhotoUrl: $postPhotoUrl)';
   }
 
   @override
@@ -2597,7 +2982,10 @@ class _$_CommentPostPressed implements _CommentPostPressed {
                     .equals(other.commentText, commentText)) &&
             (identical(other.isCommentSpoiler, isCommentSpoiler) ||
                 const DeepCollectionEquality()
-                    .equals(other.isCommentSpoiler, isCommentSpoiler)));
+                    .equals(other.isCommentSpoiler, isCommentSpoiler)) &&
+            (identical(other.postPhotoUrl, postPhotoUrl) ||
+                const DeepCollectionEquality()
+                    .equals(other.postPhotoUrl, postPhotoUrl)));
   }
 
   @override
@@ -2606,7 +2994,8 @@ class _$_CommentPostPressed implements _CommentPostPressed {
       const DeepCollectionEquality().hash(postOwnerUid) ^
       const DeepCollectionEquality().hash(postUid) ^
       const DeepCollectionEquality().hash(commentText) ^
-      const DeepCollectionEquality().hash(isCommentSpoiler);
+      const DeepCollectionEquality().hash(isCommentSpoiler) ^
+      const DeepCollectionEquality().hash(postPhotoUrl);
 
   @JsonKey(ignore: true)
   @override
@@ -2618,7 +3007,9 @@ class _$_CommentPostPressed implements _CommentPostPressed {
   TResult when<TResult extends Object>({
     @required TResult loadPostPressed(String postOwnerUid, String postUid),
     @required TResult showSpoilerPressed(),
-    @required TResult likePostPressed(String postOwnerUid, String postUid),
+    @required
+        TResult likePostPressed(
+            String postOwnerUid, String postUid, String postPhotoUrl),
     @required TResult unlikePostPressed(String postOwnerUid, String postUid),
     @required
         TResult showPostLikersPressed(String postOwnerUid, String postUid),
@@ -2627,10 +3018,10 @@ class _$_CommentPostPressed implements _CommentPostPressed {
             String postOwnerUid, String postUid),
     @required
         TResult commentPostPressed(String postOwnerUid, String postUid,
-            String commentText, bool isCommentSpoiler),
+            String commentText, bool isCommentSpoiler, String postPhotoUrl),
     @required
-        TResult deleteCommentPostPressed(
-            String postOwnerUid, String postUid, String commentUid),
+        TResult deleteCommentPostPressed(String postOwnerUid, String postUid,
+            String commentUid, String commentOwnerUid),
     @required
         TResult showPostCommentsPressed(String postOwnerUid, String postUid),
     @required
@@ -2639,10 +3030,15 @@ class _$_CommentPostPressed implements _CommentPostPressed {
     @required TResult showAllSpoilersInCommentsPressed(),
     @required
         TResult likePostCommentPressed(
-            String postOwnerUid, String postUid, String commentUid),
+            String postOwnerUid,
+            String postUid,
+            String commentUid,
+            String commentOwnerUid,
+            String commentText,
+            String postPhotoUrl),
     @required
-        TResult unlikePostCommentPressed(
-            String postOwnerUid, String postUid, String commentUid),
+        TResult unlikePostCommentPressed(String postOwnerUid, String postUid,
+            String commentUid, String commentOwnerUid),
     @required
         TResult showCommentLikersPressed(
             String postOwnerUid, String postUid, String commentUid),
@@ -2650,11 +3046,22 @@ class _$_CommentPostPressed implements _CommentPostPressed {
         TResult nextPageShowCommentLikersPressed(
             String postOwnerUid, String postUid, String commentUid),
     @required
-        TResult replyToCommentPressed(String postOwnerUid, String postUid,
-            String parentCommentUid, String commentText, bool isCommentSpoiler),
+        TResult replyToCommentPressed(
+            String postOwnerUid,
+            String postUid,
+            String parentCommentUid,
+            String commentText,
+            bool isCommentSpoiler,
+            String postPhotoUrl,
+            String uidOfTheCommentOwnerBeingRepliedTo),
     @required
-        TResult deleteReplyToCommentPressed(String postOwnerUid, String postUid,
-            String parentCommentUid, String commentUid),
+        TResult deleteReplyToCommentPressed(
+            String postOwnerUid,
+            String postUid,
+            String parentCommentUid,
+            String commentUid,
+            String commentOwnerUid,
+            String parentCommentOwnerUid),
     @required
         TResult showCommentRepliesPressed(
             String postOwnerUid, String postUid, String parentCommentUid),
@@ -2664,11 +3071,17 @@ class _$_CommentPostPressed implements _CommentPostPressed {
     @required TResult hideCommentRepliesPressed(String parentCommentUid),
     @required TResult unHideCommentRepliesPressed(String parentCommentUid),
     @required
-        TResult likeReplyToCommentPressed(String postOwnerUid, String postUid,
-            String parentCommentUid, String commentUid),
+        TResult likeReplyToCommentPressed(
+            String postOwnerUid,
+            String postUid,
+            String parentCommentUid,
+            String commentUid,
+            String commentOwnerUid,
+            String commentText,
+            String postPhotoUrl),
     @required
         TResult unlikeReplyToCommentPressed(String postOwnerUid, String postUid,
-            String parentCommentUid, String commentUid),
+            String parentCommentUid, String commentUid, String commentOwnerUid),
     @required
         TResult showReplyLikersPressed(String postOwnerUid, String postUid,
             String parentCommentUid, String commentUid),
@@ -2702,7 +3115,7 @@ class _$_CommentPostPressed implements _CommentPostPressed {
     assert(showReplyLikersPressed != null);
     assert(nextPageShowReplyLikersPressed != null);
     return commentPostPressed(
-        postOwnerUid, postUid, commentText, isCommentSpoiler);
+        postOwnerUid, postUid, commentText, isCommentSpoiler, postPhotoUrl);
   }
 
   @override
@@ -2710,40 +3123,63 @@ class _$_CommentPostPressed implements _CommentPostPressed {
   TResult maybeWhen<TResult extends Object>({
     TResult loadPostPressed(String postOwnerUid, String postUid),
     TResult showSpoilerPressed(),
-    TResult likePostPressed(String postOwnerUid, String postUid),
+    TResult likePostPressed(
+        String postOwnerUid, String postUid, String postPhotoUrl),
     TResult unlikePostPressed(String postOwnerUid, String postUid),
     TResult showPostLikersPressed(String postOwnerUid, String postUid),
     TResult nextPageShowPostLikersPressed(String postOwnerUid, String postUid),
     TResult commentPostPressed(String postOwnerUid, String postUid,
-        String commentText, bool isCommentSpoiler),
-    TResult deleteCommentPostPressed(
-        String postOwnerUid, String postUid, String commentUid),
+        String commentText, bool isCommentSpoiler, String postPhotoUrl),
+    TResult deleteCommentPostPressed(String postOwnerUid, String postUid,
+        String commentUid, String commentOwnerUid),
     TResult showPostCommentsPressed(String postOwnerUid, String postUid),
     TResult nextPageShowPostCommentsPressed(
         String postOwnerUid, String postUid),
     TResult showAllSpoilersInCommentsPressed(),
     TResult likePostCommentPressed(
-        String postOwnerUid, String postUid, String commentUid),
-    TResult unlikePostCommentPressed(
-        String postOwnerUid, String postUid, String commentUid),
+        String postOwnerUid,
+        String postUid,
+        String commentUid,
+        String commentOwnerUid,
+        String commentText,
+        String postPhotoUrl),
+    TResult unlikePostCommentPressed(String postOwnerUid, String postUid,
+        String commentUid, String commentOwnerUid),
     TResult showCommentLikersPressed(
         String postOwnerUid, String postUid, String commentUid),
     TResult nextPageShowCommentLikersPressed(
         String postOwnerUid, String postUid, String commentUid),
-    TResult replyToCommentPressed(String postOwnerUid, String postUid,
-        String parentCommentUid, String commentText, bool isCommentSpoiler),
-    TResult deleteReplyToCommentPressed(String postOwnerUid, String postUid,
-        String parentCommentUid, String commentUid),
+    TResult replyToCommentPressed(
+        String postOwnerUid,
+        String postUid,
+        String parentCommentUid,
+        String commentText,
+        bool isCommentSpoiler,
+        String postPhotoUrl,
+        String uidOfTheCommentOwnerBeingRepliedTo),
+    TResult deleteReplyToCommentPressed(
+        String postOwnerUid,
+        String postUid,
+        String parentCommentUid,
+        String commentUid,
+        String commentOwnerUid,
+        String parentCommentOwnerUid),
     TResult showCommentRepliesPressed(
         String postOwnerUid, String postUid, String parentCommentUid),
     TResult nextPageShowCommentRepliesPressed(
         String postOwnerUid, String postUid, String parentCommentUid),
     TResult hideCommentRepliesPressed(String parentCommentUid),
     TResult unHideCommentRepliesPressed(String parentCommentUid),
-    TResult likeReplyToCommentPressed(String postOwnerUid, String postUid,
-        String parentCommentUid, String commentUid),
+    TResult likeReplyToCommentPressed(
+        String postOwnerUid,
+        String postUid,
+        String parentCommentUid,
+        String commentUid,
+        String commentOwnerUid,
+        String commentText,
+        String postPhotoUrl),
     TResult unlikeReplyToCommentPressed(String postOwnerUid, String postUid,
-        String parentCommentUid, String commentUid),
+        String parentCommentUid, String commentUid, String commentOwnerUid),
     TResult showReplyLikersPressed(String postOwnerUid, String postUid,
         String parentCommentUid, String commentUid),
     TResult nextPageShowReplyLikersPressed(String postOwnerUid, String postUid,
@@ -2753,7 +3189,7 @@ class _$_CommentPostPressed implements _CommentPostPressed {
     assert(orElse != null);
     if (commentPostPressed != null) {
       return commentPostPressed(
-          postOwnerUid, postUid, commentText, isCommentSpoiler);
+          postOwnerUid, postUid, commentText, isCommentSpoiler, postPhotoUrl);
     }
     return orElse();
   }
@@ -2879,12 +3315,14 @@ abstract class _CommentPostPressed implements UserPostEvent {
       {@required String postOwnerUid,
       @required String postUid,
       @required String commentText,
-      @required bool isCommentSpoiler}) = _$_CommentPostPressed;
+      @required bool isCommentSpoiler,
+      @required String postPhotoUrl}) = _$_CommentPostPressed;
 
   String get postOwnerUid;
   String get postUid;
   String get commentText;
   bool get isCommentSpoiler;
+  String get postPhotoUrl;
   @JsonKey(ignore: true)
   _$CommentPostPressedCopyWith<_CommentPostPressed> get copyWith;
 }
@@ -2894,7 +3332,11 @@ abstract class _$DeleteCommentPostPressedCopyWith<$Res> {
   factory _$DeleteCommentPostPressedCopyWith(_DeleteCommentPostPressed value,
           $Res Function(_DeleteCommentPostPressed) then) =
       __$DeleteCommentPostPressedCopyWithImpl<$Res>;
-  $Res call({String postOwnerUid, String postUid, String commentUid});
+  $Res call(
+      {String postOwnerUid,
+      String postUid,
+      String commentUid,
+      String commentOwnerUid});
 }
 
 /// @nodoc
@@ -2914,6 +3356,7 @@ class __$DeleteCommentPostPressedCopyWithImpl<$Res>
     Object postOwnerUid = freezed,
     Object postUid = freezed,
     Object commentUid = freezed,
+    Object commentOwnerUid = freezed,
   }) {
     return _then(_DeleteCommentPostPressed(
       postOwnerUid: postOwnerUid == freezed
@@ -2922,6 +3365,9 @@ class __$DeleteCommentPostPressedCopyWithImpl<$Res>
       postUid: postUid == freezed ? _value.postUid : postUid as String,
       commentUid:
           commentUid == freezed ? _value.commentUid : commentUid as String,
+      commentOwnerUid: commentOwnerUid == freezed
+          ? _value.commentOwnerUid
+          : commentOwnerUid as String,
     ));
   }
 }
@@ -2931,10 +3377,12 @@ class _$_DeleteCommentPostPressed implements _DeleteCommentPostPressed {
   const _$_DeleteCommentPostPressed(
       {@required this.postOwnerUid,
       @required this.postUid,
-      @required this.commentUid})
+      @required this.commentUid,
+      @required this.commentOwnerUid})
       : assert(postOwnerUid != null),
         assert(postUid != null),
-        assert(commentUid != null);
+        assert(commentUid != null),
+        assert(commentOwnerUid != null);
 
   @override
   final String postOwnerUid;
@@ -2942,10 +3390,12 @@ class _$_DeleteCommentPostPressed implements _DeleteCommentPostPressed {
   final String postUid;
   @override
   final String commentUid;
+  @override
+  final String commentOwnerUid;
 
   @override
   String toString() {
-    return 'UserPostEvent.deleteCommentPostPressed(postOwnerUid: $postOwnerUid, postUid: $postUid, commentUid: $commentUid)';
+    return 'UserPostEvent.deleteCommentPostPressed(postOwnerUid: $postOwnerUid, postUid: $postUid, commentUid: $commentUid, commentOwnerUid: $commentOwnerUid)';
   }
 
   @override
@@ -2960,7 +3410,10 @@ class _$_DeleteCommentPostPressed implements _DeleteCommentPostPressed {
                     .equals(other.postUid, postUid)) &&
             (identical(other.commentUid, commentUid) ||
                 const DeepCollectionEquality()
-                    .equals(other.commentUid, commentUid)));
+                    .equals(other.commentUid, commentUid)) &&
+            (identical(other.commentOwnerUid, commentOwnerUid) ||
+                const DeepCollectionEquality()
+                    .equals(other.commentOwnerUid, commentOwnerUid)));
   }
 
   @override
@@ -2968,7 +3421,8 @@ class _$_DeleteCommentPostPressed implements _DeleteCommentPostPressed {
       runtimeType.hashCode ^
       const DeepCollectionEquality().hash(postOwnerUid) ^
       const DeepCollectionEquality().hash(postUid) ^
-      const DeepCollectionEquality().hash(commentUid);
+      const DeepCollectionEquality().hash(commentUid) ^
+      const DeepCollectionEquality().hash(commentOwnerUid);
 
   @JsonKey(ignore: true)
   @override
@@ -2981,7 +3435,9 @@ class _$_DeleteCommentPostPressed implements _DeleteCommentPostPressed {
   TResult when<TResult extends Object>({
     @required TResult loadPostPressed(String postOwnerUid, String postUid),
     @required TResult showSpoilerPressed(),
-    @required TResult likePostPressed(String postOwnerUid, String postUid),
+    @required
+        TResult likePostPressed(
+            String postOwnerUid, String postUid, String postPhotoUrl),
     @required TResult unlikePostPressed(String postOwnerUid, String postUid),
     @required
         TResult showPostLikersPressed(String postOwnerUid, String postUid),
@@ -2990,10 +3446,10 @@ class _$_DeleteCommentPostPressed implements _DeleteCommentPostPressed {
             String postOwnerUid, String postUid),
     @required
         TResult commentPostPressed(String postOwnerUid, String postUid,
-            String commentText, bool isCommentSpoiler),
+            String commentText, bool isCommentSpoiler, String postPhotoUrl),
     @required
-        TResult deleteCommentPostPressed(
-            String postOwnerUid, String postUid, String commentUid),
+        TResult deleteCommentPostPressed(String postOwnerUid, String postUid,
+            String commentUid, String commentOwnerUid),
     @required
         TResult showPostCommentsPressed(String postOwnerUid, String postUid),
     @required
@@ -3002,10 +3458,15 @@ class _$_DeleteCommentPostPressed implements _DeleteCommentPostPressed {
     @required TResult showAllSpoilersInCommentsPressed(),
     @required
         TResult likePostCommentPressed(
-            String postOwnerUid, String postUid, String commentUid),
+            String postOwnerUid,
+            String postUid,
+            String commentUid,
+            String commentOwnerUid,
+            String commentText,
+            String postPhotoUrl),
     @required
-        TResult unlikePostCommentPressed(
-            String postOwnerUid, String postUid, String commentUid),
+        TResult unlikePostCommentPressed(String postOwnerUid, String postUid,
+            String commentUid, String commentOwnerUid),
     @required
         TResult showCommentLikersPressed(
             String postOwnerUid, String postUid, String commentUid),
@@ -3013,11 +3474,22 @@ class _$_DeleteCommentPostPressed implements _DeleteCommentPostPressed {
         TResult nextPageShowCommentLikersPressed(
             String postOwnerUid, String postUid, String commentUid),
     @required
-        TResult replyToCommentPressed(String postOwnerUid, String postUid,
-            String parentCommentUid, String commentText, bool isCommentSpoiler),
+        TResult replyToCommentPressed(
+            String postOwnerUid,
+            String postUid,
+            String parentCommentUid,
+            String commentText,
+            bool isCommentSpoiler,
+            String postPhotoUrl,
+            String uidOfTheCommentOwnerBeingRepliedTo),
     @required
-        TResult deleteReplyToCommentPressed(String postOwnerUid, String postUid,
-            String parentCommentUid, String commentUid),
+        TResult deleteReplyToCommentPressed(
+            String postOwnerUid,
+            String postUid,
+            String parentCommentUid,
+            String commentUid,
+            String commentOwnerUid,
+            String parentCommentOwnerUid),
     @required
         TResult showCommentRepliesPressed(
             String postOwnerUid, String postUid, String parentCommentUid),
@@ -3027,11 +3499,17 @@ class _$_DeleteCommentPostPressed implements _DeleteCommentPostPressed {
     @required TResult hideCommentRepliesPressed(String parentCommentUid),
     @required TResult unHideCommentRepliesPressed(String parentCommentUid),
     @required
-        TResult likeReplyToCommentPressed(String postOwnerUid, String postUid,
-            String parentCommentUid, String commentUid),
+        TResult likeReplyToCommentPressed(
+            String postOwnerUid,
+            String postUid,
+            String parentCommentUid,
+            String commentUid,
+            String commentOwnerUid,
+            String commentText,
+            String postPhotoUrl),
     @required
         TResult unlikeReplyToCommentPressed(String postOwnerUid, String postUid,
-            String parentCommentUid, String commentUid),
+            String parentCommentUid, String commentUid, String commentOwnerUid),
     @required
         TResult showReplyLikersPressed(String postOwnerUid, String postUid,
             String parentCommentUid, String commentUid),
@@ -3064,7 +3542,8 @@ class _$_DeleteCommentPostPressed implements _DeleteCommentPostPressed {
     assert(unlikeReplyToCommentPressed != null);
     assert(showReplyLikersPressed != null);
     assert(nextPageShowReplyLikersPressed != null);
-    return deleteCommentPostPressed(postOwnerUid, postUid, commentUid);
+    return deleteCommentPostPressed(
+        postOwnerUid, postUid, commentUid, commentOwnerUid);
   }
 
   @override
@@ -3072,40 +3551,63 @@ class _$_DeleteCommentPostPressed implements _DeleteCommentPostPressed {
   TResult maybeWhen<TResult extends Object>({
     TResult loadPostPressed(String postOwnerUid, String postUid),
     TResult showSpoilerPressed(),
-    TResult likePostPressed(String postOwnerUid, String postUid),
+    TResult likePostPressed(
+        String postOwnerUid, String postUid, String postPhotoUrl),
     TResult unlikePostPressed(String postOwnerUid, String postUid),
     TResult showPostLikersPressed(String postOwnerUid, String postUid),
     TResult nextPageShowPostLikersPressed(String postOwnerUid, String postUid),
     TResult commentPostPressed(String postOwnerUid, String postUid,
-        String commentText, bool isCommentSpoiler),
-    TResult deleteCommentPostPressed(
-        String postOwnerUid, String postUid, String commentUid),
+        String commentText, bool isCommentSpoiler, String postPhotoUrl),
+    TResult deleteCommentPostPressed(String postOwnerUid, String postUid,
+        String commentUid, String commentOwnerUid),
     TResult showPostCommentsPressed(String postOwnerUid, String postUid),
     TResult nextPageShowPostCommentsPressed(
         String postOwnerUid, String postUid),
     TResult showAllSpoilersInCommentsPressed(),
     TResult likePostCommentPressed(
-        String postOwnerUid, String postUid, String commentUid),
-    TResult unlikePostCommentPressed(
-        String postOwnerUid, String postUid, String commentUid),
+        String postOwnerUid,
+        String postUid,
+        String commentUid,
+        String commentOwnerUid,
+        String commentText,
+        String postPhotoUrl),
+    TResult unlikePostCommentPressed(String postOwnerUid, String postUid,
+        String commentUid, String commentOwnerUid),
     TResult showCommentLikersPressed(
         String postOwnerUid, String postUid, String commentUid),
     TResult nextPageShowCommentLikersPressed(
         String postOwnerUid, String postUid, String commentUid),
-    TResult replyToCommentPressed(String postOwnerUid, String postUid,
-        String parentCommentUid, String commentText, bool isCommentSpoiler),
-    TResult deleteReplyToCommentPressed(String postOwnerUid, String postUid,
-        String parentCommentUid, String commentUid),
+    TResult replyToCommentPressed(
+        String postOwnerUid,
+        String postUid,
+        String parentCommentUid,
+        String commentText,
+        bool isCommentSpoiler,
+        String postPhotoUrl,
+        String uidOfTheCommentOwnerBeingRepliedTo),
+    TResult deleteReplyToCommentPressed(
+        String postOwnerUid,
+        String postUid,
+        String parentCommentUid,
+        String commentUid,
+        String commentOwnerUid,
+        String parentCommentOwnerUid),
     TResult showCommentRepliesPressed(
         String postOwnerUid, String postUid, String parentCommentUid),
     TResult nextPageShowCommentRepliesPressed(
         String postOwnerUid, String postUid, String parentCommentUid),
     TResult hideCommentRepliesPressed(String parentCommentUid),
     TResult unHideCommentRepliesPressed(String parentCommentUid),
-    TResult likeReplyToCommentPressed(String postOwnerUid, String postUid,
-        String parentCommentUid, String commentUid),
+    TResult likeReplyToCommentPressed(
+        String postOwnerUid,
+        String postUid,
+        String parentCommentUid,
+        String commentUid,
+        String commentOwnerUid,
+        String commentText,
+        String postPhotoUrl),
     TResult unlikeReplyToCommentPressed(String postOwnerUid, String postUid,
-        String parentCommentUid, String commentUid),
+        String parentCommentUid, String commentUid, String commentOwnerUid),
     TResult showReplyLikersPressed(String postOwnerUid, String postUid,
         String parentCommentUid, String commentUid),
     TResult nextPageShowReplyLikersPressed(String postOwnerUid, String postUid,
@@ -3114,7 +3616,8 @@ class _$_DeleteCommentPostPressed implements _DeleteCommentPostPressed {
   }) {
     assert(orElse != null);
     if (deleteCommentPostPressed != null) {
-      return deleteCommentPostPressed(postOwnerUid, postUid, commentUid);
+      return deleteCommentPostPressed(
+          postOwnerUid, postUid, commentUid, commentOwnerUid);
     }
     return orElse();
   }
@@ -3239,11 +3742,13 @@ abstract class _DeleteCommentPostPressed implements UserPostEvent {
   const factory _DeleteCommentPostPressed(
       {@required String postOwnerUid,
       @required String postUid,
-      @required String commentUid}) = _$_DeleteCommentPostPressed;
+      @required String commentUid,
+      @required String commentOwnerUid}) = _$_DeleteCommentPostPressed;
 
   String get postOwnerUid;
   String get postUid;
   String get commentUid;
+  String get commentOwnerUid;
   @JsonKey(ignore: true)
   _$DeleteCommentPostPressedCopyWith<_DeleteCommentPostPressed> get copyWith;
 }
@@ -3327,7 +3832,9 @@ class _$_ShowPostCommentsPressed implements _ShowPostCommentsPressed {
   TResult when<TResult extends Object>({
     @required TResult loadPostPressed(String postOwnerUid, String postUid),
     @required TResult showSpoilerPressed(),
-    @required TResult likePostPressed(String postOwnerUid, String postUid),
+    @required
+        TResult likePostPressed(
+            String postOwnerUid, String postUid, String postPhotoUrl),
     @required TResult unlikePostPressed(String postOwnerUid, String postUid),
     @required
         TResult showPostLikersPressed(String postOwnerUid, String postUid),
@@ -3336,10 +3843,10 @@ class _$_ShowPostCommentsPressed implements _ShowPostCommentsPressed {
             String postOwnerUid, String postUid),
     @required
         TResult commentPostPressed(String postOwnerUid, String postUid,
-            String commentText, bool isCommentSpoiler),
+            String commentText, bool isCommentSpoiler, String postPhotoUrl),
     @required
-        TResult deleteCommentPostPressed(
-            String postOwnerUid, String postUid, String commentUid),
+        TResult deleteCommentPostPressed(String postOwnerUid, String postUid,
+            String commentUid, String commentOwnerUid),
     @required
         TResult showPostCommentsPressed(String postOwnerUid, String postUid),
     @required
@@ -3348,10 +3855,15 @@ class _$_ShowPostCommentsPressed implements _ShowPostCommentsPressed {
     @required TResult showAllSpoilersInCommentsPressed(),
     @required
         TResult likePostCommentPressed(
-            String postOwnerUid, String postUid, String commentUid),
+            String postOwnerUid,
+            String postUid,
+            String commentUid,
+            String commentOwnerUid,
+            String commentText,
+            String postPhotoUrl),
     @required
-        TResult unlikePostCommentPressed(
-            String postOwnerUid, String postUid, String commentUid),
+        TResult unlikePostCommentPressed(String postOwnerUid, String postUid,
+            String commentUid, String commentOwnerUid),
     @required
         TResult showCommentLikersPressed(
             String postOwnerUid, String postUid, String commentUid),
@@ -3359,11 +3871,22 @@ class _$_ShowPostCommentsPressed implements _ShowPostCommentsPressed {
         TResult nextPageShowCommentLikersPressed(
             String postOwnerUid, String postUid, String commentUid),
     @required
-        TResult replyToCommentPressed(String postOwnerUid, String postUid,
-            String parentCommentUid, String commentText, bool isCommentSpoiler),
+        TResult replyToCommentPressed(
+            String postOwnerUid,
+            String postUid,
+            String parentCommentUid,
+            String commentText,
+            bool isCommentSpoiler,
+            String postPhotoUrl,
+            String uidOfTheCommentOwnerBeingRepliedTo),
     @required
-        TResult deleteReplyToCommentPressed(String postOwnerUid, String postUid,
-            String parentCommentUid, String commentUid),
+        TResult deleteReplyToCommentPressed(
+            String postOwnerUid,
+            String postUid,
+            String parentCommentUid,
+            String commentUid,
+            String commentOwnerUid,
+            String parentCommentOwnerUid),
     @required
         TResult showCommentRepliesPressed(
             String postOwnerUid, String postUid, String parentCommentUid),
@@ -3373,11 +3896,17 @@ class _$_ShowPostCommentsPressed implements _ShowPostCommentsPressed {
     @required TResult hideCommentRepliesPressed(String parentCommentUid),
     @required TResult unHideCommentRepliesPressed(String parentCommentUid),
     @required
-        TResult likeReplyToCommentPressed(String postOwnerUid, String postUid,
-            String parentCommentUid, String commentUid),
+        TResult likeReplyToCommentPressed(
+            String postOwnerUid,
+            String postUid,
+            String parentCommentUid,
+            String commentUid,
+            String commentOwnerUid,
+            String commentText,
+            String postPhotoUrl),
     @required
         TResult unlikeReplyToCommentPressed(String postOwnerUid, String postUid,
-            String parentCommentUid, String commentUid),
+            String parentCommentUid, String commentUid, String commentOwnerUid),
     @required
         TResult showReplyLikersPressed(String postOwnerUid, String postUid,
             String parentCommentUid, String commentUid),
@@ -3418,40 +3947,63 @@ class _$_ShowPostCommentsPressed implements _ShowPostCommentsPressed {
   TResult maybeWhen<TResult extends Object>({
     TResult loadPostPressed(String postOwnerUid, String postUid),
     TResult showSpoilerPressed(),
-    TResult likePostPressed(String postOwnerUid, String postUid),
+    TResult likePostPressed(
+        String postOwnerUid, String postUid, String postPhotoUrl),
     TResult unlikePostPressed(String postOwnerUid, String postUid),
     TResult showPostLikersPressed(String postOwnerUid, String postUid),
     TResult nextPageShowPostLikersPressed(String postOwnerUid, String postUid),
     TResult commentPostPressed(String postOwnerUid, String postUid,
-        String commentText, bool isCommentSpoiler),
-    TResult deleteCommentPostPressed(
-        String postOwnerUid, String postUid, String commentUid),
+        String commentText, bool isCommentSpoiler, String postPhotoUrl),
+    TResult deleteCommentPostPressed(String postOwnerUid, String postUid,
+        String commentUid, String commentOwnerUid),
     TResult showPostCommentsPressed(String postOwnerUid, String postUid),
     TResult nextPageShowPostCommentsPressed(
         String postOwnerUid, String postUid),
     TResult showAllSpoilersInCommentsPressed(),
     TResult likePostCommentPressed(
-        String postOwnerUid, String postUid, String commentUid),
-    TResult unlikePostCommentPressed(
-        String postOwnerUid, String postUid, String commentUid),
+        String postOwnerUid,
+        String postUid,
+        String commentUid,
+        String commentOwnerUid,
+        String commentText,
+        String postPhotoUrl),
+    TResult unlikePostCommentPressed(String postOwnerUid, String postUid,
+        String commentUid, String commentOwnerUid),
     TResult showCommentLikersPressed(
         String postOwnerUid, String postUid, String commentUid),
     TResult nextPageShowCommentLikersPressed(
         String postOwnerUid, String postUid, String commentUid),
-    TResult replyToCommentPressed(String postOwnerUid, String postUid,
-        String parentCommentUid, String commentText, bool isCommentSpoiler),
-    TResult deleteReplyToCommentPressed(String postOwnerUid, String postUid,
-        String parentCommentUid, String commentUid),
+    TResult replyToCommentPressed(
+        String postOwnerUid,
+        String postUid,
+        String parentCommentUid,
+        String commentText,
+        bool isCommentSpoiler,
+        String postPhotoUrl,
+        String uidOfTheCommentOwnerBeingRepliedTo),
+    TResult deleteReplyToCommentPressed(
+        String postOwnerUid,
+        String postUid,
+        String parentCommentUid,
+        String commentUid,
+        String commentOwnerUid,
+        String parentCommentOwnerUid),
     TResult showCommentRepliesPressed(
         String postOwnerUid, String postUid, String parentCommentUid),
     TResult nextPageShowCommentRepliesPressed(
         String postOwnerUid, String postUid, String parentCommentUid),
     TResult hideCommentRepliesPressed(String parentCommentUid),
     TResult unHideCommentRepliesPressed(String parentCommentUid),
-    TResult likeReplyToCommentPressed(String postOwnerUid, String postUid,
-        String parentCommentUid, String commentUid),
+    TResult likeReplyToCommentPressed(
+        String postOwnerUid,
+        String postUid,
+        String parentCommentUid,
+        String commentUid,
+        String commentOwnerUid,
+        String commentText,
+        String postPhotoUrl),
     TResult unlikeReplyToCommentPressed(String postOwnerUid, String postUid,
-        String parentCommentUid, String commentUid),
+        String parentCommentUid, String commentUid, String commentOwnerUid),
     TResult showReplyLikersPressed(String postOwnerUid, String postUid,
         String parentCommentUid, String commentUid),
     TResult nextPageShowReplyLikersPressed(String postOwnerUid, String postUid,
@@ -3674,7 +4226,9 @@ class _$_NextPageShowPostCommentsPressed
   TResult when<TResult extends Object>({
     @required TResult loadPostPressed(String postOwnerUid, String postUid),
     @required TResult showSpoilerPressed(),
-    @required TResult likePostPressed(String postOwnerUid, String postUid),
+    @required
+        TResult likePostPressed(
+            String postOwnerUid, String postUid, String postPhotoUrl),
     @required TResult unlikePostPressed(String postOwnerUid, String postUid),
     @required
         TResult showPostLikersPressed(String postOwnerUid, String postUid),
@@ -3683,10 +4237,10 @@ class _$_NextPageShowPostCommentsPressed
             String postOwnerUid, String postUid),
     @required
         TResult commentPostPressed(String postOwnerUid, String postUid,
-            String commentText, bool isCommentSpoiler),
+            String commentText, bool isCommentSpoiler, String postPhotoUrl),
     @required
-        TResult deleteCommentPostPressed(
-            String postOwnerUid, String postUid, String commentUid),
+        TResult deleteCommentPostPressed(String postOwnerUid, String postUid,
+            String commentUid, String commentOwnerUid),
     @required
         TResult showPostCommentsPressed(String postOwnerUid, String postUid),
     @required
@@ -3695,10 +4249,15 @@ class _$_NextPageShowPostCommentsPressed
     @required TResult showAllSpoilersInCommentsPressed(),
     @required
         TResult likePostCommentPressed(
-            String postOwnerUid, String postUid, String commentUid),
+            String postOwnerUid,
+            String postUid,
+            String commentUid,
+            String commentOwnerUid,
+            String commentText,
+            String postPhotoUrl),
     @required
-        TResult unlikePostCommentPressed(
-            String postOwnerUid, String postUid, String commentUid),
+        TResult unlikePostCommentPressed(String postOwnerUid, String postUid,
+            String commentUid, String commentOwnerUid),
     @required
         TResult showCommentLikersPressed(
             String postOwnerUid, String postUid, String commentUid),
@@ -3706,11 +4265,22 @@ class _$_NextPageShowPostCommentsPressed
         TResult nextPageShowCommentLikersPressed(
             String postOwnerUid, String postUid, String commentUid),
     @required
-        TResult replyToCommentPressed(String postOwnerUid, String postUid,
-            String parentCommentUid, String commentText, bool isCommentSpoiler),
+        TResult replyToCommentPressed(
+            String postOwnerUid,
+            String postUid,
+            String parentCommentUid,
+            String commentText,
+            bool isCommentSpoiler,
+            String postPhotoUrl,
+            String uidOfTheCommentOwnerBeingRepliedTo),
     @required
-        TResult deleteReplyToCommentPressed(String postOwnerUid, String postUid,
-            String parentCommentUid, String commentUid),
+        TResult deleteReplyToCommentPressed(
+            String postOwnerUid,
+            String postUid,
+            String parentCommentUid,
+            String commentUid,
+            String commentOwnerUid,
+            String parentCommentOwnerUid),
     @required
         TResult showCommentRepliesPressed(
             String postOwnerUid, String postUid, String parentCommentUid),
@@ -3720,11 +4290,17 @@ class _$_NextPageShowPostCommentsPressed
     @required TResult hideCommentRepliesPressed(String parentCommentUid),
     @required TResult unHideCommentRepliesPressed(String parentCommentUid),
     @required
-        TResult likeReplyToCommentPressed(String postOwnerUid, String postUid,
-            String parentCommentUid, String commentUid),
+        TResult likeReplyToCommentPressed(
+            String postOwnerUid,
+            String postUid,
+            String parentCommentUid,
+            String commentUid,
+            String commentOwnerUid,
+            String commentText,
+            String postPhotoUrl),
     @required
         TResult unlikeReplyToCommentPressed(String postOwnerUid, String postUid,
-            String parentCommentUid, String commentUid),
+            String parentCommentUid, String commentUid, String commentOwnerUid),
     @required
         TResult showReplyLikersPressed(String postOwnerUid, String postUid,
             String parentCommentUid, String commentUid),
@@ -3765,40 +4341,63 @@ class _$_NextPageShowPostCommentsPressed
   TResult maybeWhen<TResult extends Object>({
     TResult loadPostPressed(String postOwnerUid, String postUid),
     TResult showSpoilerPressed(),
-    TResult likePostPressed(String postOwnerUid, String postUid),
+    TResult likePostPressed(
+        String postOwnerUid, String postUid, String postPhotoUrl),
     TResult unlikePostPressed(String postOwnerUid, String postUid),
     TResult showPostLikersPressed(String postOwnerUid, String postUid),
     TResult nextPageShowPostLikersPressed(String postOwnerUid, String postUid),
     TResult commentPostPressed(String postOwnerUid, String postUid,
-        String commentText, bool isCommentSpoiler),
-    TResult deleteCommentPostPressed(
-        String postOwnerUid, String postUid, String commentUid),
+        String commentText, bool isCommentSpoiler, String postPhotoUrl),
+    TResult deleteCommentPostPressed(String postOwnerUid, String postUid,
+        String commentUid, String commentOwnerUid),
     TResult showPostCommentsPressed(String postOwnerUid, String postUid),
     TResult nextPageShowPostCommentsPressed(
         String postOwnerUid, String postUid),
     TResult showAllSpoilersInCommentsPressed(),
     TResult likePostCommentPressed(
-        String postOwnerUid, String postUid, String commentUid),
-    TResult unlikePostCommentPressed(
-        String postOwnerUid, String postUid, String commentUid),
+        String postOwnerUid,
+        String postUid,
+        String commentUid,
+        String commentOwnerUid,
+        String commentText,
+        String postPhotoUrl),
+    TResult unlikePostCommentPressed(String postOwnerUid, String postUid,
+        String commentUid, String commentOwnerUid),
     TResult showCommentLikersPressed(
         String postOwnerUid, String postUid, String commentUid),
     TResult nextPageShowCommentLikersPressed(
         String postOwnerUid, String postUid, String commentUid),
-    TResult replyToCommentPressed(String postOwnerUid, String postUid,
-        String parentCommentUid, String commentText, bool isCommentSpoiler),
-    TResult deleteReplyToCommentPressed(String postOwnerUid, String postUid,
-        String parentCommentUid, String commentUid),
+    TResult replyToCommentPressed(
+        String postOwnerUid,
+        String postUid,
+        String parentCommentUid,
+        String commentText,
+        bool isCommentSpoiler,
+        String postPhotoUrl,
+        String uidOfTheCommentOwnerBeingRepliedTo),
+    TResult deleteReplyToCommentPressed(
+        String postOwnerUid,
+        String postUid,
+        String parentCommentUid,
+        String commentUid,
+        String commentOwnerUid,
+        String parentCommentOwnerUid),
     TResult showCommentRepliesPressed(
         String postOwnerUid, String postUid, String parentCommentUid),
     TResult nextPageShowCommentRepliesPressed(
         String postOwnerUid, String postUid, String parentCommentUid),
     TResult hideCommentRepliesPressed(String parentCommentUid),
     TResult unHideCommentRepliesPressed(String parentCommentUid),
-    TResult likeReplyToCommentPressed(String postOwnerUid, String postUid,
-        String parentCommentUid, String commentUid),
+    TResult likeReplyToCommentPressed(
+        String postOwnerUid,
+        String postUid,
+        String parentCommentUid,
+        String commentUid,
+        String commentOwnerUid,
+        String commentText,
+        String postPhotoUrl),
     TResult unlikeReplyToCommentPressed(String postOwnerUid, String postUid,
-        String parentCommentUid, String commentUid),
+        String parentCommentUid, String commentUid, String commentOwnerUid),
     TResult showReplyLikersPressed(String postOwnerUid, String postUid,
         String parentCommentUid, String commentUid),
     TResult nextPageShowReplyLikersPressed(String postOwnerUid, String postUid,
@@ -3981,7 +4580,9 @@ class _$_ShowSpoilersPressed implements _ShowSpoilersPressed {
   TResult when<TResult extends Object>({
     @required TResult loadPostPressed(String postOwnerUid, String postUid),
     @required TResult showSpoilerPressed(),
-    @required TResult likePostPressed(String postOwnerUid, String postUid),
+    @required
+        TResult likePostPressed(
+            String postOwnerUid, String postUid, String postPhotoUrl),
     @required TResult unlikePostPressed(String postOwnerUid, String postUid),
     @required
         TResult showPostLikersPressed(String postOwnerUid, String postUid),
@@ -3990,10 +4591,10 @@ class _$_ShowSpoilersPressed implements _ShowSpoilersPressed {
             String postOwnerUid, String postUid),
     @required
         TResult commentPostPressed(String postOwnerUid, String postUid,
-            String commentText, bool isCommentSpoiler),
+            String commentText, bool isCommentSpoiler, String postPhotoUrl),
     @required
-        TResult deleteCommentPostPressed(
-            String postOwnerUid, String postUid, String commentUid),
+        TResult deleteCommentPostPressed(String postOwnerUid, String postUid,
+            String commentUid, String commentOwnerUid),
     @required
         TResult showPostCommentsPressed(String postOwnerUid, String postUid),
     @required
@@ -4002,10 +4603,15 @@ class _$_ShowSpoilersPressed implements _ShowSpoilersPressed {
     @required TResult showAllSpoilersInCommentsPressed(),
     @required
         TResult likePostCommentPressed(
-            String postOwnerUid, String postUid, String commentUid),
+            String postOwnerUid,
+            String postUid,
+            String commentUid,
+            String commentOwnerUid,
+            String commentText,
+            String postPhotoUrl),
     @required
-        TResult unlikePostCommentPressed(
-            String postOwnerUid, String postUid, String commentUid),
+        TResult unlikePostCommentPressed(String postOwnerUid, String postUid,
+            String commentUid, String commentOwnerUid),
     @required
         TResult showCommentLikersPressed(
             String postOwnerUid, String postUid, String commentUid),
@@ -4013,11 +4619,22 @@ class _$_ShowSpoilersPressed implements _ShowSpoilersPressed {
         TResult nextPageShowCommentLikersPressed(
             String postOwnerUid, String postUid, String commentUid),
     @required
-        TResult replyToCommentPressed(String postOwnerUid, String postUid,
-            String parentCommentUid, String commentText, bool isCommentSpoiler),
+        TResult replyToCommentPressed(
+            String postOwnerUid,
+            String postUid,
+            String parentCommentUid,
+            String commentText,
+            bool isCommentSpoiler,
+            String postPhotoUrl,
+            String uidOfTheCommentOwnerBeingRepliedTo),
     @required
-        TResult deleteReplyToCommentPressed(String postOwnerUid, String postUid,
-            String parentCommentUid, String commentUid),
+        TResult deleteReplyToCommentPressed(
+            String postOwnerUid,
+            String postUid,
+            String parentCommentUid,
+            String commentUid,
+            String commentOwnerUid,
+            String parentCommentOwnerUid),
     @required
         TResult showCommentRepliesPressed(
             String postOwnerUid, String postUid, String parentCommentUid),
@@ -4027,11 +4644,17 @@ class _$_ShowSpoilersPressed implements _ShowSpoilersPressed {
     @required TResult hideCommentRepliesPressed(String parentCommentUid),
     @required TResult unHideCommentRepliesPressed(String parentCommentUid),
     @required
-        TResult likeReplyToCommentPressed(String postOwnerUid, String postUid,
-            String parentCommentUid, String commentUid),
+        TResult likeReplyToCommentPressed(
+            String postOwnerUid,
+            String postUid,
+            String parentCommentUid,
+            String commentUid,
+            String commentOwnerUid,
+            String commentText,
+            String postPhotoUrl),
     @required
         TResult unlikeReplyToCommentPressed(String postOwnerUid, String postUid,
-            String parentCommentUid, String commentUid),
+            String parentCommentUid, String commentUid, String commentOwnerUid),
     @required
         TResult showReplyLikersPressed(String postOwnerUid, String postUid,
             String parentCommentUid, String commentUid),
@@ -4072,40 +4695,63 @@ class _$_ShowSpoilersPressed implements _ShowSpoilersPressed {
   TResult maybeWhen<TResult extends Object>({
     TResult loadPostPressed(String postOwnerUid, String postUid),
     TResult showSpoilerPressed(),
-    TResult likePostPressed(String postOwnerUid, String postUid),
+    TResult likePostPressed(
+        String postOwnerUid, String postUid, String postPhotoUrl),
     TResult unlikePostPressed(String postOwnerUid, String postUid),
     TResult showPostLikersPressed(String postOwnerUid, String postUid),
     TResult nextPageShowPostLikersPressed(String postOwnerUid, String postUid),
     TResult commentPostPressed(String postOwnerUid, String postUid,
-        String commentText, bool isCommentSpoiler),
-    TResult deleteCommentPostPressed(
-        String postOwnerUid, String postUid, String commentUid),
+        String commentText, bool isCommentSpoiler, String postPhotoUrl),
+    TResult deleteCommentPostPressed(String postOwnerUid, String postUid,
+        String commentUid, String commentOwnerUid),
     TResult showPostCommentsPressed(String postOwnerUid, String postUid),
     TResult nextPageShowPostCommentsPressed(
         String postOwnerUid, String postUid),
     TResult showAllSpoilersInCommentsPressed(),
     TResult likePostCommentPressed(
-        String postOwnerUid, String postUid, String commentUid),
-    TResult unlikePostCommentPressed(
-        String postOwnerUid, String postUid, String commentUid),
+        String postOwnerUid,
+        String postUid,
+        String commentUid,
+        String commentOwnerUid,
+        String commentText,
+        String postPhotoUrl),
+    TResult unlikePostCommentPressed(String postOwnerUid, String postUid,
+        String commentUid, String commentOwnerUid),
     TResult showCommentLikersPressed(
         String postOwnerUid, String postUid, String commentUid),
     TResult nextPageShowCommentLikersPressed(
         String postOwnerUid, String postUid, String commentUid),
-    TResult replyToCommentPressed(String postOwnerUid, String postUid,
-        String parentCommentUid, String commentText, bool isCommentSpoiler),
-    TResult deleteReplyToCommentPressed(String postOwnerUid, String postUid,
-        String parentCommentUid, String commentUid),
+    TResult replyToCommentPressed(
+        String postOwnerUid,
+        String postUid,
+        String parentCommentUid,
+        String commentText,
+        bool isCommentSpoiler,
+        String postPhotoUrl,
+        String uidOfTheCommentOwnerBeingRepliedTo),
+    TResult deleteReplyToCommentPressed(
+        String postOwnerUid,
+        String postUid,
+        String parentCommentUid,
+        String commentUid,
+        String commentOwnerUid,
+        String parentCommentOwnerUid),
     TResult showCommentRepliesPressed(
         String postOwnerUid, String postUid, String parentCommentUid),
     TResult nextPageShowCommentRepliesPressed(
         String postOwnerUid, String postUid, String parentCommentUid),
     TResult hideCommentRepliesPressed(String parentCommentUid),
     TResult unHideCommentRepliesPressed(String parentCommentUid),
-    TResult likeReplyToCommentPressed(String postOwnerUid, String postUid,
-        String parentCommentUid, String commentUid),
+    TResult likeReplyToCommentPressed(
+        String postOwnerUid,
+        String postUid,
+        String parentCommentUid,
+        String commentUid,
+        String commentOwnerUid,
+        String commentText,
+        String postPhotoUrl),
     TResult unlikeReplyToCommentPressed(String postOwnerUid, String postUid,
-        String parentCommentUid, String commentUid),
+        String parentCommentUid, String commentUid, String commentOwnerUid),
     TResult showReplyLikersPressed(String postOwnerUid, String postUid,
         String parentCommentUid, String commentUid),
     TResult nextPageShowReplyLikersPressed(String postOwnerUid, String postUid,
@@ -4244,7 +4890,13 @@ abstract class _$LikePostCommentPressedCopyWith<$Res> {
   factory _$LikePostCommentPressedCopyWith(_LikePostCommentPressed value,
           $Res Function(_LikePostCommentPressed) then) =
       __$LikePostCommentPressedCopyWithImpl<$Res>;
-  $Res call({String postOwnerUid, String postUid, String commentUid});
+  $Res call(
+      {String postOwnerUid,
+      String postUid,
+      String commentUid,
+      String commentOwnerUid,
+      String commentText,
+      String postPhotoUrl});
 }
 
 /// @nodoc
@@ -4263,6 +4915,9 @@ class __$LikePostCommentPressedCopyWithImpl<$Res>
     Object postOwnerUid = freezed,
     Object postUid = freezed,
     Object commentUid = freezed,
+    Object commentOwnerUid = freezed,
+    Object commentText = freezed,
+    Object postPhotoUrl = freezed,
   }) {
     return _then(_LikePostCommentPressed(
       postOwnerUid: postOwnerUid == freezed
@@ -4271,6 +4926,14 @@ class __$LikePostCommentPressedCopyWithImpl<$Res>
       postUid: postUid == freezed ? _value.postUid : postUid as String,
       commentUid:
           commentUid == freezed ? _value.commentUid : commentUid as String,
+      commentOwnerUid: commentOwnerUid == freezed
+          ? _value.commentOwnerUid
+          : commentOwnerUid as String,
+      commentText:
+          commentText == freezed ? _value.commentText : commentText as String,
+      postPhotoUrl: postPhotoUrl == freezed
+          ? _value.postPhotoUrl
+          : postPhotoUrl as String,
     ));
   }
 }
@@ -4280,10 +4943,16 @@ class _$_LikePostCommentPressed implements _LikePostCommentPressed {
   const _$_LikePostCommentPressed(
       {@required this.postOwnerUid,
       @required this.postUid,
-      @required this.commentUid})
+      @required this.commentUid,
+      @required this.commentOwnerUid,
+      @required this.commentText,
+      @required this.postPhotoUrl})
       : assert(postOwnerUid != null),
         assert(postUid != null),
-        assert(commentUid != null);
+        assert(commentUid != null),
+        assert(commentOwnerUid != null),
+        assert(commentText != null),
+        assert(postPhotoUrl != null);
 
   @override
   final String postOwnerUid;
@@ -4291,10 +4960,16 @@ class _$_LikePostCommentPressed implements _LikePostCommentPressed {
   final String postUid;
   @override
   final String commentUid;
+  @override
+  final String commentOwnerUid;
+  @override
+  final String commentText;
+  @override
+  final String postPhotoUrl;
 
   @override
   String toString() {
-    return 'UserPostEvent.likePostCommentPressed(postOwnerUid: $postOwnerUid, postUid: $postUid, commentUid: $commentUid)';
+    return 'UserPostEvent.likePostCommentPressed(postOwnerUid: $postOwnerUid, postUid: $postUid, commentUid: $commentUid, commentOwnerUid: $commentOwnerUid, commentText: $commentText, postPhotoUrl: $postPhotoUrl)';
   }
 
   @override
@@ -4309,7 +4984,16 @@ class _$_LikePostCommentPressed implements _LikePostCommentPressed {
                     .equals(other.postUid, postUid)) &&
             (identical(other.commentUid, commentUid) ||
                 const DeepCollectionEquality()
-                    .equals(other.commentUid, commentUid)));
+                    .equals(other.commentUid, commentUid)) &&
+            (identical(other.commentOwnerUid, commentOwnerUid) ||
+                const DeepCollectionEquality()
+                    .equals(other.commentOwnerUid, commentOwnerUid)) &&
+            (identical(other.commentText, commentText) ||
+                const DeepCollectionEquality()
+                    .equals(other.commentText, commentText)) &&
+            (identical(other.postPhotoUrl, postPhotoUrl) ||
+                const DeepCollectionEquality()
+                    .equals(other.postPhotoUrl, postPhotoUrl)));
   }
 
   @override
@@ -4317,7 +5001,10 @@ class _$_LikePostCommentPressed implements _LikePostCommentPressed {
       runtimeType.hashCode ^
       const DeepCollectionEquality().hash(postOwnerUid) ^
       const DeepCollectionEquality().hash(postUid) ^
-      const DeepCollectionEquality().hash(commentUid);
+      const DeepCollectionEquality().hash(commentUid) ^
+      const DeepCollectionEquality().hash(commentOwnerUid) ^
+      const DeepCollectionEquality().hash(commentText) ^
+      const DeepCollectionEquality().hash(postPhotoUrl);
 
   @JsonKey(ignore: true)
   @override
@@ -4330,7 +5017,9 @@ class _$_LikePostCommentPressed implements _LikePostCommentPressed {
   TResult when<TResult extends Object>({
     @required TResult loadPostPressed(String postOwnerUid, String postUid),
     @required TResult showSpoilerPressed(),
-    @required TResult likePostPressed(String postOwnerUid, String postUid),
+    @required
+        TResult likePostPressed(
+            String postOwnerUid, String postUid, String postPhotoUrl),
     @required TResult unlikePostPressed(String postOwnerUid, String postUid),
     @required
         TResult showPostLikersPressed(String postOwnerUid, String postUid),
@@ -4339,10 +5028,10 @@ class _$_LikePostCommentPressed implements _LikePostCommentPressed {
             String postOwnerUid, String postUid),
     @required
         TResult commentPostPressed(String postOwnerUid, String postUid,
-            String commentText, bool isCommentSpoiler),
+            String commentText, bool isCommentSpoiler, String postPhotoUrl),
     @required
-        TResult deleteCommentPostPressed(
-            String postOwnerUid, String postUid, String commentUid),
+        TResult deleteCommentPostPressed(String postOwnerUid, String postUid,
+            String commentUid, String commentOwnerUid),
     @required
         TResult showPostCommentsPressed(String postOwnerUid, String postUid),
     @required
@@ -4351,10 +5040,15 @@ class _$_LikePostCommentPressed implements _LikePostCommentPressed {
     @required TResult showAllSpoilersInCommentsPressed(),
     @required
         TResult likePostCommentPressed(
-            String postOwnerUid, String postUid, String commentUid),
+            String postOwnerUid,
+            String postUid,
+            String commentUid,
+            String commentOwnerUid,
+            String commentText,
+            String postPhotoUrl),
     @required
-        TResult unlikePostCommentPressed(
-            String postOwnerUid, String postUid, String commentUid),
+        TResult unlikePostCommentPressed(String postOwnerUid, String postUid,
+            String commentUid, String commentOwnerUid),
     @required
         TResult showCommentLikersPressed(
             String postOwnerUid, String postUid, String commentUid),
@@ -4362,11 +5056,22 @@ class _$_LikePostCommentPressed implements _LikePostCommentPressed {
         TResult nextPageShowCommentLikersPressed(
             String postOwnerUid, String postUid, String commentUid),
     @required
-        TResult replyToCommentPressed(String postOwnerUid, String postUid,
-            String parentCommentUid, String commentText, bool isCommentSpoiler),
+        TResult replyToCommentPressed(
+            String postOwnerUid,
+            String postUid,
+            String parentCommentUid,
+            String commentText,
+            bool isCommentSpoiler,
+            String postPhotoUrl,
+            String uidOfTheCommentOwnerBeingRepliedTo),
     @required
-        TResult deleteReplyToCommentPressed(String postOwnerUid, String postUid,
-            String parentCommentUid, String commentUid),
+        TResult deleteReplyToCommentPressed(
+            String postOwnerUid,
+            String postUid,
+            String parentCommentUid,
+            String commentUid,
+            String commentOwnerUid,
+            String parentCommentOwnerUid),
     @required
         TResult showCommentRepliesPressed(
             String postOwnerUid, String postUid, String parentCommentUid),
@@ -4376,11 +5081,17 @@ class _$_LikePostCommentPressed implements _LikePostCommentPressed {
     @required TResult hideCommentRepliesPressed(String parentCommentUid),
     @required TResult unHideCommentRepliesPressed(String parentCommentUid),
     @required
-        TResult likeReplyToCommentPressed(String postOwnerUid, String postUid,
-            String parentCommentUid, String commentUid),
+        TResult likeReplyToCommentPressed(
+            String postOwnerUid,
+            String postUid,
+            String parentCommentUid,
+            String commentUid,
+            String commentOwnerUid,
+            String commentText,
+            String postPhotoUrl),
     @required
         TResult unlikeReplyToCommentPressed(String postOwnerUid, String postUid,
-            String parentCommentUid, String commentUid),
+            String parentCommentUid, String commentUid, String commentOwnerUid),
     @required
         TResult showReplyLikersPressed(String postOwnerUid, String postUid,
             String parentCommentUid, String commentUid),
@@ -4413,7 +5124,8 @@ class _$_LikePostCommentPressed implements _LikePostCommentPressed {
     assert(unlikeReplyToCommentPressed != null);
     assert(showReplyLikersPressed != null);
     assert(nextPageShowReplyLikersPressed != null);
-    return likePostCommentPressed(postOwnerUid, postUid, commentUid);
+    return likePostCommentPressed(postOwnerUid, postUid, commentUid,
+        commentOwnerUid, commentText, postPhotoUrl);
   }
 
   @override
@@ -4421,40 +5133,63 @@ class _$_LikePostCommentPressed implements _LikePostCommentPressed {
   TResult maybeWhen<TResult extends Object>({
     TResult loadPostPressed(String postOwnerUid, String postUid),
     TResult showSpoilerPressed(),
-    TResult likePostPressed(String postOwnerUid, String postUid),
+    TResult likePostPressed(
+        String postOwnerUid, String postUid, String postPhotoUrl),
     TResult unlikePostPressed(String postOwnerUid, String postUid),
     TResult showPostLikersPressed(String postOwnerUid, String postUid),
     TResult nextPageShowPostLikersPressed(String postOwnerUid, String postUid),
     TResult commentPostPressed(String postOwnerUid, String postUid,
-        String commentText, bool isCommentSpoiler),
-    TResult deleteCommentPostPressed(
-        String postOwnerUid, String postUid, String commentUid),
+        String commentText, bool isCommentSpoiler, String postPhotoUrl),
+    TResult deleteCommentPostPressed(String postOwnerUid, String postUid,
+        String commentUid, String commentOwnerUid),
     TResult showPostCommentsPressed(String postOwnerUid, String postUid),
     TResult nextPageShowPostCommentsPressed(
         String postOwnerUid, String postUid),
     TResult showAllSpoilersInCommentsPressed(),
     TResult likePostCommentPressed(
-        String postOwnerUid, String postUid, String commentUid),
-    TResult unlikePostCommentPressed(
-        String postOwnerUid, String postUid, String commentUid),
+        String postOwnerUid,
+        String postUid,
+        String commentUid,
+        String commentOwnerUid,
+        String commentText,
+        String postPhotoUrl),
+    TResult unlikePostCommentPressed(String postOwnerUid, String postUid,
+        String commentUid, String commentOwnerUid),
     TResult showCommentLikersPressed(
         String postOwnerUid, String postUid, String commentUid),
     TResult nextPageShowCommentLikersPressed(
         String postOwnerUid, String postUid, String commentUid),
-    TResult replyToCommentPressed(String postOwnerUid, String postUid,
-        String parentCommentUid, String commentText, bool isCommentSpoiler),
-    TResult deleteReplyToCommentPressed(String postOwnerUid, String postUid,
-        String parentCommentUid, String commentUid),
+    TResult replyToCommentPressed(
+        String postOwnerUid,
+        String postUid,
+        String parentCommentUid,
+        String commentText,
+        bool isCommentSpoiler,
+        String postPhotoUrl,
+        String uidOfTheCommentOwnerBeingRepliedTo),
+    TResult deleteReplyToCommentPressed(
+        String postOwnerUid,
+        String postUid,
+        String parentCommentUid,
+        String commentUid,
+        String commentOwnerUid,
+        String parentCommentOwnerUid),
     TResult showCommentRepliesPressed(
         String postOwnerUid, String postUid, String parentCommentUid),
     TResult nextPageShowCommentRepliesPressed(
         String postOwnerUid, String postUid, String parentCommentUid),
     TResult hideCommentRepliesPressed(String parentCommentUid),
     TResult unHideCommentRepliesPressed(String parentCommentUid),
-    TResult likeReplyToCommentPressed(String postOwnerUid, String postUid,
-        String parentCommentUid, String commentUid),
+    TResult likeReplyToCommentPressed(
+        String postOwnerUid,
+        String postUid,
+        String parentCommentUid,
+        String commentUid,
+        String commentOwnerUid,
+        String commentText,
+        String postPhotoUrl),
     TResult unlikeReplyToCommentPressed(String postOwnerUid, String postUid,
-        String parentCommentUid, String commentUid),
+        String parentCommentUid, String commentUid, String commentOwnerUid),
     TResult showReplyLikersPressed(String postOwnerUid, String postUid,
         String parentCommentUid, String commentUid),
     TResult nextPageShowReplyLikersPressed(String postOwnerUid, String postUid,
@@ -4463,7 +5198,8 @@ class _$_LikePostCommentPressed implements _LikePostCommentPressed {
   }) {
     assert(orElse != null);
     if (likePostCommentPressed != null) {
-      return likePostCommentPressed(postOwnerUid, postUid, commentUid);
+      return likePostCommentPressed(postOwnerUid, postUid, commentUid,
+          commentOwnerUid, commentText, postPhotoUrl);
     }
     return orElse();
   }
@@ -4588,11 +5324,17 @@ abstract class _LikePostCommentPressed implements UserPostEvent {
   const factory _LikePostCommentPressed(
       {@required String postOwnerUid,
       @required String postUid,
-      @required String commentUid}) = _$_LikePostCommentPressed;
+      @required String commentUid,
+      @required String commentOwnerUid,
+      @required String commentText,
+      @required String postPhotoUrl}) = _$_LikePostCommentPressed;
 
   String get postOwnerUid;
   String get postUid;
   String get commentUid;
+  String get commentOwnerUid;
+  String get commentText;
+  String get postPhotoUrl;
   @JsonKey(ignore: true)
   _$LikePostCommentPressedCopyWith<_LikePostCommentPressed> get copyWith;
 }
@@ -4602,7 +5344,11 @@ abstract class _$UnlikePostCommentPressedCopyWith<$Res> {
   factory _$UnlikePostCommentPressedCopyWith(_UnlikePostCommentPressed value,
           $Res Function(_UnlikePostCommentPressed) then) =
       __$UnlikePostCommentPressedCopyWithImpl<$Res>;
-  $Res call({String postOwnerUid, String postUid, String commentUid});
+  $Res call(
+      {String postOwnerUid,
+      String postUid,
+      String commentUid,
+      String commentOwnerUid});
 }
 
 /// @nodoc
@@ -4622,6 +5368,7 @@ class __$UnlikePostCommentPressedCopyWithImpl<$Res>
     Object postOwnerUid = freezed,
     Object postUid = freezed,
     Object commentUid = freezed,
+    Object commentOwnerUid = freezed,
   }) {
     return _then(_UnlikePostCommentPressed(
       postOwnerUid: postOwnerUid == freezed
@@ -4630,6 +5377,9 @@ class __$UnlikePostCommentPressedCopyWithImpl<$Res>
       postUid: postUid == freezed ? _value.postUid : postUid as String,
       commentUid:
           commentUid == freezed ? _value.commentUid : commentUid as String,
+      commentOwnerUid: commentOwnerUid == freezed
+          ? _value.commentOwnerUid
+          : commentOwnerUid as String,
     ));
   }
 }
@@ -4639,10 +5389,12 @@ class _$_UnlikePostCommentPressed implements _UnlikePostCommentPressed {
   const _$_UnlikePostCommentPressed(
       {@required this.postOwnerUid,
       @required this.postUid,
-      @required this.commentUid})
+      @required this.commentUid,
+      @required this.commentOwnerUid})
       : assert(postOwnerUid != null),
         assert(postUid != null),
-        assert(commentUid != null);
+        assert(commentUid != null),
+        assert(commentOwnerUid != null);
 
   @override
   final String postOwnerUid;
@@ -4650,10 +5402,12 @@ class _$_UnlikePostCommentPressed implements _UnlikePostCommentPressed {
   final String postUid;
   @override
   final String commentUid;
+  @override
+  final String commentOwnerUid;
 
   @override
   String toString() {
-    return 'UserPostEvent.unlikePostCommentPressed(postOwnerUid: $postOwnerUid, postUid: $postUid, commentUid: $commentUid)';
+    return 'UserPostEvent.unlikePostCommentPressed(postOwnerUid: $postOwnerUid, postUid: $postUid, commentUid: $commentUid, commentOwnerUid: $commentOwnerUid)';
   }
 
   @override
@@ -4668,7 +5422,10 @@ class _$_UnlikePostCommentPressed implements _UnlikePostCommentPressed {
                     .equals(other.postUid, postUid)) &&
             (identical(other.commentUid, commentUid) ||
                 const DeepCollectionEquality()
-                    .equals(other.commentUid, commentUid)));
+                    .equals(other.commentUid, commentUid)) &&
+            (identical(other.commentOwnerUid, commentOwnerUid) ||
+                const DeepCollectionEquality()
+                    .equals(other.commentOwnerUid, commentOwnerUid)));
   }
 
   @override
@@ -4676,7 +5433,8 @@ class _$_UnlikePostCommentPressed implements _UnlikePostCommentPressed {
       runtimeType.hashCode ^
       const DeepCollectionEquality().hash(postOwnerUid) ^
       const DeepCollectionEquality().hash(postUid) ^
-      const DeepCollectionEquality().hash(commentUid);
+      const DeepCollectionEquality().hash(commentUid) ^
+      const DeepCollectionEquality().hash(commentOwnerUid);
 
   @JsonKey(ignore: true)
   @override
@@ -4689,7 +5447,9 @@ class _$_UnlikePostCommentPressed implements _UnlikePostCommentPressed {
   TResult when<TResult extends Object>({
     @required TResult loadPostPressed(String postOwnerUid, String postUid),
     @required TResult showSpoilerPressed(),
-    @required TResult likePostPressed(String postOwnerUid, String postUid),
+    @required
+        TResult likePostPressed(
+            String postOwnerUid, String postUid, String postPhotoUrl),
     @required TResult unlikePostPressed(String postOwnerUid, String postUid),
     @required
         TResult showPostLikersPressed(String postOwnerUid, String postUid),
@@ -4698,10 +5458,10 @@ class _$_UnlikePostCommentPressed implements _UnlikePostCommentPressed {
             String postOwnerUid, String postUid),
     @required
         TResult commentPostPressed(String postOwnerUid, String postUid,
-            String commentText, bool isCommentSpoiler),
+            String commentText, bool isCommentSpoiler, String postPhotoUrl),
     @required
-        TResult deleteCommentPostPressed(
-            String postOwnerUid, String postUid, String commentUid),
+        TResult deleteCommentPostPressed(String postOwnerUid, String postUid,
+            String commentUid, String commentOwnerUid),
     @required
         TResult showPostCommentsPressed(String postOwnerUid, String postUid),
     @required
@@ -4710,10 +5470,15 @@ class _$_UnlikePostCommentPressed implements _UnlikePostCommentPressed {
     @required TResult showAllSpoilersInCommentsPressed(),
     @required
         TResult likePostCommentPressed(
-            String postOwnerUid, String postUid, String commentUid),
+            String postOwnerUid,
+            String postUid,
+            String commentUid,
+            String commentOwnerUid,
+            String commentText,
+            String postPhotoUrl),
     @required
-        TResult unlikePostCommentPressed(
-            String postOwnerUid, String postUid, String commentUid),
+        TResult unlikePostCommentPressed(String postOwnerUid, String postUid,
+            String commentUid, String commentOwnerUid),
     @required
         TResult showCommentLikersPressed(
             String postOwnerUid, String postUid, String commentUid),
@@ -4721,11 +5486,22 @@ class _$_UnlikePostCommentPressed implements _UnlikePostCommentPressed {
         TResult nextPageShowCommentLikersPressed(
             String postOwnerUid, String postUid, String commentUid),
     @required
-        TResult replyToCommentPressed(String postOwnerUid, String postUid,
-            String parentCommentUid, String commentText, bool isCommentSpoiler),
+        TResult replyToCommentPressed(
+            String postOwnerUid,
+            String postUid,
+            String parentCommentUid,
+            String commentText,
+            bool isCommentSpoiler,
+            String postPhotoUrl,
+            String uidOfTheCommentOwnerBeingRepliedTo),
     @required
-        TResult deleteReplyToCommentPressed(String postOwnerUid, String postUid,
-            String parentCommentUid, String commentUid),
+        TResult deleteReplyToCommentPressed(
+            String postOwnerUid,
+            String postUid,
+            String parentCommentUid,
+            String commentUid,
+            String commentOwnerUid,
+            String parentCommentOwnerUid),
     @required
         TResult showCommentRepliesPressed(
             String postOwnerUid, String postUid, String parentCommentUid),
@@ -4735,11 +5511,17 @@ class _$_UnlikePostCommentPressed implements _UnlikePostCommentPressed {
     @required TResult hideCommentRepliesPressed(String parentCommentUid),
     @required TResult unHideCommentRepliesPressed(String parentCommentUid),
     @required
-        TResult likeReplyToCommentPressed(String postOwnerUid, String postUid,
-            String parentCommentUid, String commentUid),
+        TResult likeReplyToCommentPressed(
+            String postOwnerUid,
+            String postUid,
+            String parentCommentUid,
+            String commentUid,
+            String commentOwnerUid,
+            String commentText,
+            String postPhotoUrl),
     @required
         TResult unlikeReplyToCommentPressed(String postOwnerUid, String postUid,
-            String parentCommentUid, String commentUid),
+            String parentCommentUid, String commentUid, String commentOwnerUid),
     @required
         TResult showReplyLikersPressed(String postOwnerUid, String postUid,
             String parentCommentUid, String commentUid),
@@ -4772,7 +5554,8 @@ class _$_UnlikePostCommentPressed implements _UnlikePostCommentPressed {
     assert(unlikeReplyToCommentPressed != null);
     assert(showReplyLikersPressed != null);
     assert(nextPageShowReplyLikersPressed != null);
-    return unlikePostCommentPressed(postOwnerUid, postUid, commentUid);
+    return unlikePostCommentPressed(
+        postOwnerUid, postUid, commentUid, commentOwnerUid);
   }
 
   @override
@@ -4780,40 +5563,63 @@ class _$_UnlikePostCommentPressed implements _UnlikePostCommentPressed {
   TResult maybeWhen<TResult extends Object>({
     TResult loadPostPressed(String postOwnerUid, String postUid),
     TResult showSpoilerPressed(),
-    TResult likePostPressed(String postOwnerUid, String postUid),
+    TResult likePostPressed(
+        String postOwnerUid, String postUid, String postPhotoUrl),
     TResult unlikePostPressed(String postOwnerUid, String postUid),
     TResult showPostLikersPressed(String postOwnerUid, String postUid),
     TResult nextPageShowPostLikersPressed(String postOwnerUid, String postUid),
     TResult commentPostPressed(String postOwnerUid, String postUid,
-        String commentText, bool isCommentSpoiler),
-    TResult deleteCommentPostPressed(
-        String postOwnerUid, String postUid, String commentUid),
+        String commentText, bool isCommentSpoiler, String postPhotoUrl),
+    TResult deleteCommentPostPressed(String postOwnerUid, String postUid,
+        String commentUid, String commentOwnerUid),
     TResult showPostCommentsPressed(String postOwnerUid, String postUid),
     TResult nextPageShowPostCommentsPressed(
         String postOwnerUid, String postUid),
     TResult showAllSpoilersInCommentsPressed(),
     TResult likePostCommentPressed(
-        String postOwnerUid, String postUid, String commentUid),
-    TResult unlikePostCommentPressed(
-        String postOwnerUid, String postUid, String commentUid),
+        String postOwnerUid,
+        String postUid,
+        String commentUid,
+        String commentOwnerUid,
+        String commentText,
+        String postPhotoUrl),
+    TResult unlikePostCommentPressed(String postOwnerUid, String postUid,
+        String commentUid, String commentOwnerUid),
     TResult showCommentLikersPressed(
         String postOwnerUid, String postUid, String commentUid),
     TResult nextPageShowCommentLikersPressed(
         String postOwnerUid, String postUid, String commentUid),
-    TResult replyToCommentPressed(String postOwnerUid, String postUid,
-        String parentCommentUid, String commentText, bool isCommentSpoiler),
-    TResult deleteReplyToCommentPressed(String postOwnerUid, String postUid,
-        String parentCommentUid, String commentUid),
+    TResult replyToCommentPressed(
+        String postOwnerUid,
+        String postUid,
+        String parentCommentUid,
+        String commentText,
+        bool isCommentSpoiler,
+        String postPhotoUrl,
+        String uidOfTheCommentOwnerBeingRepliedTo),
+    TResult deleteReplyToCommentPressed(
+        String postOwnerUid,
+        String postUid,
+        String parentCommentUid,
+        String commentUid,
+        String commentOwnerUid,
+        String parentCommentOwnerUid),
     TResult showCommentRepliesPressed(
         String postOwnerUid, String postUid, String parentCommentUid),
     TResult nextPageShowCommentRepliesPressed(
         String postOwnerUid, String postUid, String parentCommentUid),
     TResult hideCommentRepliesPressed(String parentCommentUid),
     TResult unHideCommentRepliesPressed(String parentCommentUid),
-    TResult likeReplyToCommentPressed(String postOwnerUid, String postUid,
-        String parentCommentUid, String commentUid),
+    TResult likeReplyToCommentPressed(
+        String postOwnerUid,
+        String postUid,
+        String parentCommentUid,
+        String commentUid,
+        String commentOwnerUid,
+        String commentText,
+        String postPhotoUrl),
     TResult unlikeReplyToCommentPressed(String postOwnerUid, String postUid,
-        String parentCommentUid, String commentUid),
+        String parentCommentUid, String commentUid, String commentOwnerUid),
     TResult showReplyLikersPressed(String postOwnerUid, String postUid,
         String parentCommentUid, String commentUid),
     TResult nextPageShowReplyLikersPressed(String postOwnerUid, String postUid,
@@ -4822,7 +5628,8 @@ class _$_UnlikePostCommentPressed implements _UnlikePostCommentPressed {
   }) {
     assert(orElse != null);
     if (unlikePostCommentPressed != null) {
-      return unlikePostCommentPressed(postOwnerUid, postUid, commentUid);
+      return unlikePostCommentPressed(
+          postOwnerUid, postUid, commentUid, commentOwnerUid);
     }
     return orElse();
   }
@@ -4947,11 +5754,13 @@ abstract class _UnlikePostCommentPressed implements UserPostEvent {
   const factory _UnlikePostCommentPressed(
       {@required String postOwnerUid,
       @required String postUid,
-      @required String commentUid}) = _$_UnlikePostCommentPressed;
+      @required String commentUid,
+      @required String commentOwnerUid}) = _$_UnlikePostCommentPressed;
 
   String get postOwnerUid;
   String get postUid;
   String get commentUid;
+  String get commentOwnerUid;
   @JsonKey(ignore: true)
   _$UnlikePostCommentPressedCopyWith<_UnlikePostCommentPressed> get copyWith;
 }
@@ -5048,7 +5857,9 @@ class _$_ShowCommentLikersPressed implements _ShowCommentLikersPressed {
   TResult when<TResult extends Object>({
     @required TResult loadPostPressed(String postOwnerUid, String postUid),
     @required TResult showSpoilerPressed(),
-    @required TResult likePostPressed(String postOwnerUid, String postUid),
+    @required
+        TResult likePostPressed(
+            String postOwnerUid, String postUid, String postPhotoUrl),
     @required TResult unlikePostPressed(String postOwnerUid, String postUid),
     @required
         TResult showPostLikersPressed(String postOwnerUid, String postUid),
@@ -5057,10 +5868,10 @@ class _$_ShowCommentLikersPressed implements _ShowCommentLikersPressed {
             String postOwnerUid, String postUid),
     @required
         TResult commentPostPressed(String postOwnerUid, String postUid,
-            String commentText, bool isCommentSpoiler),
+            String commentText, bool isCommentSpoiler, String postPhotoUrl),
     @required
-        TResult deleteCommentPostPressed(
-            String postOwnerUid, String postUid, String commentUid),
+        TResult deleteCommentPostPressed(String postOwnerUid, String postUid,
+            String commentUid, String commentOwnerUid),
     @required
         TResult showPostCommentsPressed(String postOwnerUid, String postUid),
     @required
@@ -5069,10 +5880,15 @@ class _$_ShowCommentLikersPressed implements _ShowCommentLikersPressed {
     @required TResult showAllSpoilersInCommentsPressed(),
     @required
         TResult likePostCommentPressed(
-            String postOwnerUid, String postUid, String commentUid),
+            String postOwnerUid,
+            String postUid,
+            String commentUid,
+            String commentOwnerUid,
+            String commentText,
+            String postPhotoUrl),
     @required
-        TResult unlikePostCommentPressed(
-            String postOwnerUid, String postUid, String commentUid),
+        TResult unlikePostCommentPressed(String postOwnerUid, String postUid,
+            String commentUid, String commentOwnerUid),
     @required
         TResult showCommentLikersPressed(
             String postOwnerUid, String postUid, String commentUid),
@@ -5080,11 +5896,22 @@ class _$_ShowCommentLikersPressed implements _ShowCommentLikersPressed {
         TResult nextPageShowCommentLikersPressed(
             String postOwnerUid, String postUid, String commentUid),
     @required
-        TResult replyToCommentPressed(String postOwnerUid, String postUid,
-            String parentCommentUid, String commentText, bool isCommentSpoiler),
+        TResult replyToCommentPressed(
+            String postOwnerUid,
+            String postUid,
+            String parentCommentUid,
+            String commentText,
+            bool isCommentSpoiler,
+            String postPhotoUrl,
+            String uidOfTheCommentOwnerBeingRepliedTo),
     @required
-        TResult deleteReplyToCommentPressed(String postOwnerUid, String postUid,
-            String parentCommentUid, String commentUid),
+        TResult deleteReplyToCommentPressed(
+            String postOwnerUid,
+            String postUid,
+            String parentCommentUid,
+            String commentUid,
+            String commentOwnerUid,
+            String parentCommentOwnerUid),
     @required
         TResult showCommentRepliesPressed(
             String postOwnerUid, String postUid, String parentCommentUid),
@@ -5094,11 +5921,17 @@ class _$_ShowCommentLikersPressed implements _ShowCommentLikersPressed {
     @required TResult hideCommentRepliesPressed(String parentCommentUid),
     @required TResult unHideCommentRepliesPressed(String parentCommentUid),
     @required
-        TResult likeReplyToCommentPressed(String postOwnerUid, String postUid,
-            String parentCommentUid, String commentUid),
+        TResult likeReplyToCommentPressed(
+            String postOwnerUid,
+            String postUid,
+            String parentCommentUid,
+            String commentUid,
+            String commentOwnerUid,
+            String commentText,
+            String postPhotoUrl),
     @required
         TResult unlikeReplyToCommentPressed(String postOwnerUid, String postUid,
-            String parentCommentUid, String commentUid),
+            String parentCommentUid, String commentUid, String commentOwnerUid),
     @required
         TResult showReplyLikersPressed(String postOwnerUid, String postUid,
             String parentCommentUid, String commentUid),
@@ -5139,40 +5972,63 @@ class _$_ShowCommentLikersPressed implements _ShowCommentLikersPressed {
   TResult maybeWhen<TResult extends Object>({
     TResult loadPostPressed(String postOwnerUid, String postUid),
     TResult showSpoilerPressed(),
-    TResult likePostPressed(String postOwnerUid, String postUid),
+    TResult likePostPressed(
+        String postOwnerUid, String postUid, String postPhotoUrl),
     TResult unlikePostPressed(String postOwnerUid, String postUid),
     TResult showPostLikersPressed(String postOwnerUid, String postUid),
     TResult nextPageShowPostLikersPressed(String postOwnerUid, String postUid),
     TResult commentPostPressed(String postOwnerUid, String postUid,
-        String commentText, bool isCommentSpoiler),
-    TResult deleteCommentPostPressed(
-        String postOwnerUid, String postUid, String commentUid),
+        String commentText, bool isCommentSpoiler, String postPhotoUrl),
+    TResult deleteCommentPostPressed(String postOwnerUid, String postUid,
+        String commentUid, String commentOwnerUid),
     TResult showPostCommentsPressed(String postOwnerUid, String postUid),
     TResult nextPageShowPostCommentsPressed(
         String postOwnerUid, String postUid),
     TResult showAllSpoilersInCommentsPressed(),
     TResult likePostCommentPressed(
-        String postOwnerUid, String postUid, String commentUid),
-    TResult unlikePostCommentPressed(
-        String postOwnerUid, String postUid, String commentUid),
+        String postOwnerUid,
+        String postUid,
+        String commentUid,
+        String commentOwnerUid,
+        String commentText,
+        String postPhotoUrl),
+    TResult unlikePostCommentPressed(String postOwnerUid, String postUid,
+        String commentUid, String commentOwnerUid),
     TResult showCommentLikersPressed(
         String postOwnerUid, String postUid, String commentUid),
     TResult nextPageShowCommentLikersPressed(
         String postOwnerUid, String postUid, String commentUid),
-    TResult replyToCommentPressed(String postOwnerUid, String postUid,
-        String parentCommentUid, String commentText, bool isCommentSpoiler),
-    TResult deleteReplyToCommentPressed(String postOwnerUid, String postUid,
-        String parentCommentUid, String commentUid),
+    TResult replyToCommentPressed(
+        String postOwnerUid,
+        String postUid,
+        String parentCommentUid,
+        String commentText,
+        bool isCommentSpoiler,
+        String postPhotoUrl,
+        String uidOfTheCommentOwnerBeingRepliedTo),
+    TResult deleteReplyToCommentPressed(
+        String postOwnerUid,
+        String postUid,
+        String parentCommentUid,
+        String commentUid,
+        String commentOwnerUid,
+        String parentCommentOwnerUid),
     TResult showCommentRepliesPressed(
         String postOwnerUid, String postUid, String parentCommentUid),
     TResult nextPageShowCommentRepliesPressed(
         String postOwnerUid, String postUid, String parentCommentUid),
     TResult hideCommentRepliesPressed(String parentCommentUid),
     TResult unHideCommentRepliesPressed(String parentCommentUid),
-    TResult likeReplyToCommentPressed(String postOwnerUid, String postUid,
-        String parentCommentUid, String commentUid),
+    TResult likeReplyToCommentPressed(
+        String postOwnerUid,
+        String postUid,
+        String parentCommentUid,
+        String commentUid,
+        String commentOwnerUid,
+        String commentText,
+        String postPhotoUrl),
     TResult unlikeReplyToCommentPressed(String postOwnerUid, String postUid,
-        String parentCommentUid, String commentUid),
+        String parentCommentUid, String commentUid, String commentOwnerUid),
     TResult showReplyLikersPressed(String postOwnerUid, String postUid,
         String parentCommentUid, String commentUid),
     TResult nextPageShowReplyLikersPressed(String postOwnerUid, String postUid,
@@ -5410,7 +6266,9 @@ class _$_NextPageShowCommentLikersPressed
   TResult when<TResult extends Object>({
     @required TResult loadPostPressed(String postOwnerUid, String postUid),
     @required TResult showSpoilerPressed(),
-    @required TResult likePostPressed(String postOwnerUid, String postUid),
+    @required
+        TResult likePostPressed(
+            String postOwnerUid, String postUid, String postPhotoUrl),
     @required TResult unlikePostPressed(String postOwnerUid, String postUid),
     @required
         TResult showPostLikersPressed(String postOwnerUid, String postUid),
@@ -5419,10 +6277,10 @@ class _$_NextPageShowCommentLikersPressed
             String postOwnerUid, String postUid),
     @required
         TResult commentPostPressed(String postOwnerUid, String postUid,
-            String commentText, bool isCommentSpoiler),
+            String commentText, bool isCommentSpoiler, String postPhotoUrl),
     @required
-        TResult deleteCommentPostPressed(
-            String postOwnerUid, String postUid, String commentUid),
+        TResult deleteCommentPostPressed(String postOwnerUid, String postUid,
+            String commentUid, String commentOwnerUid),
     @required
         TResult showPostCommentsPressed(String postOwnerUid, String postUid),
     @required
@@ -5431,10 +6289,15 @@ class _$_NextPageShowCommentLikersPressed
     @required TResult showAllSpoilersInCommentsPressed(),
     @required
         TResult likePostCommentPressed(
-            String postOwnerUid, String postUid, String commentUid),
+            String postOwnerUid,
+            String postUid,
+            String commentUid,
+            String commentOwnerUid,
+            String commentText,
+            String postPhotoUrl),
     @required
-        TResult unlikePostCommentPressed(
-            String postOwnerUid, String postUid, String commentUid),
+        TResult unlikePostCommentPressed(String postOwnerUid, String postUid,
+            String commentUid, String commentOwnerUid),
     @required
         TResult showCommentLikersPressed(
             String postOwnerUid, String postUid, String commentUid),
@@ -5442,11 +6305,22 @@ class _$_NextPageShowCommentLikersPressed
         TResult nextPageShowCommentLikersPressed(
             String postOwnerUid, String postUid, String commentUid),
     @required
-        TResult replyToCommentPressed(String postOwnerUid, String postUid,
-            String parentCommentUid, String commentText, bool isCommentSpoiler),
+        TResult replyToCommentPressed(
+            String postOwnerUid,
+            String postUid,
+            String parentCommentUid,
+            String commentText,
+            bool isCommentSpoiler,
+            String postPhotoUrl,
+            String uidOfTheCommentOwnerBeingRepliedTo),
     @required
-        TResult deleteReplyToCommentPressed(String postOwnerUid, String postUid,
-            String parentCommentUid, String commentUid),
+        TResult deleteReplyToCommentPressed(
+            String postOwnerUid,
+            String postUid,
+            String parentCommentUid,
+            String commentUid,
+            String commentOwnerUid,
+            String parentCommentOwnerUid),
     @required
         TResult showCommentRepliesPressed(
             String postOwnerUid, String postUid, String parentCommentUid),
@@ -5456,11 +6330,17 @@ class _$_NextPageShowCommentLikersPressed
     @required TResult hideCommentRepliesPressed(String parentCommentUid),
     @required TResult unHideCommentRepliesPressed(String parentCommentUid),
     @required
-        TResult likeReplyToCommentPressed(String postOwnerUid, String postUid,
-            String parentCommentUid, String commentUid),
+        TResult likeReplyToCommentPressed(
+            String postOwnerUid,
+            String postUid,
+            String parentCommentUid,
+            String commentUid,
+            String commentOwnerUid,
+            String commentText,
+            String postPhotoUrl),
     @required
         TResult unlikeReplyToCommentPressed(String postOwnerUid, String postUid,
-            String parentCommentUid, String commentUid),
+            String parentCommentUid, String commentUid, String commentOwnerUid),
     @required
         TResult showReplyLikersPressed(String postOwnerUid, String postUid,
             String parentCommentUid, String commentUid),
@@ -5501,40 +6381,63 @@ class _$_NextPageShowCommentLikersPressed
   TResult maybeWhen<TResult extends Object>({
     TResult loadPostPressed(String postOwnerUid, String postUid),
     TResult showSpoilerPressed(),
-    TResult likePostPressed(String postOwnerUid, String postUid),
+    TResult likePostPressed(
+        String postOwnerUid, String postUid, String postPhotoUrl),
     TResult unlikePostPressed(String postOwnerUid, String postUid),
     TResult showPostLikersPressed(String postOwnerUid, String postUid),
     TResult nextPageShowPostLikersPressed(String postOwnerUid, String postUid),
     TResult commentPostPressed(String postOwnerUid, String postUid,
-        String commentText, bool isCommentSpoiler),
-    TResult deleteCommentPostPressed(
-        String postOwnerUid, String postUid, String commentUid),
+        String commentText, bool isCommentSpoiler, String postPhotoUrl),
+    TResult deleteCommentPostPressed(String postOwnerUid, String postUid,
+        String commentUid, String commentOwnerUid),
     TResult showPostCommentsPressed(String postOwnerUid, String postUid),
     TResult nextPageShowPostCommentsPressed(
         String postOwnerUid, String postUid),
     TResult showAllSpoilersInCommentsPressed(),
     TResult likePostCommentPressed(
-        String postOwnerUid, String postUid, String commentUid),
-    TResult unlikePostCommentPressed(
-        String postOwnerUid, String postUid, String commentUid),
+        String postOwnerUid,
+        String postUid,
+        String commentUid,
+        String commentOwnerUid,
+        String commentText,
+        String postPhotoUrl),
+    TResult unlikePostCommentPressed(String postOwnerUid, String postUid,
+        String commentUid, String commentOwnerUid),
     TResult showCommentLikersPressed(
         String postOwnerUid, String postUid, String commentUid),
     TResult nextPageShowCommentLikersPressed(
         String postOwnerUid, String postUid, String commentUid),
-    TResult replyToCommentPressed(String postOwnerUid, String postUid,
-        String parentCommentUid, String commentText, bool isCommentSpoiler),
-    TResult deleteReplyToCommentPressed(String postOwnerUid, String postUid,
-        String parentCommentUid, String commentUid),
+    TResult replyToCommentPressed(
+        String postOwnerUid,
+        String postUid,
+        String parentCommentUid,
+        String commentText,
+        bool isCommentSpoiler,
+        String postPhotoUrl,
+        String uidOfTheCommentOwnerBeingRepliedTo),
+    TResult deleteReplyToCommentPressed(
+        String postOwnerUid,
+        String postUid,
+        String parentCommentUid,
+        String commentUid,
+        String commentOwnerUid,
+        String parentCommentOwnerUid),
     TResult showCommentRepliesPressed(
         String postOwnerUid, String postUid, String parentCommentUid),
     TResult nextPageShowCommentRepliesPressed(
         String postOwnerUid, String postUid, String parentCommentUid),
     TResult hideCommentRepliesPressed(String parentCommentUid),
     TResult unHideCommentRepliesPressed(String parentCommentUid),
-    TResult likeReplyToCommentPressed(String postOwnerUid, String postUid,
-        String parentCommentUid, String commentUid),
+    TResult likeReplyToCommentPressed(
+        String postOwnerUid,
+        String postUid,
+        String parentCommentUid,
+        String commentUid,
+        String commentOwnerUid,
+        String commentText,
+        String postPhotoUrl),
     TResult unlikeReplyToCommentPressed(String postOwnerUid, String postUid,
-        String parentCommentUid, String commentUid),
+        String parentCommentUid, String commentUid, String commentOwnerUid),
     TResult showReplyLikersPressed(String postOwnerUid, String postUid,
         String parentCommentUid, String commentUid),
     TResult nextPageShowReplyLikersPressed(String postOwnerUid, String postUid,
@@ -5689,7 +6592,9 @@ abstract class _$ReplyToCommentPressedCopyWith<$Res> {
       String postUid,
       String parentCommentUid,
       String commentText,
-      bool isCommentSpoiler});
+      bool isCommentSpoiler,
+      String postPhotoUrl,
+      String uidOfTheCommentOwnerBeingRepliedTo});
 }
 
 /// @nodoc
@@ -5710,6 +6615,8 @@ class __$ReplyToCommentPressedCopyWithImpl<$Res>
     Object parentCommentUid = freezed,
     Object commentText = freezed,
     Object isCommentSpoiler = freezed,
+    Object postPhotoUrl = freezed,
+    Object uidOfTheCommentOwnerBeingRepliedTo = freezed,
   }) {
     return _then(_ReplyToCommentPressed(
       postOwnerUid: postOwnerUid == freezed
@@ -5724,6 +6631,13 @@ class __$ReplyToCommentPressedCopyWithImpl<$Res>
       isCommentSpoiler: isCommentSpoiler == freezed
           ? _value.isCommentSpoiler
           : isCommentSpoiler as bool,
+      postPhotoUrl: postPhotoUrl == freezed
+          ? _value.postPhotoUrl
+          : postPhotoUrl as String,
+      uidOfTheCommentOwnerBeingRepliedTo:
+          uidOfTheCommentOwnerBeingRepliedTo == freezed
+              ? _value.uidOfTheCommentOwnerBeingRepliedTo
+              : uidOfTheCommentOwnerBeingRepliedTo as String,
     ));
   }
 }
@@ -5735,12 +6649,16 @@ class _$_ReplyToCommentPressed implements _ReplyToCommentPressed {
       @required this.postUid,
       @required this.parentCommentUid,
       @required this.commentText,
-      @required this.isCommentSpoiler})
+      @required this.isCommentSpoiler,
+      @required this.postPhotoUrl,
+      @required this.uidOfTheCommentOwnerBeingRepliedTo})
       : assert(postOwnerUid != null),
         assert(postUid != null),
         assert(parentCommentUid != null),
         assert(commentText != null),
-        assert(isCommentSpoiler != null);
+        assert(isCommentSpoiler != null),
+        assert(postPhotoUrl != null),
+        assert(uidOfTheCommentOwnerBeingRepliedTo != null);
 
   @override
   final String postOwnerUid;
@@ -5752,10 +6670,14 @@ class _$_ReplyToCommentPressed implements _ReplyToCommentPressed {
   final String commentText;
   @override
   final bool isCommentSpoiler;
+  @override
+  final String postPhotoUrl;
+  @override
+  final String uidOfTheCommentOwnerBeingRepliedTo;
 
   @override
   String toString() {
-    return 'UserPostEvent.replyToCommentPressed(postOwnerUid: $postOwnerUid, postUid: $postUid, parentCommentUid: $parentCommentUid, commentText: $commentText, isCommentSpoiler: $isCommentSpoiler)';
+    return 'UserPostEvent.replyToCommentPressed(postOwnerUid: $postOwnerUid, postUid: $postUid, parentCommentUid: $parentCommentUid, commentText: $commentText, isCommentSpoiler: $isCommentSpoiler, postPhotoUrl: $postPhotoUrl, uidOfTheCommentOwnerBeingRepliedTo: $uidOfTheCommentOwnerBeingRepliedTo)';
   }
 
   @override
@@ -5776,7 +6698,15 @@ class _$_ReplyToCommentPressed implements _ReplyToCommentPressed {
                     .equals(other.commentText, commentText)) &&
             (identical(other.isCommentSpoiler, isCommentSpoiler) ||
                 const DeepCollectionEquality()
-                    .equals(other.isCommentSpoiler, isCommentSpoiler)));
+                    .equals(other.isCommentSpoiler, isCommentSpoiler)) &&
+            (identical(other.postPhotoUrl, postPhotoUrl) ||
+                const DeepCollectionEquality()
+                    .equals(other.postPhotoUrl, postPhotoUrl)) &&
+            (identical(other.uidOfTheCommentOwnerBeingRepliedTo,
+                    uidOfTheCommentOwnerBeingRepliedTo) ||
+                const DeepCollectionEquality().equals(
+                    other.uidOfTheCommentOwnerBeingRepliedTo,
+                    uidOfTheCommentOwnerBeingRepliedTo)));
   }
 
   @override
@@ -5786,7 +6716,9 @@ class _$_ReplyToCommentPressed implements _ReplyToCommentPressed {
       const DeepCollectionEquality().hash(postUid) ^
       const DeepCollectionEquality().hash(parentCommentUid) ^
       const DeepCollectionEquality().hash(commentText) ^
-      const DeepCollectionEquality().hash(isCommentSpoiler);
+      const DeepCollectionEquality().hash(isCommentSpoiler) ^
+      const DeepCollectionEquality().hash(postPhotoUrl) ^
+      const DeepCollectionEquality().hash(uidOfTheCommentOwnerBeingRepliedTo);
 
   @JsonKey(ignore: true)
   @override
@@ -5799,7 +6731,9 @@ class _$_ReplyToCommentPressed implements _ReplyToCommentPressed {
   TResult when<TResult extends Object>({
     @required TResult loadPostPressed(String postOwnerUid, String postUid),
     @required TResult showSpoilerPressed(),
-    @required TResult likePostPressed(String postOwnerUid, String postUid),
+    @required
+        TResult likePostPressed(
+            String postOwnerUid, String postUid, String postPhotoUrl),
     @required TResult unlikePostPressed(String postOwnerUid, String postUid),
     @required
         TResult showPostLikersPressed(String postOwnerUid, String postUid),
@@ -5808,10 +6742,10 @@ class _$_ReplyToCommentPressed implements _ReplyToCommentPressed {
             String postOwnerUid, String postUid),
     @required
         TResult commentPostPressed(String postOwnerUid, String postUid,
-            String commentText, bool isCommentSpoiler),
+            String commentText, bool isCommentSpoiler, String postPhotoUrl),
     @required
-        TResult deleteCommentPostPressed(
-            String postOwnerUid, String postUid, String commentUid),
+        TResult deleteCommentPostPressed(String postOwnerUid, String postUid,
+            String commentUid, String commentOwnerUid),
     @required
         TResult showPostCommentsPressed(String postOwnerUid, String postUid),
     @required
@@ -5820,10 +6754,15 @@ class _$_ReplyToCommentPressed implements _ReplyToCommentPressed {
     @required TResult showAllSpoilersInCommentsPressed(),
     @required
         TResult likePostCommentPressed(
-            String postOwnerUid, String postUid, String commentUid),
+            String postOwnerUid,
+            String postUid,
+            String commentUid,
+            String commentOwnerUid,
+            String commentText,
+            String postPhotoUrl),
     @required
-        TResult unlikePostCommentPressed(
-            String postOwnerUid, String postUid, String commentUid),
+        TResult unlikePostCommentPressed(String postOwnerUid, String postUid,
+            String commentUid, String commentOwnerUid),
     @required
         TResult showCommentLikersPressed(
             String postOwnerUid, String postUid, String commentUid),
@@ -5831,11 +6770,22 @@ class _$_ReplyToCommentPressed implements _ReplyToCommentPressed {
         TResult nextPageShowCommentLikersPressed(
             String postOwnerUid, String postUid, String commentUid),
     @required
-        TResult replyToCommentPressed(String postOwnerUid, String postUid,
-            String parentCommentUid, String commentText, bool isCommentSpoiler),
+        TResult replyToCommentPressed(
+            String postOwnerUid,
+            String postUid,
+            String parentCommentUid,
+            String commentText,
+            bool isCommentSpoiler,
+            String postPhotoUrl,
+            String uidOfTheCommentOwnerBeingRepliedTo),
     @required
-        TResult deleteReplyToCommentPressed(String postOwnerUid, String postUid,
-            String parentCommentUid, String commentUid),
+        TResult deleteReplyToCommentPressed(
+            String postOwnerUid,
+            String postUid,
+            String parentCommentUid,
+            String commentUid,
+            String commentOwnerUid,
+            String parentCommentOwnerUid),
     @required
         TResult showCommentRepliesPressed(
             String postOwnerUid, String postUid, String parentCommentUid),
@@ -5845,11 +6795,17 @@ class _$_ReplyToCommentPressed implements _ReplyToCommentPressed {
     @required TResult hideCommentRepliesPressed(String parentCommentUid),
     @required TResult unHideCommentRepliesPressed(String parentCommentUid),
     @required
-        TResult likeReplyToCommentPressed(String postOwnerUid, String postUid,
-            String parentCommentUid, String commentUid),
+        TResult likeReplyToCommentPressed(
+            String postOwnerUid,
+            String postUid,
+            String parentCommentUid,
+            String commentUid,
+            String commentOwnerUid,
+            String commentText,
+            String postPhotoUrl),
     @required
         TResult unlikeReplyToCommentPressed(String postOwnerUid, String postUid,
-            String parentCommentUid, String commentUid),
+            String parentCommentUid, String commentUid, String commentOwnerUid),
     @required
         TResult showReplyLikersPressed(String postOwnerUid, String postUid,
             String parentCommentUid, String commentUid),
@@ -5883,7 +6839,13 @@ class _$_ReplyToCommentPressed implements _ReplyToCommentPressed {
     assert(showReplyLikersPressed != null);
     assert(nextPageShowReplyLikersPressed != null);
     return replyToCommentPressed(
-        postOwnerUid, postUid, parentCommentUid, commentText, isCommentSpoiler);
+        postOwnerUid,
+        postUid,
+        parentCommentUid,
+        commentText,
+        isCommentSpoiler,
+        postPhotoUrl,
+        uidOfTheCommentOwnerBeingRepliedTo);
   }
 
   @override
@@ -5891,40 +6853,63 @@ class _$_ReplyToCommentPressed implements _ReplyToCommentPressed {
   TResult maybeWhen<TResult extends Object>({
     TResult loadPostPressed(String postOwnerUid, String postUid),
     TResult showSpoilerPressed(),
-    TResult likePostPressed(String postOwnerUid, String postUid),
+    TResult likePostPressed(
+        String postOwnerUid, String postUid, String postPhotoUrl),
     TResult unlikePostPressed(String postOwnerUid, String postUid),
     TResult showPostLikersPressed(String postOwnerUid, String postUid),
     TResult nextPageShowPostLikersPressed(String postOwnerUid, String postUid),
     TResult commentPostPressed(String postOwnerUid, String postUid,
-        String commentText, bool isCommentSpoiler),
-    TResult deleteCommentPostPressed(
-        String postOwnerUid, String postUid, String commentUid),
+        String commentText, bool isCommentSpoiler, String postPhotoUrl),
+    TResult deleteCommentPostPressed(String postOwnerUid, String postUid,
+        String commentUid, String commentOwnerUid),
     TResult showPostCommentsPressed(String postOwnerUid, String postUid),
     TResult nextPageShowPostCommentsPressed(
         String postOwnerUid, String postUid),
     TResult showAllSpoilersInCommentsPressed(),
     TResult likePostCommentPressed(
-        String postOwnerUid, String postUid, String commentUid),
-    TResult unlikePostCommentPressed(
-        String postOwnerUid, String postUid, String commentUid),
+        String postOwnerUid,
+        String postUid,
+        String commentUid,
+        String commentOwnerUid,
+        String commentText,
+        String postPhotoUrl),
+    TResult unlikePostCommentPressed(String postOwnerUid, String postUid,
+        String commentUid, String commentOwnerUid),
     TResult showCommentLikersPressed(
         String postOwnerUid, String postUid, String commentUid),
     TResult nextPageShowCommentLikersPressed(
         String postOwnerUid, String postUid, String commentUid),
-    TResult replyToCommentPressed(String postOwnerUid, String postUid,
-        String parentCommentUid, String commentText, bool isCommentSpoiler),
-    TResult deleteReplyToCommentPressed(String postOwnerUid, String postUid,
-        String parentCommentUid, String commentUid),
+    TResult replyToCommentPressed(
+        String postOwnerUid,
+        String postUid,
+        String parentCommentUid,
+        String commentText,
+        bool isCommentSpoiler,
+        String postPhotoUrl,
+        String uidOfTheCommentOwnerBeingRepliedTo),
+    TResult deleteReplyToCommentPressed(
+        String postOwnerUid,
+        String postUid,
+        String parentCommentUid,
+        String commentUid,
+        String commentOwnerUid,
+        String parentCommentOwnerUid),
     TResult showCommentRepliesPressed(
         String postOwnerUid, String postUid, String parentCommentUid),
     TResult nextPageShowCommentRepliesPressed(
         String postOwnerUid, String postUid, String parentCommentUid),
     TResult hideCommentRepliesPressed(String parentCommentUid),
     TResult unHideCommentRepliesPressed(String parentCommentUid),
-    TResult likeReplyToCommentPressed(String postOwnerUid, String postUid,
-        String parentCommentUid, String commentUid),
+    TResult likeReplyToCommentPressed(
+        String postOwnerUid,
+        String postUid,
+        String parentCommentUid,
+        String commentUid,
+        String commentOwnerUid,
+        String commentText,
+        String postPhotoUrl),
     TResult unlikeReplyToCommentPressed(String postOwnerUid, String postUid,
-        String parentCommentUid, String commentUid),
+        String parentCommentUid, String commentUid, String commentOwnerUid),
     TResult showReplyLikersPressed(String postOwnerUid, String postUid,
         String parentCommentUid, String commentUid),
     TResult nextPageShowReplyLikersPressed(String postOwnerUid, String postUid,
@@ -5933,8 +6918,14 @@ class _$_ReplyToCommentPressed implements _ReplyToCommentPressed {
   }) {
     assert(orElse != null);
     if (replyToCommentPressed != null) {
-      return replyToCommentPressed(postOwnerUid, postUid, parentCommentUid,
-          commentText, isCommentSpoiler);
+      return replyToCommentPressed(
+          postOwnerUid,
+          postUid,
+          parentCommentUid,
+          commentText,
+          isCommentSpoiler,
+          postPhotoUrl,
+          uidOfTheCommentOwnerBeingRepliedTo);
     }
     return orElse();
   }
@@ -6057,17 +7048,22 @@ class _$_ReplyToCommentPressed implements _ReplyToCommentPressed {
 
 abstract class _ReplyToCommentPressed implements UserPostEvent {
   const factory _ReplyToCommentPressed(
-      {@required String postOwnerUid,
-      @required String postUid,
-      @required String parentCommentUid,
-      @required String commentText,
-      @required bool isCommentSpoiler}) = _$_ReplyToCommentPressed;
+          {@required String postOwnerUid,
+          @required String postUid,
+          @required String parentCommentUid,
+          @required String commentText,
+          @required bool isCommentSpoiler,
+          @required String postPhotoUrl,
+          @required String uidOfTheCommentOwnerBeingRepliedTo}) =
+      _$_ReplyToCommentPressed;
 
   String get postOwnerUid;
   String get postUid;
   String get parentCommentUid;
   String get commentText;
   bool get isCommentSpoiler;
+  String get postPhotoUrl;
+  String get uidOfTheCommentOwnerBeingRepliedTo;
   @JsonKey(ignore: true)
   _$ReplyToCommentPressedCopyWith<_ReplyToCommentPressed> get copyWith;
 }
@@ -6082,7 +7078,9 @@ abstract class _$DeleteReplyToCommentPressedCopyWith<$Res> {
       {String postOwnerUid,
       String postUid,
       String parentCommentUid,
-      String commentUid});
+      String commentUid,
+      String commentOwnerUid,
+      String parentCommentOwnerUid});
 }
 
 /// @nodoc
@@ -6104,6 +7102,8 @@ class __$DeleteReplyToCommentPressedCopyWithImpl<$Res>
     Object postUid = freezed,
     Object parentCommentUid = freezed,
     Object commentUid = freezed,
+    Object commentOwnerUid = freezed,
+    Object parentCommentOwnerUid = freezed,
   }) {
     return _then(_DeleteReplyToCommentPressed(
       postOwnerUid: postOwnerUid == freezed
@@ -6115,6 +7115,12 @@ class __$DeleteReplyToCommentPressedCopyWithImpl<$Res>
           : parentCommentUid as String,
       commentUid:
           commentUid == freezed ? _value.commentUid : commentUid as String,
+      commentOwnerUid: commentOwnerUid == freezed
+          ? _value.commentOwnerUid
+          : commentOwnerUid as String,
+      parentCommentOwnerUid: parentCommentOwnerUid == freezed
+          ? _value.parentCommentOwnerUid
+          : parentCommentOwnerUid as String,
     ));
   }
 }
@@ -6125,11 +7131,15 @@ class _$_DeleteReplyToCommentPressed implements _DeleteReplyToCommentPressed {
       {@required this.postOwnerUid,
       @required this.postUid,
       @required this.parentCommentUid,
-      @required this.commentUid})
+      @required this.commentUid,
+      @required this.commentOwnerUid,
+      @required this.parentCommentOwnerUid})
       : assert(postOwnerUid != null),
         assert(postUid != null),
         assert(parentCommentUid != null),
-        assert(commentUid != null);
+        assert(commentUid != null),
+        assert(commentOwnerUid != null),
+        assert(parentCommentOwnerUid != null);
 
   @override
   final String postOwnerUid;
@@ -6139,10 +7149,14 @@ class _$_DeleteReplyToCommentPressed implements _DeleteReplyToCommentPressed {
   final String parentCommentUid;
   @override
   final String commentUid;
+  @override
+  final String commentOwnerUid;
+  @override
+  final String parentCommentOwnerUid;
 
   @override
   String toString() {
-    return 'UserPostEvent.deleteReplyToCommentPressed(postOwnerUid: $postOwnerUid, postUid: $postUid, parentCommentUid: $parentCommentUid, commentUid: $commentUid)';
+    return 'UserPostEvent.deleteReplyToCommentPressed(postOwnerUid: $postOwnerUid, postUid: $postUid, parentCommentUid: $parentCommentUid, commentUid: $commentUid, commentOwnerUid: $commentOwnerUid, parentCommentOwnerUid: $parentCommentOwnerUid)';
   }
 
   @override
@@ -6160,7 +7174,13 @@ class _$_DeleteReplyToCommentPressed implements _DeleteReplyToCommentPressed {
                     .equals(other.parentCommentUid, parentCommentUid)) &&
             (identical(other.commentUid, commentUid) ||
                 const DeepCollectionEquality()
-                    .equals(other.commentUid, commentUid)));
+                    .equals(other.commentUid, commentUid)) &&
+            (identical(other.commentOwnerUid, commentOwnerUid) ||
+                const DeepCollectionEquality()
+                    .equals(other.commentOwnerUid, commentOwnerUid)) &&
+            (identical(other.parentCommentOwnerUid, parentCommentOwnerUid) ||
+                const DeepCollectionEquality().equals(
+                    other.parentCommentOwnerUid, parentCommentOwnerUid)));
   }
 
   @override
@@ -6169,7 +7189,9 @@ class _$_DeleteReplyToCommentPressed implements _DeleteReplyToCommentPressed {
       const DeepCollectionEquality().hash(postOwnerUid) ^
       const DeepCollectionEquality().hash(postUid) ^
       const DeepCollectionEquality().hash(parentCommentUid) ^
-      const DeepCollectionEquality().hash(commentUid);
+      const DeepCollectionEquality().hash(commentUid) ^
+      const DeepCollectionEquality().hash(commentOwnerUid) ^
+      const DeepCollectionEquality().hash(parentCommentOwnerUid);
 
   @JsonKey(ignore: true)
   @override
@@ -6182,7 +7204,9 @@ class _$_DeleteReplyToCommentPressed implements _DeleteReplyToCommentPressed {
   TResult when<TResult extends Object>({
     @required TResult loadPostPressed(String postOwnerUid, String postUid),
     @required TResult showSpoilerPressed(),
-    @required TResult likePostPressed(String postOwnerUid, String postUid),
+    @required
+        TResult likePostPressed(
+            String postOwnerUid, String postUid, String postPhotoUrl),
     @required TResult unlikePostPressed(String postOwnerUid, String postUid),
     @required
         TResult showPostLikersPressed(String postOwnerUid, String postUid),
@@ -6191,10 +7215,10 @@ class _$_DeleteReplyToCommentPressed implements _DeleteReplyToCommentPressed {
             String postOwnerUid, String postUid),
     @required
         TResult commentPostPressed(String postOwnerUid, String postUid,
-            String commentText, bool isCommentSpoiler),
+            String commentText, bool isCommentSpoiler, String postPhotoUrl),
     @required
-        TResult deleteCommentPostPressed(
-            String postOwnerUid, String postUid, String commentUid),
+        TResult deleteCommentPostPressed(String postOwnerUid, String postUid,
+            String commentUid, String commentOwnerUid),
     @required
         TResult showPostCommentsPressed(String postOwnerUid, String postUid),
     @required
@@ -6203,10 +7227,15 @@ class _$_DeleteReplyToCommentPressed implements _DeleteReplyToCommentPressed {
     @required TResult showAllSpoilersInCommentsPressed(),
     @required
         TResult likePostCommentPressed(
-            String postOwnerUid, String postUid, String commentUid),
+            String postOwnerUid,
+            String postUid,
+            String commentUid,
+            String commentOwnerUid,
+            String commentText,
+            String postPhotoUrl),
     @required
-        TResult unlikePostCommentPressed(
-            String postOwnerUid, String postUid, String commentUid),
+        TResult unlikePostCommentPressed(String postOwnerUid, String postUid,
+            String commentUid, String commentOwnerUid),
     @required
         TResult showCommentLikersPressed(
             String postOwnerUid, String postUid, String commentUid),
@@ -6214,11 +7243,22 @@ class _$_DeleteReplyToCommentPressed implements _DeleteReplyToCommentPressed {
         TResult nextPageShowCommentLikersPressed(
             String postOwnerUid, String postUid, String commentUid),
     @required
-        TResult replyToCommentPressed(String postOwnerUid, String postUid,
-            String parentCommentUid, String commentText, bool isCommentSpoiler),
+        TResult replyToCommentPressed(
+            String postOwnerUid,
+            String postUid,
+            String parentCommentUid,
+            String commentText,
+            bool isCommentSpoiler,
+            String postPhotoUrl,
+            String uidOfTheCommentOwnerBeingRepliedTo),
     @required
-        TResult deleteReplyToCommentPressed(String postOwnerUid, String postUid,
-            String parentCommentUid, String commentUid),
+        TResult deleteReplyToCommentPressed(
+            String postOwnerUid,
+            String postUid,
+            String parentCommentUid,
+            String commentUid,
+            String commentOwnerUid,
+            String parentCommentOwnerUid),
     @required
         TResult showCommentRepliesPressed(
             String postOwnerUid, String postUid, String parentCommentUid),
@@ -6228,11 +7268,17 @@ class _$_DeleteReplyToCommentPressed implements _DeleteReplyToCommentPressed {
     @required TResult hideCommentRepliesPressed(String parentCommentUid),
     @required TResult unHideCommentRepliesPressed(String parentCommentUid),
     @required
-        TResult likeReplyToCommentPressed(String postOwnerUid, String postUid,
-            String parentCommentUid, String commentUid),
+        TResult likeReplyToCommentPressed(
+            String postOwnerUid,
+            String postUid,
+            String parentCommentUid,
+            String commentUid,
+            String commentOwnerUid,
+            String commentText,
+            String postPhotoUrl),
     @required
         TResult unlikeReplyToCommentPressed(String postOwnerUid, String postUid,
-            String parentCommentUid, String commentUid),
+            String parentCommentUid, String commentUid, String commentOwnerUid),
     @required
         TResult showReplyLikersPressed(String postOwnerUid, String postUid,
             String parentCommentUid, String commentUid),
@@ -6265,8 +7311,8 @@ class _$_DeleteReplyToCommentPressed implements _DeleteReplyToCommentPressed {
     assert(unlikeReplyToCommentPressed != null);
     assert(showReplyLikersPressed != null);
     assert(nextPageShowReplyLikersPressed != null);
-    return deleteReplyToCommentPressed(
-        postOwnerUid, postUid, parentCommentUid, commentUid);
+    return deleteReplyToCommentPressed(postOwnerUid, postUid, parentCommentUid,
+        commentUid, commentOwnerUid, parentCommentOwnerUid);
   }
 
   @override
@@ -6274,40 +7320,63 @@ class _$_DeleteReplyToCommentPressed implements _DeleteReplyToCommentPressed {
   TResult maybeWhen<TResult extends Object>({
     TResult loadPostPressed(String postOwnerUid, String postUid),
     TResult showSpoilerPressed(),
-    TResult likePostPressed(String postOwnerUid, String postUid),
+    TResult likePostPressed(
+        String postOwnerUid, String postUid, String postPhotoUrl),
     TResult unlikePostPressed(String postOwnerUid, String postUid),
     TResult showPostLikersPressed(String postOwnerUid, String postUid),
     TResult nextPageShowPostLikersPressed(String postOwnerUid, String postUid),
     TResult commentPostPressed(String postOwnerUid, String postUid,
-        String commentText, bool isCommentSpoiler),
-    TResult deleteCommentPostPressed(
-        String postOwnerUid, String postUid, String commentUid),
+        String commentText, bool isCommentSpoiler, String postPhotoUrl),
+    TResult deleteCommentPostPressed(String postOwnerUid, String postUid,
+        String commentUid, String commentOwnerUid),
     TResult showPostCommentsPressed(String postOwnerUid, String postUid),
     TResult nextPageShowPostCommentsPressed(
         String postOwnerUid, String postUid),
     TResult showAllSpoilersInCommentsPressed(),
     TResult likePostCommentPressed(
-        String postOwnerUid, String postUid, String commentUid),
-    TResult unlikePostCommentPressed(
-        String postOwnerUid, String postUid, String commentUid),
+        String postOwnerUid,
+        String postUid,
+        String commentUid,
+        String commentOwnerUid,
+        String commentText,
+        String postPhotoUrl),
+    TResult unlikePostCommentPressed(String postOwnerUid, String postUid,
+        String commentUid, String commentOwnerUid),
     TResult showCommentLikersPressed(
         String postOwnerUid, String postUid, String commentUid),
     TResult nextPageShowCommentLikersPressed(
         String postOwnerUid, String postUid, String commentUid),
-    TResult replyToCommentPressed(String postOwnerUid, String postUid,
-        String parentCommentUid, String commentText, bool isCommentSpoiler),
-    TResult deleteReplyToCommentPressed(String postOwnerUid, String postUid,
-        String parentCommentUid, String commentUid),
+    TResult replyToCommentPressed(
+        String postOwnerUid,
+        String postUid,
+        String parentCommentUid,
+        String commentText,
+        bool isCommentSpoiler,
+        String postPhotoUrl,
+        String uidOfTheCommentOwnerBeingRepliedTo),
+    TResult deleteReplyToCommentPressed(
+        String postOwnerUid,
+        String postUid,
+        String parentCommentUid,
+        String commentUid,
+        String commentOwnerUid,
+        String parentCommentOwnerUid),
     TResult showCommentRepliesPressed(
         String postOwnerUid, String postUid, String parentCommentUid),
     TResult nextPageShowCommentRepliesPressed(
         String postOwnerUid, String postUid, String parentCommentUid),
     TResult hideCommentRepliesPressed(String parentCommentUid),
     TResult unHideCommentRepliesPressed(String parentCommentUid),
-    TResult likeReplyToCommentPressed(String postOwnerUid, String postUid,
-        String parentCommentUid, String commentUid),
+    TResult likeReplyToCommentPressed(
+        String postOwnerUid,
+        String postUid,
+        String parentCommentUid,
+        String commentUid,
+        String commentOwnerUid,
+        String commentText,
+        String postPhotoUrl),
     TResult unlikeReplyToCommentPressed(String postOwnerUid, String postUid,
-        String parentCommentUid, String commentUid),
+        String parentCommentUid, String commentUid, String commentOwnerUid),
     TResult showReplyLikersPressed(String postOwnerUid, String postUid,
         String parentCommentUid, String commentUid),
     TResult nextPageShowReplyLikersPressed(String postOwnerUid, String postUid,
@@ -6316,8 +7385,8 @@ class _$_DeleteReplyToCommentPressed implements _DeleteReplyToCommentPressed {
   }) {
     assert(orElse != null);
     if (deleteReplyToCommentPressed != null) {
-      return deleteReplyToCommentPressed(
-          postOwnerUid, postUid, parentCommentUid, commentUid);
+      return deleteReplyToCommentPressed(postOwnerUid, postUid,
+          parentCommentUid, commentUid, commentOwnerUid, parentCommentOwnerUid);
     }
     return orElse();
   }
@@ -6443,12 +7512,16 @@ abstract class _DeleteReplyToCommentPressed implements UserPostEvent {
       {@required String postOwnerUid,
       @required String postUid,
       @required String parentCommentUid,
-      @required String commentUid}) = _$_DeleteReplyToCommentPressed;
+      @required String commentUid,
+      @required String commentOwnerUid,
+      @required String parentCommentOwnerUid}) = _$_DeleteReplyToCommentPressed;
 
   String get postOwnerUid;
   String get postUid;
   String get parentCommentUid;
   String get commentUid;
+  String get commentOwnerUid;
+  String get parentCommentOwnerUid;
   @JsonKey(ignore: true)
   _$DeleteReplyToCommentPressedCopyWith<_DeleteReplyToCommentPressed>
       get copyWith;
@@ -6548,7 +7621,9 @@ class _$_ShowCommentRepliesPressed implements _ShowCommentRepliesPressed {
   TResult when<TResult extends Object>({
     @required TResult loadPostPressed(String postOwnerUid, String postUid),
     @required TResult showSpoilerPressed(),
-    @required TResult likePostPressed(String postOwnerUid, String postUid),
+    @required
+        TResult likePostPressed(
+            String postOwnerUid, String postUid, String postPhotoUrl),
     @required TResult unlikePostPressed(String postOwnerUid, String postUid),
     @required
         TResult showPostLikersPressed(String postOwnerUid, String postUid),
@@ -6557,10 +7632,10 @@ class _$_ShowCommentRepliesPressed implements _ShowCommentRepliesPressed {
             String postOwnerUid, String postUid),
     @required
         TResult commentPostPressed(String postOwnerUid, String postUid,
-            String commentText, bool isCommentSpoiler),
+            String commentText, bool isCommentSpoiler, String postPhotoUrl),
     @required
-        TResult deleteCommentPostPressed(
-            String postOwnerUid, String postUid, String commentUid),
+        TResult deleteCommentPostPressed(String postOwnerUid, String postUid,
+            String commentUid, String commentOwnerUid),
     @required
         TResult showPostCommentsPressed(String postOwnerUid, String postUid),
     @required
@@ -6569,10 +7644,15 @@ class _$_ShowCommentRepliesPressed implements _ShowCommentRepliesPressed {
     @required TResult showAllSpoilersInCommentsPressed(),
     @required
         TResult likePostCommentPressed(
-            String postOwnerUid, String postUid, String commentUid),
+            String postOwnerUid,
+            String postUid,
+            String commentUid,
+            String commentOwnerUid,
+            String commentText,
+            String postPhotoUrl),
     @required
-        TResult unlikePostCommentPressed(
-            String postOwnerUid, String postUid, String commentUid),
+        TResult unlikePostCommentPressed(String postOwnerUid, String postUid,
+            String commentUid, String commentOwnerUid),
     @required
         TResult showCommentLikersPressed(
             String postOwnerUid, String postUid, String commentUid),
@@ -6580,11 +7660,22 @@ class _$_ShowCommentRepliesPressed implements _ShowCommentRepliesPressed {
         TResult nextPageShowCommentLikersPressed(
             String postOwnerUid, String postUid, String commentUid),
     @required
-        TResult replyToCommentPressed(String postOwnerUid, String postUid,
-            String parentCommentUid, String commentText, bool isCommentSpoiler),
+        TResult replyToCommentPressed(
+            String postOwnerUid,
+            String postUid,
+            String parentCommentUid,
+            String commentText,
+            bool isCommentSpoiler,
+            String postPhotoUrl,
+            String uidOfTheCommentOwnerBeingRepliedTo),
     @required
-        TResult deleteReplyToCommentPressed(String postOwnerUid, String postUid,
-            String parentCommentUid, String commentUid),
+        TResult deleteReplyToCommentPressed(
+            String postOwnerUid,
+            String postUid,
+            String parentCommentUid,
+            String commentUid,
+            String commentOwnerUid,
+            String parentCommentOwnerUid),
     @required
         TResult showCommentRepliesPressed(
             String postOwnerUid, String postUid, String parentCommentUid),
@@ -6594,11 +7685,17 @@ class _$_ShowCommentRepliesPressed implements _ShowCommentRepliesPressed {
     @required TResult hideCommentRepliesPressed(String parentCommentUid),
     @required TResult unHideCommentRepliesPressed(String parentCommentUid),
     @required
-        TResult likeReplyToCommentPressed(String postOwnerUid, String postUid,
-            String parentCommentUid, String commentUid),
+        TResult likeReplyToCommentPressed(
+            String postOwnerUid,
+            String postUid,
+            String parentCommentUid,
+            String commentUid,
+            String commentOwnerUid,
+            String commentText,
+            String postPhotoUrl),
     @required
         TResult unlikeReplyToCommentPressed(String postOwnerUid, String postUid,
-            String parentCommentUid, String commentUid),
+            String parentCommentUid, String commentUid, String commentOwnerUid),
     @required
         TResult showReplyLikersPressed(String postOwnerUid, String postUid,
             String parentCommentUid, String commentUid),
@@ -6639,40 +7736,63 @@ class _$_ShowCommentRepliesPressed implements _ShowCommentRepliesPressed {
   TResult maybeWhen<TResult extends Object>({
     TResult loadPostPressed(String postOwnerUid, String postUid),
     TResult showSpoilerPressed(),
-    TResult likePostPressed(String postOwnerUid, String postUid),
+    TResult likePostPressed(
+        String postOwnerUid, String postUid, String postPhotoUrl),
     TResult unlikePostPressed(String postOwnerUid, String postUid),
     TResult showPostLikersPressed(String postOwnerUid, String postUid),
     TResult nextPageShowPostLikersPressed(String postOwnerUid, String postUid),
     TResult commentPostPressed(String postOwnerUid, String postUid,
-        String commentText, bool isCommentSpoiler),
-    TResult deleteCommentPostPressed(
-        String postOwnerUid, String postUid, String commentUid),
+        String commentText, bool isCommentSpoiler, String postPhotoUrl),
+    TResult deleteCommentPostPressed(String postOwnerUid, String postUid,
+        String commentUid, String commentOwnerUid),
     TResult showPostCommentsPressed(String postOwnerUid, String postUid),
     TResult nextPageShowPostCommentsPressed(
         String postOwnerUid, String postUid),
     TResult showAllSpoilersInCommentsPressed(),
     TResult likePostCommentPressed(
-        String postOwnerUid, String postUid, String commentUid),
-    TResult unlikePostCommentPressed(
-        String postOwnerUid, String postUid, String commentUid),
+        String postOwnerUid,
+        String postUid,
+        String commentUid,
+        String commentOwnerUid,
+        String commentText,
+        String postPhotoUrl),
+    TResult unlikePostCommentPressed(String postOwnerUid, String postUid,
+        String commentUid, String commentOwnerUid),
     TResult showCommentLikersPressed(
         String postOwnerUid, String postUid, String commentUid),
     TResult nextPageShowCommentLikersPressed(
         String postOwnerUid, String postUid, String commentUid),
-    TResult replyToCommentPressed(String postOwnerUid, String postUid,
-        String parentCommentUid, String commentText, bool isCommentSpoiler),
-    TResult deleteReplyToCommentPressed(String postOwnerUid, String postUid,
-        String parentCommentUid, String commentUid),
+    TResult replyToCommentPressed(
+        String postOwnerUid,
+        String postUid,
+        String parentCommentUid,
+        String commentText,
+        bool isCommentSpoiler,
+        String postPhotoUrl,
+        String uidOfTheCommentOwnerBeingRepliedTo),
+    TResult deleteReplyToCommentPressed(
+        String postOwnerUid,
+        String postUid,
+        String parentCommentUid,
+        String commentUid,
+        String commentOwnerUid,
+        String parentCommentOwnerUid),
     TResult showCommentRepliesPressed(
         String postOwnerUid, String postUid, String parentCommentUid),
     TResult nextPageShowCommentRepliesPressed(
         String postOwnerUid, String postUid, String parentCommentUid),
     TResult hideCommentRepliesPressed(String parentCommentUid),
     TResult unHideCommentRepliesPressed(String parentCommentUid),
-    TResult likeReplyToCommentPressed(String postOwnerUid, String postUid,
-        String parentCommentUid, String commentUid),
+    TResult likeReplyToCommentPressed(
+        String postOwnerUid,
+        String postUid,
+        String parentCommentUid,
+        String commentUid,
+        String commentOwnerUid,
+        String commentText,
+        String postPhotoUrl),
     TResult unlikeReplyToCommentPressed(String postOwnerUid, String postUid,
-        String parentCommentUid, String commentUid),
+        String parentCommentUid, String commentUid, String commentOwnerUid),
     TResult showReplyLikersPressed(String postOwnerUid, String postUid,
         String parentCommentUid, String commentUid),
     TResult nextPageShowReplyLikersPressed(String postOwnerUid, String postUid,
@@ -6912,7 +8032,9 @@ class _$_NextPageShowCommentRepliesPressed
   TResult when<TResult extends Object>({
     @required TResult loadPostPressed(String postOwnerUid, String postUid),
     @required TResult showSpoilerPressed(),
-    @required TResult likePostPressed(String postOwnerUid, String postUid),
+    @required
+        TResult likePostPressed(
+            String postOwnerUid, String postUid, String postPhotoUrl),
     @required TResult unlikePostPressed(String postOwnerUid, String postUid),
     @required
         TResult showPostLikersPressed(String postOwnerUid, String postUid),
@@ -6921,10 +8043,10 @@ class _$_NextPageShowCommentRepliesPressed
             String postOwnerUid, String postUid),
     @required
         TResult commentPostPressed(String postOwnerUid, String postUid,
-            String commentText, bool isCommentSpoiler),
+            String commentText, bool isCommentSpoiler, String postPhotoUrl),
     @required
-        TResult deleteCommentPostPressed(
-            String postOwnerUid, String postUid, String commentUid),
+        TResult deleteCommentPostPressed(String postOwnerUid, String postUid,
+            String commentUid, String commentOwnerUid),
     @required
         TResult showPostCommentsPressed(String postOwnerUid, String postUid),
     @required
@@ -6933,10 +8055,15 @@ class _$_NextPageShowCommentRepliesPressed
     @required TResult showAllSpoilersInCommentsPressed(),
     @required
         TResult likePostCommentPressed(
-            String postOwnerUid, String postUid, String commentUid),
+            String postOwnerUid,
+            String postUid,
+            String commentUid,
+            String commentOwnerUid,
+            String commentText,
+            String postPhotoUrl),
     @required
-        TResult unlikePostCommentPressed(
-            String postOwnerUid, String postUid, String commentUid),
+        TResult unlikePostCommentPressed(String postOwnerUid, String postUid,
+            String commentUid, String commentOwnerUid),
     @required
         TResult showCommentLikersPressed(
             String postOwnerUid, String postUid, String commentUid),
@@ -6944,11 +8071,22 @@ class _$_NextPageShowCommentRepliesPressed
         TResult nextPageShowCommentLikersPressed(
             String postOwnerUid, String postUid, String commentUid),
     @required
-        TResult replyToCommentPressed(String postOwnerUid, String postUid,
-            String parentCommentUid, String commentText, bool isCommentSpoiler),
+        TResult replyToCommentPressed(
+            String postOwnerUid,
+            String postUid,
+            String parentCommentUid,
+            String commentText,
+            bool isCommentSpoiler,
+            String postPhotoUrl,
+            String uidOfTheCommentOwnerBeingRepliedTo),
     @required
-        TResult deleteReplyToCommentPressed(String postOwnerUid, String postUid,
-            String parentCommentUid, String commentUid),
+        TResult deleteReplyToCommentPressed(
+            String postOwnerUid,
+            String postUid,
+            String parentCommentUid,
+            String commentUid,
+            String commentOwnerUid,
+            String parentCommentOwnerUid),
     @required
         TResult showCommentRepliesPressed(
             String postOwnerUid, String postUid, String parentCommentUid),
@@ -6958,11 +8096,17 @@ class _$_NextPageShowCommentRepliesPressed
     @required TResult hideCommentRepliesPressed(String parentCommentUid),
     @required TResult unHideCommentRepliesPressed(String parentCommentUid),
     @required
-        TResult likeReplyToCommentPressed(String postOwnerUid, String postUid,
-            String parentCommentUid, String commentUid),
+        TResult likeReplyToCommentPressed(
+            String postOwnerUid,
+            String postUid,
+            String parentCommentUid,
+            String commentUid,
+            String commentOwnerUid,
+            String commentText,
+            String postPhotoUrl),
     @required
         TResult unlikeReplyToCommentPressed(String postOwnerUid, String postUid,
-            String parentCommentUid, String commentUid),
+            String parentCommentUid, String commentUid, String commentOwnerUid),
     @required
         TResult showReplyLikersPressed(String postOwnerUid, String postUid,
             String parentCommentUid, String commentUid),
@@ -7004,40 +8148,63 @@ class _$_NextPageShowCommentRepliesPressed
   TResult maybeWhen<TResult extends Object>({
     TResult loadPostPressed(String postOwnerUid, String postUid),
     TResult showSpoilerPressed(),
-    TResult likePostPressed(String postOwnerUid, String postUid),
+    TResult likePostPressed(
+        String postOwnerUid, String postUid, String postPhotoUrl),
     TResult unlikePostPressed(String postOwnerUid, String postUid),
     TResult showPostLikersPressed(String postOwnerUid, String postUid),
     TResult nextPageShowPostLikersPressed(String postOwnerUid, String postUid),
     TResult commentPostPressed(String postOwnerUid, String postUid,
-        String commentText, bool isCommentSpoiler),
-    TResult deleteCommentPostPressed(
-        String postOwnerUid, String postUid, String commentUid),
+        String commentText, bool isCommentSpoiler, String postPhotoUrl),
+    TResult deleteCommentPostPressed(String postOwnerUid, String postUid,
+        String commentUid, String commentOwnerUid),
     TResult showPostCommentsPressed(String postOwnerUid, String postUid),
     TResult nextPageShowPostCommentsPressed(
         String postOwnerUid, String postUid),
     TResult showAllSpoilersInCommentsPressed(),
     TResult likePostCommentPressed(
-        String postOwnerUid, String postUid, String commentUid),
-    TResult unlikePostCommentPressed(
-        String postOwnerUid, String postUid, String commentUid),
+        String postOwnerUid,
+        String postUid,
+        String commentUid,
+        String commentOwnerUid,
+        String commentText,
+        String postPhotoUrl),
+    TResult unlikePostCommentPressed(String postOwnerUid, String postUid,
+        String commentUid, String commentOwnerUid),
     TResult showCommentLikersPressed(
         String postOwnerUid, String postUid, String commentUid),
     TResult nextPageShowCommentLikersPressed(
         String postOwnerUid, String postUid, String commentUid),
-    TResult replyToCommentPressed(String postOwnerUid, String postUid,
-        String parentCommentUid, String commentText, bool isCommentSpoiler),
-    TResult deleteReplyToCommentPressed(String postOwnerUid, String postUid,
-        String parentCommentUid, String commentUid),
+    TResult replyToCommentPressed(
+        String postOwnerUid,
+        String postUid,
+        String parentCommentUid,
+        String commentText,
+        bool isCommentSpoiler,
+        String postPhotoUrl,
+        String uidOfTheCommentOwnerBeingRepliedTo),
+    TResult deleteReplyToCommentPressed(
+        String postOwnerUid,
+        String postUid,
+        String parentCommentUid,
+        String commentUid,
+        String commentOwnerUid,
+        String parentCommentOwnerUid),
     TResult showCommentRepliesPressed(
         String postOwnerUid, String postUid, String parentCommentUid),
     TResult nextPageShowCommentRepliesPressed(
         String postOwnerUid, String postUid, String parentCommentUid),
     TResult hideCommentRepliesPressed(String parentCommentUid),
     TResult unHideCommentRepliesPressed(String parentCommentUid),
-    TResult likeReplyToCommentPressed(String postOwnerUid, String postUid,
-        String parentCommentUid, String commentUid),
+    TResult likeReplyToCommentPressed(
+        String postOwnerUid,
+        String postUid,
+        String parentCommentUid,
+        String commentUid,
+        String commentOwnerUid,
+        String commentText,
+        String postPhotoUrl),
     TResult unlikeReplyToCommentPressed(String postOwnerUid, String postUid,
-        String parentCommentUid, String commentUid),
+        String parentCommentUid, String commentUid, String commentOwnerUid),
     TResult showReplyLikersPressed(String postOwnerUid, String postUid,
         String parentCommentUid, String commentUid),
     TResult nextPageShowReplyLikersPressed(String postOwnerUid, String postUid,
@@ -7254,7 +8421,9 @@ class _$_HideCommentRepliesPressed implements _HideCommentRepliesPressed {
   TResult when<TResult extends Object>({
     @required TResult loadPostPressed(String postOwnerUid, String postUid),
     @required TResult showSpoilerPressed(),
-    @required TResult likePostPressed(String postOwnerUid, String postUid),
+    @required
+        TResult likePostPressed(
+            String postOwnerUid, String postUid, String postPhotoUrl),
     @required TResult unlikePostPressed(String postOwnerUid, String postUid),
     @required
         TResult showPostLikersPressed(String postOwnerUid, String postUid),
@@ -7263,10 +8432,10 @@ class _$_HideCommentRepliesPressed implements _HideCommentRepliesPressed {
             String postOwnerUid, String postUid),
     @required
         TResult commentPostPressed(String postOwnerUid, String postUid,
-            String commentText, bool isCommentSpoiler),
+            String commentText, bool isCommentSpoiler, String postPhotoUrl),
     @required
-        TResult deleteCommentPostPressed(
-            String postOwnerUid, String postUid, String commentUid),
+        TResult deleteCommentPostPressed(String postOwnerUid, String postUid,
+            String commentUid, String commentOwnerUid),
     @required
         TResult showPostCommentsPressed(String postOwnerUid, String postUid),
     @required
@@ -7275,10 +8444,15 @@ class _$_HideCommentRepliesPressed implements _HideCommentRepliesPressed {
     @required TResult showAllSpoilersInCommentsPressed(),
     @required
         TResult likePostCommentPressed(
-            String postOwnerUid, String postUid, String commentUid),
+            String postOwnerUid,
+            String postUid,
+            String commentUid,
+            String commentOwnerUid,
+            String commentText,
+            String postPhotoUrl),
     @required
-        TResult unlikePostCommentPressed(
-            String postOwnerUid, String postUid, String commentUid),
+        TResult unlikePostCommentPressed(String postOwnerUid, String postUid,
+            String commentUid, String commentOwnerUid),
     @required
         TResult showCommentLikersPressed(
             String postOwnerUid, String postUid, String commentUid),
@@ -7286,11 +8460,22 @@ class _$_HideCommentRepliesPressed implements _HideCommentRepliesPressed {
         TResult nextPageShowCommentLikersPressed(
             String postOwnerUid, String postUid, String commentUid),
     @required
-        TResult replyToCommentPressed(String postOwnerUid, String postUid,
-            String parentCommentUid, String commentText, bool isCommentSpoiler),
+        TResult replyToCommentPressed(
+            String postOwnerUid,
+            String postUid,
+            String parentCommentUid,
+            String commentText,
+            bool isCommentSpoiler,
+            String postPhotoUrl,
+            String uidOfTheCommentOwnerBeingRepliedTo),
     @required
-        TResult deleteReplyToCommentPressed(String postOwnerUid, String postUid,
-            String parentCommentUid, String commentUid),
+        TResult deleteReplyToCommentPressed(
+            String postOwnerUid,
+            String postUid,
+            String parentCommentUid,
+            String commentUid,
+            String commentOwnerUid,
+            String parentCommentOwnerUid),
     @required
         TResult showCommentRepliesPressed(
             String postOwnerUid, String postUid, String parentCommentUid),
@@ -7300,11 +8485,17 @@ class _$_HideCommentRepliesPressed implements _HideCommentRepliesPressed {
     @required TResult hideCommentRepliesPressed(String parentCommentUid),
     @required TResult unHideCommentRepliesPressed(String parentCommentUid),
     @required
-        TResult likeReplyToCommentPressed(String postOwnerUid, String postUid,
-            String parentCommentUid, String commentUid),
+        TResult likeReplyToCommentPressed(
+            String postOwnerUid,
+            String postUid,
+            String parentCommentUid,
+            String commentUid,
+            String commentOwnerUid,
+            String commentText,
+            String postPhotoUrl),
     @required
         TResult unlikeReplyToCommentPressed(String postOwnerUid, String postUid,
-            String parentCommentUid, String commentUid),
+            String parentCommentUid, String commentUid, String commentOwnerUid),
     @required
         TResult showReplyLikersPressed(String postOwnerUid, String postUid,
             String parentCommentUid, String commentUid),
@@ -7345,40 +8536,63 @@ class _$_HideCommentRepliesPressed implements _HideCommentRepliesPressed {
   TResult maybeWhen<TResult extends Object>({
     TResult loadPostPressed(String postOwnerUid, String postUid),
     TResult showSpoilerPressed(),
-    TResult likePostPressed(String postOwnerUid, String postUid),
+    TResult likePostPressed(
+        String postOwnerUid, String postUid, String postPhotoUrl),
     TResult unlikePostPressed(String postOwnerUid, String postUid),
     TResult showPostLikersPressed(String postOwnerUid, String postUid),
     TResult nextPageShowPostLikersPressed(String postOwnerUid, String postUid),
     TResult commentPostPressed(String postOwnerUid, String postUid,
-        String commentText, bool isCommentSpoiler),
-    TResult deleteCommentPostPressed(
-        String postOwnerUid, String postUid, String commentUid),
+        String commentText, bool isCommentSpoiler, String postPhotoUrl),
+    TResult deleteCommentPostPressed(String postOwnerUid, String postUid,
+        String commentUid, String commentOwnerUid),
     TResult showPostCommentsPressed(String postOwnerUid, String postUid),
     TResult nextPageShowPostCommentsPressed(
         String postOwnerUid, String postUid),
     TResult showAllSpoilersInCommentsPressed(),
     TResult likePostCommentPressed(
-        String postOwnerUid, String postUid, String commentUid),
-    TResult unlikePostCommentPressed(
-        String postOwnerUid, String postUid, String commentUid),
+        String postOwnerUid,
+        String postUid,
+        String commentUid,
+        String commentOwnerUid,
+        String commentText,
+        String postPhotoUrl),
+    TResult unlikePostCommentPressed(String postOwnerUid, String postUid,
+        String commentUid, String commentOwnerUid),
     TResult showCommentLikersPressed(
         String postOwnerUid, String postUid, String commentUid),
     TResult nextPageShowCommentLikersPressed(
         String postOwnerUid, String postUid, String commentUid),
-    TResult replyToCommentPressed(String postOwnerUid, String postUid,
-        String parentCommentUid, String commentText, bool isCommentSpoiler),
-    TResult deleteReplyToCommentPressed(String postOwnerUid, String postUid,
-        String parentCommentUid, String commentUid),
+    TResult replyToCommentPressed(
+        String postOwnerUid,
+        String postUid,
+        String parentCommentUid,
+        String commentText,
+        bool isCommentSpoiler,
+        String postPhotoUrl,
+        String uidOfTheCommentOwnerBeingRepliedTo),
+    TResult deleteReplyToCommentPressed(
+        String postOwnerUid,
+        String postUid,
+        String parentCommentUid,
+        String commentUid,
+        String commentOwnerUid,
+        String parentCommentOwnerUid),
     TResult showCommentRepliesPressed(
         String postOwnerUid, String postUid, String parentCommentUid),
     TResult nextPageShowCommentRepliesPressed(
         String postOwnerUid, String postUid, String parentCommentUid),
     TResult hideCommentRepliesPressed(String parentCommentUid),
     TResult unHideCommentRepliesPressed(String parentCommentUid),
-    TResult likeReplyToCommentPressed(String postOwnerUid, String postUid,
-        String parentCommentUid, String commentUid),
+    TResult likeReplyToCommentPressed(
+        String postOwnerUid,
+        String postUid,
+        String parentCommentUid,
+        String commentUid,
+        String commentOwnerUid,
+        String commentText,
+        String postPhotoUrl),
     TResult unlikeReplyToCommentPressed(String postOwnerUid, String postUid,
-        String parentCommentUid, String commentUid),
+        String parentCommentUid, String commentUid, String commentOwnerUid),
     TResult showReplyLikersPressed(String postOwnerUid, String postUid,
         String parentCommentUid, String commentUid),
     TResult nextPageShowReplyLikersPressed(String postOwnerUid, String postUid,
@@ -7589,7 +8803,9 @@ class _$_UnHideCommentRepliesPressed implements _UnHideCommentRepliesPressed {
   TResult when<TResult extends Object>({
     @required TResult loadPostPressed(String postOwnerUid, String postUid),
     @required TResult showSpoilerPressed(),
-    @required TResult likePostPressed(String postOwnerUid, String postUid),
+    @required
+        TResult likePostPressed(
+            String postOwnerUid, String postUid, String postPhotoUrl),
     @required TResult unlikePostPressed(String postOwnerUid, String postUid),
     @required
         TResult showPostLikersPressed(String postOwnerUid, String postUid),
@@ -7598,10 +8814,10 @@ class _$_UnHideCommentRepliesPressed implements _UnHideCommentRepliesPressed {
             String postOwnerUid, String postUid),
     @required
         TResult commentPostPressed(String postOwnerUid, String postUid,
-            String commentText, bool isCommentSpoiler),
+            String commentText, bool isCommentSpoiler, String postPhotoUrl),
     @required
-        TResult deleteCommentPostPressed(
-            String postOwnerUid, String postUid, String commentUid),
+        TResult deleteCommentPostPressed(String postOwnerUid, String postUid,
+            String commentUid, String commentOwnerUid),
     @required
         TResult showPostCommentsPressed(String postOwnerUid, String postUid),
     @required
@@ -7610,10 +8826,15 @@ class _$_UnHideCommentRepliesPressed implements _UnHideCommentRepliesPressed {
     @required TResult showAllSpoilersInCommentsPressed(),
     @required
         TResult likePostCommentPressed(
-            String postOwnerUid, String postUid, String commentUid),
+            String postOwnerUid,
+            String postUid,
+            String commentUid,
+            String commentOwnerUid,
+            String commentText,
+            String postPhotoUrl),
     @required
-        TResult unlikePostCommentPressed(
-            String postOwnerUid, String postUid, String commentUid),
+        TResult unlikePostCommentPressed(String postOwnerUid, String postUid,
+            String commentUid, String commentOwnerUid),
     @required
         TResult showCommentLikersPressed(
             String postOwnerUid, String postUid, String commentUid),
@@ -7621,11 +8842,22 @@ class _$_UnHideCommentRepliesPressed implements _UnHideCommentRepliesPressed {
         TResult nextPageShowCommentLikersPressed(
             String postOwnerUid, String postUid, String commentUid),
     @required
-        TResult replyToCommentPressed(String postOwnerUid, String postUid,
-            String parentCommentUid, String commentText, bool isCommentSpoiler),
+        TResult replyToCommentPressed(
+            String postOwnerUid,
+            String postUid,
+            String parentCommentUid,
+            String commentText,
+            bool isCommentSpoiler,
+            String postPhotoUrl,
+            String uidOfTheCommentOwnerBeingRepliedTo),
     @required
-        TResult deleteReplyToCommentPressed(String postOwnerUid, String postUid,
-            String parentCommentUid, String commentUid),
+        TResult deleteReplyToCommentPressed(
+            String postOwnerUid,
+            String postUid,
+            String parentCommentUid,
+            String commentUid,
+            String commentOwnerUid,
+            String parentCommentOwnerUid),
     @required
         TResult showCommentRepliesPressed(
             String postOwnerUid, String postUid, String parentCommentUid),
@@ -7635,11 +8867,17 @@ class _$_UnHideCommentRepliesPressed implements _UnHideCommentRepliesPressed {
     @required TResult hideCommentRepliesPressed(String parentCommentUid),
     @required TResult unHideCommentRepliesPressed(String parentCommentUid),
     @required
-        TResult likeReplyToCommentPressed(String postOwnerUid, String postUid,
-            String parentCommentUid, String commentUid),
+        TResult likeReplyToCommentPressed(
+            String postOwnerUid,
+            String postUid,
+            String parentCommentUid,
+            String commentUid,
+            String commentOwnerUid,
+            String commentText,
+            String postPhotoUrl),
     @required
         TResult unlikeReplyToCommentPressed(String postOwnerUid, String postUid,
-            String parentCommentUid, String commentUid),
+            String parentCommentUid, String commentUid, String commentOwnerUid),
     @required
         TResult showReplyLikersPressed(String postOwnerUid, String postUid,
             String parentCommentUid, String commentUid),
@@ -7680,40 +8918,63 @@ class _$_UnHideCommentRepliesPressed implements _UnHideCommentRepliesPressed {
   TResult maybeWhen<TResult extends Object>({
     TResult loadPostPressed(String postOwnerUid, String postUid),
     TResult showSpoilerPressed(),
-    TResult likePostPressed(String postOwnerUid, String postUid),
+    TResult likePostPressed(
+        String postOwnerUid, String postUid, String postPhotoUrl),
     TResult unlikePostPressed(String postOwnerUid, String postUid),
     TResult showPostLikersPressed(String postOwnerUid, String postUid),
     TResult nextPageShowPostLikersPressed(String postOwnerUid, String postUid),
     TResult commentPostPressed(String postOwnerUid, String postUid,
-        String commentText, bool isCommentSpoiler),
-    TResult deleteCommentPostPressed(
-        String postOwnerUid, String postUid, String commentUid),
+        String commentText, bool isCommentSpoiler, String postPhotoUrl),
+    TResult deleteCommentPostPressed(String postOwnerUid, String postUid,
+        String commentUid, String commentOwnerUid),
     TResult showPostCommentsPressed(String postOwnerUid, String postUid),
     TResult nextPageShowPostCommentsPressed(
         String postOwnerUid, String postUid),
     TResult showAllSpoilersInCommentsPressed(),
     TResult likePostCommentPressed(
-        String postOwnerUid, String postUid, String commentUid),
-    TResult unlikePostCommentPressed(
-        String postOwnerUid, String postUid, String commentUid),
+        String postOwnerUid,
+        String postUid,
+        String commentUid,
+        String commentOwnerUid,
+        String commentText,
+        String postPhotoUrl),
+    TResult unlikePostCommentPressed(String postOwnerUid, String postUid,
+        String commentUid, String commentOwnerUid),
     TResult showCommentLikersPressed(
         String postOwnerUid, String postUid, String commentUid),
     TResult nextPageShowCommentLikersPressed(
         String postOwnerUid, String postUid, String commentUid),
-    TResult replyToCommentPressed(String postOwnerUid, String postUid,
-        String parentCommentUid, String commentText, bool isCommentSpoiler),
-    TResult deleteReplyToCommentPressed(String postOwnerUid, String postUid,
-        String parentCommentUid, String commentUid),
+    TResult replyToCommentPressed(
+        String postOwnerUid,
+        String postUid,
+        String parentCommentUid,
+        String commentText,
+        bool isCommentSpoiler,
+        String postPhotoUrl,
+        String uidOfTheCommentOwnerBeingRepliedTo),
+    TResult deleteReplyToCommentPressed(
+        String postOwnerUid,
+        String postUid,
+        String parentCommentUid,
+        String commentUid,
+        String commentOwnerUid,
+        String parentCommentOwnerUid),
     TResult showCommentRepliesPressed(
         String postOwnerUid, String postUid, String parentCommentUid),
     TResult nextPageShowCommentRepliesPressed(
         String postOwnerUid, String postUid, String parentCommentUid),
     TResult hideCommentRepliesPressed(String parentCommentUid),
     TResult unHideCommentRepliesPressed(String parentCommentUid),
-    TResult likeReplyToCommentPressed(String postOwnerUid, String postUid,
-        String parentCommentUid, String commentUid),
+    TResult likeReplyToCommentPressed(
+        String postOwnerUid,
+        String postUid,
+        String parentCommentUid,
+        String commentUid,
+        String commentOwnerUid,
+        String commentText,
+        String postPhotoUrl),
     TResult unlikeReplyToCommentPressed(String postOwnerUid, String postUid,
-        String parentCommentUid, String commentUid),
+        String parentCommentUid, String commentUid, String commentOwnerUid),
     TResult showReplyLikersPressed(String postOwnerUid, String postUid,
         String parentCommentUid, String commentUid),
     TResult nextPageShowReplyLikersPressed(String postOwnerUid, String postUid,
@@ -7862,7 +9123,10 @@ abstract class _$LikeReplyToCommentPressedCopyWith<$Res> {
       {String postOwnerUid,
       String postUid,
       String parentCommentUid,
-      String commentUid});
+      String commentUid,
+      String commentOwnerUid,
+      String commentText,
+      String postPhotoUrl});
 }
 
 /// @nodoc
@@ -7883,6 +9147,9 @@ class __$LikeReplyToCommentPressedCopyWithImpl<$Res>
     Object postUid = freezed,
     Object parentCommentUid = freezed,
     Object commentUid = freezed,
+    Object commentOwnerUid = freezed,
+    Object commentText = freezed,
+    Object postPhotoUrl = freezed,
   }) {
     return _then(_LikeReplyToCommentPressed(
       postOwnerUid: postOwnerUid == freezed
@@ -7894,6 +9161,14 @@ class __$LikeReplyToCommentPressedCopyWithImpl<$Res>
           : parentCommentUid as String,
       commentUid:
           commentUid == freezed ? _value.commentUid : commentUid as String,
+      commentOwnerUid: commentOwnerUid == freezed
+          ? _value.commentOwnerUid
+          : commentOwnerUid as String,
+      commentText:
+          commentText == freezed ? _value.commentText : commentText as String,
+      postPhotoUrl: postPhotoUrl == freezed
+          ? _value.postPhotoUrl
+          : postPhotoUrl as String,
     ));
   }
 }
@@ -7904,11 +9179,17 @@ class _$_LikeReplyToCommentPressed implements _LikeReplyToCommentPressed {
       {@required this.postOwnerUid,
       @required this.postUid,
       @required this.parentCommentUid,
-      @required this.commentUid})
+      @required this.commentUid,
+      @required this.commentOwnerUid,
+      @required this.commentText,
+      @required this.postPhotoUrl})
       : assert(postOwnerUid != null),
         assert(postUid != null),
         assert(parentCommentUid != null),
-        assert(commentUid != null);
+        assert(commentUid != null),
+        assert(commentOwnerUid != null),
+        assert(commentText != null),
+        assert(postPhotoUrl != null);
 
   @override
   final String postOwnerUid;
@@ -7918,10 +9199,16 @@ class _$_LikeReplyToCommentPressed implements _LikeReplyToCommentPressed {
   final String parentCommentUid;
   @override
   final String commentUid;
+  @override
+  final String commentOwnerUid;
+  @override
+  final String commentText;
+  @override
+  final String postPhotoUrl;
 
   @override
   String toString() {
-    return 'UserPostEvent.likeReplyToCommentPressed(postOwnerUid: $postOwnerUid, postUid: $postUid, parentCommentUid: $parentCommentUid, commentUid: $commentUid)';
+    return 'UserPostEvent.likeReplyToCommentPressed(postOwnerUid: $postOwnerUid, postUid: $postUid, parentCommentUid: $parentCommentUid, commentUid: $commentUid, commentOwnerUid: $commentOwnerUid, commentText: $commentText, postPhotoUrl: $postPhotoUrl)';
   }
 
   @override
@@ -7939,7 +9226,16 @@ class _$_LikeReplyToCommentPressed implements _LikeReplyToCommentPressed {
                     .equals(other.parentCommentUid, parentCommentUid)) &&
             (identical(other.commentUid, commentUid) ||
                 const DeepCollectionEquality()
-                    .equals(other.commentUid, commentUid)));
+                    .equals(other.commentUid, commentUid)) &&
+            (identical(other.commentOwnerUid, commentOwnerUid) ||
+                const DeepCollectionEquality()
+                    .equals(other.commentOwnerUid, commentOwnerUid)) &&
+            (identical(other.commentText, commentText) ||
+                const DeepCollectionEquality()
+                    .equals(other.commentText, commentText)) &&
+            (identical(other.postPhotoUrl, postPhotoUrl) ||
+                const DeepCollectionEquality()
+                    .equals(other.postPhotoUrl, postPhotoUrl)));
   }
 
   @override
@@ -7948,7 +9244,10 @@ class _$_LikeReplyToCommentPressed implements _LikeReplyToCommentPressed {
       const DeepCollectionEquality().hash(postOwnerUid) ^
       const DeepCollectionEquality().hash(postUid) ^
       const DeepCollectionEquality().hash(parentCommentUid) ^
-      const DeepCollectionEquality().hash(commentUid);
+      const DeepCollectionEquality().hash(commentUid) ^
+      const DeepCollectionEquality().hash(commentOwnerUid) ^
+      const DeepCollectionEquality().hash(commentText) ^
+      const DeepCollectionEquality().hash(postPhotoUrl);
 
   @JsonKey(ignore: true)
   @override
@@ -7962,7 +9261,9 @@ class _$_LikeReplyToCommentPressed implements _LikeReplyToCommentPressed {
   TResult when<TResult extends Object>({
     @required TResult loadPostPressed(String postOwnerUid, String postUid),
     @required TResult showSpoilerPressed(),
-    @required TResult likePostPressed(String postOwnerUid, String postUid),
+    @required
+        TResult likePostPressed(
+            String postOwnerUid, String postUid, String postPhotoUrl),
     @required TResult unlikePostPressed(String postOwnerUid, String postUid),
     @required
         TResult showPostLikersPressed(String postOwnerUid, String postUid),
@@ -7971,10 +9272,10 @@ class _$_LikeReplyToCommentPressed implements _LikeReplyToCommentPressed {
             String postOwnerUid, String postUid),
     @required
         TResult commentPostPressed(String postOwnerUid, String postUid,
-            String commentText, bool isCommentSpoiler),
+            String commentText, bool isCommentSpoiler, String postPhotoUrl),
     @required
-        TResult deleteCommentPostPressed(
-            String postOwnerUid, String postUid, String commentUid),
+        TResult deleteCommentPostPressed(String postOwnerUid, String postUid,
+            String commentUid, String commentOwnerUid),
     @required
         TResult showPostCommentsPressed(String postOwnerUid, String postUid),
     @required
@@ -7983,10 +9284,15 @@ class _$_LikeReplyToCommentPressed implements _LikeReplyToCommentPressed {
     @required TResult showAllSpoilersInCommentsPressed(),
     @required
         TResult likePostCommentPressed(
-            String postOwnerUid, String postUid, String commentUid),
+            String postOwnerUid,
+            String postUid,
+            String commentUid,
+            String commentOwnerUid,
+            String commentText,
+            String postPhotoUrl),
     @required
-        TResult unlikePostCommentPressed(
-            String postOwnerUid, String postUid, String commentUid),
+        TResult unlikePostCommentPressed(String postOwnerUid, String postUid,
+            String commentUid, String commentOwnerUid),
     @required
         TResult showCommentLikersPressed(
             String postOwnerUid, String postUid, String commentUid),
@@ -7994,11 +9300,22 @@ class _$_LikeReplyToCommentPressed implements _LikeReplyToCommentPressed {
         TResult nextPageShowCommentLikersPressed(
             String postOwnerUid, String postUid, String commentUid),
     @required
-        TResult replyToCommentPressed(String postOwnerUid, String postUid,
-            String parentCommentUid, String commentText, bool isCommentSpoiler),
+        TResult replyToCommentPressed(
+            String postOwnerUid,
+            String postUid,
+            String parentCommentUid,
+            String commentText,
+            bool isCommentSpoiler,
+            String postPhotoUrl,
+            String uidOfTheCommentOwnerBeingRepliedTo),
     @required
-        TResult deleteReplyToCommentPressed(String postOwnerUid, String postUid,
-            String parentCommentUid, String commentUid),
+        TResult deleteReplyToCommentPressed(
+            String postOwnerUid,
+            String postUid,
+            String parentCommentUid,
+            String commentUid,
+            String commentOwnerUid,
+            String parentCommentOwnerUid),
     @required
         TResult showCommentRepliesPressed(
             String postOwnerUid, String postUid, String parentCommentUid),
@@ -8008,11 +9325,17 @@ class _$_LikeReplyToCommentPressed implements _LikeReplyToCommentPressed {
     @required TResult hideCommentRepliesPressed(String parentCommentUid),
     @required TResult unHideCommentRepliesPressed(String parentCommentUid),
     @required
-        TResult likeReplyToCommentPressed(String postOwnerUid, String postUid,
-            String parentCommentUid, String commentUid),
+        TResult likeReplyToCommentPressed(
+            String postOwnerUid,
+            String postUid,
+            String parentCommentUid,
+            String commentUid,
+            String commentOwnerUid,
+            String commentText,
+            String postPhotoUrl),
     @required
         TResult unlikeReplyToCommentPressed(String postOwnerUid, String postUid,
-            String parentCommentUid, String commentUid),
+            String parentCommentUid, String commentUid, String commentOwnerUid),
     @required
         TResult showReplyLikersPressed(String postOwnerUid, String postUid,
             String parentCommentUid, String commentUid),
@@ -8045,8 +9368,8 @@ class _$_LikeReplyToCommentPressed implements _LikeReplyToCommentPressed {
     assert(unlikeReplyToCommentPressed != null);
     assert(showReplyLikersPressed != null);
     assert(nextPageShowReplyLikersPressed != null);
-    return likeReplyToCommentPressed(
-        postOwnerUid, postUid, parentCommentUid, commentUid);
+    return likeReplyToCommentPressed(postOwnerUid, postUid, parentCommentUid,
+        commentUid, commentOwnerUid, commentText, postPhotoUrl);
   }
 
   @override
@@ -8054,40 +9377,63 @@ class _$_LikeReplyToCommentPressed implements _LikeReplyToCommentPressed {
   TResult maybeWhen<TResult extends Object>({
     TResult loadPostPressed(String postOwnerUid, String postUid),
     TResult showSpoilerPressed(),
-    TResult likePostPressed(String postOwnerUid, String postUid),
+    TResult likePostPressed(
+        String postOwnerUid, String postUid, String postPhotoUrl),
     TResult unlikePostPressed(String postOwnerUid, String postUid),
     TResult showPostLikersPressed(String postOwnerUid, String postUid),
     TResult nextPageShowPostLikersPressed(String postOwnerUid, String postUid),
     TResult commentPostPressed(String postOwnerUid, String postUid,
-        String commentText, bool isCommentSpoiler),
-    TResult deleteCommentPostPressed(
-        String postOwnerUid, String postUid, String commentUid),
+        String commentText, bool isCommentSpoiler, String postPhotoUrl),
+    TResult deleteCommentPostPressed(String postOwnerUid, String postUid,
+        String commentUid, String commentOwnerUid),
     TResult showPostCommentsPressed(String postOwnerUid, String postUid),
     TResult nextPageShowPostCommentsPressed(
         String postOwnerUid, String postUid),
     TResult showAllSpoilersInCommentsPressed(),
     TResult likePostCommentPressed(
-        String postOwnerUid, String postUid, String commentUid),
-    TResult unlikePostCommentPressed(
-        String postOwnerUid, String postUid, String commentUid),
+        String postOwnerUid,
+        String postUid,
+        String commentUid,
+        String commentOwnerUid,
+        String commentText,
+        String postPhotoUrl),
+    TResult unlikePostCommentPressed(String postOwnerUid, String postUid,
+        String commentUid, String commentOwnerUid),
     TResult showCommentLikersPressed(
         String postOwnerUid, String postUid, String commentUid),
     TResult nextPageShowCommentLikersPressed(
         String postOwnerUid, String postUid, String commentUid),
-    TResult replyToCommentPressed(String postOwnerUid, String postUid,
-        String parentCommentUid, String commentText, bool isCommentSpoiler),
-    TResult deleteReplyToCommentPressed(String postOwnerUid, String postUid,
-        String parentCommentUid, String commentUid),
+    TResult replyToCommentPressed(
+        String postOwnerUid,
+        String postUid,
+        String parentCommentUid,
+        String commentText,
+        bool isCommentSpoiler,
+        String postPhotoUrl,
+        String uidOfTheCommentOwnerBeingRepliedTo),
+    TResult deleteReplyToCommentPressed(
+        String postOwnerUid,
+        String postUid,
+        String parentCommentUid,
+        String commentUid,
+        String commentOwnerUid,
+        String parentCommentOwnerUid),
     TResult showCommentRepliesPressed(
         String postOwnerUid, String postUid, String parentCommentUid),
     TResult nextPageShowCommentRepliesPressed(
         String postOwnerUid, String postUid, String parentCommentUid),
     TResult hideCommentRepliesPressed(String parentCommentUid),
     TResult unHideCommentRepliesPressed(String parentCommentUid),
-    TResult likeReplyToCommentPressed(String postOwnerUid, String postUid,
-        String parentCommentUid, String commentUid),
+    TResult likeReplyToCommentPressed(
+        String postOwnerUid,
+        String postUid,
+        String parentCommentUid,
+        String commentUid,
+        String commentOwnerUid,
+        String commentText,
+        String postPhotoUrl),
     TResult unlikeReplyToCommentPressed(String postOwnerUid, String postUid,
-        String parentCommentUid, String commentUid),
+        String parentCommentUid, String commentUid, String commentOwnerUid),
     TResult showReplyLikersPressed(String postOwnerUid, String postUid,
         String parentCommentUid, String commentUid),
     TResult nextPageShowReplyLikersPressed(String postOwnerUid, String postUid,
@@ -8096,8 +9442,8 @@ class _$_LikeReplyToCommentPressed implements _LikeReplyToCommentPressed {
   }) {
     assert(orElse != null);
     if (likeReplyToCommentPressed != null) {
-      return likeReplyToCommentPressed(
-          postOwnerUid, postUid, parentCommentUid, commentUid);
+      return likeReplyToCommentPressed(postOwnerUid, postUid, parentCommentUid,
+          commentUid, commentOwnerUid, commentText, postPhotoUrl);
     }
     return orElse();
   }
@@ -8223,12 +9569,18 @@ abstract class _LikeReplyToCommentPressed implements UserPostEvent {
       {@required String postOwnerUid,
       @required String postUid,
       @required String parentCommentUid,
-      @required String commentUid}) = _$_LikeReplyToCommentPressed;
+      @required String commentUid,
+      @required String commentOwnerUid,
+      @required String commentText,
+      @required String postPhotoUrl}) = _$_LikeReplyToCommentPressed;
 
   String get postOwnerUid;
   String get postUid;
   String get parentCommentUid;
   String get commentUid;
+  String get commentOwnerUid;
+  String get commentText;
+  String get postPhotoUrl;
   @JsonKey(ignore: true)
   _$LikeReplyToCommentPressedCopyWith<_LikeReplyToCommentPressed> get copyWith;
 }
@@ -8243,7 +9595,8 @@ abstract class _$UnlikeReplyToCommentPressedCopyWith<$Res> {
       {String postOwnerUid,
       String postUid,
       String parentCommentUid,
-      String commentUid});
+      String commentUid,
+      String commentOwnerUid});
 }
 
 /// @nodoc
@@ -8265,6 +9618,7 @@ class __$UnlikeReplyToCommentPressedCopyWithImpl<$Res>
     Object postUid = freezed,
     Object parentCommentUid = freezed,
     Object commentUid = freezed,
+    Object commentOwnerUid = freezed,
   }) {
     return _then(_UnlikeReplyToCommentPressed(
       postOwnerUid: postOwnerUid == freezed
@@ -8276,6 +9630,9 @@ class __$UnlikeReplyToCommentPressedCopyWithImpl<$Res>
           : parentCommentUid as String,
       commentUid:
           commentUid == freezed ? _value.commentUid : commentUid as String,
+      commentOwnerUid: commentOwnerUid == freezed
+          ? _value.commentOwnerUid
+          : commentOwnerUid as String,
     ));
   }
 }
@@ -8286,11 +9643,13 @@ class _$_UnlikeReplyToCommentPressed implements _UnlikeReplyToCommentPressed {
       {@required this.postOwnerUid,
       @required this.postUid,
       @required this.parentCommentUid,
-      @required this.commentUid})
+      @required this.commentUid,
+      @required this.commentOwnerUid})
       : assert(postOwnerUid != null),
         assert(postUid != null),
         assert(parentCommentUid != null),
-        assert(commentUid != null);
+        assert(commentUid != null),
+        assert(commentOwnerUid != null);
 
   @override
   final String postOwnerUid;
@@ -8300,10 +9659,12 @@ class _$_UnlikeReplyToCommentPressed implements _UnlikeReplyToCommentPressed {
   final String parentCommentUid;
   @override
   final String commentUid;
+  @override
+  final String commentOwnerUid;
 
   @override
   String toString() {
-    return 'UserPostEvent.unlikeReplyToCommentPressed(postOwnerUid: $postOwnerUid, postUid: $postUid, parentCommentUid: $parentCommentUid, commentUid: $commentUid)';
+    return 'UserPostEvent.unlikeReplyToCommentPressed(postOwnerUid: $postOwnerUid, postUid: $postUid, parentCommentUid: $parentCommentUid, commentUid: $commentUid, commentOwnerUid: $commentOwnerUid)';
   }
 
   @override
@@ -8321,7 +9682,10 @@ class _$_UnlikeReplyToCommentPressed implements _UnlikeReplyToCommentPressed {
                     .equals(other.parentCommentUid, parentCommentUid)) &&
             (identical(other.commentUid, commentUid) ||
                 const DeepCollectionEquality()
-                    .equals(other.commentUid, commentUid)));
+                    .equals(other.commentUid, commentUid)) &&
+            (identical(other.commentOwnerUid, commentOwnerUid) ||
+                const DeepCollectionEquality()
+                    .equals(other.commentOwnerUid, commentOwnerUid)));
   }
 
   @override
@@ -8330,7 +9694,8 @@ class _$_UnlikeReplyToCommentPressed implements _UnlikeReplyToCommentPressed {
       const DeepCollectionEquality().hash(postOwnerUid) ^
       const DeepCollectionEquality().hash(postUid) ^
       const DeepCollectionEquality().hash(parentCommentUid) ^
-      const DeepCollectionEquality().hash(commentUid);
+      const DeepCollectionEquality().hash(commentUid) ^
+      const DeepCollectionEquality().hash(commentOwnerUid);
 
   @JsonKey(ignore: true)
   @override
@@ -8343,7 +9708,9 @@ class _$_UnlikeReplyToCommentPressed implements _UnlikeReplyToCommentPressed {
   TResult when<TResult extends Object>({
     @required TResult loadPostPressed(String postOwnerUid, String postUid),
     @required TResult showSpoilerPressed(),
-    @required TResult likePostPressed(String postOwnerUid, String postUid),
+    @required
+        TResult likePostPressed(
+            String postOwnerUid, String postUid, String postPhotoUrl),
     @required TResult unlikePostPressed(String postOwnerUid, String postUid),
     @required
         TResult showPostLikersPressed(String postOwnerUid, String postUid),
@@ -8352,10 +9719,10 @@ class _$_UnlikeReplyToCommentPressed implements _UnlikeReplyToCommentPressed {
             String postOwnerUid, String postUid),
     @required
         TResult commentPostPressed(String postOwnerUid, String postUid,
-            String commentText, bool isCommentSpoiler),
+            String commentText, bool isCommentSpoiler, String postPhotoUrl),
     @required
-        TResult deleteCommentPostPressed(
-            String postOwnerUid, String postUid, String commentUid),
+        TResult deleteCommentPostPressed(String postOwnerUid, String postUid,
+            String commentUid, String commentOwnerUid),
     @required
         TResult showPostCommentsPressed(String postOwnerUid, String postUid),
     @required
@@ -8364,10 +9731,15 @@ class _$_UnlikeReplyToCommentPressed implements _UnlikeReplyToCommentPressed {
     @required TResult showAllSpoilersInCommentsPressed(),
     @required
         TResult likePostCommentPressed(
-            String postOwnerUid, String postUid, String commentUid),
+            String postOwnerUid,
+            String postUid,
+            String commentUid,
+            String commentOwnerUid,
+            String commentText,
+            String postPhotoUrl),
     @required
-        TResult unlikePostCommentPressed(
-            String postOwnerUid, String postUid, String commentUid),
+        TResult unlikePostCommentPressed(String postOwnerUid, String postUid,
+            String commentUid, String commentOwnerUid),
     @required
         TResult showCommentLikersPressed(
             String postOwnerUid, String postUid, String commentUid),
@@ -8375,11 +9747,22 @@ class _$_UnlikeReplyToCommentPressed implements _UnlikeReplyToCommentPressed {
         TResult nextPageShowCommentLikersPressed(
             String postOwnerUid, String postUid, String commentUid),
     @required
-        TResult replyToCommentPressed(String postOwnerUid, String postUid,
-            String parentCommentUid, String commentText, bool isCommentSpoiler),
+        TResult replyToCommentPressed(
+            String postOwnerUid,
+            String postUid,
+            String parentCommentUid,
+            String commentText,
+            bool isCommentSpoiler,
+            String postPhotoUrl,
+            String uidOfTheCommentOwnerBeingRepliedTo),
     @required
-        TResult deleteReplyToCommentPressed(String postOwnerUid, String postUid,
-            String parentCommentUid, String commentUid),
+        TResult deleteReplyToCommentPressed(
+            String postOwnerUid,
+            String postUid,
+            String parentCommentUid,
+            String commentUid,
+            String commentOwnerUid,
+            String parentCommentOwnerUid),
     @required
         TResult showCommentRepliesPressed(
             String postOwnerUid, String postUid, String parentCommentUid),
@@ -8389,11 +9772,17 @@ class _$_UnlikeReplyToCommentPressed implements _UnlikeReplyToCommentPressed {
     @required TResult hideCommentRepliesPressed(String parentCommentUid),
     @required TResult unHideCommentRepliesPressed(String parentCommentUid),
     @required
-        TResult likeReplyToCommentPressed(String postOwnerUid, String postUid,
-            String parentCommentUid, String commentUid),
+        TResult likeReplyToCommentPressed(
+            String postOwnerUid,
+            String postUid,
+            String parentCommentUid,
+            String commentUid,
+            String commentOwnerUid,
+            String commentText,
+            String postPhotoUrl),
     @required
         TResult unlikeReplyToCommentPressed(String postOwnerUid, String postUid,
-            String parentCommentUid, String commentUid),
+            String parentCommentUid, String commentUid, String commentOwnerUid),
     @required
         TResult showReplyLikersPressed(String postOwnerUid, String postUid,
             String parentCommentUid, String commentUid),
@@ -8427,7 +9816,7 @@ class _$_UnlikeReplyToCommentPressed implements _UnlikeReplyToCommentPressed {
     assert(showReplyLikersPressed != null);
     assert(nextPageShowReplyLikersPressed != null);
     return unlikeReplyToCommentPressed(
-        postOwnerUid, postUid, parentCommentUid, commentUid);
+        postOwnerUid, postUid, parentCommentUid, commentUid, commentOwnerUid);
   }
 
   @override
@@ -8435,40 +9824,63 @@ class _$_UnlikeReplyToCommentPressed implements _UnlikeReplyToCommentPressed {
   TResult maybeWhen<TResult extends Object>({
     TResult loadPostPressed(String postOwnerUid, String postUid),
     TResult showSpoilerPressed(),
-    TResult likePostPressed(String postOwnerUid, String postUid),
+    TResult likePostPressed(
+        String postOwnerUid, String postUid, String postPhotoUrl),
     TResult unlikePostPressed(String postOwnerUid, String postUid),
     TResult showPostLikersPressed(String postOwnerUid, String postUid),
     TResult nextPageShowPostLikersPressed(String postOwnerUid, String postUid),
     TResult commentPostPressed(String postOwnerUid, String postUid,
-        String commentText, bool isCommentSpoiler),
-    TResult deleteCommentPostPressed(
-        String postOwnerUid, String postUid, String commentUid),
+        String commentText, bool isCommentSpoiler, String postPhotoUrl),
+    TResult deleteCommentPostPressed(String postOwnerUid, String postUid,
+        String commentUid, String commentOwnerUid),
     TResult showPostCommentsPressed(String postOwnerUid, String postUid),
     TResult nextPageShowPostCommentsPressed(
         String postOwnerUid, String postUid),
     TResult showAllSpoilersInCommentsPressed(),
     TResult likePostCommentPressed(
-        String postOwnerUid, String postUid, String commentUid),
-    TResult unlikePostCommentPressed(
-        String postOwnerUid, String postUid, String commentUid),
+        String postOwnerUid,
+        String postUid,
+        String commentUid,
+        String commentOwnerUid,
+        String commentText,
+        String postPhotoUrl),
+    TResult unlikePostCommentPressed(String postOwnerUid, String postUid,
+        String commentUid, String commentOwnerUid),
     TResult showCommentLikersPressed(
         String postOwnerUid, String postUid, String commentUid),
     TResult nextPageShowCommentLikersPressed(
         String postOwnerUid, String postUid, String commentUid),
-    TResult replyToCommentPressed(String postOwnerUid, String postUid,
-        String parentCommentUid, String commentText, bool isCommentSpoiler),
-    TResult deleteReplyToCommentPressed(String postOwnerUid, String postUid,
-        String parentCommentUid, String commentUid),
+    TResult replyToCommentPressed(
+        String postOwnerUid,
+        String postUid,
+        String parentCommentUid,
+        String commentText,
+        bool isCommentSpoiler,
+        String postPhotoUrl,
+        String uidOfTheCommentOwnerBeingRepliedTo),
+    TResult deleteReplyToCommentPressed(
+        String postOwnerUid,
+        String postUid,
+        String parentCommentUid,
+        String commentUid,
+        String commentOwnerUid,
+        String parentCommentOwnerUid),
     TResult showCommentRepliesPressed(
         String postOwnerUid, String postUid, String parentCommentUid),
     TResult nextPageShowCommentRepliesPressed(
         String postOwnerUid, String postUid, String parentCommentUid),
     TResult hideCommentRepliesPressed(String parentCommentUid),
     TResult unHideCommentRepliesPressed(String parentCommentUid),
-    TResult likeReplyToCommentPressed(String postOwnerUid, String postUid,
-        String parentCommentUid, String commentUid),
+    TResult likeReplyToCommentPressed(
+        String postOwnerUid,
+        String postUid,
+        String parentCommentUid,
+        String commentUid,
+        String commentOwnerUid,
+        String commentText,
+        String postPhotoUrl),
     TResult unlikeReplyToCommentPressed(String postOwnerUid, String postUid,
-        String parentCommentUid, String commentUid),
+        String parentCommentUid, String commentUid, String commentOwnerUid),
     TResult showReplyLikersPressed(String postOwnerUid, String postUid,
         String parentCommentUid, String commentUid),
     TResult nextPageShowReplyLikersPressed(String postOwnerUid, String postUid,
@@ -8478,7 +9890,7 @@ class _$_UnlikeReplyToCommentPressed implements _UnlikeReplyToCommentPressed {
     assert(orElse != null);
     if (unlikeReplyToCommentPressed != null) {
       return unlikeReplyToCommentPressed(
-          postOwnerUid, postUid, parentCommentUid, commentUid);
+          postOwnerUid, postUid, parentCommentUid, commentUid, commentOwnerUid);
     }
     return orElse();
   }
@@ -8604,12 +10016,14 @@ abstract class _UnlikeReplyToCommentPressed implements UserPostEvent {
       {@required String postOwnerUid,
       @required String postUid,
       @required String parentCommentUid,
-      @required String commentUid}) = _$_UnlikeReplyToCommentPressed;
+      @required String commentUid,
+      @required String commentOwnerUid}) = _$_UnlikeReplyToCommentPressed;
 
   String get postOwnerUid;
   String get postUid;
   String get parentCommentUid;
   String get commentUid;
+  String get commentOwnerUid;
   @JsonKey(ignore: true)
   _$UnlikeReplyToCommentPressedCopyWith<_UnlikeReplyToCommentPressed>
       get copyWith;
@@ -8722,7 +10136,9 @@ class _$_ShowReplyLikersPressed implements _ShowReplyLikersPressed {
   TResult when<TResult extends Object>({
     @required TResult loadPostPressed(String postOwnerUid, String postUid),
     @required TResult showSpoilerPressed(),
-    @required TResult likePostPressed(String postOwnerUid, String postUid),
+    @required
+        TResult likePostPressed(
+            String postOwnerUid, String postUid, String postPhotoUrl),
     @required TResult unlikePostPressed(String postOwnerUid, String postUid),
     @required
         TResult showPostLikersPressed(String postOwnerUid, String postUid),
@@ -8731,10 +10147,10 @@ class _$_ShowReplyLikersPressed implements _ShowReplyLikersPressed {
             String postOwnerUid, String postUid),
     @required
         TResult commentPostPressed(String postOwnerUid, String postUid,
-            String commentText, bool isCommentSpoiler),
+            String commentText, bool isCommentSpoiler, String postPhotoUrl),
     @required
-        TResult deleteCommentPostPressed(
-            String postOwnerUid, String postUid, String commentUid),
+        TResult deleteCommentPostPressed(String postOwnerUid, String postUid,
+            String commentUid, String commentOwnerUid),
     @required
         TResult showPostCommentsPressed(String postOwnerUid, String postUid),
     @required
@@ -8743,10 +10159,15 @@ class _$_ShowReplyLikersPressed implements _ShowReplyLikersPressed {
     @required TResult showAllSpoilersInCommentsPressed(),
     @required
         TResult likePostCommentPressed(
-            String postOwnerUid, String postUid, String commentUid),
+            String postOwnerUid,
+            String postUid,
+            String commentUid,
+            String commentOwnerUid,
+            String commentText,
+            String postPhotoUrl),
     @required
-        TResult unlikePostCommentPressed(
-            String postOwnerUid, String postUid, String commentUid),
+        TResult unlikePostCommentPressed(String postOwnerUid, String postUid,
+            String commentUid, String commentOwnerUid),
     @required
         TResult showCommentLikersPressed(
             String postOwnerUid, String postUid, String commentUid),
@@ -8754,11 +10175,22 @@ class _$_ShowReplyLikersPressed implements _ShowReplyLikersPressed {
         TResult nextPageShowCommentLikersPressed(
             String postOwnerUid, String postUid, String commentUid),
     @required
-        TResult replyToCommentPressed(String postOwnerUid, String postUid,
-            String parentCommentUid, String commentText, bool isCommentSpoiler),
+        TResult replyToCommentPressed(
+            String postOwnerUid,
+            String postUid,
+            String parentCommentUid,
+            String commentText,
+            bool isCommentSpoiler,
+            String postPhotoUrl,
+            String uidOfTheCommentOwnerBeingRepliedTo),
     @required
-        TResult deleteReplyToCommentPressed(String postOwnerUid, String postUid,
-            String parentCommentUid, String commentUid),
+        TResult deleteReplyToCommentPressed(
+            String postOwnerUid,
+            String postUid,
+            String parentCommentUid,
+            String commentUid,
+            String commentOwnerUid,
+            String parentCommentOwnerUid),
     @required
         TResult showCommentRepliesPressed(
             String postOwnerUid, String postUid, String parentCommentUid),
@@ -8768,11 +10200,17 @@ class _$_ShowReplyLikersPressed implements _ShowReplyLikersPressed {
     @required TResult hideCommentRepliesPressed(String parentCommentUid),
     @required TResult unHideCommentRepliesPressed(String parentCommentUid),
     @required
-        TResult likeReplyToCommentPressed(String postOwnerUid, String postUid,
-            String parentCommentUid, String commentUid),
+        TResult likeReplyToCommentPressed(
+            String postOwnerUid,
+            String postUid,
+            String parentCommentUid,
+            String commentUid,
+            String commentOwnerUid,
+            String commentText,
+            String postPhotoUrl),
     @required
         TResult unlikeReplyToCommentPressed(String postOwnerUid, String postUid,
-            String parentCommentUid, String commentUid),
+            String parentCommentUid, String commentUid, String commentOwnerUid),
     @required
         TResult showReplyLikersPressed(String postOwnerUid, String postUid,
             String parentCommentUid, String commentUid),
@@ -8814,40 +10252,63 @@ class _$_ShowReplyLikersPressed implements _ShowReplyLikersPressed {
   TResult maybeWhen<TResult extends Object>({
     TResult loadPostPressed(String postOwnerUid, String postUid),
     TResult showSpoilerPressed(),
-    TResult likePostPressed(String postOwnerUid, String postUid),
+    TResult likePostPressed(
+        String postOwnerUid, String postUid, String postPhotoUrl),
     TResult unlikePostPressed(String postOwnerUid, String postUid),
     TResult showPostLikersPressed(String postOwnerUid, String postUid),
     TResult nextPageShowPostLikersPressed(String postOwnerUid, String postUid),
     TResult commentPostPressed(String postOwnerUid, String postUid,
-        String commentText, bool isCommentSpoiler),
-    TResult deleteCommentPostPressed(
-        String postOwnerUid, String postUid, String commentUid),
+        String commentText, bool isCommentSpoiler, String postPhotoUrl),
+    TResult deleteCommentPostPressed(String postOwnerUid, String postUid,
+        String commentUid, String commentOwnerUid),
     TResult showPostCommentsPressed(String postOwnerUid, String postUid),
     TResult nextPageShowPostCommentsPressed(
         String postOwnerUid, String postUid),
     TResult showAllSpoilersInCommentsPressed(),
     TResult likePostCommentPressed(
-        String postOwnerUid, String postUid, String commentUid),
-    TResult unlikePostCommentPressed(
-        String postOwnerUid, String postUid, String commentUid),
+        String postOwnerUid,
+        String postUid,
+        String commentUid,
+        String commentOwnerUid,
+        String commentText,
+        String postPhotoUrl),
+    TResult unlikePostCommentPressed(String postOwnerUid, String postUid,
+        String commentUid, String commentOwnerUid),
     TResult showCommentLikersPressed(
         String postOwnerUid, String postUid, String commentUid),
     TResult nextPageShowCommentLikersPressed(
         String postOwnerUid, String postUid, String commentUid),
-    TResult replyToCommentPressed(String postOwnerUid, String postUid,
-        String parentCommentUid, String commentText, bool isCommentSpoiler),
-    TResult deleteReplyToCommentPressed(String postOwnerUid, String postUid,
-        String parentCommentUid, String commentUid),
+    TResult replyToCommentPressed(
+        String postOwnerUid,
+        String postUid,
+        String parentCommentUid,
+        String commentText,
+        bool isCommentSpoiler,
+        String postPhotoUrl,
+        String uidOfTheCommentOwnerBeingRepliedTo),
+    TResult deleteReplyToCommentPressed(
+        String postOwnerUid,
+        String postUid,
+        String parentCommentUid,
+        String commentUid,
+        String commentOwnerUid,
+        String parentCommentOwnerUid),
     TResult showCommentRepliesPressed(
         String postOwnerUid, String postUid, String parentCommentUid),
     TResult nextPageShowCommentRepliesPressed(
         String postOwnerUid, String postUid, String parentCommentUid),
     TResult hideCommentRepliesPressed(String parentCommentUid),
     TResult unHideCommentRepliesPressed(String parentCommentUid),
-    TResult likeReplyToCommentPressed(String postOwnerUid, String postUid,
-        String parentCommentUid, String commentUid),
+    TResult likeReplyToCommentPressed(
+        String postOwnerUid,
+        String postUid,
+        String parentCommentUid,
+        String commentUid,
+        String commentOwnerUid,
+        String commentText,
+        String postPhotoUrl),
     TResult unlikeReplyToCommentPressed(String postOwnerUid, String postUid,
-        String parentCommentUid, String commentUid),
+        String parentCommentUid, String commentUid, String commentOwnerUid),
     TResult showReplyLikersPressed(String postOwnerUid, String postUid,
         String parentCommentUid, String commentUid),
     TResult nextPageShowReplyLikersPressed(String postOwnerUid, String postUid,
@@ -9104,7 +10565,9 @@ class _$_NextPageShowReplyLikersPressed
   TResult when<TResult extends Object>({
     @required TResult loadPostPressed(String postOwnerUid, String postUid),
     @required TResult showSpoilerPressed(),
-    @required TResult likePostPressed(String postOwnerUid, String postUid),
+    @required
+        TResult likePostPressed(
+            String postOwnerUid, String postUid, String postPhotoUrl),
     @required TResult unlikePostPressed(String postOwnerUid, String postUid),
     @required
         TResult showPostLikersPressed(String postOwnerUid, String postUid),
@@ -9113,10 +10576,10 @@ class _$_NextPageShowReplyLikersPressed
             String postOwnerUid, String postUid),
     @required
         TResult commentPostPressed(String postOwnerUid, String postUid,
-            String commentText, bool isCommentSpoiler),
+            String commentText, bool isCommentSpoiler, String postPhotoUrl),
     @required
-        TResult deleteCommentPostPressed(
-            String postOwnerUid, String postUid, String commentUid),
+        TResult deleteCommentPostPressed(String postOwnerUid, String postUid,
+            String commentUid, String commentOwnerUid),
     @required
         TResult showPostCommentsPressed(String postOwnerUid, String postUid),
     @required
@@ -9125,10 +10588,15 @@ class _$_NextPageShowReplyLikersPressed
     @required TResult showAllSpoilersInCommentsPressed(),
     @required
         TResult likePostCommentPressed(
-            String postOwnerUid, String postUid, String commentUid),
+            String postOwnerUid,
+            String postUid,
+            String commentUid,
+            String commentOwnerUid,
+            String commentText,
+            String postPhotoUrl),
     @required
-        TResult unlikePostCommentPressed(
-            String postOwnerUid, String postUid, String commentUid),
+        TResult unlikePostCommentPressed(String postOwnerUid, String postUid,
+            String commentUid, String commentOwnerUid),
     @required
         TResult showCommentLikersPressed(
             String postOwnerUid, String postUid, String commentUid),
@@ -9136,11 +10604,22 @@ class _$_NextPageShowReplyLikersPressed
         TResult nextPageShowCommentLikersPressed(
             String postOwnerUid, String postUid, String commentUid),
     @required
-        TResult replyToCommentPressed(String postOwnerUid, String postUid,
-            String parentCommentUid, String commentText, bool isCommentSpoiler),
+        TResult replyToCommentPressed(
+            String postOwnerUid,
+            String postUid,
+            String parentCommentUid,
+            String commentText,
+            bool isCommentSpoiler,
+            String postPhotoUrl,
+            String uidOfTheCommentOwnerBeingRepliedTo),
     @required
-        TResult deleteReplyToCommentPressed(String postOwnerUid, String postUid,
-            String parentCommentUid, String commentUid),
+        TResult deleteReplyToCommentPressed(
+            String postOwnerUid,
+            String postUid,
+            String parentCommentUid,
+            String commentUid,
+            String commentOwnerUid,
+            String parentCommentOwnerUid),
     @required
         TResult showCommentRepliesPressed(
             String postOwnerUid, String postUid, String parentCommentUid),
@@ -9150,11 +10629,17 @@ class _$_NextPageShowReplyLikersPressed
     @required TResult hideCommentRepliesPressed(String parentCommentUid),
     @required TResult unHideCommentRepliesPressed(String parentCommentUid),
     @required
-        TResult likeReplyToCommentPressed(String postOwnerUid, String postUid,
-            String parentCommentUid, String commentUid),
+        TResult likeReplyToCommentPressed(
+            String postOwnerUid,
+            String postUid,
+            String parentCommentUid,
+            String commentUid,
+            String commentOwnerUid,
+            String commentText,
+            String postPhotoUrl),
     @required
         TResult unlikeReplyToCommentPressed(String postOwnerUid, String postUid,
-            String parentCommentUid, String commentUid),
+            String parentCommentUid, String commentUid, String commentOwnerUid),
     @required
         TResult showReplyLikersPressed(String postOwnerUid, String postUid,
             String parentCommentUid, String commentUid),
@@ -9196,40 +10681,63 @@ class _$_NextPageShowReplyLikersPressed
   TResult maybeWhen<TResult extends Object>({
     TResult loadPostPressed(String postOwnerUid, String postUid),
     TResult showSpoilerPressed(),
-    TResult likePostPressed(String postOwnerUid, String postUid),
+    TResult likePostPressed(
+        String postOwnerUid, String postUid, String postPhotoUrl),
     TResult unlikePostPressed(String postOwnerUid, String postUid),
     TResult showPostLikersPressed(String postOwnerUid, String postUid),
     TResult nextPageShowPostLikersPressed(String postOwnerUid, String postUid),
     TResult commentPostPressed(String postOwnerUid, String postUid,
-        String commentText, bool isCommentSpoiler),
-    TResult deleteCommentPostPressed(
-        String postOwnerUid, String postUid, String commentUid),
+        String commentText, bool isCommentSpoiler, String postPhotoUrl),
+    TResult deleteCommentPostPressed(String postOwnerUid, String postUid,
+        String commentUid, String commentOwnerUid),
     TResult showPostCommentsPressed(String postOwnerUid, String postUid),
     TResult nextPageShowPostCommentsPressed(
         String postOwnerUid, String postUid),
     TResult showAllSpoilersInCommentsPressed(),
     TResult likePostCommentPressed(
-        String postOwnerUid, String postUid, String commentUid),
-    TResult unlikePostCommentPressed(
-        String postOwnerUid, String postUid, String commentUid),
+        String postOwnerUid,
+        String postUid,
+        String commentUid,
+        String commentOwnerUid,
+        String commentText,
+        String postPhotoUrl),
+    TResult unlikePostCommentPressed(String postOwnerUid, String postUid,
+        String commentUid, String commentOwnerUid),
     TResult showCommentLikersPressed(
         String postOwnerUid, String postUid, String commentUid),
     TResult nextPageShowCommentLikersPressed(
         String postOwnerUid, String postUid, String commentUid),
-    TResult replyToCommentPressed(String postOwnerUid, String postUid,
-        String parentCommentUid, String commentText, bool isCommentSpoiler),
-    TResult deleteReplyToCommentPressed(String postOwnerUid, String postUid,
-        String parentCommentUid, String commentUid),
+    TResult replyToCommentPressed(
+        String postOwnerUid,
+        String postUid,
+        String parentCommentUid,
+        String commentText,
+        bool isCommentSpoiler,
+        String postPhotoUrl,
+        String uidOfTheCommentOwnerBeingRepliedTo),
+    TResult deleteReplyToCommentPressed(
+        String postOwnerUid,
+        String postUid,
+        String parentCommentUid,
+        String commentUid,
+        String commentOwnerUid,
+        String parentCommentOwnerUid),
     TResult showCommentRepliesPressed(
         String postOwnerUid, String postUid, String parentCommentUid),
     TResult nextPageShowCommentRepliesPressed(
         String postOwnerUid, String postUid, String parentCommentUid),
     TResult hideCommentRepliesPressed(String parentCommentUid),
     TResult unHideCommentRepliesPressed(String parentCommentUid),
-    TResult likeReplyToCommentPressed(String postOwnerUid, String postUid,
-        String parentCommentUid, String commentUid),
+    TResult likeReplyToCommentPressed(
+        String postOwnerUid,
+        String postUid,
+        String parentCommentUid,
+        String commentUid,
+        String commentOwnerUid,
+        String commentText,
+        String postPhotoUrl),
     TResult unlikeReplyToCommentPressed(String postOwnerUid, String postUid,
-        String parentCommentUid, String commentUid),
+        String parentCommentUid, String commentUid, String commentOwnerUid),
     TResult showReplyLikersPressed(String postOwnerUid, String postUid,
         String parentCommentUid, String commentUid),
     TResult nextPageShowReplyLikersPressed(String postOwnerUid, String postUid,

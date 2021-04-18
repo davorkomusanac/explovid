@@ -395,7 +395,10 @@ class _OtherUserReviewState extends State<OtherUserReview> with TickerProviderSt
                                             )
                                           : context.read<UserPostBloc>().add(
                                                 UserPostEvent.likePostPressed(
-                                                    postOwnerUid: widget.postOwnerUid, postUid: widget.postUid),
+                                                  postOwnerUid: widget.postOwnerUid,
+                                                  postUid: widget.postUid,
+                                                  postPhotoUrl: state.userPost.posterPath,
+                                                ),
                                               );
                                     },
                                   ),
@@ -449,6 +452,7 @@ class _OtherUserReviewState extends State<OtherUserReview> with TickerProviderSt
                                                 isPostSpoiler: state.isSpoiler,
                                                 postCreationDate: state.userPost.postCreationDate,
                                                 isKeyboardFocused: true,
+                                                postPhotoUrl: state.userPost.posterPath,
                                               ),
                                             ),
                                           )
@@ -476,6 +480,7 @@ class _OtherUserReviewState extends State<OtherUserReview> with TickerProviderSt
                                                 isPostSpoiler: state.isSpoiler,
                                                 postCreationDate: state.userPost.postCreationDate,
                                                 isKeyboardFocused: false,
+                                                postPhotoUrl: state.userPost.posterPath,
                                               ),
                                             ),
                                           )

@@ -50,7 +50,11 @@ class UserPostBloc extends Bloc<UserPostEvent, UserPostState> {
           errorMessage: '',
           numberOfLikes: state.numberOfLikes + 1,
         );
-        var result = await _userActionsRepository.likePost(postOwnerUid: e.postOwnerUid, postUid: e.postUid);
+        var result = await _userActionsRepository.likePost(
+          postOwnerUid: e.postOwnerUid,
+          postUid: e.postUid,
+          postPhotoUrl: e.postPhotoUrl,
+        );
         bool isSuccessfullyLiked = result.isEmpty;
         yield isSuccessfullyLiked
             ? state.copyWith(
@@ -137,6 +141,7 @@ class UserPostBloc extends Bloc<UserPostEvent, UserPostState> {
           postUid: e.postUid,
           commentText: e.commentText,
           isCommentSpoiler: e.isCommentSpoiler,
+          postPhotoUrl: e.postPhotoUrl,
         );
         OurUser user = result[0];
         OurPostComment comment = result[1];
@@ -166,6 +171,7 @@ class UserPostBloc extends Bloc<UserPostEvent, UserPostState> {
           postOwnerUid: e.postOwnerUid,
           postUid: e.postUid,
           commentUid: e.commentUid,
+          commentOwnerUid: e.commentOwnerUid,
         );
         if (result.isEmpty) {
           add(
@@ -275,6 +281,9 @@ class UserPostBloc extends Bloc<UserPostEvent, UserPostState> {
           postOwnerUid: e.postOwnerUid,
           postUid: e.postUid,
           commentUid: e.commentUid,
+          commentOwnerUid: e.commentOwnerUid,
+          postPhotoUrl: e.postPhotoUrl,
+          commentText: e.commentText,
         );
         if (result.isNotEmpty) {
           state.postCommentsLikedByCurrentUser[e.commentUid] = false;
@@ -299,6 +308,7 @@ class UserPostBloc extends Bloc<UserPostEvent, UserPostState> {
           postOwnerUid: e.postOwnerUid,
           postUid: e.postUid,
           commentUid: e.commentUid,
+          commentOwnerUid: e.commentOwnerUid,
         );
         if (result.isNotEmpty) {
           state.postCommentsLikedByCurrentUser[e.commentUid] = true;
@@ -367,6 +377,8 @@ class UserPostBloc extends Bloc<UserPostEvent, UserPostState> {
           parentCommentUid: e.parentCommentUid,
           commentText: e.commentText,
           isCommentSpoiler: e.isCommentSpoiler,
+          postPhotoUrl: e.postPhotoUrl,
+          uidOfTheCommentOwnerBeingRepliedTo: e.uidOfTheCommentOwnerBeingRepliedTo,
         );
         OurUser user = result[0];
         OurPostComment comment = result[1];
@@ -405,6 +417,8 @@ class UserPostBloc extends Bloc<UserPostEvent, UserPostState> {
           postUid: e.postUid,
           parentCommentUid: e.parentCommentUid,
           commentUid: e.commentUid,
+          commentOwnerUid: e.commentOwnerUid,
+          parentCommentOwnerUid: e.parentCommentOwnerUid,
         );
         //Reset so that the comments load again
         if (result.isEmpty) {
@@ -537,6 +551,9 @@ class UserPostBloc extends Bloc<UserPostEvent, UserPostState> {
           postUid: e.postUid,
           parentCommentUid: e.parentCommentUid,
           commentUid: e.commentUid,
+          commentText: e.commentText,
+          postPhotoUrl: e.postPhotoUrl,
+          commentOwnerUid: e.commentOwnerUid,
         );
         if (result.isNotEmpty) {
           state.commentRepliesLikedByCurrentUser[e.commentUid] = false;
@@ -561,6 +578,7 @@ class UserPostBloc extends Bloc<UserPostEvent, UserPostState> {
           postUid: e.postUid,
           parentCommentUid: e.parentCommentUid,
           commentUid: e.commentUid,
+          commentOwnerUid: e.commentOwnerUid,
         );
         if (result.isNotEmpty) {
           state.commentRepliesLikedByCurrentUser[e.commentUid] = true;

@@ -4,6 +4,7 @@ import 'package:explovid/application/search/movie_search/movie_details/movie_det
 import 'package:explovid/application/search/movie_search/movie_search_bloc.dart';
 import 'package:explovid/application/search/tv_show_search/tv_show_details/tv_show_details_bloc.dart';
 import 'package:explovid/application/user_interactions/follow/follow_bloc.dart';
+import 'package:explovid/application/user_interactions/notifications/notifications_bloc.dart';
 import 'package:explovid/application/user_post/reviews_posts/reviews_posts_bloc.dart';
 import 'package:explovid/application/user_post/user_post_bloc.dart';
 import 'package:explovid/application/user_profile_information/current_user_profile_information/current_user_profile_information_bloc.dart';
@@ -18,8 +19,8 @@ import 'package:explovid/data/search_db/tv_show_db/tv_show_repository.dart';
 import 'package:explovid/data/user_profile_db/other_user_profile_db/other_user_profile_repository.dart';
 import 'package:explovid/data/user_profile_db/user_actions_db/user_actions_repository.dart';
 import 'package:explovid/presentation/pages/feedback_page/feedback_page.dart';
-import 'package:explovid/presentation/pages/home_page/four.dart';
 import 'package:explovid/presentation/pages/home_page/one.dart';
+import 'package:explovid/presentation/pages/notifications_page/notifications_page.dart';
 import 'package:explovid/presentation/pages/profile_page/current_user_page/profile_page.dart';
 import 'package:explovid/presentation/pages/search_page/search_page.dart';
 import 'package:flutter/cupertino.dart';
@@ -49,13 +50,13 @@ class _HomePageState extends State<HomePage> {
   ];
   CupertinoTabController _tabController;
   //CurrentIndex needs to be equal to initialIndex so that an exception is not thrown
-  int currentIndex = 4;
+  int currentIndex = 3;
 
   @override
   void initState() {
     super.initState();
     //Put the Search page as the starting one? For the time being until the app is populated
-    _tabController = CupertinoTabController(initialIndex: 4);
+    _tabController = CupertinoTabController(initialIndex: 3);
     client = http.Client();
     _movieRepository = MovieRepository(client);
     _tvShowRepository = TvShowRepository(client);
@@ -71,6 +72,9 @@ class _HomePageState extends State<HomePage> {
         );
     context.read<CurrentUserProfileInformationBloc>().add(
           CurrentUserProfileInformationEvent.loadCurrentUserProfilePressed(),
+        );
+    context.read<NotificationsBloc>().add(
+          NotificationsEvent.loadInitialNotifications(),
         );
   }
 
@@ -167,6 +171,7 @@ class _HomePageState extends State<HomePage> {
                       _userActionsRepository,
                     ),
                   ),
+
                   ///Reviews
                   BlocProvider(
                     create: (context) => ReviewsPostsBloc(
@@ -302,6 +307,7 @@ class _HomePageState extends State<HomePage> {
                       _userActionsRepository,
                     ),
                   ),
+
                   ///Reviews
                   BlocProvider(
                     create: (context) => ReviewsPostsBloc(
@@ -313,7 +319,7 @@ class _HomePageState extends State<HomePage> {
                   navigatorKey: tabNavKeys[3],
                   builder: (context) {
                     return CupertinoPageScaffold(
-                      child: FourPage(),
+                      child: NotificationsPage(),
                     );
                   },
                 ),

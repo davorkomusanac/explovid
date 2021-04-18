@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:explovid/data/models/our_notification/our_notification.dart';
 import 'package:explovid/data/models/our_user/our_user.dart';
 import 'package:explovid/data/models/our_user_post/our_post_comment.dart';
 import 'package:explovid/data/models/our_user_post/our_user_post.dart';
@@ -15,6 +16,7 @@ class UserActionsRepository {
   CollectionReference _followers = FirebaseFirestore.instance.collection('user_followers');
   CollectionReference _posts = FirebaseFirestore.instance.collection('posts');
   CollectionReference _reviews = FirebaseFirestore.instance.collection('reviews');
+  CollectionReference _notificationFeed = FirebaseFirestore.instance.collection('notification_feed');
   FirebaseAuth _auth = FirebaseAuth.instance;
 
   /// //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -79,6 +81,21 @@ class UserActionsRepository {
   Future<String> followUser({@required String otherUserUid}) async {
     String returnVal = "";
     WriteBatch batch = FirebaseFirestore.instance.batch();
+    OurNotification ourNotification = OurNotification(
+      notificationUid: Uuid().v4(),
+      senderUid: _auth.currentUser.uid,
+      receiverUid: otherUserUid,
+      notificationCreationDate: Timestamp.now(),
+      postPhotoUrl: '',
+      typeOfNotification: kFollow,
+      postUid: '',
+      postOwnerUid: '',
+      notificationText: '',
+      isNotificationTextSpoiler: false,
+      commentUid: '',
+      parentCommentUid: '',
+      commentBeingRepliedToUid: '',
+    );
     try {
       //increment the number of people the current user follows
       batch.set(
@@ -112,6 +129,12 @@ class UserActionsRepository {
           "user_follow_date": Timestamp.now(),
           "uid": _auth.currentUser.uid,
         },
+        SetOptions(merge: true),
+      );
+      //Send notification to other user that the current user has started following him
+      batch.set(
+        _notificationFeed.doc(otherUserUid).collection("notifications").doc(_auth.currentUser.uid + "_followed_" + otherUserUid),
+        ourNotification.toDocument(),
         SetOptions(merge: true),
       );
       await batch.commit();
@@ -150,6 +173,10 @@ class UserActionsRepository {
       batch.delete(
         _followers.doc(otherUserUid).collection("followers").doc(_auth.currentUser.uid),
       );
+      //Remove notification from other user's notification feed
+      batch.delete(
+        _notificationFeed.doc(otherUserUid).collection("notifications").doc(_auth.currentUser.uid + "_followed_" + otherUserUid),
+      );
       await batch.commit();
     } catch (error) {
       print(error.toString());
@@ -185,6 +212,13 @@ class UserActionsRepository {
       //Remove current user's data from the other user's collection of following
       batch.delete(
         _following.doc(otherUserUid).collection("following").doc(_auth.currentUser.uid),
+      );
+      //Remove notification from current user's notification feed
+      batch.delete(
+        _notificationFeed
+            .doc(_auth.currentUser.uid)
+            .collection("notifications")
+            .doc(otherUserUid + "_followed_" + _auth.currentUser.uid),
       );
       await batch.commit();
     } catch (error) {
@@ -350,9 +384,30 @@ class UserActionsRepository {
   /// //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   /// like Post/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   /// //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  Future<String> likePost({@required String postOwnerUid, @required String postUid}) async {
+  Future<String> likePost({
+    @required String postOwnerUid,
+    @required String postUid,
+    @required String postPhotoUrl,
+  }) async {
     String returnVal = "";
     WriteBatch batch = FirebaseFirestore.instance.batch();
+    //Check if user is liking his own post, so that there is no need to write to notification feed
+    bool isUserLikingHisOwnPost = _auth.currentUser.uid == postOwnerUid;
+    OurNotification ourNotification = OurNotification(
+      notificationUid: Uuid().v4(),
+      senderUid: _auth.currentUser.uid,
+      receiverUid: postOwnerUid,
+      notificationCreationDate: Timestamp.now(),
+      postPhotoUrl: postPhotoUrl,
+      typeOfNotification: kLikePost,
+      postUid: postUid,
+      postOwnerUid: postOwnerUid,
+      notificationText: '',
+      isNotificationTextSpoiler: false,
+      commentUid: '',
+      parentCommentUid: '',
+      commentBeingRepliedToUid: '',
+    );
     try {
       batch.set(
         _posts.doc(postOwnerUid).collection("user_posts").doc(postUid),
@@ -369,6 +424,13 @@ class UserActionsRepository {
         },
         SetOptions(merge: true),
       );
+      //Send notification to other user's notification feed ONLY if the user is not liking his own post
+      if (!isUserLikingHisOwnPost)
+        batch.set(
+          _notificationFeed.doc(postOwnerUid).collection("notifications").doc(_auth.currentUser.uid + "_liked_post_" + postUid),
+          ourNotification.toDocument(),
+          SetOptions(merge: true),
+        );
       await batch.commit();
     } catch (e) {
       print(e.toString());
@@ -390,6 +452,10 @@ class UserActionsRepository {
       );
       batch.delete(
         _posts.doc(postOwnerUid).collection("user_posts").doc(postUid).collection("likes").doc(_auth.currentUser.uid),
+      );
+      //Remove notification from other user's notification feed
+      batch.delete(
+        _notificationFeed.doc(postOwnerUid).collection("notifications").doc(_auth.currentUser.uid + "_liked_post_" + postUid),
       );
       await batch.commit();
     } catch (e) {
@@ -417,7 +483,7 @@ class UserActionsRepository {
   }
 
   /// //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  /// comment Post/// //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  /// comment Post//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   /// //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //Returns List so that when commenting a post, the user's info gets pushed to the bloc state of comments
   Future<List<dynamic>> commentPost({
@@ -425,6 +491,7 @@ class UserActionsRepository {
     @required String postUid,
     @required String commentText,
     @required bool isCommentSpoiler,
+    @required String postPhotoUrl,
   }) async {
     List<dynamic> postCommentAndItsOwner = [];
     OurUser user;
@@ -437,6 +504,23 @@ class UserActionsRepository {
       numberOfLikes: 0,
       numberOfReplies: 0,
       isCommentSpoiler: isCommentSpoiler,
+    );
+    //Check if user is commenting his own post, so that there is no need to write to notification feed
+    bool isUserCommentingHisOwnPost = _auth.currentUser.uid == postOwnerUid;
+    OurNotification ourNotification = OurNotification(
+      notificationUid: Uuid().v4(),
+      senderUid: _auth.currentUser.uid,
+      receiverUid: postOwnerUid,
+      notificationCreationDate: Timestamp.now(),
+      postPhotoUrl: postPhotoUrl,
+      typeOfNotification: kCommentPost,
+      postUid: postUid,
+      postOwnerUid: postOwnerUid,
+      notificationText: commentText,
+      isNotificationTextSpoiler: isCommentSpoiler,
+      commentUid: ourPostComment.commentUid,
+      parentCommentUid: '',
+      commentBeingRepliedToUid: '',
     );
     try {
       batch.set(
@@ -451,6 +535,16 @@ class UserActionsRepository {
         ourPostComment.toDocument(),
         SetOptions(merge: true),
       );
+      //Send comment notification to other users notification feed only if the user is not commenting his own post
+      if (!isUserCommentingHisOwnPost)
+        batch.set(
+          _notificationFeed
+              .doc(postOwnerUid)
+              .collection("notifications")
+              .doc(_auth.currentUser.uid + "_commented_post_" + ourPostComment.commentUid),
+          ourNotification.toDocument(),
+          SetOptions(merge: true),
+        );
       await batch.commit();
       var snap = await _users.doc(_auth.currentUser.uid).get();
       user = OurUser.fromSnapshot(snap);
@@ -478,6 +572,7 @@ class UserActionsRepository {
     @required String postOwnerUid,
     @required String postUid,
     @required String commentUid,
+    @required String commentOwnerUid,
   }) async {
     String returnVal = "";
     WriteBatch batch = FirebaseFirestore.instance.batch();
@@ -491,6 +586,10 @@ class UserActionsRepository {
       );
       batch.delete(
         _posts.doc(postOwnerUid).collection("user_posts").doc(postUid).collection("comments").doc(commentUid),
+      );
+      //Remove notification from other user's notification feed
+      batch.delete(
+        _notificationFeed.doc(postOwnerUid).collection("notifications").doc(commentOwnerUid + "_commented_post_" + commentUid),
       );
       await batch.commit();
     } catch (e) {
@@ -507,9 +606,28 @@ class UserActionsRepository {
     @required String postOwnerUid,
     @required String postUid,
     @required String commentUid,
+    @required String commentOwnerUid,
+    @required String commentText,
+    @required String postPhotoUrl,
   }) async {
     String returnVal = "";
     WriteBatch batch = FirebaseFirestore.instance.batch();
+    bool isUserLikingHisOwnComment = _auth.currentUser.uid == commentOwnerUid;
+    OurNotification ourNotification = OurNotification(
+      notificationUid: Uuid().v4(),
+      senderUid: _auth.currentUser.uid,
+      receiverUid: commentOwnerUid,
+      notificationCreationDate: Timestamp.now(),
+      postPhotoUrl: postPhotoUrl,
+      typeOfNotification: kLikeComment,
+      postUid: postUid,
+      postOwnerUid: postOwnerUid,
+      notificationText: commentText,
+      isNotificationTextSpoiler: false,
+      commentUid: commentUid,
+      parentCommentUid: '',
+      commentBeingRepliedToUid: '',
+    );
     try {
       batch.set(
         _posts.doc(postOwnerUid).collection("user_posts").doc(postUid).collection("comments").doc(commentUid),
@@ -533,6 +651,16 @@ class UserActionsRepository {
         },
         SetOptions(merge: true),
       );
+      //Send notification
+      if (!isUserLikingHisOwnComment)
+        batch.set(
+          _notificationFeed
+              .doc(commentOwnerUid)
+              .collection("notifications")
+              .doc(_auth.currentUser.uid + "_liked_comment_" + commentUid),
+          ourNotification.toDocument(),
+          SetOptions(merge: true),
+        );
       await batch.commit();
     } catch (e) {
       print(e.toString());
@@ -545,6 +673,7 @@ class UserActionsRepository {
     @required String postOwnerUid,
     @required String postUid,
     @required String commentUid,
+    @required String commentOwnerUid,
   }) async {
     String returnVal = "";
     WriteBatch batch = FirebaseFirestore.instance.batch();
@@ -565,6 +694,13 @@ class UserActionsRepository {
             .doc(commentUid)
             .collection("likes")
             .doc(_auth.currentUser.uid),
+      );
+      //Remove notification
+      batch.delete(
+        _notificationFeed
+            .doc(commentOwnerUid)
+            .collection("notifications")
+            .doc(_auth.currentUser.uid + "_liked_comment_" + commentUid),
       );
       await batch.commit();
     } catch (e) {
@@ -613,7 +749,11 @@ class UserActionsRepository {
     @required String parentCommentUid,
     @required String commentText,
     @required bool isCommentSpoiler,
-    //TODO add String here commentUidTheUserIsReplying and check if it is the same as parent or just a sibling
+    @required String postPhotoUrl,
+    // @required String uidOfTheCommentBeingRepliedTo,
+    //@required String parentCommentOwnerUid,
+    @required String uidOfTheCommentOwnerBeingRepliedTo,
+    //TODO remove unnecessary
   }) async {
     List<dynamic> commentReplyAndItsOwner = [];
     OurUser user;
@@ -626,6 +766,26 @@ class UserActionsRepository {
       numberOfLikes: 0,
       numberOfReplies: 0,
       isCommentSpoiler: isCommentSpoiler,
+    );
+
+    //Check if user is replying to himself
+    bool isUserReplyingToHimself = _auth.currentUser.uid == uidOfTheCommentOwnerBeingRepliedTo;
+
+    OurNotification ourNotification = OurNotification(
+      notificationUid: Uuid().v4(),
+      senderUid: _auth.currentUser.uid,
+      receiverUid: uidOfTheCommentOwnerBeingRepliedTo,
+      notificationCreationDate: Timestamp.now(),
+      postPhotoUrl: postPhotoUrl,
+      typeOfNotification: kRepliedComment,
+      postUid: postUid,
+      postOwnerUid: postOwnerUid,
+      notificationText: commentText,
+      isNotificationTextSpoiler: isCommentSpoiler,
+      commentUid: ourPostComment.commentUid,
+      parentCommentUid: parentCommentUid,
+      //commentBeingRepliedToUid: uidOfTheCommentBeingRepliedTo,
+      commentBeingRepliedToUid: '',
     );
     try {
       //Increase number of comments for that post
@@ -657,7 +817,16 @@ class UserActionsRepository {
         ourPostComment.toDocument(),
         SetOptions(merge: true),
       );
-      //TODO Write to notification feed, check if reply is to parent comment or child under parent, if the latter, send notification to both?
+      //Send notification to user being replied to
+      if (!isUserReplyingToHimself)
+        batch.set(
+          _notificationFeed
+              .doc(uidOfTheCommentOwnerBeingRepliedTo)
+              .collection("notifications")
+              .doc(_auth.currentUser.uid + "_replied_comment_" + ourPostComment.commentUid),
+          ourNotification.toDocument(),
+          SetOptions(merge: true),
+        );
       var snap = await _users.doc(_auth.currentUser.uid).get();
       user = OurUser.fromSnapshot(snap);
       await batch.commit();
@@ -685,8 +854,9 @@ class UserActionsRepository {
     @required String postOwnerUid,
     @required String postUid,
     @required String parentCommentUid,
+    @required String parentCommentOwnerUid,
     @required String commentUid,
-    //TODO Add here commentUidTheUserIsReplying to check if it is parent comment owner or other user, to delete from both users notification feed
+    @required String commentOwnerUid,
   }) async {
     String returnVal = "";
     WriteBatch batch = FirebaseFirestore.instance.batch();
@@ -716,7 +886,13 @@ class UserActionsRepository {
             .collection("comments")
             .doc(commentUid),
       );
-      //TODO Remove from notification feed here
+      //Remove notification from parent Comment Owner feed
+      batch.delete(
+        _notificationFeed
+            .doc(parentCommentOwnerUid)
+            .collection("notifications")
+            .doc(commentOwnerUid + "_replied_comment_" + commentUid),
+      );
       await batch.commit();
     } catch (e) {
       print(e.toString());
@@ -730,10 +906,29 @@ class UserActionsRepository {
     @required String postUid,
     @required String parentCommentUid,
     @required String commentUid,
-    //TODO Add here commentUidTheUserIsReplying to check if it is parent comment owner or other user, to delete from both users notification feed
+    @required String commentOwnerUid,
+    @required String commentText,
+    @required String postPhotoUrl,
   }) async {
     String returnVal = "";
     WriteBatch batch = FirebaseFirestore.instance.batch();
+
+    bool isUserLikingHisOwnReply = _auth.currentUser.uid == commentOwnerUid;
+    OurNotification ourNotification = OurNotification(
+      notificationUid: Uuid().v4(),
+      senderUid: _auth.currentUser.uid,
+      receiverUid: commentOwnerUid,
+      notificationCreationDate: Timestamp.now(),
+      postPhotoUrl: postPhotoUrl,
+      typeOfNotification: kLikeRepliedComment,
+      postUid: postUid,
+      postOwnerUid: postOwnerUid,
+      notificationText: commentText,
+      isNotificationTextSpoiler: false,
+      commentUid: commentUid,
+      parentCommentUid: parentCommentUid,
+      commentBeingRepliedToUid: '',
+    );
     try {
       batch.set(
         _posts
@@ -766,7 +961,16 @@ class UserActionsRepository {
         },
         SetOptions(merge: true),
       );
-      //TODO Add to notification feed
+      //Send notification
+      if (!isUserLikingHisOwnReply)
+        batch.set(
+          _notificationFeed
+              .doc(commentOwnerUid)
+              .collection("notifications")
+              .doc(_auth.currentUser.uid + "_liked_replied_comment_" + commentUid),
+          ourNotification.toDocument(),
+          SetOptions(merge: true),
+        );
       await batch.commit();
     } catch (e) {
       print(e.toString());
@@ -780,7 +984,7 @@ class UserActionsRepository {
     @required String postUid,
     @required String parentCommentUid,
     @required String commentUid,
-    //TODO Add here commentUidTheUserIsReplying to check if it is parent comment owner or other user, to delete from both users notification feed
+    @required String commentOwnerUid,
   }) async {
     String returnVal = "";
     WriteBatch batch = FirebaseFirestore.instance.batch();
@@ -811,7 +1015,13 @@ class UserActionsRepository {
             .collection("likes")
             .doc(_auth.currentUser.uid),
       );
-      //TODO Remove from notification feed
+      //Remove notification
+      batch.delete(
+        _notificationFeed
+            .doc(commentOwnerUid)
+            .collection("notifications")
+            .doc(_auth.currentUser.uid + "_liked_replied_comment_" + commentUid),
+      );
       await batch.commit();
     } catch (e) {
       print(e.toString());
@@ -1512,5 +1722,51 @@ class UserActionsRepository {
     return post;
   }
 
-// TODO Implement notification feed
+  /// //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  /// //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  /// //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  /// Notification Feed /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  /// //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  /// //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  /// //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  Stream<List<OurNotification>> getNotifications() {
+    return _notificationFeed
+        .doc(_auth.currentUser.uid)
+        .collection("notifications")
+        .orderBy('notification_creation_date', descending: true)
+        .limit(10)
+        .snapshots()
+        .map(
+      (snapshot) {
+        return snapshot.docs
+            .map(
+              (doc) => OurNotification.fromSnapshot(doc),
+            )
+            .toList()
+            .cast<OurNotification>();
+      },
+    );
+  }
+
+  //Pagination
+  Future<List<OurNotification>> getNotificationsNextPage(OurNotification lastItemInList) async {
+    List<OurNotification> nextPageNotifications = <OurNotification>[];
+    try {
+      var query = await _notificationFeed
+          .doc(_auth.currentUser.uid)
+          .collection("notifications")
+          .orderBy('notification_creation_date', descending: true)
+          .limit(10)
+          .startAfter([lastItemInList.notificationCreationDate]).get();
+      for (var doc in query.docs) {
+        nextPageNotifications.add(
+          OurNotification.fromSnapshot(doc),
+        );
+      }
+    } catch (error) {
+      print("ERROR Fetching Notifications Next Page " + error.toString());
+    }
+    return nextPageNotifications;
+  }
 }

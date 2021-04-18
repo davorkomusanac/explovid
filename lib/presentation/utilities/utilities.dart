@@ -320,7 +320,12 @@ class BuildPosterImage extends StatelessWidget {
   final double width;
   final String resolution;
 
-  BuildPosterImage({this.imagePath, this.height, this.width, this.resolution = "w185"});
+  BuildPosterImage({
+    @required this.imagePath,
+    @required this.height,
+    @required this.width,
+    this.resolution = "w185",
+  });
 
   @override
   Widget build(BuildContext context) {

@@ -35,6 +35,7 @@ class CurrentUserProfileInformationBloc extends Bloc<CurrentUserProfileInformati
             );
       },
       currentUserProfileLoaded: (e) async* {
+        //TODO update state here, add nextPage increase?
         yield state.copyWith(
           errorMessage: '',
           isSearching: false,

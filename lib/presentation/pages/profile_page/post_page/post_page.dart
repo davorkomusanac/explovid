@@ -306,7 +306,11 @@ class _PostPageState extends State<PostPage> with TickerProviderStateMixin {
                                 });
                                 if (!state.isPostLiked)
                                   context.read<UserPostBloc>().add(
-                                        UserPostEvent.likePostPressed(postOwnerUid: widget.postOwnerUid, postUid: widget.postUid),
+                                        UserPostEvent.likePostPressed(
+                                          postOwnerUid: widget.postOwnerUid,
+                                          postUid: widget.postUid,
+                                          postPhotoUrl: state.userPost.posterPath,
+                                        ),
                                       );
                               },
                               child: Stack(
@@ -358,7 +362,10 @@ class _PostPageState extends State<PostPage> with TickerProviderStateMixin {
                                                 )
                                               : context.read<UserPostBloc>().add(
                                                     UserPostEvent.likePostPressed(
-                                                        postOwnerUid: widget.postOwnerUid, postUid: widget.postUid),
+                                                      postOwnerUid: widget.postOwnerUid,
+                                                      postUid: widget.postUid,
+                                                      postPhotoUrl: state.userPost.posterPath,
+                                                    ),
                                                   );
                                         },
                                       ),
@@ -412,6 +419,7 @@ class _PostPageState extends State<PostPage> with TickerProviderStateMixin {
                                                     isPostSpoiler: state.isSpoiler,
                                                     postCreationDate: state.userPost.postCreationDate,
                                                     isKeyboardFocused: true,
+                                                    postPhotoUrl: state.userPost.posterPath,
                                                   ),
                                                 ),
                                               )
@@ -439,6 +447,7 @@ class _PostPageState extends State<PostPage> with TickerProviderStateMixin {
                                                     isPostSpoiler: state.isSpoiler,
                                                     postCreationDate: state.userPost.postCreationDate,
                                                     isKeyboardFocused: false,
+                                                    postPhotoUrl: state.userPost.posterPath,
                                                   ),
                                                 ),
                                               )
