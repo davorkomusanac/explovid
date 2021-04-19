@@ -17,6 +17,8 @@ class UserActionsRepository {
   CollectionReference _posts = FirebaseFirestore.instance.collection('posts');
   CollectionReference _reviews = FirebaseFirestore.instance.collection('reviews');
   CollectionReference _notificationFeed = FirebaseFirestore.instance.collection('notification_feed');
+  CollectionReference _globalNewsFeed = FirebaseFirestore.instance.collection('global_news_feed');
+  CollectionReference _userNewsFeed = FirebaseFirestore.instance.collection('user_news_feed');
   FirebaseAuth _auth = FirebaseAuth.instance;
 
   /// //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1768,5 +1770,162 @@ class UserActionsRepository {
       print("ERROR Fetching Notifications Next Page " + error.toString());
     }
     return nextPageNotifications;
+  }
+
+  /// //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  /// //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  /// //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  /// Global News Feed /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  /// //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  /// //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  /// //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  Future<List<dynamic>> showGlobalReviews() async {
+    List<dynamic> reviewsAndTime = [];
+    List<OurUserPost> reviews = [];
+    Timestamp time = Timestamp.now();
+    try {
+      var querySnapshot = await _globalNewsFeed.orderBy("post_creation_date", descending: true).limit(15).get();
+
+      if (querySnapshot.docs.isNotEmpty) time = querySnapshot.docs.last.data()["post_creation_date"];
+      for (var query in querySnapshot.docs)
+        reviews.add(
+          OurUserPost(
+              tmdbId: 0,
+              title: '',
+              posterPath: '',
+              isOfTypeMovie: true,
+              isSpoiler: true,
+              review: '',
+              rating: 0,
+              postUid: query.data()["post_uid"],
+              postOwnerUid: query.data()["user_uid"],
+              postCreationDate: time,
+              numberOfLikes: 0,
+              numberOfComments: 0),
+        );
+    } catch (error) {
+      print(error.toString());
+    }
+    reviewsAndTime.add(reviews);
+    reviewsAndTime.add(time);
+    return reviewsAndTime;
+  }
+
+  //Pagination
+  Future<List<dynamic>> showGlobalReviewsNextPage({@required Timestamp lastReviewTimestamp}) async {
+    List<dynamic> reviewsAndTime = [];
+    List<OurUserPost> reviews = [];
+    Timestamp time = Timestamp.now();
+    try {
+      var querySnapshot =
+          await _globalNewsFeed.orderBy("post_creation_date", descending: true).limit(15).startAfter([lastReviewTimestamp]).get();
+
+      if (querySnapshot.docs.isNotEmpty) time = querySnapshot.docs.last.data()["post_creation_date"];
+      for (var query in querySnapshot.docs)
+        reviews.add(
+          OurUserPost(
+              tmdbId: 0,
+              title: '',
+              posterPath: '',
+              isOfTypeMovie: true,
+              isSpoiler: true,
+              review: '',
+              rating: 0,
+              postUid: query.data()["post_uid"],
+              postOwnerUid: query.data()["user_uid"],
+              postCreationDate: time,
+              numberOfLikes: 0,
+              numberOfComments: 0),
+        );
+    } catch (error) {
+      print(error.toString());
+    }
+    reviewsAndTime.add(reviews);
+    reviewsAndTime.add(time);
+    return reviewsAndTime;
+  }
+
+  /// //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  /// //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  /// //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  /// User News Feed /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  /// //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  /// //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  /// //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  Future<List<dynamic>> showUserNewsFeedReviews() async {
+    List<dynamic> reviewsAndTime = [];
+    List<OurUserPost> reviews = [];
+    Timestamp time = Timestamp.now();
+    try {
+      var querySnapshot = await _userNewsFeed
+          .doc(_auth.currentUser.uid)
+          .collection("feed")
+          .orderBy("post_creation_date", descending: true)
+          .limit(15)
+          .get();
+
+      if (querySnapshot.docs.isNotEmpty) time = querySnapshot.docs.last.data()["post_creation_date"];
+      for (var query in querySnapshot.docs)
+        reviews.add(
+          OurUserPost(
+              tmdbId: 0,
+              title: '',
+              posterPath: '',
+              isOfTypeMovie: true,
+              isSpoiler: true,
+              review: '',
+              rating: 0,
+              postUid: query.data()["post_uid"],
+              postOwnerUid: query.data()["user_uid"],
+              postCreationDate: time,
+              numberOfLikes: 0,
+              numberOfComments: 0),
+        );
+    } catch (error) {
+      print(error.toString());
+    }
+    reviewsAndTime.add(reviews);
+    reviewsAndTime.add(time);
+    return reviewsAndTime;
+  }
+
+  //Pagination
+  Future<List<dynamic>> showUserNewsFeedReviewsNextPage({@required Timestamp lastReviewTimestamp}) async {
+    List<dynamic> reviewsAndTime = [];
+    List<OurUserPost> reviews = [];
+    Timestamp time = Timestamp.now();
+    try {
+      var querySnapshot = await _userNewsFeed
+          .doc(_auth.currentUser.uid)
+          .collection("feed")
+          .orderBy("post_creation_date", descending: true)
+          .limit(15)
+          .startAfter([lastReviewTimestamp]).get();
+
+      if (querySnapshot.docs.isNotEmpty) time = querySnapshot.docs.last.data()["post_creation_date"];
+      for (var query in querySnapshot.docs)
+        reviews.add(
+          OurUserPost(
+              tmdbId: 0,
+              title: '',
+              posterPath: '',
+              isOfTypeMovie: true,
+              isSpoiler: true,
+              review: '',
+              rating: 0,
+              postUid: query.data()["post_uid"],
+              postOwnerUid: query.data()["user_uid"],
+              postCreationDate: time,
+              numberOfLikes: 0,
+              numberOfComments: 0),
+        );
+    } catch (error) {
+      print(error.toString());
+    }
+    reviewsAndTime.add(reviews);
+    reviewsAndTime.add(time);
+    return reviewsAndTime;
   }
 }

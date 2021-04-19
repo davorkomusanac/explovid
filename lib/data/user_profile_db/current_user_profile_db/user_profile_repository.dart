@@ -20,6 +20,7 @@ class UserProfileRepository {
   CollectionReference _users = FirebaseFirestore.instance.collection('users');
   CollectionReference _posts = FirebaseFirestore.instance.collection('posts');
   CollectionReference _reviews = FirebaseFirestore.instance.collection('reviews');
+  CollectionReference _globalNewsFeed = FirebaseFirestore.instance.collection('global_news_feed');
   FirebaseAuth _auth = FirebaseAuth.instance;
 
   Stream<OurUser> getCurrentUserProfileInformation() {
@@ -198,6 +199,15 @@ class UserProfileRepository {
           "post_creation_date": ourUserPost.postCreationDate,
         },
       );
+      //Add movie review to global news feed collection
+      batch.set(
+        _globalNewsFeed.doc(ourUserPost.postUid),
+        {
+          "user_uid": _auth.currentUser.uid,
+          "post_uid": ourUserPost.postUid,
+          "post_creation_date": ourUserPost.postCreationDate,
+        },
+      );
       await batch.commit();
       print("successfully added movie to array watched");
     } catch (error) {
@@ -260,6 +270,10 @@ class UserProfileRepository {
             .doc("movie_reviews")
             .collection(movieTitle + "_" + movieId.toString())
             .doc(postUid),
+      );
+      //Remove from global news feed
+      batch.delete(
+        _globalNewsFeed.doc(postUid),
       );
       await batch.commit();
       print("successfully removed  movie from watched array");
@@ -418,6 +432,15 @@ class UserProfileRepository {
           "post_creation_date": ourUserPost.postCreationDate,
         },
       );
+      //Add tv show review to global news feed
+      batch.set(
+        _globalNewsFeed.doc(ourUserPost.postUid),
+        {
+          "user_uid": _auth.currentUser.uid,
+          "post_uid": ourUserPost.postUid,
+          "post_creation_date": ourUserPost.postCreationDate,
+        },
+      );
       await batch.commit();
       print("successfully added tv show to array watched");
     } catch (error) {
@@ -479,6 +502,10 @@ class UserProfileRepository {
             .doc("tv_show_reviews")
             .collection(tvShowTitle + "_" + tvShowId.toString())
             .doc(postUid),
+      );
+      //Remove from global news feed
+      batch.delete(
+        _globalNewsFeed.doc(postUid),
       );
       await batch.commit();
       print("successfully removed tv show from watched array");

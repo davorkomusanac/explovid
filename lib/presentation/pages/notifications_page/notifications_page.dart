@@ -56,20 +56,24 @@ class _NotificationsPageState extends State<NotificationsPage> {
               ? Center(child: CircularProgressIndicator())
               : NotificationListener<ScrollNotification>(
                   onNotification: _handleScrollNotification,
-                  child: ListView.builder(
-                    controller: _scrollController,
-                    itemCount: _calculateNotificationsListLength(state),
-                    itemBuilder: (context, index) {
-                      return index >= state.notifications.length
-                          ? BuildLoaderNextPage()
-                          : BlocProvider(
-                              create: (context) => OtherUserProfileInformationBloc(
-                                _otherUserProfileRepository,
-                              ),
-                              child: _BuildNotificationItem(notification: state.notifications[index]),
-                            );
-                    },
-                  ),
+                  child: state.notifications.isEmpty
+                      ? Center(
+                          child: Text("Your notifications will show up here"),
+                        )
+                      : ListView.builder(
+                          controller: _scrollController,
+                          itemCount: _calculateNotificationsListLength(state),
+                          itemBuilder: (context, index) {
+                            return index >= state.notifications.length
+                                ? BuildLoaderNextPage()
+                                : BlocProvider(
+                                    create: (context) => OtherUserProfileInformationBloc(
+                                      _otherUserProfileRepository,
+                                    ),
+                                    child: _BuildNotificationItem(notification: state.notifications[index]),
+                                  );
+                          },
+                        ),
                 );
         },
       ),
@@ -699,8 +703,8 @@ class __BuildNotificationItemState extends State<_BuildNotificationItem> {
     );
   }
 
-  Widget _buildLikeRepliedCommentNotification() {
-    return Offstage();
-    //TODO Right now no need since it is the same as likedComment?
-  }
+  // Widget _buildLikeRepliedCommentNotification() {
+  //   return Offstage();
+  //   //TODO Right now no need since it is the same as likedComment?
+  // }
 }
