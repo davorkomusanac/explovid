@@ -53,7 +53,12 @@ class _NotificationsPageState extends State<NotificationsPage> {
       body: BlocBuilder<NotificationsBloc, NotificationsState>(
         builder: (context, state) {
           return state.isLoading
-              ? Center(child: CircularProgressIndicator())
+              ? const Padding(
+                  padding: EdgeInsets.symmetric(vertical: 32.0),
+                  child: Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                )
               : NotificationListener<ScrollNotification>(
                   onNotification: _handleScrollNotification,
                   child: state.notifications.isEmpty
@@ -137,7 +142,12 @@ class __BuildNotificationItemState extends State<_BuildNotificationItem> {
     return BlocBuilder<OtherUserProfileInformationBloc, OtherUserProfileInformationState>(
       builder: (context, state) {
         return state.isSearching
-            ? Center(child: CircularProgressIndicator())
+            ? const Padding(
+                padding: EdgeInsets.symmetric(vertical: 32.0),
+                child: Center(
+                  child: CircularProgressIndicator(),
+                ),
+              )
             : GestureDetector(
                 behavior: HitTestBehavior.opaque,
                 onTap: () {
@@ -252,7 +262,12 @@ class __BuildNotificationItemState extends State<_BuildNotificationItem> {
     return BlocBuilder<OtherUserProfileInformationBloc, OtherUserProfileInformationState>(
       builder: (context, state) {
         return state.isSearching
-            ? Center(child: CircularProgressIndicator())
+            ? const Padding(
+                padding: EdgeInsets.symmetric(vertical: 32.0),
+                child: Center(
+                  child: CircularProgressIndicator(),
+                ),
+              )
             : GestureDetector(
                 behavior: HitTestBehavior.opaque,
                 onTap: () {
@@ -374,7 +389,12 @@ class __BuildNotificationItemState extends State<_BuildNotificationItem> {
     return BlocBuilder<OtherUserProfileInformationBloc, OtherUserProfileInformationState>(
       builder: (context, state) {
         return state.isSearching
-            ? Center(child: CircularProgressIndicator())
+            ? const Padding(
+                padding: EdgeInsets.symmetric(vertical: 32.0),
+                child: Center(
+                  child: CircularProgressIndicator(),
+                ),
+              )
             : GestureDetector(
                 behavior: HitTestBehavior.opaque,
                 onTap: () {
@@ -496,7 +516,12 @@ class __BuildNotificationItemState extends State<_BuildNotificationItem> {
     return BlocBuilder<OtherUserProfileInformationBloc, OtherUserProfileInformationState>(
       builder: (context, state) {
         return state.isSearching
-            ? Center(child: CircularProgressIndicator())
+            ? const Padding(
+                padding: EdgeInsets.symmetric(vertical: 32.0),
+                child: Center(
+                  child: CircularProgressIndicator(),
+                ),
+              )
             : GestureDetector(
                 behavior: HitTestBehavior.opaque,
                 onTap: () {
@@ -618,7 +643,12 @@ class __BuildNotificationItemState extends State<_BuildNotificationItem> {
     return BlocBuilder<OtherUserProfileInformationBloc, OtherUserProfileInformationState>(
       builder: (context, state) {
         return state.isSearching
-            ? Center(child: CircularProgressIndicator())
+            ? const Padding(
+                padding: EdgeInsets.symmetric(vertical: 32.0),
+                child: Center(
+                  child: CircularProgressIndicator(),
+                ),
+              )
             : GestureDetector(
                 behavior: HitTestBehavior.opaque,
                 onTap: () {

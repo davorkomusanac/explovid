@@ -28,7 +28,8 @@ class NewsFeedPage extends StatefulWidget {
 }
 
 class _NewsFeedPageState extends State<NewsFeedPage> with TickerProviderStateMixin {
-  ScrollController _scrollController;
+  ScrollController _userNewsFeedScrollController;
+  ScrollController _globalNewsFeedScrollController;
   UserActionsRepository _userActionsRepository;
   OtherUserProfileRepository _otherUserProfileRepository;
   Completer<void> _refreshCompleter;
@@ -41,7 +42,8 @@ class _NewsFeedPageState extends State<NewsFeedPage> with TickerProviderStateMix
   @override
   void initState() {
     super.initState();
-    _scrollController = ScrollController();
+    _userNewsFeedScrollController = ScrollController();
+    _globalNewsFeedScrollController = ScrollController();
     _userActionsRepository = UserActionsRepository();
     _otherUserProfileRepository = OtherUserProfileRepository();
     _refreshCompleter = Completer<void>();
@@ -50,28 +52,30 @@ class _NewsFeedPageState extends State<NewsFeedPage> with TickerProviderStateMix
 
   @override
   void dispose() {
-    _scrollController.dispose();
+    _userNewsFeedScrollController.dispose();
+    _globalNewsFeedScrollController.dispose();
     _tabController.dispose();
     super.dispose();
   }
 
   //If at end of the Listview, search for more reviews
-  bool _handleScrollNotification(ScrollNotification notification) {
-    if (notification is ScrollEndNotification && _scrollController.position.extentAfter == 0) {
-      print("Calling fetch next news feed page");
-      switch (_tabController.index) {
-        case (0):
-          context.read<UserNewsFeedBloc>().add(
-                UserNewsFeedEvent.loadReviewsPressedNextPage(),
-              );
-          break;
-        case (1):
-          context.read<GlobalNewsFeedBloc>().add(
-                GlobalNewsFeedEvent.loadReviewsPressedNextPage(),
-              );
-          break;
-        default:
-      }
+  bool _handleUserNewsFeedScrollNotification(ScrollNotification notification) {
+    if (notification is ScrollEndNotification && _userNewsFeedScrollController.position.extentAfter == 0) {
+      print("Calling fetch next user news feed page");
+      context.read<UserNewsFeedBloc>().add(
+            UserNewsFeedEvent.loadReviewsPressedNextPage(),
+          );
+    }
+    return false;
+  }
+
+  //If at end of the Listview, search for more reviews
+  bool _handleGlobalNewsFeedScrollNotification(ScrollNotification notification) {
+    if (notification is ScrollEndNotification && _globalNewsFeedScrollController.position.extentAfter == 0) {
+      print("Calling fetch next global news feed page");
+      context.read<GlobalNewsFeedBloc>().add(
+            GlobalNewsFeedEvent.loadReviewsPressedNextPage(),
+          );
     }
     return false;
   }
@@ -124,16 +128,28 @@ class _NewsFeedPageState extends State<NewsFeedPage> with TickerProviderStateMix
         },
         builder: (context, state) {
           return state.isLoadingReviews
-              ? Center(child: CircularProgressIndicator())
+              ? Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 32.0),
+                  child: const Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                )
               : NotificationListener<ScrollNotification>(
-                  onNotification: _handleScrollNotification,
+                  onNotification: _handleUserNewsFeedScrollNotification,
                   child: state.reviews.isEmpty
-                      ? Center(
-                          child: Text("Follow other people to see their reviews"),
+                      ? ListView.builder(
+                          physics: const AlwaysScrollableScrollPhysics(),
+                          controller: _userNewsFeedScrollController,
+                          itemCount: 1,
+                          itemBuilder: (context, index) {
+                            return Center(
+                              child: Text("Follow other people to see their reviews"),
+                            );
+                          },
                         )
                       : ListView.builder(
-                          physics: AlwaysScrollableScrollPhysics(),
-                          controller: _scrollController,
+                          physics: const AlwaysScrollableScrollPhysics(),
+                          controller: _userNewsFeedScrollController,
                           itemCount: _calculateUserNewsFeedListLength(state),
                           itemBuilder: (context, index) {
                             if (index >= state.reviews.length) {
@@ -190,16 +206,21 @@ class _NewsFeedPageState extends State<NewsFeedPage> with TickerProviderStateMix
         },
         builder: (context, state) {
           return state.isLoadingReviews
-              ? Center(child: CircularProgressIndicator())
+              ? Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 32.0),
+                  child: const Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                )
               : NotificationListener<ScrollNotification>(
-                  onNotification: _handleScrollNotification,
+                  onNotification: _handleGlobalNewsFeedScrollNotification,
                   child: state.reviews.isEmpty
-                      ? Center(
+                      ? const Center(
                           child: Text("Other user's reviews will show up here"),
                         )
                       : ListView.builder(
-                          physics: AlwaysScrollableScrollPhysics(),
-                          controller: _scrollController,
+                          physics: const AlwaysScrollableScrollPhysics(),
+                          controller: _globalNewsFeedScrollController,
                           itemCount: _calculateGlobalNewsFeedListLength(state),
                           itemBuilder: (context, index) {
                             if (index >= state.reviews.length) {
@@ -259,7 +280,7 @@ class _UserNewsFeedReview extends StatefulWidget {
   _UserNewsFeedReviewState createState() => _UserNewsFeedReviewState();
 }
 
-class _UserNewsFeedReviewState extends State<_UserNewsFeedReview> with TickerProviderStateMixin {
+class _UserNewsFeedReviewState extends State<_UserNewsFeedReview> with TickerProviderStateMixin, AutomaticKeepAliveClientMixin {
   bool isReviewExpanded = false;
   bool toggleHeartIconAnimation = false;
 
@@ -278,6 +299,9 @@ class _UserNewsFeedReviewState extends State<_UserNewsFeedReview> with TickerPro
           ),
         );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 
   //Method to call when Navigator.pop is called, to update the page
   void sendEvent() {
@@ -440,6 +464,8 @@ class _UserNewsFeedReviewState extends State<_UserNewsFeedReview> with TickerPro
 
   @override
   Widget build(BuildContext context) {
+    //Need to call mustCallSuper for automaticKeepAlive?
+    super.build(context);
     return BlocBuilder<OtherUserProfileInformationBloc, OtherUserProfileInformationState>(
       builder: (context, userState) {
         return BlocConsumer<UserPostBloc, UserPostState>(
@@ -455,7 +481,12 @@ class _UserNewsFeedReviewState extends State<_UserNewsFeedReview> with TickerPro
           },
           builder: (context, state) {
             return state.isLoadingPost || userState.isSearching
-                ? Center(child: CircularProgressIndicator())
+                ? Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 32.0),
+                    child: const Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                  )
                 : Padding(
                     padding: const EdgeInsets.only(bottom: 12.0),
                     child: Column(
@@ -550,7 +581,7 @@ class _UserNewsFeedReviewState extends State<_UserNewsFeedReview> with TickerPro
                             alignment: AlignmentDirectional.center,
                             children: [
                               BuildPosterImage(
-                                resolution: "w500",
+                                resolution: "original",
                                 height: MediaQuery.of(context).size.width * 0.7 * 1.5,
                                 width: MediaQuery.of(context).size.width * 0.7,
                                 imagePath: state.userPost.posterPath,
@@ -575,11 +606,11 @@ class _UserNewsFeedReviewState extends State<_UserNewsFeedReview> with TickerPro
                                   IconButton(
                                     padding: EdgeInsets.only(),
                                     icon: state.isPostLiked
-                                        ? Icon(
+                                        ? const Icon(
                                             Icons.favorite,
                                             color: Colors.red,
                                           )
-                                        : Icon(
+                                        : const Icon(
                                             Icons.favorite_border,
                                             //color: Colors.black,
                                           ),
@@ -634,9 +665,8 @@ class _UserNewsFeedReviewState extends State<_UserNewsFeedReview> with TickerPro
                                   ),
                                   IconButton(
                                     padding: EdgeInsets.only(),
-                                    icon: Icon(
+                                    icon: const Icon(
                                       CommunityMaterialIcons.chat_outline,
-                                      //color: Colors.black,
                                     ),
                                     onPressed: () {
                                       Navigator.of(context)
@@ -780,14 +810,14 @@ class _UserNewsFeedReviewState extends State<_UserNewsFeedReview> with TickerPro
                                   fontWeight: FontWeight.w700,
                                 ),
                                 children: [
-                                  TextSpan(
+                                  const TextSpan(
                                     text: "  rated it ",
                                     style: TextStyle(
                                       fontWeight: FontWeight.normal,
                                       color: Colors.white,
                                     ),
                                   ),
-                                  TextSpan(
+                                  const TextSpan(
                                     text: " ⭐ ",
                                     style: TextStyle(
                                       fontSize: 20,
@@ -801,7 +831,7 @@ class _UserNewsFeedReviewState extends State<_UserNewsFeedReview> with TickerPro
                                       fontSize: 20,
                                     ),
                                   ),
-                                  TextSpan(
+                                  const TextSpan(
                                     text: " / 10",
                                     style: TextStyle(
                                       color: Colors.white,

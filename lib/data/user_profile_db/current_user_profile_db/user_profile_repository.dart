@@ -21,6 +21,7 @@ class UserProfileRepository {
   CollectionReference _posts = FirebaseFirestore.instance.collection('posts');
   CollectionReference _reviews = FirebaseFirestore.instance.collection('reviews');
   CollectionReference _globalNewsFeed = FirebaseFirestore.instance.collection('global_news_feed');
+  CollectionReference _userNewsFeed = FirebaseFirestore.instance.collection('user_news_feed');
   FirebaseAuth _auth = FirebaseAuth.instance;
 
   Stream<OurUser> getCurrentUserProfileInformation() {
@@ -208,6 +209,15 @@ class UserProfileRepository {
           "post_creation_date": ourUserPost.postCreationDate,
         },
       );
+      //Add movie review to current user's own user news feed
+      batch.set(
+        _userNewsFeed.doc(_auth.currentUser.uid).collection("feed").doc(ourUserPost.postUid),
+        {
+          "user_uid": _auth.currentUser.uid,
+          "post_uid": ourUserPost.postUid,
+          "post_creation_date": ourUserPost.postCreationDate,
+        },
+      );
       await batch.commit();
       print("successfully added movie to array watched");
     } catch (error) {
@@ -274,6 +284,10 @@ class UserProfileRepository {
       //Remove from global news feed
       batch.delete(
         _globalNewsFeed.doc(postUid),
+      );
+      //Remove from current Users news feed
+      batch.delete(
+        _userNewsFeed.doc(_auth.currentUser.uid).collection("feed").doc(postUid),
       );
       await batch.commit();
       print("successfully removed  movie from watched array");
@@ -441,6 +455,15 @@ class UserProfileRepository {
           "post_creation_date": ourUserPost.postCreationDate,
         },
       );
+      //Add tv show review to current user's own user news feed
+      batch.set(
+        _userNewsFeed.doc(_auth.currentUser.uid).collection("feed").doc(ourUserPost.postUid),
+        {
+          "user_uid": _auth.currentUser.uid,
+          "post_uid": ourUserPost.postUid,
+          "post_creation_date": ourUserPost.postCreationDate,
+        },
+      );
       await batch.commit();
       print("successfully added tv show to array watched");
     } catch (error) {
@@ -506,6 +529,10 @@ class UserProfileRepository {
       //Remove from global news feed
       batch.delete(
         _globalNewsFeed.doc(postUid),
+      );
+      //Remove from current Users news feed
+      batch.delete(
+        _userNewsFeed.doc(_auth.currentUser.uid).collection("feed").doc(postUid),
       );
       await batch.commit();
       print("successfully removed tv show from watched array");
