@@ -462,6 +462,7 @@ class _UserNewsFeedReviewState extends State<_UserNewsFeedReview> with TickerPro
     );
   }
 
+  //TODO Check if post is empty (already delete) then just show Offstage?
   @override
   Widget build(BuildContext context) {
     //Need to call mustCallSuper for automaticKeepAlive?
@@ -480,25 +481,322 @@ class _UserNewsFeedReviewState extends State<_UserNewsFeedReview> with TickerPro
             }
           },
           builder: (context, state) {
-            return state.isLoadingPost || userState.isSearching
-                ? Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 32.0),
-                    child: const Center(
-                      child: CircularProgressIndicator(),
-                    ),
-                  )
-                : Padding(
-                    padding: const EdgeInsets.only(bottom: 12.0),
-                    child: Column(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            if (state.isLoadingPost || userState.isSearching) {
+              return Padding(
+                padding: const EdgeInsets.symmetric(vertical: 32.0),
+                child: const Center(
+                  child: CircularProgressIndicator(),
+                ),
+              );
+            } else {
+              if (state.userPost.posterPath.isEmpty) {
+                //return Offstage();
+                return SizedBox(width: 0, height: 0);
+              } else {
+                return Padding(
+                  padding: const EdgeInsets.only(bottom: 12.0),
+                  child: Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: GestureDetector(
+                              behavior: HitTestBehavior.opaque,
+                              onTap: () {
+                                Navigator.of(context)
+                                    .push(
+                                      MaterialPageRoute(
+                                        builder: (context) => OtherUserProfilePage(otherUserUid: widget.postOwnerUid),
+                                      ),
+                                    )
+                                    .then(
+                                      (value) => setState(
+                                        () {
+                                          sendEvent();
+                                        },
+                                      ),
+                                    );
+                              },
+                              child: Row(
+                                children: [
+                                  Material(
+                                    elevation: 20,
+                                    borderRadius: const BorderRadius.all(
+                                      Radius.circular(20.0),
+                                    ),
+                                    child:
+                                        BuildProfilePhotoAvatar(profilePhotoUrl: userState.ourUser.profilePhotoUrl, radius: 20),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 12.0),
+                                    child: Text(
+                                      userState.ourUser.username,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          if (state.isCurrentUserOwnerOfPost)
+                            IconButton(
+                                icon: Icon(Icons.more_vert),
+                                onPressed: () {
+                                  // ignore: close_sinks
+                                  final movieBloc = BlocProvider.of<MovieListsUserProfileBloc>(context, listen: false);
+                                  // ignore: close_sinks
+                                  final tvShowBloc = BlocProvider.of<TvShowListsUserProfileBloc>(context, listen: false);
+                                  // ignore: close_sinks
+                                  final userPostBloc = BlocProvider.of<UserPostBloc>(context, listen: false);
+                                  showDialog(
+                                    context: context,
+                                    builder: (context) {
+                                      return _buildEditPostActionsDialog(
+                                        userPostBloc: userPostBloc,
+                                        movieListsUserProfileBloc: movieBloc,
+                                        tvShowListsUserProfileBloc: tvShowBloc,
+                                        state: state,
+                                      );
+                                    },
+                                  );
+                                }),
+                        ],
+                      ),
+                      GestureDetector(
+                        onDoubleTap: () {
+                          updateHeartIconAnimation();
+                          Future.delayed(Duration(milliseconds: 1000), () {
+                            updateHeartIconAnimation();
+                          });
+                          if (!state.isPostLiked)
+                            context.read<UserPostBloc>().add(
+                                  UserPostEvent.likePostPressed(
+                                    postOwnerUid: widget.postOwnerUid,
+                                    postUid: widget.postUid,
+                                    postPhotoUrl: state.userPost.posterPath,
+                                  ),
+                                );
+                        },
+                        child: Stack(
+                          alignment: AlignmentDirectional.center,
                           children: [
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: GestureDetector(
-                                behavior: HitTestBehavior.opaque,
-                                onTap: () {
+                            BuildPosterImage(
+                              resolution: "original",
+                              height: MediaQuery.of(context).size.width * 0.7 * 1.5,
+                              width: MediaQuery.of(context).size.width * 0.7,
+                              imagePath: state.userPost.posterPath,
+                            ),
+                            AnimatedSizeAndFade.showHide(
+                              show: toggleHeartIconAnimation,
+                              vsync: this,
+                              child: Icon(
+                                Icons.favorite,
+                                color: Colors.red,
+                                size: MediaQuery.of(context).size.width * 0.25,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Row(
+                              children: [
+                                IconButton(
+                                  padding: EdgeInsets.only(),
+                                  icon: state.isPostLiked
+                                      ? const Icon(
+                                          Icons.favorite,
+                                          color: Colors.red,
+                                        )
+                                      : const Icon(
+                                          Icons.favorite_border,
+                                          //color: Colors.black,
+                                        ),
+                                  onPressed: () {
+                                    // ignore: close_sinks
+                                    final bloc = BlocProvider.of<UserPostBloc>(context, listen: false);
+                                    state.isPostLiked
+                                        ? showDialog(
+                                            context: context,
+                                            builder: (context) {
+                                              return _buildConfirmUnlikeDialog(bloc: bloc);
+                                            },
+                                          )
+                                        : context.read<UserPostBloc>().add(
+                                              UserPostEvent.likePostPressed(
+                                                postOwnerUid: widget.postOwnerUid,
+                                                postUid: widget.postUid,
+                                                postPhotoUrl: state.userPost.posterPath,
+                                              ),
+                                            );
+                                  },
+                                ),
+                                InkWell(
+                                  onTap: () {
+                                    Navigator.of(context)
+                                        .push(
+                                          MaterialPageRoute(
+                                            builder: (context) => PostLikersPage(
+                                              postOwnerUid: widget.postOwnerUid,
+                                              postUid: widget.postUid,
+                                            ),
+                                          ),
+                                        )
+                                        .then(
+                                          (value) => setState(
+                                            () {
+                                              sendEvent();
+                                            },
+                                          ),
+                                        );
+                                  },
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(
+                                      right: 8.0,
+                                      bottom: 8.0,
+                                      top: 8.0,
+                                    ),
+                                    child: Text(
+                                      convertNumberOfLikesAndComments(state.numberOfLikes),
+                                    ),
+                                  ),
+                                ),
+                                IconButton(
+                                  padding: EdgeInsets.only(),
+                                  icon: const Icon(
+                                    CommunityMaterialIcons.chat_outline,
+                                  ),
+                                  onPressed: () {
+                                    Navigator.of(context)
+                                        .push(
+                                          MaterialPageRoute(
+                                            builder: (context) => PostCommentsPage(
+                                              postOwnerUid: widget.postOwnerUid,
+                                              postUid: widget.postUid,
+                                              postOwnerUsername: userState.ourUser.username,
+                                              postOwnerProfilePhoto: userState.ourUser.profilePhotoUrl,
+                                              postOwnerRating: state.userPost.rating,
+                                              postOwnerReview: state.userPost.review,
+                                              isPostSpoiler: state.isSpoiler,
+                                              postCreationDate: state.userPost.postCreationDate,
+                                              isKeyboardFocused: true,
+                                              postPhotoUrl: state.userPost.posterPath,
+                                            ),
+                                          ),
+                                        )
+                                        .then(
+                                          (value) => setState(
+                                            () {
+                                              sendEvent();
+                                            },
+                                          ),
+                                        );
+                                  },
+                                ),
+                                InkWell(
+                                  onTap: () {
+                                    Navigator.of(context)
+                                        .push(
+                                          MaterialPageRoute(
+                                            builder: (context) => PostCommentsPage(
+                                              postOwnerUid: widget.postOwnerUid,
+                                              postUid: widget.postUid,
+                                              postOwnerUsername: userState.ourUser.username,
+                                              postOwnerProfilePhoto: userState.ourUser.profilePhotoUrl,
+                                              postOwnerRating: state.userPost.rating,
+                                              postOwnerReview: state.userPost.review,
+                                              isPostSpoiler: state.isSpoiler,
+                                              postCreationDate: state.userPost.postCreationDate,
+                                              isKeyboardFocused: false,
+                                              postPhotoUrl: state.userPost.posterPath,
+                                            ),
+                                          ),
+                                        )
+                                        .then(
+                                          (value) => setState(
+                                            () {
+                                              sendEvent();
+                                            },
+                                          ),
+                                        );
+                                  },
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(
+                                      right: 8.0,
+                                      bottom: 8.0,
+                                      top: 8.0,
+                                    ),
+                                    child: Text(
+                                      convertNumberOfLikesAndComments(state.numberOfComments),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Expanded(
+                            child: TextButton(
+                              style: TextButton.styleFrom(
+                                primary: Colors.tealAccent[200],
+                              ),
+                              onPressed: () {
+                                state.userPost.isOfTypeMovie
+                                    ? Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                          builder: (context) => MovieDetailsPage(
+                                            movieId: state.userPost.tmdbId,
+                                            movieTitle: state.userPost.title,
+                                          ),
+                                        ),
+                                      )
+                                    : Navigator.of(context)
+                                        .push(
+                                          MaterialPageRoute(
+                                            builder: (context) => TvShowDetailsPage(
+                                              tvShowName: state.userPost.title,
+                                              tvShowId: state.userPost.tmdbId,
+                                            ),
+                                          ),
+                                        )
+                                        .then(
+                                          (value) => setState(
+                                            () {
+                                              sendEvent();
+                                            },
+                                          ),
+                                        );
+                              },
+                              child: Column(
+                                children: [
+                                  Text(
+                                    state.userPost.title,
+                                    overflow: TextOverflow.ellipsis,
+                                    maxLines: 3,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                        child: Align(
+                          alignment: Alignment.centerLeft,
+                          child: RichText(
+                            maxLines: 2,
+                            text: TextSpan(
+                              text: userState.ourUser.username,
+                              recognizer: TapGestureRecognizer()
+                                ..onTap = () {
                                   Navigator.of(context)
                                       .push(
                                         MaterialPageRoute(
@@ -513,386 +811,96 @@ class _UserNewsFeedReviewState extends State<_UserNewsFeedReview> with TickerPro
                                         ),
                                       );
                                 },
-                                child: Row(
-                                  children: [
-                                    Material(
-                                      elevation: 20,
-                                      borderRadius: const BorderRadius.all(
-                                        Radius.circular(20.0),
-                                      ),
-                                      child:
-                                          BuildProfilePhotoAvatar(profilePhotoUrl: userState.ourUser.profilePhotoUrl, radius: 20),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(left: 12.0),
-                                      child: Text(
-                                        userState.ourUser.username,
-                                        overflow: TextOverflow.ellipsis,
-                                        style: TextStyle(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.w500,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                            if (state.isCurrentUserOwnerOfPost)
-                              IconButton(
-                                  icon: Icon(Icons.more_vert),
-                                  onPressed: () {
-                                    // ignore: close_sinks
-                                    final movieBloc = BlocProvider.of<MovieListsUserProfileBloc>(context, listen: false);
-                                    // ignore: close_sinks
-                                    final tvShowBloc = BlocProvider.of<TvShowListsUserProfileBloc>(context, listen: false);
-                                    // ignore: close_sinks
-                                    final userPostBloc = BlocProvider.of<UserPostBloc>(context, listen: false);
-                                    showDialog(
-                                      context: context,
-                                      builder: (context) {
-                                        return _buildEditPostActionsDialog(
-                                          userPostBloc: userPostBloc,
-                                          movieListsUserProfileBloc: movieBloc,
-                                          tvShowListsUserProfileBloc: tvShowBloc,
-                                          state: state,
-                                        );
-                                      },
-                                    );
-                                  }),
-                          ],
-                        ),
-                        GestureDetector(
-                          onDoubleTap: () {
-                            updateHeartIconAnimation();
-                            Future.delayed(Duration(milliseconds: 1000), () {
-                              updateHeartIconAnimation();
-                            });
-                            if (!state.isPostLiked)
-                              context.read<UserPostBloc>().add(
-                                    UserPostEvent.likePostPressed(
-                                      postOwnerUid: widget.postOwnerUid,
-                                      postUid: widget.postUid,
-                                      postPhotoUrl: state.userPost.posterPath,
-                                    ),
-                                  );
-                          },
-                          child: Stack(
-                            alignment: AlignmentDirectional.center,
-                            children: [
-                              BuildPosterImage(
-                                resolution: "original",
-                                height: MediaQuery.of(context).size.width * 0.7 * 1.5,
-                                width: MediaQuery.of(context).size.width * 0.7,
-                                imagePath: state.userPost.posterPath,
-                              ),
-                              AnimatedSizeAndFade.showHide(
-                                show: toggleHeartIconAnimation,
-                                vsync: this,
-                                child: Icon(
-                                  Icons.favorite,
-                                  color: Colors.red,
-                                  size: MediaQuery.of(context).size.width * 0.25,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Row(
-                          children: [
-                            Expanded(
-                              child: Row(
-                                children: [
-                                  IconButton(
-                                    padding: EdgeInsets.only(),
-                                    icon: state.isPostLiked
-                                        ? const Icon(
-                                            Icons.favorite,
-                                            color: Colors.red,
-                                          )
-                                        : const Icon(
-                                            Icons.favorite_border,
-                                            //color: Colors.black,
-                                          ),
-                                    onPressed: () {
-                                      // ignore: close_sinks
-                                      final bloc = BlocProvider.of<UserPostBloc>(context, listen: false);
-                                      state.isPostLiked
-                                          ? showDialog(
-                                              context: context,
-                                              builder: (context) {
-                                                return _buildConfirmUnlikeDialog(bloc: bloc);
-                                              },
-                                            )
-                                          : context.read<UserPostBloc>().add(
-                                                UserPostEvent.likePostPressed(
-                                                  postOwnerUid: widget.postOwnerUid,
-                                                  postUid: widget.postUid,
-                                                  postPhotoUrl: state.userPost.posterPath,
-                                                ),
-                                              );
-                                    },
-                                  ),
-                                  InkWell(
-                                    onTap: () {
-                                      Navigator.of(context)
-                                          .push(
-                                            MaterialPageRoute(
-                                              builder: (context) => PostLikersPage(
-                                                postOwnerUid: widget.postOwnerUid,
-                                                postUid: widget.postUid,
-                                              ),
-                                            ),
-                                          )
-                                          .then(
-                                            (value) => setState(
-                                              () {
-                                                sendEvent();
-                                              },
-                                            ),
-                                          );
-                                    },
-                                    child: Padding(
-                                      padding: const EdgeInsets.only(
-                                        right: 8.0,
-                                        bottom: 8.0,
-                                        top: 8.0,
-                                      ),
-                                      child: Text(
-                                        convertNumberOfLikesAndComments(state.numberOfLikes),
-                                      ),
-                                    ),
-                                  ),
-                                  IconButton(
-                                    padding: EdgeInsets.only(),
-                                    icon: const Icon(
-                                      CommunityMaterialIcons.chat_outline,
-                                    ),
-                                    onPressed: () {
-                                      Navigator.of(context)
-                                          .push(
-                                            MaterialPageRoute(
-                                              builder: (context) => PostCommentsPage(
-                                                postOwnerUid: widget.postOwnerUid,
-                                                postUid: widget.postUid,
-                                                postOwnerUsername: userState.ourUser.username,
-                                                postOwnerProfilePhoto: userState.ourUser.profilePhotoUrl,
-                                                postOwnerRating: state.userPost.rating,
-                                                postOwnerReview: state.userPost.review,
-                                                isPostSpoiler: state.isSpoiler,
-                                                postCreationDate: state.userPost.postCreationDate,
-                                                isKeyboardFocused: true,
-                                                postPhotoUrl: state.userPost.posterPath,
-                                              ),
-                                            ),
-                                          )
-                                          .then(
-                                            (value) => setState(
-                                              () {
-                                                sendEvent();
-                                              },
-                                            ),
-                                          );
-                                    },
-                                  ),
-                                  InkWell(
-                                    onTap: () {
-                                      Navigator.of(context)
-                                          .push(
-                                            MaterialPageRoute(
-                                              builder: (context) => PostCommentsPage(
-                                                postOwnerUid: widget.postOwnerUid,
-                                                postUid: widget.postUid,
-                                                postOwnerUsername: userState.ourUser.username,
-                                                postOwnerProfilePhoto: userState.ourUser.profilePhotoUrl,
-                                                postOwnerRating: state.userPost.rating,
-                                                postOwnerReview: state.userPost.review,
-                                                isPostSpoiler: state.isSpoiler,
-                                                postCreationDate: state.userPost.postCreationDate,
-                                                isKeyboardFocused: false,
-                                                postPhotoUrl: state.userPost.posterPath,
-                                              ),
-                                            ),
-                                          )
-                                          .then(
-                                            (value) => setState(
-                                              () {
-                                                sendEvent();
-                                              },
-                                            ),
-                                          );
-                                    },
-                                    child: Padding(
-                                      padding: const EdgeInsets.only(
-                                        right: 8.0,
-                                        bottom: 8.0,
-                                        top: 8.0,
-                                      ),
-                                      child: Text(
-                                        convertNumberOfLikesAndComments(state.numberOfComments),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Expanded(
-                              child: TextButton(
-                                style: TextButton.styleFrom(
-                                  primary: Colors.tealAccent[200],
-                                ),
-                                onPressed: () {
-                                  state.userPost.isOfTypeMovie
-                                      ? Navigator.of(context).push(
-                                          MaterialPageRoute(
-                                            builder: (context) => MovieDetailsPage(
-                                              movieId: state.userPost.tmdbId,
-                                              movieTitle: state.userPost.title,
-                                            ),
-                                          ),
-                                        )
-                                      : Navigator.of(context)
-                                          .push(
-                                            MaterialPageRoute(
-                                              builder: (context) => TvShowDetailsPage(
-                                                tvShowName: state.userPost.title,
-                                                tvShowId: state.userPost.tmdbId,
-                                              ),
-                                            ),
-                                          )
-                                          .then(
-                                            (value) => setState(
-                                              () {
-                                                sendEvent();
-                                              },
-                                            ),
-                                          );
-                                },
-                                child: Column(
-                                  children: [
-                                    Text(
-                                      state.userPost.title,
-                                      overflow: TextOverflow.ellipsis,
-                                      maxLines: 3,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                          child: Align(
-                            alignment: Alignment.centerLeft,
-                            child: RichText(
-                              maxLines: 2,
-                              text: TextSpan(
-                                text: userState.ourUser.username,
-                                recognizer: TapGestureRecognizer()
-                                  ..onTap = () {
-                                    Navigator.of(context)
-                                        .push(
-                                          MaterialPageRoute(
-                                            builder: (context) => OtherUserProfilePage(otherUserUid: widget.postOwnerUid),
-                                          ),
-                                        )
-                                        .then(
-                                          (value) => setState(
-                                            () {
-                                              sendEvent();
-                                            },
-                                          ),
-                                        );
-                                  },
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w700,
-                                ),
-                                children: [
-                                  const TextSpan(
-                                    text: "  rated it ",
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.normal,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                  const TextSpan(
-                                    text: " ⭐ ",
-                                    style: TextStyle(
-                                      fontSize: 20,
-                                    ),
-                                  ),
-                                  TextSpan(
-                                    text: state.userPost.rating.toInt().toString(),
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.w600,
-                                      color: Colors.yellow,
-                                      fontSize: 20,
-                                    ),
-                                  ),
-                                  const TextSpan(
-                                    text: " / 10",
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.normal,
-                                      fontSize: 14,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                        state.isSpoiler
-                            ? OutlinedButton(
-                                style: OutlinedButton.styleFrom(
-                                  primary: Colors.tealAccent[700],
-                                ),
-                                onPressed: () {
-                                  context.read<UserPostBloc>().add(
-                                        UserPostEvent.showSpoilerPressed(),
-                                      );
-                                },
-                                child: Text("This review contains spoilers, press to see"),
-                              )
-                            : Padding(
-                                padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                                child: Align(
-                                  alignment: Alignment.centerLeft,
-                                  child: GestureDetector(
-                                    onTap: () {
-                                      setState(() {
-                                        isReviewExpanded = !isReviewExpanded;
-                                      });
-                                    },
-                                    child: ExpandableText(
-                                      state.userPost.review,
-                                      expandText: "more",
-                                      collapseText: "...collapse",
-                                      maxLines: 3,
-                                      expanded: isReviewExpanded,
-                                      key: UniqueKey(),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Align(
-                            alignment: Alignment.centerLeft,
-                            child: Text(
-                              convertPostCreationDate(state.userPost.postCreationDate),
                               style: TextStyle(
-                                color: Colors.grey,
-                                fontSize: 12,
+                                fontSize: 16,
+                                fontWeight: FontWeight.w700,
                               ),
+                              children: [
+                                const TextSpan(
+                                  text: "  rated it ",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.normal,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                                const TextSpan(
+                                  text: " ⭐ ",
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                  ),
+                                ),
+                                TextSpan(
+                                  text: state.userPost.rating.toInt().toString(),
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.yellow,
+                                    fontSize: 20,
+                                  ),
+                                ),
+                                const TextSpan(
+                                  text: " / 10",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.normal,
+                                    fontSize: 14,
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                         ),
-                      ],
-                    ),
-                  );
+                      ),
+                      state.isSpoiler
+                          ? OutlinedButton(
+                              style: OutlinedButton.styleFrom(
+                                primary: Colors.tealAccent[700],
+                              ),
+                              onPressed: () {
+                                context.read<UserPostBloc>().add(
+                                      UserPostEvent.showSpoilerPressed(),
+                                    );
+                              },
+                              child: Text("This review contains spoilers, press to see"),
+                            )
+                          : Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                              child: Align(
+                                alignment: Alignment.centerLeft,
+                                child: GestureDetector(
+                                  onTap: () {
+                                    setState(() {
+                                      isReviewExpanded = !isReviewExpanded;
+                                    });
+                                  },
+                                  child: ExpandableText(
+                                    state.userPost.review,
+                                    expandText: "more",
+                                    collapseText: "...collapse",
+                                    maxLines: 3,
+                                    expanded: isReviewExpanded,
+                                    key: UniqueKey(),
+                                  ),
+                                ),
+                              ),
+                            ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            convertPostCreationDate(state.userPost.postCreationDate),
+                            style: TextStyle(
+                              color: Colors.grey,
+                              fontSize: 12,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              }
+            }
           },
         );
       },

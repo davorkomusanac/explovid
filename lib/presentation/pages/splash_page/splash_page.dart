@@ -65,7 +65,7 @@ class _SplashPageState extends State<SplashPage> {
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 20.0),
                   child: Image.asset(
-                    "assets/logo.PNG",
+                    "assets/splash_logo.PNG",
                     width: MediaQuery.of(context).size.width * 0.5,
                   ),
                 ),
