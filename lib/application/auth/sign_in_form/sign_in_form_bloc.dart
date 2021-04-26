@@ -183,11 +183,28 @@ class SignInFormBloc extends Bloc<SignInFormEvent, SignInFormState> {
           );
         }
       },
-      // ignore: missing_return
       signInWithApplePressed: (e) async* {
-        //TODO Add Sign In With Apple
-        //currently not implemented a Mac is needed for the signInWithApple package
-        print("Not implemented yet");
+        yield state.copyWith(
+          isSubmitting: true,
+          isAuthStateChanged: false,
+          errorMessage: '',
+        );
+        final String result = await _authRepository.signInWithApple();
+        //if successful notify state listeners to change authState
+        if (result == kSuccess) {
+          yield state.copyWith(
+            isSubmitting: false,
+            isAuthStateChanged: true,
+            errorMessage: '',
+          );
+          //if failed, show the exception inside errorMessage
+        } else {
+          yield state.copyWith(
+            isSubmitting: false,
+            isAuthStateChanged: false,
+            errorMessage: result,
+          );
+        }
       },
       resetPasswordPressed: (e) async* {
         yield state.copyWith(

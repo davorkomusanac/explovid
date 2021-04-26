@@ -1,3 +1,4 @@
+import 'package:apple_sign_in/apple_sign_in.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:explovid/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -217,9 +218,66 @@ class AuthRepository {
   }
 
   Future<String> signInWithApple() async {
-    //Not implemented for now. A Mac is needed
-    //TODO Add Sign In With Apple. Sign out Also
-    return "Not implemented for now, stay tuned for updates!";
+    String returnValue = kError;
+    try {
+      if (!await AppleSignIn.isAvailable()) {
+        return "Apple Sign In is not available on this device";
+      }
+
+      AuthorizationResult result = await AppleSignIn.performRequests([
+        AppleIdRequest(requestedScopes: [Scope.email, Scope.fullName])
+      ]);
+
+      switch (result.status) {
+        case AuthorizationStatus.authorized:
+          //Get Token
+          final AppleIdCredential appleIdCredential = result.credential;
+          final OAuthProvider oAuthProvider = OAuthProvider('apple.com');
+          final credential = oAuthProvider.credential(
+              idToken: String.fromCharCodes(appleIdCredential.identityToken),
+              accessToken: String.fromCharCodes(appleIdCredential.authorizationCode));
+
+          //Sign in
+          UserCredential userCredential = await _auth.signInWithCredential(credential);
+          DocumentSnapshot userDocumentSnapshot = await _users.doc(userCredential.user.uid).get();
+          if (!userDocumentSnapshot.exists) {
+            await _users.doc(userCredential.user.uid).set({
+              "uid": userCredential.user.uid,
+              "email": userCredential.user.email,
+              "full_name": userCredential.user.displayName,
+              "username": "",
+              "bio": "Add bio..",
+              "profile_photo_url": "", //googleSignInAccount.photoUrl,
+              "account_created_date": Timestamp.now(),
+              "followers": 0,
+              "following": 0,
+              "movie_watchlist": [],
+              "movie_watched": [],
+              "tv_show_watchlist": [],
+              "tv_show_watched": [],
+              "watched_length": 0,
+              "watchlist_length": 0,
+            });
+          } else {
+            print("Document already exits, nvm");
+          }
+          returnValue = kSuccess;
+          break;
+        case AuthorizationStatus.error:
+          return "Apple authorization failed";
+          break;
+        case AuthorizationStatus.cancelled:
+          return "Sign in cancelled";
+          break;
+      }
+    } on PlatformException catch (e) {
+      print(e.message);
+      returnValue = e.code;
+    } catch (e) {
+      print(e);
+      returnValue = e.toString();
+    }
+    return returnValue;
   }
 
   Future<String> signOut() async {
@@ -252,7 +310,12 @@ class AuthRepository {
         return returnValue;
       }
     } else if (userLoginService == "apple.com") {
-      //TODO Implement Apple Delete account and log out also
+      //Need to login here to confirm before delete
+      String result = await signInWithApple();
+      if (result != kSuccess) {
+        returnValue = result;
+        return returnValue;
+      }
     } else {
       return returnValue;
     }

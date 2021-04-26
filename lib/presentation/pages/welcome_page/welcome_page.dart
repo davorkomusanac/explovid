@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:explovid/application/auth/sign_in_form/sign_in_form_bloc.dart';
 import 'package:explovid/presentation/pages/sign_up_page/privacy_policy_page.dart';
 import 'package:explovid/presentation/pages/sign_up_page/sign_up_page.dart';
@@ -186,25 +188,29 @@ class _WelcomePageState extends State<WelcomePage> {
                         text: "Sign In With Google",
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
-                      child: SignInButton(
-                        Buttons.Apple,
-                        onPressed: () {
-                          !isAgreed
-                              ? ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                    content: Text("You need to check the checkbox before continuing"),
-                                    duration: Duration(seconds: 1),
-                                  ),
-                                )
-                              : context.read<SignInFormBloc>().add(
-                                    SignInFormEvent.signInWithApplePressed(),
-                                  );
-                        },
-                        text: "Sign In With Apple",
-                      ),
-                    ),
+                    Platform.isIOS
+                        ? Padding(
+                            padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
+                            child: SignInButton(
+                              Buttons.Apple,
+                              onPressed: () {
+                                !isAgreed
+                                    ? ScaffoldMessenger.of(context).showSnackBar(
+                                        SnackBar(
+                                          content: Text("You need to check the checkbox before continuing"),
+                                          duration: Duration(seconds: 1),
+                                        ),
+                                      )
+                                    : context.read<SignInFormBloc>().add(
+                                          SignInFormEvent.signInWithApplePressed(),
+                                        );
+                              },
+                              text: "Sign In With Apple",
+                            ),
+                          )
+                        : Padding(
+                            padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
+                          ),
                     Padding(
                       padding: const EdgeInsets.only(top: 5.0, bottom: 8.0),
                       child: ElevatedButton(
