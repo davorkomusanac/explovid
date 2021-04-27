@@ -212,7 +212,7 @@ class AuthRepository {
       returnValue = e.code;
     } catch (e) {
       print(e);
-      returnValue = e.toString();
+      returnValue = "There was an error signing in with Google";
     }
     return returnValue;
   }

@@ -1,9 +1,7 @@
 import 'dart:io';
 
 import 'package:explovid/application/auth/sign_in_form/sign_in_form_bloc.dart';
-import 'package:explovid/presentation/pages/sign_up_page/privacy_policy_page.dart';
 import 'package:explovid/presentation/pages/sign_up_page/sign_up_page.dart';
-import 'package:explovid/presentation/pages/sign_up_page/terms_of_use_page.dart';
 import 'package:explovid/presentation/pages/splash_page/splash_page.dart';
 import 'package:explovid/presentation/pages/welcome_page/forgot_password_page.dart';
 import 'package:explovid/presentation/utilities/utilities.dart';
@@ -12,6 +10,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class WelcomePage extends StatefulWidget {
   @override
@@ -20,6 +19,25 @@ class WelcomePage extends StatefulWidget {
 
 class _WelcomePageState extends State<WelcomePage> {
   bool isAgreed = false;
+
+  void _launchWebPage(BuildContext context) async {
+    try {
+      if (await canLaunch("https://www.explovid.com/")) {
+        await launch("https://www.explovid.com/");
+      } else {
+        throw 'Could not launch web page';
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            e.toString(),
+          ),
+          duration: Duration(seconds: 1),
+        ),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -148,9 +166,7 @@ class _WelcomePageState extends State<WelcomePage> {
                                 style: TextStyle(fontWeight: FontWeight.w700, color: Colors.grey[50]),
                                 recognizer: TapGestureRecognizer()
                                   ..onTap = () {
-                                    Navigator.of(context).push(
-                                      MaterialPageRoute(builder: (context) => TermsOfUsePage()),
-                                    );
+                                    _launchWebPage(context);
                                   },
                               ),
                               TextSpan(text: " and ", style: TextStyle()),
@@ -159,9 +175,7 @@ class _WelcomePageState extends State<WelcomePage> {
                                 style: TextStyle(fontWeight: FontWeight.w700, color: Colors.grey[50]),
                                 recognizer: TapGestureRecognizer()
                                   ..onTap = () {
-                                    Navigator.of(context).push(
-                                      MaterialPageRoute(builder: (context) => PrivacyPolicyPage()),
-                                    );
+                                    _launchWebPage(context);
                                   },
                               ),
                             ],

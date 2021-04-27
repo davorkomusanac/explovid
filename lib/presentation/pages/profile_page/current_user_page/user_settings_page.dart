@@ -1,12 +1,12 @@
 import 'package:explovid/application/auth/auth_check/auth_check_bloc.dart';
 import 'package:explovid/application/auth/sign_in_form/delete_account/delete_account_bloc.dart';
 import 'package:explovid/constants.dart';
-import 'package:explovid/presentation/pages/sign_up_page/privacy_policy_page.dart';
-import 'package:explovid/presentation/pages/sign_up_page/terms_of_use_page.dart';
+import 'package:explovid/presentation/pages/profile_page/current_user_page/credits_page.dart';
 import 'package:explovid/presentation/pages/splash_page/splash_page.dart';
 import 'package:explovid/presentation/utilities/utilities.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class UserSettingsPage extends StatefulWidget {
   @override
@@ -21,6 +21,25 @@ class _UserSettingsPageState extends State<UserSettingsPage> {
     context.read<DeleteAccountBloc>().add(
           DeleteAccountEvent.checkAuthProvider(),
         );
+  }
+
+  void _launchWebPage(BuildContext context) async {
+    try {
+      if (await canLaunch("https://www.explovid.com/")) {
+        await launch("https://www.explovid.com/");
+      } else {
+        throw 'Could not launch web page';
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            e.toString(),
+          ),
+          duration: Duration(seconds: 1),
+        ),
+      );
+    }
   }
 
   @override
@@ -61,18 +80,14 @@ class _UserSettingsPageState extends State<UserSettingsPage> {
               SizedBox(height: 30),
               TextButton(
                 onPressed: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => PrivacyPolicyPage()),
-                  );
+                  _launchWebPage(context);
                 },
                 style: TextButton.styleFrom(primary: Colors.tealAccent[700]),
                 child: Text("Privacy Policy"),
               ),
               TextButton(
                 onPressed: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => TermsOfUsePage()),
-                  );
+                  _launchWebPage(context);
                 },
                 style: TextButton.styleFrom(primary: Colors.tealAccent[700]),
                 child: Text("Terms of Use"),
@@ -87,6 +102,17 @@ class _UserSettingsPageState extends State<UserSettingsPage> {
                   style: TextButton.styleFrom(primary: Colors.tealAccent[700]),
                   child: Text("Reset Password"),
                 ),
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context, rootNavigator: false).push(
+                    MaterialPageRoute(
+                      builder: (context) => CreditsPage(),
+                    ),
+                  );
+                },
+                style: TextButton.styleFrom(primary: Colors.tealAccent[700]),
+                child: Text("Credits"),
+              ),
               if (state.isSubmitting) LinearProgressIndicator(),
               Spacer(),
               Center(
