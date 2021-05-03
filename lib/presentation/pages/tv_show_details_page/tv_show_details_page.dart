@@ -654,7 +654,7 @@ class _TvShowDetailsPageState extends State<TvShowDetailsPage> {
                                                             100
                                                     ? "⭐" +
                                                         state.tvShowDetails.tvShowSearchResults.tvShowSummaries[index].voteAverage
-                                                            .toString() +
+                                                            .toStringAsFixed(1) +
                                                         " " +
                                                         state.tvShowDetails.tvShowSearchResults.tvShowSummaries[index].name
                                                     : "⭐ N/A " +

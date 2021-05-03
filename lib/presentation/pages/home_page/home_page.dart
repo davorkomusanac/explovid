@@ -56,13 +56,13 @@ class _HomePageState extends State<HomePage> {
   ];
   CupertinoTabController _tabController;
   //CurrentIndex needs to be equal to initialIndex so that an exception is not thrown
-  int currentIndex = 0;
+  int currentIndex = 2;
 
   @override
   void initState() {
     super.initState();
     //Put the Search page as the starting one? For the time being until the app is populated
-    _tabController = CupertinoTabController(initialIndex: 0);
+    _tabController = CupertinoTabController(initialIndex: 2);
     client = http.Client();
     _movieRepository = MovieRepository(client);
     _tvShowRepository = TvShowRepository(client);
@@ -119,6 +119,8 @@ class _HomePageState extends State<HomePage> {
             if (currentIndex == index) {
               switch (index) {
                 case 0:
+                  BlocProvider.of<GlobalNewsFeedBloc>(context, listen: false).add(GlobalNewsFeedEvent.loadReviewsPressed());
+                  BlocProvider.of<UserNewsFeedBloc>(context, listen: false).add(UserNewsFeedEvent.loadReviewsPressed());
                   tabNavKeys[0].currentState.popUntil((route) => route.isFirst);
                   break;
                 case 1:

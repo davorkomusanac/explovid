@@ -659,7 +659,7 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
                                                             100
                                                     ? "⭐" +
                                                         state.movieDetails.movieSearchResults.movieSummaries[index].voteAverage
-                                                            .toString() +
+                                                            .toStringAsFixed(1) +
                                                         " " +
                                                         state.movieDetails.movieSearchResults.movieSummaries[index].title
                                                     : "⭐ N/A " +

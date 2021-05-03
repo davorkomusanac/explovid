@@ -75,7 +75,10 @@ class _NotificationsPageState extends State<NotificationsPage> {
                                     create: (context) => OtherUserProfileInformationBloc(
                                       _otherUserProfileRepository,
                                     ),
-                                    child: _BuildNotificationItem(notification: state.notifications[index]),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: _BuildNotificationItem(notification: state.notifications[index]),
+                                    ),
                                   );
                           },
                         ),
@@ -654,9 +657,8 @@ class __BuildNotificationItemState extends State<_BuildNotificationItem> {
                 onTap: () {
                   Navigator.of(context, rootNavigator: false).push(
                     MaterialPageRoute(
-                      builder: (context) => PostPage(
-                        postOwnerUid: widget.notification.postOwnerUid,
-                        postUid: widget.notification.postUid,
+                      builder: (context) => OtherUserProfilePage(
+                        otherUserUid: widget.notification.senderUid,
                       ),
                     ),
                   );
