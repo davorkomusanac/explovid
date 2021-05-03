@@ -1,5 +1,6 @@
 import 'package:community_material_icon/community_material_icon.dart';
 import 'package:expandable_text/expandable_text.dart';
+import 'package:explovid/application/feedback/report/report_bloc.dart';
 import 'package:explovid/application/user_post/user_post_bloc.dart';
 import 'package:explovid/application/user_profile_information/current_user_profile_information/current_user_profile_watchlist_watched/movie_lists/movie_lists_user_profile_bloc.dart';
 import 'package:explovid/application/user_profile_information/current_user_profile_information/current_user_profile_watchlist_watched/tv_show_lists/tv_show_lists_user_profile_bloc.dart';
@@ -7,6 +8,7 @@ import 'package:explovid/application/user_profile_information/other_user_profile
 import 'package:explovid/presentation/pages/profile_page/other_user_page/other_user_profile_page.dart';
 import 'package:explovid/presentation/pages/profile_page/post_page/post_comments_page.dart';
 import 'package:explovid/presentation/pages/profile_page/post_page/post_likers_page.dart';
+import 'package:explovid/presentation/pages/profile_page/post_page/post_page.dart';
 import 'package:explovid/presentation/utilities/utilities.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -191,6 +193,38 @@ class _OtherUserReviewState extends State<OtherUserReview> with TickerProviderSt
     );
   }
 
+  Widget _reportPostDialogConfirmation({
+    @required String otherUserUid,
+    @required String postUid,
+    @required String postText,
+    @required ReportBloc bloc,
+  }) {
+    return SimpleDialog(
+      children: [
+        SimpleDialogOption(
+          padding: EdgeInsets.all(16),
+          onPressed: () {
+            showDialog(
+              context: context,
+              builder: (context) {
+                return ReportPostDialog(
+                  otherUserUid: otherUserUid,
+                  postUid: postUid,
+                  postText: postText,
+                  bloc: bloc,
+                );
+              },
+            );
+          },
+          child: Text(
+            "Report Post",
+            textAlign: TextAlign.center,
+          ),
+        ),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<OtherUserProfileInformationBloc, OtherUserProfileInformationState>(
@@ -307,31 +341,41 @@ class _OtherUserReviewState extends State<OtherUserReview> with TickerProviderSt
                                 ),
                               ),
                             ),
-                            if (state.isCurrentUserOwnerOfPost)
-                              Expanded(
-                                flex: 1,
-                                child: IconButton(
-                                    icon: Icon(Icons.more_vert),
-                                    onPressed: () {
-                                      // ignore: close_sinks
-                                      final movieBloc = BlocProvider.of<MovieListsUserProfileBloc>(context, listen: false);
-                                      // ignore: close_sinks
-                                      final tvShowBloc = BlocProvider.of<TvShowListsUserProfileBloc>(context, listen: false);
-                                      // ignore: close_sinks
-                                      final userPostBloc = BlocProvider.of<UserPostBloc>(context, listen: false);
-                                      showDialog(
-                                        context: context,
-                                        builder: (context) {
-                                          return _buildEditPostActionsDialog(
-                                            userPostBloc: userPostBloc,
-                                            movieListsUserProfileBloc: movieBloc,
-                                            tvShowListsUserProfileBloc: tvShowBloc,
-                                            state: state,
-                                          );
-                                        },
-                                      );
-                                    }),
+                            Expanded(
+                              flex: 1,
+                              child: IconButton(
+                                icon: Icon(Icons.more_vert),
+                                onPressed: () {
+                                  // ignore: close_sinks
+                                  final movieBloc = BlocProvider.of<MovieListsUserProfileBloc>(context, listen: false);
+                                  // ignore: close_sinks
+                                  final tvShowBloc = BlocProvider.of<TvShowListsUserProfileBloc>(context, listen: false);
+                                  // ignore: close_sinks
+                                  final userPostBloc = BlocProvider.of<UserPostBloc>(context, listen: false);
+                                  // ignore: close_sinks
+                                  final reportBloc = BlocProvider.of<ReportBloc>(context, listen: false);
+
+                                  showDialog(
+                                    context: context,
+                                    builder: (context) {
+                                      return state.isCurrentUserOwnerOfPost
+                                          ? _buildEditPostActionsDialog(
+                                              userPostBloc: userPostBloc,
+                                              movieListsUserProfileBloc: movieBloc,
+                                              tvShowListsUserProfileBloc: tvShowBloc,
+                                              state: state,
+                                            )
+                                          : _reportPostDialogConfirmation(
+                                              otherUserUid: widget.postOwnerUid,
+                                              postUid: widget.postUid,
+                                              postText: state.userPost.review,
+                                              bloc: reportBloc,
+                                            );
+                                    },
+                                  );
+                                },
                               ),
+                            ),
                           ],
                         ),
                         state.isSpoiler

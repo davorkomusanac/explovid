@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:community_material_icon/community_material_icon.dart';
+import 'package:explovid/application/feedback/report/report_bloc.dart';
 import 'package:explovid/application/user_interactions/follow/follow_bloc.dart';
 import 'package:explovid/application/user_profile_information/current_user_profile_information/current_user_profile_information_bloc.dart';
 import 'package:explovid/application/user_profile_information/other_user_profile_information/other_user_profile_information_bloc.dart';
@@ -487,19 +488,47 @@ class _OtherUserProfilePageState extends State<OtherUserProfilePage> with Ticker
                       children: [
                         Padding(
                           padding: const EdgeInsets.only(left: 10.0, top: 2.0, right: 12.0, bottom: 0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              BackButton(),
-                              Text(
-                                userInfoState.isSearching ? "" : userInfoState.ourUser.username,
-                                overflow: TextOverflow.ellipsis,
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w700,
+                          child: BlocListener<ReportBloc, ReportState>(
+                            listener: (context, state) {
+                              if (state.errorMessage.isNotEmpty) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text(state.errorMessage),
+                                    duration: Duration(seconds: 2),
+                                  ),
+                                );
+                              }
+                            },
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                BackButton(),
+                                Text(
+                                  userInfoState.isSearching ? "" : userInfoState.ourUser.username,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w700,
+                                  ),
                                 ),
-                              ),
-                            ],
+                                Spacer(),
+                                IconButton(
+                                    icon: Icon(Icons.more_vert),
+                                    onPressed: () {
+                                      // ignore: close_sinks
+                                      final bloc = BlocProvider.of<ReportBloc>(context, listen: false);
+                                      showDialog(
+                                        context: context,
+                                        builder: (context) {
+                                          return _reportUserDialogConfirmation(
+                                            otherUserUid: widget.otherUserUid,
+                                            bloc: bloc,
+                                          );
+                                        },
+                                      );
+                                    }),
+                              ],
+                            ),
                           ),
                         ),
                         Padding(
@@ -745,6 +774,34 @@ class _OtherUserProfilePageState extends State<OtherUserProfilePage> with Ticker
       ),
     );
   }
+
+  Widget _reportUserDialogConfirmation({
+    @required String otherUserUid,
+    @required ReportBloc bloc,
+  }) {
+    return SimpleDialog(
+      children: [
+        SimpleDialogOption(
+          padding: EdgeInsets.all(16),
+          onPressed: () {
+            showDialog(
+              context: context,
+              builder: (context) {
+                return ReportUserDialog(
+                  otherUserUid: otherUserUid,
+                  bloc: bloc,
+                );
+              },
+            );
+          },
+          child: Text(
+            "Report User",
+            textAlign: TextAlign.center,
+          ),
+        ),
+      ],
+    );
+  }
 }
 
 class UnfollowUserDialog extends StatefulWidget {
@@ -785,6 +842,105 @@ class _UnfollowUserDialogState extends State<UnfollowUserDialog> {
           child: Text("Yes"),
         ),
       ],
+    );
+  }
+}
+
+class ReportUserDialog extends StatefulWidget {
+  final String otherUserUid;
+  final ReportBloc bloc;
+
+  ReportUserDialog({
+    @required this.otherUserUid,
+    @required this.bloc,
+  });
+
+  @override
+  _ReportUserDialogState createState() => _ReportUserDialogState();
+}
+
+class _ReportUserDialogState extends State<ReportUserDialog> {
+  TextEditingController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        FocusScope.of(context).unfocus();
+      },
+      child: AlertDialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(25.0)),
+        ),
+        actionsPadding: EdgeInsets.only(right: 12),
+        contentPadding: const EdgeInsets.fromLTRB(24.0, 20.0, 24.0, 0.0),
+        insetPadding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
+        content: SizedBox(
+          width: MediaQuery.of(context).size.width,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(bottom: 8.0),
+                child: Text(
+                  "Why are you reporting this user?",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 20,
+                  ),
+                ),
+              ),
+              Expanded(
+                child: TextField(
+                  controller: _controller,
+                  maxLines: 80,
+                  maxLength: 1000,
+                  decoration: InputDecoration(
+                    counter: Offstage(),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(context, rootNavigator: true).pop();
+              Navigator.of(context, rootNavigator: true).pop();
+            },
+            style: TextButton.styleFrom(
+              primary: Colors.tealAccent[200],
+            ),
+            child: Text("Cancel"),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              widget.bloc.add(
+                ReportEvent.reportUserPressed(reportedUserUid: widget.otherUserUid, reportMessage: _controller.text),
+              );
+              Navigator.of(context, rootNavigator: true).pop();
+              Navigator.of(context, rootNavigator: true).pop();
+            },
+            style: ElevatedButton.styleFrom(
+              primary: Colors.tealAccent[700],
+            ),
+            child: Text("Submit"),
+          ),
+        ],
+      ),
     );
   }
 }

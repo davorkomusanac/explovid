@@ -1,4 +1,5 @@
 import 'package:community_material_icon/community_material_icon.dart';
+import 'package:explovid/application/feedback/report/report_bloc.dart';
 import 'package:explovid/application/search/actor_search/actor_details/actor_details_bloc.dart';
 import 'package:explovid/application/search/movie_search/movie_details/movie_details_bloc.dart';
 import 'package:explovid/application/search/movie_search/movie_search_bloc.dart';
@@ -18,6 +19,7 @@ import 'package:explovid/application/user_profile_information/other_user_profile
 import 'package:explovid/data/search_db/actor_db/actor_repository.dart';
 import 'package:explovid/data/search_db/movie_db/movie_repository.dart';
 import 'package:explovid/data/search_db/tv_show_db/tv_show_repository.dart';
+import 'package:explovid/data/user_profile_db/current_user_profile_db/user_feedback_repository.dart';
 import 'package:explovid/data/user_profile_db/other_user_profile_db/other_user_profile_repository.dart';
 import 'package:explovid/data/user_profile_db/user_actions_db/user_actions_repository.dart';
 import 'package:explovid/presentation/pages/feedback_page/feedback_page.dart';
@@ -43,6 +45,7 @@ class _HomePageState extends State<HomePage> {
   ActorRepository _actorRepository;
   UserActionsRepository _userActionsRepository;
   OtherUserProfileRepository _otherUserProfileRepository;
+  UserFeedbackRepository _userFeedbackRepository;
 
   final List<GlobalKey<NavigatorState>> tabNavKeys = [
     GlobalKey<NavigatorState>(),
@@ -66,6 +69,8 @@ class _HomePageState extends State<HomePage> {
     _actorRepository = ActorRepository(client);
     _userActionsRepository = UserActionsRepository();
     _otherUserProfileRepository = OtherUserProfileRepository();
+    _userFeedbackRepository = UserFeedbackRepository();
+
     //Calling events here, since if they are called with BlocProvider initialization they don't get updated when the user logs out
     context.read<MovieListsUserProfileBloc>().add(
           MovieListsUserProfileEvent.loadMovieToListInitial(),
@@ -187,6 +192,13 @@ class _HomePageState extends State<HomePage> {
                       _userActionsRepository,
                     ),
                   ),
+
+                  ///Report content
+                  BlocProvider(
+                    create: (context) => ReportBloc(
+                      _userFeedbackRepository,
+                    ),
+                  ),
                 ],
                 child: CupertinoTabView(
                   navigatorKey: tabNavKeys[0],
@@ -263,6 +275,13 @@ class _HomePageState extends State<HomePage> {
                       _userActionsRepository,
                     ),
                   ),
+
+                  ///Report content
+                  BlocProvider(
+                    create: (context) => ReportBloc(
+                      _userFeedbackRepository,
+                    ),
+                  ),
                 ],
                 child: CupertinoTabView(
                   navigatorKey: tabNavKeys[2],
@@ -323,6 +342,13 @@ class _HomePageState extends State<HomePage> {
                       _userActionsRepository,
                     ),
                   ),
+
+                  ///Report content
+                  BlocProvider(
+                    create: (context) => ReportBloc(
+                      _userFeedbackRepository,
+                    ),
+                  ),
                 ],
                 child: CupertinoTabView(
                   navigatorKey: tabNavKeys[3],
@@ -381,6 +407,13 @@ class _HomePageState extends State<HomePage> {
                   BlocProvider(
                     create: (context) => ReviewsPostsBloc(
                       _userActionsRepository,
+                    ),
+                  ),
+
+                  ///Report content
+                  BlocProvider(
+                    create: (context) => ReportBloc(
+                      _userFeedbackRepository,
                     ),
                   ),
                 ],

@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:explovid/application/feedback/report/report_bloc.dart';
 import 'package:explovid/application/search/tv_show_search/tv_show_details/tv_show_details_bloc.dart';
 import 'package:explovid/application/user_post/reviews_posts/reviews_posts_bloc.dart';
 import 'package:explovid/application/user_post/user_post_bloc.dart';
@@ -711,44 +712,56 @@ class _TvShowDetailsPageState extends State<TvShowDetailsPage> {
                               }
                             },
                           ),
-                          BlocBuilder<ReviewsPostsBloc, ReviewsPostsState>(
-                            builder: (context, state) {
-                              return state.isLoadingReviews
-                                  ? Center(
-                                      child: CircularProgressIndicator(),
-                                    )
-                                  : NotificationListener<ScrollNotification>(
-                                      onNotification: _handleScrollNotification,
-                                      child: ListView.builder(
-                                        shrinkWrap: true,
-                                        controller: _scrollController,
-                                        itemCount: _calculateOtherUsersReviewsListLength(state),
-                                        itemBuilder: (context, index) {
-                                          if (index >= state.reviews.length) {
-                                            return BuildLoaderNextPage();
-                                          } else {
-                                            String postOwnerUid = state.reviews[index].postOwnerUid;
-                                            String postUid = state.reviews[index].postUid;
-                                            //Have to give a new BlocProvider instance to each item since each items needs its own state
-                                            return BlocProvider(
-                                              create: (context) => UserPostBloc(
-                                                _userActionsRepository,
-                                              ),
-                                              child: BlocProvider(
-                                                create: (context) => OtherUserProfileInformationBloc(
-                                                  _otherUserProfileRepository,
-                                                ),
-                                                child: OtherUserReview(
-                                                  postOwnerUid: postOwnerUid,
-                                                  postUid: postUid,
-                                                ),
-                                              ),
-                                            );
-                                          }
-                                        },
-                                      ),
-                                    );
+                          BlocListener<ReportBloc, ReportState>(
+                            listener: (context, reportState) {
+                              if (reportState.errorMessage.isNotEmpty) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text(reportState.errorMessage),
+                                    duration: Duration(seconds: 2),
+                                  ),
+                                );
+                              }
                             },
+                            child: BlocBuilder<ReviewsPostsBloc, ReviewsPostsState>(
+                              builder: (context, state) {
+                                return state.isLoadingReviews
+                                    ? Center(
+                                        child: CircularProgressIndicator(),
+                                      )
+                                    : NotificationListener<ScrollNotification>(
+                                        onNotification: _handleScrollNotification,
+                                        child: ListView.builder(
+                                          shrinkWrap: true,
+                                          controller: _scrollController,
+                                          itemCount: _calculateOtherUsersReviewsListLength(state),
+                                          itemBuilder: (context, index) {
+                                            if (index >= state.reviews.length) {
+                                              return BuildLoaderNextPage();
+                                            } else {
+                                              String postOwnerUid = state.reviews[index].postOwnerUid;
+                                              String postUid = state.reviews[index].postUid;
+                                              //Have to give a new BlocProvider instance to each item since each items needs its own state
+                                              return BlocProvider(
+                                                create: (context) => UserPostBloc(
+                                                  _userActionsRepository,
+                                                ),
+                                                child: BlocProvider(
+                                                  create: (context) => OtherUserProfileInformationBloc(
+                                                    _otherUserProfileRepository,
+                                                  ),
+                                                  child: OtherUserReview(
+                                                    postOwnerUid: postOwnerUid,
+                                                    postUid: postUid,
+                                                  ),
+                                                ),
+                                              );
+                                            }
+                                          },
+                                        ),
+                                      );
+                              },
+                            ),
                           ),
                         ],
                       ),

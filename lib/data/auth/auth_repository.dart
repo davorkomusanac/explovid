@@ -189,7 +189,7 @@ class AuthRepository {
         await _users.doc(userCredential.user.uid).set({
           "uid": userCredential.user.uid,
           "email": googleSignInAccount.email,
-          "full_name": googleSignInAccount.displayName,
+          "full_name": googleSignInAccount.displayName ?? "",
           "username": "",
           "bio": "Add bio..",
           "profile_photo_url": "", //googleSignInAccount.photoUrl,
@@ -244,7 +244,7 @@ class AuthRepository {
             await _users.doc(userCredential.user.uid).set({
               "uid": userCredential.user.uid,
               "email": userCredential.user.email,
-              "full_name": userCredential.user.displayName,
+              "full_name": userCredential.user.displayName ?? "",
               "username": "",
               "bio": "Add bio..",
               "profile_photo_url": "", //googleSignInAccount.photoUrl,

@@ -4,6 +4,7 @@ import 'dart:core';
 import 'package:animated_size_and_fade/animated_size_and_fade.dart';
 import 'package:community_material_icon/community_material_icon.dart';
 import 'package:expandable_text/expandable_text.dart';
+import 'package:explovid/application/feedback/report/report_bloc.dart';
 import 'package:explovid/application/user_post/global_news_feed/global_news_feed_bloc.dart';
 import 'package:explovid/application/user_post/user_news_feed/user_news_feed_bloc.dart';
 import 'package:explovid/application/user_post/user_post_bloc.dart';
@@ -16,6 +17,7 @@ import 'package:explovid/presentation/pages/movie_details_page/movie_details_pag
 import 'package:explovid/presentation/pages/profile_page/other_user_page/other_user_profile_page.dart';
 import 'package:explovid/presentation/pages/profile_page/post_page/post_comments_page.dart';
 import 'package:explovid/presentation/pages/profile_page/post_page/post_likers_page.dart';
+import 'package:explovid/presentation/pages/profile_page/post_page/post_page.dart';
 import 'package:explovid/presentation/pages/tv_show_details_page/tv_show_details_page.dart';
 import 'package:explovid/presentation/utilities/utilities.dart';
 import 'package:flutter/gestures.dart';
@@ -84,20 +86,32 @@ class _NewsFeedPageState extends State<NewsFeedPage> with TickerProviderStateMix
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            TabBar(
-              controller: _tabController,
-              tabs: _tabs,
-            ),
-            Expanded(
-              child: TabBarView(
+        child: BlocListener<ReportBloc, ReportState>(
+          listener: (context, reportState) {
+            if (reportState.errorMessage.isNotEmpty) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(reportState.errorMessage),
+                  duration: Duration(seconds: 2),
+                ),
+              );
+            }
+          },
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              TabBar(
                 controller: _tabController,
-                children: _tabViews(context),
+                tabs: _tabs,
               ),
-            ),
-          ],
+              Expanded(
+                child: TabBarView(
+                  controller: _tabController,
+                  children: _tabViews(context),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -462,6 +476,38 @@ class _UserNewsFeedReviewState extends State<_UserNewsFeedReview> with TickerPro
     );
   }
 
+  Widget _reportPostDialogConfirmation({
+    @required String otherUserUid,
+    @required String postUid,
+    @required String postText,
+    @required ReportBloc bloc,
+  }) {
+    return SimpleDialog(
+      children: [
+        SimpleDialogOption(
+          padding: EdgeInsets.all(16),
+          onPressed: () {
+            showDialog(
+              context: context,
+              builder: (context) {
+                return ReportPostDialog(
+                  otherUserUid: otherUserUid,
+                  postUid: postUid,
+                  postText: postText,
+                  bloc: bloc,
+                );
+              },
+            );
+          },
+          child: Text(
+            "Report Post",
+            textAlign: TextAlign.center,
+          ),
+        ),
+      ],
+    );
+  }
+
   //TODO Check if post is empty (already delete) then just show Offstage?
   @override
   Widget build(BuildContext context) {
@@ -544,28 +590,38 @@ class _UserNewsFeedReviewState extends State<_UserNewsFeedReview> with TickerPro
                               ),
                             ),
                           ),
-                          if (state.isCurrentUserOwnerOfPost)
-                            IconButton(
-                                icon: Icon(Icons.more_vert),
-                                onPressed: () {
-                                  // ignore: close_sinks
-                                  final movieBloc = BlocProvider.of<MovieListsUserProfileBloc>(context, listen: false);
-                                  // ignore: close_sinks
-                                  final tvShowBloc = BlocProvider.of<TvShowListsUserProfileBloc>(context, listen: false);
-                                  // ignore: close_sinks
-                                  final userPostBloc = BlocProvider.of<UserPostBloc>(context, listen: false);
-                                  showDialog(
-                                    context: context,
-                                    builder: (context) {
-                                      return _buildEditPostActionsDialog(
-                                        userPostBloc: userPostBloc,
-                                        movieListsUserProfileBloc: movieBloc,
-                                        tvShowListsUserProfileBloc: tvShowBloc,
-                                        state: state,
-                                      );
-                                    },
-                                  );
-                                }),
+                          IconButton(
+                            icon: Icon(Icons.more_vert),
+                            onPressed: () {
+                              // ignore: close_sinks
+                              final movieBloc = BlocProvider.of<MovieListsUserProfileBloc>(context, listen: false);
+                              // ignore: close_sinks
+                              final tvShowBloc = BlocProvider.of<TvShowListsUserProfileBloc>(context, listen: false);
+                              // ignore: close_sinks
+                              final userPostBloc = BlocProvider.of<UserPostBloc>(context, listen: false);
+                              // ignore: close_sinks
+                              final reportBloc = BlocProvider.of<ReportBloc>(context, listen: false);
+
+                              showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return state.isCurrentUserOwnerOfPost
+                                      ? _buildEditPostActionsDialog(
+                                          userPostBloc: userPostBloc,
+                                          movieListsUserProfileBloc: movieBloc,
+                                          tvShowListsUserProfileBloc: tvShowBloc,
+                                          state: state,
+                                        )
+                                      : _reportPostDialogConfirmation(
+                                          otherUserUid: widget.postOwnerUid,
+                                          postUid: widget.postUid,
+                                          postText: state.userPost.review,
+                                          bloc: reportBloc,
+                                        );
+                                },
+                              );
+                            },
+                          ),
                         ],
                       ),
                       GestureDetector(

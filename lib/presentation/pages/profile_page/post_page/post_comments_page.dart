@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:expandable_text/expandable_text.dart';
+import 'package:explovid/application/feedback/report/report_bloc.dart';
 import 'package:explovid/application/user_post/user_post_bloc.dart';
 import 'package:explovid/application/user_profile_information/current_user_profile_information/current_user_profile_information_bloc.dart';
 import 'package:explovid/presentation/pages/profile_page/other_user_page/other_user_profile_page.dart';
@@ -455,18 +456,24 @@ class _PostCommentsPageState extends State<PostCommentsPage> {
         children: [
           GestureDetector(
             onLongPress: () {
-              if (currentUserUid == widget.postOwnerUid || currentUserUid == user.uid) {
-                showDialog(
-                  context: context,
-                  builder: (context) {
-                    return _buildDeleteCommentDialog(
-                      bloc: bloc,
-                      commentUid: comment.commentUid,
-                      commentOwnerUid: user.uid,
-                    );
-                  },
-                );
-              }
+              bool isUserAllowedToDeleteComment = currentUserUid == widget.postOwnerUid || currentUserUid == user.uid;
+              // ignore: close_sinks
+              final reportBloc = BlocProvider.of<ReportBloc>(context, listen: false);
+
+              showDialog(
+                context: context,
+                builder: (context) {
+                  return _buildCommentActionsDialog(
+                    bloc: bloc,
+                    commentUid: comment.commentUid,
+                    commentOwnerUid: user.uid,
+                    isUserAllowedToDeleteComment: isUserAllowedToDeleteComment,
+                    reportBloc: reportBloc,
+                    postUid: widget.postUid,
+                    commentText: comment.commentText,
+                  );
+                },
+              );
             },
             onDoubleTap: () {
               if (!isCommentLiked)
@@ -792,21 +799,27 @@ class _PostCommentsPageState extends State<PostCommentsPage> {
             padding: const EdgeInsets.symmetric(vertical: 8.0),
             child: GestureDetector(
               onLongPress: () {
-                if (currentUserUid == widget.postOwnerUid || currentUserUid == user.uid) {
-                  showDialog(
-                    context: context,
-                    builder: (context) {
-                      return _buildDeleteCommentDialog(
-                        bloc: bloc,
-                        commentUid: comment.commentUid,
-                        parentCommentUid: parentCommentUid,
-                        isCommentAReplyToAnotherComment: true,
-                        commentOwnerUid: user.uid,
-                        parentCommentOwnerUid: parentCommentOwnerUid,
-                      );
-                    },
-                  );
-                }
+                bool isUserAllowedToDeleteComment = currentUserUid == widget.postOwnerUid || currentUserUid == user.uid;
+                // ignore: close_sinks
+                final reportBloc = BlocProvider.of<ReportBloc>(context, listen: false);
+
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return _buildCommentActionsDialog(
+                      bloc: bloc,
+                      commentUid: comment.commentUid,
+                      parentCommentUid: parentCommentUid,
+                      isCommentAReplyToAnotherComment: true,
+                      commentOwnerUid: user.uid,
+                      parentCommentOwnerUid: parentCommentOwnerUid,
+                      isUserAllowedToDeleteComment: isUserAllowedToDeleteComment,
+                      reportBloc: reportBloc,
+                      postUid: widget.postUid,
+                      commentText: comment.commentText,
+                    );
+                  },
+                );
               },
               onDoubleTap: () {
                 if (!isReplyLiked)
@@ -1092,46 +1105,63 @@ class _PostCommentsPageState extends State<PostCommentsPage> {
   /// Alert Dialogs---------------------------------------------------------------------------------------
   /// ----------------------------------------------------------------------------------------------------
   /// ----------------------------------------------------------------------------------------------------
-  Widget _buildDeleteCommentDialog({
+  Widget _buildCommentActionsDialog({
     @required UserPostBloc bloc,
+    @required ReportBloc reportBloc,
     @required String commentUid,
     @required String commentOwnerUid,
+    @required bool isUserAllowedToDeleteComment,
+    @required String postUid,
+    @required String commentText,
     String parentCommentOwnerUid = "",
     String parentCommentUid = "",
     bool isCommentAReplyToAnotherComment = false,
   }) {
-    return AlertDialog(
-      title: Text("Do you want to delete this comment?"),
-      actions: [
-        TextButton(
-          onPressed: () {
-            Navigator.of(context, rootNavigator: true).pop();
-          },
-          style: TextButton.styleFrom(
-            primary: Colors.tealAccent[200],
+    return SimpleDialog(
+      children: [
+        if (isUserAllowedToDeleteComment)
+          SimpleDialogOption(
+            padding: EdgeInsets.all(16),
+            onPressed: () {
+              showDialog(
+                context: context,
+                builder: (context) {
+                  return _buildConfirmDeleteCommentDialog(
+                    bloc: bloc,
+                    commentUid: commentUid,
+                    parentCommentUid: parentCommentUid,
+                    isCommentAReplyToAnotherComment: isCommentAReplyToAnotherComment,
+                    parentCommentOwnerUid: parentCommentOwnerUid,
+                    commentOwnerUid: commentOwnerUid,
+                  );
+                },
+              );
+            },
+            child: Text(
+              "Delete Comment",
+              textAlign: TextAlign.center,
+            ),
           ),
-          child: Text("No"),
-        ),
-        TextButton(
+        SimpleDialogOption(
+          padding: EdgeInsets.all(16),
           onPressed: () {
             showDialog(
               context: context,
               builder: (context) {
-                return _buildConfirmDeleteCommentDialog(
-                  bloc: bloc,
+                return ReportCommentDialog(
+                  otherUserUid: commentOwnerUid,
+                  postUid: postUid,
                   commentUid: commentUid,
-                  parentCommentUid: parentCommentUid,
-                  isCommentAReplyToAnotherComment: isCommentAReplyToAnotherComment,
-                  parentCommentOwnerUid: parentCommentOwnerUid,
-                  commentOwnerUid: commentOwnerUid,
+                  commentText: commentText,
+                  bloc: reportBloc,
                 );
               },
             );
           },
-          style: TextButton.styleFrom(
-            primary: Colors.tealAccent[200],
+          child: Text(
+            "Report Comment",
+            textAlign: TextAlign.center,
           ),
-          child: Text("Yes"),
         ),
       ],
     );
@@ -1387,6 +1417,117 @@ class __BuildReplyCommentButtonState extends State<_BuildReplyCommentButton> {
           //Had to add widget here in case not one condition is fulfilled?
           return Offstage();
         },
+      ),
+    );
+  }
+}
+
+class ReportCommentDialog extends StatefulWidget {
+  final String otherUserUid;
+  final ReportBloc bloc;
+  final String postUid;
+  final String commentUid;
+  final String commentText;
+
+  ReportCommentDialog({
+    @required this.otherUserUid,
+    @required this.bloc,
+    @required this.postUid,
+    @required this.commentText,
+    @required this.commentUid,
+  });
+
+  @override
+  _ReportCommentDialogState createState() => _ReportCommentDialogState();
+}
+
+class _ReportCommentDialogState extends State<ReportCommentDialog> {
+  TextEditingController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        FocusScope.of(context).unfocus();
+      },
+      child: AlertDialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(25.0)),
+        ),
+        actionsPadding: EdgeInsets.only(right: 12),
+        contentPadding: const EdgeInsets.fromLTRB(24.0, 20.0, 24.0, 0.0),
+        insetPadding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
+        content: SizedBox(
+          width: MediaQuery.of(context).size.width,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(bottom: 8.0),
+                child: Text(
+                  "Why are you reporting this comment?",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 20,
+                  ),
+                ),
+              ),
+              Expanded(
+                child: TextField(
+                  controller: _controller,
+                  maxLines: 80,
+                  maxLength: 1000,
+                  decoration: InputDecoration(
+                    counter: Offstage(),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(context, rootNavigator: true).pop();
+              Navigator.of(context, rootNavigator: true).pop();
+            },
+            style: TextButton.styleFrom(
+              primary: Colors.tealAccent[200],
+            ),
+            child: Text("Cancel"),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              widget.bloc.add(
+                ReportEvent.reportCommentPressed(
+                  reportedUserUid: widget.otherUserUid,
+                  reportMessage: _controller.text,
+                  reportedPostUid: widget.postUid,
+                  reportedCommentText: widget.commentText,
+                  reportedCommentUid: widget.commentUid,
+                ),
+              );
+              Navigator.of(context, rootNavigator: true).pop();
+              Navigator.of(context, rootNavigator: true).pop();
+            },
+            style: ElevatedButton.styleFrom(
+              primary: Colors.tealAccent[700],
+            ),
+            child: Text("Submit"),
+          ),
+        ],
       ),
     );
   }

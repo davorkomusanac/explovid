@@ -3,6 +3,7 @@ import 'dart:core';
 import 'package:animated_size_and_fade/animated_size_and_fade.dart';
 import 'package:community_material_icon/community_material_icon.dart';
 import 'package:expandable_text/expandable_text.dart';
+import 'package:explovid/application/feedback/report/report_bloc.dart';
 import 'package:explovid/application/user_post/user_post_bloc.dart';
 import 'package:explovid/application/user_profile_information/current_user_profile_information/current_user_profile_watchlist_watched/movie_lists/movie_lists_user_profile_bloc.dart';
 import 'package:explovid/application/user_profile_information/current_user_profile_information/current_user_profile_watchlist_watched/tv_show_lists/tv_show_lists_user_profile_bloc.dart';
@@ -200,6 +201,38 @@ class _PostPageState extends State<PostPage> with TickerProviderStateMixin {
     );
   }
 
+  Widget _reportPostDialogConfirmation({
+    @required String otherUserUid,
+    @required String postUid,
+    @required String postText,
+    @required ReportBloc bloc,
+  }) {
+    return SimpleDialog(
+      children: [
+        SimpleDialogOption(
+          padding: EdgeInsets.all(16),
+          onPressed: () {
+            showDialog(
+              context: context,
+              builder: (context) {
+                return ReportPostDialog(
+                  otherUserUid: otherUserUid,
+                  postUid: postUid,
+                  postText: postText,
+                  bloc: bloc,
+                );
+              },
+            );
+          },
+          child: Text(
+            "Report Post",
+            textAlign: TextAlign.center,
+          ),
+        ),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -227,76 +260,97 @@ class _PostPageState extends State<PostPage> with TickerProviderStateMixin {
                         physics: AlwaysScrollableScrollPhysics(),
                         child: Column(
                           children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: GestureDetector(
-                                    behavior: HitTestBehavior.opaque,
-                                    onTap: () {
-                                      Navigator.of(context)
-                                          .push(
-                                            MaterialPageRoute(
-                                              builder: (context) => OtherUserProfilePage(otherUserUid: widget.postOwnerUid),
+                            BlocListener<ReportBloc, ReportState>(
+                              listener: (context, reportState) {
+                                if (reportState.errorMessage.isNotEmpty) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      content: Text(reportState.errorMessage),
+                                      duration: Duration(seconds: 2),
+                                    ),
+                                  );
+                                }
+                              },
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: GestureDetector(
+                                      behavior: HitTestBehavior.opaque,
+                                      onTap: () {
+                                        Navigator.of(context)
+                                            .push(
+                                              MaterialPageRoute(
+                                                builder: (context) => OtherUserProfilePage(otherUserUid: widget.postOwnerUid),
+                                              ),
+                                            )
+                                            .then(
+                                              (value) => setState(
+                                                () {
+                                                  sendEvent();
+                                                },
+                                              ),
+                                            );
+                                      },
+                                      child: Row(
+                                        children: [
+                                          Material(
+                                            elevation: 20,
+                                            borderRadius: const BorderRadius.all(
+                                              Radius.circular(20.0),
                                             ),
-                                          )
-                                          .then(
-                                            (value) => setState(
-                                              () {
-                                                sendEvent();
-                                              },
-                                            ),
-                                          );
-                                    },
-                                    child: Row(
-                                      children: [
-                                        Material(
-                                          elevation: 20,
-                                          borderRadius: const BorderRadius.all(
-                                            Radius.circular(20.0),
+                                            child: BuildProfilePhotoAvatar(
+                                                profilePhotoUrl: userState.ourUser.profilePhotoUrl, radius: 20),
                                           ),
-                                          child: BuildProfilePhotoAvatar(
-                                              profilePhotoUrl: userState.ourUser.profilePhotoUrl, radius: 20),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.only(left: 12.0),
-                                          child: Text(
-                                            userState.ourUser.username,
-                                            overflow: TextOverflow.ellipsis,
-                                            style: TextStyle(
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.w500,
+                                          Padding(
+                                            padding: const EdgeInsets.only(left: 12.0),
+                                            child: Text(
+                                              userState.ourUser.username,
+                                              overflow: TextOverflow.ellipsis,
+                                              style: TextStyle(
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.w500,
+                                              ),
                                             ),
                                           ),
-                                        ),
-                                      ],
+                                        ],
+                                      ),
                                     ),
                                   ),
-                                ),
-                                if (state.isCurrentUserOwnerOfPost)
                                   IconButton(
-                                      icon: Icon(Icons.more_vert),
-                                      onPressed: () {
-                                        // ignore: close_sinks
-                                        final movieBloc = BlocProvider.of<MovieListsUserProfileBloc>(context, listen: false);
-                                        // ignore: close_sinks
-                                        final tvShowBloc = BlocProvider.of<TvShowListsUserProfileBloc>(context, listen: false);
-                                        // ignore: close_sinks
-                                        final userPostBloc = BlocProvider.of<UserPostBloc>(context, listen: false);
-                                        showDialog(
-                                          context: context,
-                                          builder: (context) {
-                                            return _buildEditPostActionsDialog(
-                                              userPostBloc: userPostBloc,
-                                              movieListsUserProfileBloc: movieBloc,
-                                              tvShowListsUserProfileBloc: tvShowBloc,
-                                              state: state,
-                                            );
-                                          },
-                                        );
-                                      }),
-                              ],
+                                    icon: Icon(Icons.more_vert),
+                                    onPressed: () {
+                                      // ignore: close_sinks
+                                      final movieBloc = BlocProvider.of<MovieListsUserProfileBloc>(context, listen: false);
+                                      // ignore: close_sinks
+                                      final tvShowBloc = BlocProvider.of<TvShowListsUserProfileBloc>(context, listen: false);
+                                      // ignore: close_sinks
+                                      final userPostBloc = BlocProvider.of<UserPostBloc>(context, listen: false);
+                                      // ignore: close_sinks
+                                      final reportBloc = BlocProvider.of<ReportBloc>(context, listen: false);
+                                      showDialog(
+                                        context: context,
+                                        builder: (context) {
+                                          return state.isCurrentUserOwnerOfPost
+                                              ? _buildEditPostActionsDialog(
+                                                  userPostBloc: userPostBloc,
+                                                  movieListsUserProfileBloc: movieBloc,
+                                                  tvShowListsUserProfileBloc: tvShowBloc,
+                                                  state: state,
+                                                )
+                                              : _reportPostDialogConfirmation(
+                                                  otherUserUid: widget.postOwnerUid,
+                                                  postUid: widget.postUid,
+                                                  postText: state.userPost.review,
+                                                  bloc: reportBloc,
+                                                );
+                                        },
+                                      );
+                                    },
+                                  ),
+                                ],
+                              ),
                             ),
                             GestureDetector(
                               onDoubleTap: () {
@@ -763,6 +817,114 @@ class __BuildUpdateReviewDialogState extends State<_BuildUpdateReviewDialog> {
                         isSpoiler: isSpoiler,
                       ),
                     );
+              Navigator.of(context, rootNavigator: true).pop();
+              Navigator.of(context, rootNavigator: true).pop();
+            },
+            style: ElevatedButton.styleFrom(
+              primary: Colors.tealAccent[700],
+            ),
+            child: Text("Submit"),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class ReportPostDialog extends StatefulWidget {
+  final String otherUserUid;
+  final ReportBloc bloc;
+  final String postUid;
+  final String postText;
+
+  ReportPostDialog({
+    @required this.otherUserUid,
+    @required this.bloc,
+    @required this.postUid,
+    @required this.postText,
+  });
+
+  @override
+  _ReportPostDialogState createState() => _ReportPostDialogState();
+}
+
+class _ReportPostDialogState extends State<ReportPostDialog> {
+  TextEditingController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        FocusScope.of(context).unfocus();
+      },
+      child: AlertDialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(25.0)),
+        ),
+        actionsPadding: EdgeInsets.only(right: 12),
+        contentPadding: const EdgeInsets.fromLTRB(24.0, 20.0, 24.0, 0.0),
+        insetPadding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
+        content: SizedBox(
+          width: MediaQuery.of(context).size.width,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(bottom: 8.0),
+                child: Text(
+                  "Why are you reporting this post?",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 20,
+                  ),
+                ),
+              ),
+              Expanded(
+                child: TextField(
+                  controller: _controller,
+                  maxLines: 80,
+                  maxLength: 1000,
+                  decoration: InputDecoration(
+                    counter: Offstage(),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(context, rootNavigator: true).pop();
+              Navigator.of(context, rootNavigator: true).pop();
+            },
+            style: TextButton.styleFrom(
+              primary: Colors.tealAccent[200],
+            ),
+            child: Text("Cancel"),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              widget.bloc.add(
+                ReportEvent.reportPostPressed(
+                  reportedUserUid: widget.otherUserUid,
+                  reportMessage: _controller.text,
+                  reportedPostText: widget.postText,
+                  reportedPostUid: widget.postUid,
+                ),
+              );
               Navigator.of(context, rootNavigator: true).pop();
               Navigator.of(context, rootNavigator: true).pop();
             },
