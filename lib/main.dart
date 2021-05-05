@@ -2,6 +2,7 @@ import 'package:explovid/application/auth/auth_check/auth_check_bloc.dart';
 import 'package:explovid/application/auth/sign_in_form/delete_account/delete_account_bloc.dart';
 import 'package:explovid/application/auth/sign_in_form/edit_profile/edit_profile_bloc.dart';
 import 'package:explovid/application/auth/sign_in_form/sign_in_form_bloc.dart';
+import 'package:explovid/application/feedback/block_user/block_user_bloc.dart';
 import 'package:explovid/application/feedback/feedback_bloc.dart';
 import 'package:explovid/application/search/actor_search/actor_search_bloc.dart';
 import 'package:explovid/application/search/movie_search/movie_search_bloc.dart';
@@ -149,6 +150,13 @@ class _MyAppState extends State<MyApp> {
         BlocProvider(
           create: (context) => UserNewsFeedBloc(
             _userActionsRepository,
+          ),
+        ),
+
+        ///Block Other Users
+        BlocProvider(
+          create: (context) => BlockUserBloc(
+            _userFeedbackRepository,
           ),
         ),
       ],

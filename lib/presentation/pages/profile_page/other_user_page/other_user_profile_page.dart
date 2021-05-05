@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:community_material_icon/community_material_icon.dart';
+import 'package:explovid/application/feedback/block_user/block_user_bloc.dart';
 import 'package:explovid/application/feedback/report/report_bloc.dart';
 import 'package:explovid/application/user_interactions/follow/follow_bloc.dart';
 import 'package:explovid/application/user_profile_information/current_user_profile_information/current_user_profile_information_bloc.dart';
@@ -488,7 +489,7 @@ class _OtherUserProfilePageState extends State<OtherUserProfilePage> with Ticker
                       children: [
                         Padding(
                           padding: const EdgeInsets.only(left: 10.0, top: 2.0, right: 12.0, bottom: 0),
-                          child: BlocListener<ReportBloc, ReportState>(
+                          child: BlocListener<BlockUserBloc, BlockUserState>(
                             listener: (context, state) {
                               if (state.errorMessage.isNotEmpty) {
                                 ScaffoldMessenger.of(context).showSnackBar(
@@ -499,35 +500,50 @@ class _OtherUserProfilePageState extends State<OtherUserProfilePage> with Ticker
                                 );
                               }
                             },
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                BackButton(),
-                                Text(
-                                  userInfoState.isSearching ? "" : userInfoState.ourUser.username,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.w700,
+                            child: BlocListener<ReportBloc, ReportState>(
+                              listener: (context, state) {
+                                if (state.errorMessage.isNotEmpty) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      content: Text(state.errorMessage),
+                                      duration: Duration(seconds: 2),
+                                    ),
+                                  );
+                                }
+                              },
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  BackButton(),
+                                  Text(
+                                    userInfoState.isSearching ? "" : userInfoState.ourUser.username,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.w700,
+                                    ),
                                   ),
-                                ),
-                                Spacer(),
-                                IconButton(
-                                    icon: Icon(Icons.more_vert),
-                                    onPressed: () {
-                                      // ignore: close_sinks
-                                      final bloc = BlocProvider.of<ReportBloc>(context, listen: false);
-                                      showDialog(
-                                        context: context,
-                                        builder: (context) {
-                                          return _reportUserDialogConfirmation(
-                                            otherUserUid: widget.otherUserUid,
-                                            bloc: bloc,
-                                          );
-                                        },
-                                      );
-                                    }),
-                              ],
+                                  Spacer(),
+                                  IconButton(
+                                      icon: Icon(Icons.more_vert),
+                                      onPressed: () {
+                                        // ignore: close_sinks
+                                        final bloc = BlocProvider.of<ReportBloc>(context, listen: false);
+                                        // ignore: close_sinks
+                                        final blockUserBloc = BlocProvider.of<BlockUserBloc>(context, listen: false);
+                                        showDialog(
+                                          context: context,
+                                          builder: (context) {
+                                            return _reportUserDialogConfirmation(
+                                              otherUserUid: widget.otherUserUid,
+                                              bloc: bloc,
+                                              blockUserBloc: blockUserBloc,
+                                            );
+                                          },
+                                        );
+                                      }),
+                                ],
+                              ),
                             ),
                           ),
                         ),
@@ -650,30 +666,70 @@ class _OtherUserProfilePageState extends State<OtherUserProfilePage> with Ticker
                                 builder: (context, state) {
                                   // ignore: close_sinks
                                   final followBloc = BlocProvider.of<FollowBloc>(context, listen: false);
-                                  return state.isSubmitting
-                                      ? Center(child: CircularProgressIndicator())
-                                      : ElevatedButton(
-                                          style: state.isFollowing ? kWatchedButton : kNotWatchedButton,
-                                          onPressed: () {
-                                            state.isFollowing
-                                                ? showDialog(
-                                                    context: context,
-                                                    builder: (context) {
-                                                      return UnfollowUserDialog(
-                                                          otherUserUid: widget.otherUserUid, bloc: followBloc);
-                                                    },
-                                                  )
-                                                : context.read<FollowBloc>().add(
-                                                      FollowEvent.followUserPressed(otherUserUid: widget.otherUserUid),
-                                                    );
-                                          },
-                                          child: Padding(
-                                            padding: const EdgeInsets.symmetric(horizontal: 48.0),
-                                            child: Text(
-                                              state.isFollowing ? "Following" : "Follow",
+                                  return BlocBuilder<BlockUserBloc, BlockUserState>(
+                                    builder: (context, userBlockState) {
+                                      if (state.isSubmitting) {
+                                        return Center(child: CircularProgressIndicator());
+                                      } else {
+                                        bool isTheOtherUserBlocked = userBlockState.blockedUsers.contains(widget.otherUserUid);
+                                        bool isBlockedByOtherUser = userBlockState.usersBlockedBy.contains(widget.otherUserUid);
+                                        if (isTheOtherUserBlocked) {
+                                          return ElevatedButton(
+                                            style: kNotWatchedButton,
+                                            onPressed: () {
+                                              context.read<BlockUserBloc>().add(
+                                                    BlockUserEvent.unblockUserPressed(
+                                                      blockedUserUid: widget.otherUserUid,
+                                                    ),
+                                                  );
+                                            },
+                                            child: Padding(
+                                              padding: const EdgeInsets.symmetric(horizontal: 48.0),
+                                              child: Text(
+                                                "Unblock",
+                                              ),
                                             ),
-                                          ),
-                                        );
+                                          );
+                                        } else {
+                                          if (isBlockedByOtherUser) {
+                                            return ElevatedButton(
+                                              style: kNotWatchedButton,
+                                              onPressed: null,
+                                              child: Padding(
+                                                padding: const EdgeInsets.symmetric(horizontal: 48.0),
+                                                child: Text(
+                                                  "Unavailable",
+                                                ),
+                                              ),
+                                            );
+                                          } else {
+                                            return ElevatedButton(
+                                              style: state.isFollowing ? kWatchedButton : kNotWatchedButton,
+                                              onPressed: () {
+                                                state.isFollowing
+                                                    ? showDialog(
+                                                        context: context,
+                                                        builder: (context) {
+                                                          return UnfollowUserDialog(
+                                                              otherUserUid: widget.otherUserUid, bloc: followBloc);
+                                                        },
+                                                      )
+                                                    : context.read<FollowBloc>().add(
+                                                          FollowEvent.followUserPressed(otherUserUid: widget.otherUserUid),
+                                                        );
+                                              },
+                                              child: Padding(
+                                                padding: const EdgeInsets.symmetric(horizontal: 48.0),
+                                                child: Text(
+                                                  state.isFollowing ? "Following" : "Follow",
+                                                ),
+                                              ),
+                                            );
+                                          }
+                                        }
+                                      }
+                                    },
+                                  );
                                 },
                               );
                             } else {
@@ -698,13 +754,19 @@ class _OtherUserProfilePageState extends State<OtherUserProfilePage> with Ticker
                   ),
                 ];
               },
-              body: Builder(
-                builder: (context) {
+              body: BlocBuilder<BlockUserBloc, BlockUserState>(
+                builder: (context, userBlockState) {
                   _scrollController = PrimaryScrollController.of(context);
-                  return TabBarView(
-                    controller: _watchTypeTabController,
-                    children: _watchTypeTabViews(context),
-                  );
+                  if (userBlockState.blockedUsers.contains(widget.otherUserUid)) {
+                    return Center(child: Text("Unblock the user to see more"));
+                  } else {
+                    return userBlockState.usersBlockedBy.contains(widget.otherUserUid)
+                        ? Center(child: Text("Currently unavailable"))
+                        : TabBarView(
+                            controller: _watchTypeTabController,
+                            children: _watchTypeTabViews(context),
+                          );
+                  }
                 },
               ),
             );
@@ -778,6 +840,7 @@ class _OtherUserProfilePageState extends State<OtherUserProfilePage> with Ticker
   Widget _reportUserDialogConfirmation({
     @required String otherUserUid,
     @required ReportBloc bloc,
+    @required BlockUserBloc blockUserBloc,
   }) {
     return SimpleDialog(
       children: [
@@ -796,6 +859,21 @@ class _OtherUserProfilePageState extends State<OtherUserProfilePage> with Ticker
           },
           child: Text(
             "Report User",
+            textAlign: TextAlign.center,
+          ),
+        ),
+        SimpleDialogOption(
+          padding: EdgeInsets.all(16),
+          onPressed: () {
+            blockUserBloc.add(
+              BlockUserEvent.blockUserPressed(
+                blockedUserUid: otherUserUid,
+              ),
+            );
+            Navigator.of(context, rootNavigator: true).pop();
+          },
+          child: Text(
+            "Block User",
             textAlign: TextAlign.center,
           ),
         ),
@@ -942,5 +1020,17 @@ class _ReportUserDialogState extends State<ReportUserDialog> {
         ],
       ),
     );
+  }
+}
+
+class BlockUserDialog extends StatefulWidget {
+  @override
+  _BlockUserDialogState createState() => _BlockUserDialogState();
+}
+
+class _BlockUserDialogState extends State<BlockUserDialog> {
+  @override
+  Widget build(BuildContext context) {
+    return Container();
   }
 }

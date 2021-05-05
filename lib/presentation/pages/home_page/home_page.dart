@@ -1,4 +1,5 @@
 import 'package:community_material_icon/community_material_icon.dart';
+import 'package:explovid/application/feedback/block_user/block_user_bloc.dart';
 import 'package:explovid/application/feedback/report/report_bloc.dart';
 import 'package:explovid/application/search/actor_search/actor_details/actor_details_bloc.dart';
 import 'package:explovid/application/search/movie_search/movie_details/movie_details_bloc.dart';
@@ -89,6 +90,9 @@ class _HomePageState extends State<HomePage> {
         );
     context.read<UserNewsFeedBloc>().add(
           UserNewsFeedEvent.loadReviewsPressed(),
+        );
+    context.read<BlockUserBloc>().add(
+          BlockUserEvent.loadInitialListOfBlockedUsersPressed(),
         );
   }
 

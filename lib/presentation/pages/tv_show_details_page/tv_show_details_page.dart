@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:explovid/application/feedback/block_user/block_user_bloc.dart';
 import 'package:explovid/application/feedback/report/report_bloc.dart';
 import 'package:explovid/application/search/tv_show_search/tv_show_details/tv_show_details_bloc.dart';
 import 'package:explovid/application/user_post/reviews_posts/reviews_posts_bloc.dart';
@@ -742,19 +743,26 @@ class _TvShowDetailsPageState extends State<TvShowDetailsPage> {
                                               String postOwnerUid = state.reviews[index].postOwnerUid;
                                               String postUid = state.reviews[index].postUid;
                                               //Have to give a new BlocProvider instance to each item since each items needs its own state
-                                              return BlocProvider(
-                                                create: (context) => UserPostBloc(
-                                                  _userActionsRepository,
-                                                ),
-                                                child: BlocProvider(
-                                                  create: (context) => OtherUserProfileInformationBloc(
-                                                    _otherUserProfileRepository,
-                                                  ),
-                                                  child: OtherUserReview(
-                                                    postOwnerUid: postOwnerUid,
-                                                    postUid: postUid,
-                                                  ),
-                                                ),
+                                              return BlocBuilder<BlockUserBloc, BlockUserState>(
+                                                builder: (context, userBlockState) {
+                                                  return userBlockState.blockedUsers.contains(postOwnerUid) ||
+                                                          userBlockState.usersBlockedBy.contains(postOwnerUid)
+                                                      ? SizedBox(width: 0, height: 0)
+                                                      : BlocProvider(
+                                                          create: (context) => UserPostBloc(
+                                                            _userActionsRepository,
+                                                          ),
+                                                          child: BlocProvider(
+                                                            create: (context) => OtherUserProfileInformationBloc(
+                                                              _otherUserProfileRepository,
+                                                            ),
+                                                            child: OtherUserReview(
+                                                              postOwnerUid: postOwnerUid,
+                                                              postUid: postUid,
+                                                            ),
+                                                          ),
+                                                        );
+                                                },
                                               );
                                             }
                                           },

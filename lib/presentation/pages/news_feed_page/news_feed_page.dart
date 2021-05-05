@@ -4,6 +4,7 @@ import 'dart:core';
 import 'package:animated_size_and_fade/animated_size_and_fade.dart';
 import 'package:community_material_icon/community_material_icon.dart';
 import 'package:expandable_text/expandable_text.dart';
+import 'package:explovid/application/feedback/block_user/block_user_bloc.dart';
 import 'package:explovid/application/feedback/report/report_bloc.dart';
 import 'package:explovid/application/user_post/global_news_feed/global_news_feed_bloc.dart';
 import 'package:explovid/application/user_post/user_news_feed/user_news_feed_bloc.dart';
@@ -171,20 +172,27 @@ class _NewsFeedPageState extends State<NewsFeedPage> with TickerProviderStateMix
                             } else {
                               String postOwnerUid = state.reviews[index].postOwnerUid;
                               String postUid = state.reviews[index].postUid;
-                              return BlocProvider(
-                                create: (context) => UserPostBloc(
-                                  _userActionsRepository,
-                                ),
-                                child: BlocProvider(
-                                  create: (context) => OtherUserProfileInformationBloc(
-                                    _otherUserProfileRepository,
-                                  ),
-                                  child: _UserNewsFeedReview(
-                                    postOwnerUid: postOwnerUid,
-                                    postUid: postUid,
-                                    key: ValueKey(postUid),
-                                  ),
-                                ),
+                              return BlocBuilder<BlockUserBloc, BlockUserState>(
+                                builder: (context, userBlockState) {
+                                  return userBlockState.blockedUsers.contains(postOwnerUid) ||
+                                          userBlockState.usersBlockedBy.contains(postOwnerUid)
+                                      ? SizedBox(width: 0, height: 0)
+                                      : BlocProvider(
+                                          create: (context) => UserPostBloc(
+                                            _userActionsRepository,
+                                          ),
+                                          child: BlocProvider(
+                                            create: (context) => OtherUserProfileInformationBloc(
+                                              _otherUserProfileRepository,
+                                            ),
+                                            child: _UserNewsFeedReview(
+                                              postOwnerUid: postOwnerUid,
+                                              postUid: postUid,
+                                              key: ValueKey(postUid),
+                                            ),
+                                          ),
+                                        );
+                                },
                               );
                             }
                           },
@@ -242,20 +250,27 @@ class _NewsFeedPageState extends State<NewsFeedPage> with TickerProviderStateMix
                             } else {
                               String postOwnerUid = state.reviews[index].postOwnerUid;
                               String postUid = state.reviews[index].postUid;
-                              return BlocProvider(
-                                create: (context) => UserPostBloc(
-                                  _userActionsRepository,
-                                ),
-                                child: BlocProvider(
-                                  create: (context) => OtherUserProfileInformationBloc(
-                                    _otherUserProfileRepository,
-                                  ),
-                                  child: _UserNewsFeedReview(
-                                    postOwnerUid: postOwnerUid,
-                                    postUid: postUid,
-                                    key: ValueKey(postUid),
-                                  ),
-                                ),
+                              return BlocBuilder<BlockUserBloc, BlockUserState>(
+                                builder: (context, userBlockState) {
+                                  return userBlockState.blockedUsers.contains(postOwnerUid) ||
+                                          userBlockState.usersBlockedBy.contains(postOwnerUid)
+                                      ? SizedBox(width: 0, height: 0)
+                                      : BlocProvider(
+                                          create: (context) => UserPostBloc(
+                                            _userActionsRepository,
+                                          ),
+                                          child: BlocProvider(
+                                            create: (context) => OtherUserProfileInformationBloc(
+                                              _otherUserProfileRepository,
+                                            ),
+                                            child: _UserNewsFeedReview(
+                                              postOwnerUid: postOwnerUid,
+                                              postUid: postUid,
+                                              key: ValueKey(postUid),
+                                            ),
+                                          ),
+                                        );
+                                },
                               );
                             }
                           },
