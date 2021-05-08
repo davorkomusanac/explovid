@@ -247,10 +247,12 @@ class UserActionsRepository {
       ]);
       if (querySnapshot.docs.isNotEmpty) time = querySnapshot.docs.last.data()["user_follow_date"];
       for (var query in queries) {
-        followers.add(OurUser.fromSnapshot(query));
+        if (query.data() != null) {
+          followers.add(OurUser.fromSnapshot(query));
+        }
       }
     } catch (error) {
-      print(error.toString());
+      print("SHOW FOLLOWERS ERROR: " + error.toString());
     }
     followersAndTime.add(followers);
     followersAndTime.add(time);
@@ -275,7 +277,7 @@ class UserActionsRepository {
       ]);
       if (querySnapshot.docs.isNotEmpty) time = querySnapshot.docs.last.data()["user_follow_date"];
       for (var query in queries) {
-        following.add(OurUser.fromSnapshot(query));
+        if (query.data() != null) following.add(OurUser.fromSnapshot(query));
       }
     } catch (error) {
       print(error.toString());
@@ -306,7 +308,7 @@ class UserActionsRepository {
       ]);
       if (querySnapshot.docs.isNotEmpty) time = querySnapshot.docs.last.data()["user_follow_date"];
       for (var query in queries) {
-        followers.add(OurUser.fromSnapshot(query));
+        if (query.data() != null) followers.add(OurUser.fromSnapshot(query));
       }
     } catch (error) {
       print(error.toString());
@@ -337,7 +339,7 @@ class UserActionsRepository {
       ]);
       if (querySnapshot.docs.isNotEmpty) time = querySnapshot.docs.last.data()["user_follow_date"];
       for (var query in queries) {
-        following.add(OurUser.fromSnapshot(query));
+        if (query.data() != null) following.add(OurUser.fromSnapshot(query));
       }
     } catch (error) {
       print(error.toString());
@@ -1093,7 +1095,7 @@ class UserActionsRepository {
       ]);
       if (querySnapshot.docs.isNotEmpty) time = querySnapshot.docs.last.data()["timestamp"];
       for (var query in queries) {
-        commentRepliesLikes.add(OurUser.fromSnapshot(query));
+        if (query.data() != null) commentRepliesLikes.add(OurUser.fromSnapshot(query));
       }
     } catch (error) {
       print(error.toString());
@@ -1132,7 +1134,7 @@ class UserActionsRepository {
       ]);
       if (querySnapshot.docs.isNotEmpty) time = querySnapshot.docs.last.data()["timestamp"];
       for (var query in queries) {
-        commentRepliesLikes.add(OurUser.fromSnapshot(query));
+        if (query.data() != null) commentRepliesLikes.add(OurUser.fromSnapshot(query));
       }
     } catch (error) {
       print(error.toString());
@@ -1169,10 +1171,17 @@ class UserActionsRepository {
         for (var query in querySnapshot.docs) _users.doc(query.data()["user_uid"]).get(),
       ]);
       for (var query in queries) {
-        commentRepliesUserProfiles.add(OurUser.fromSnapshot(query));
+        if (query.data() != null) commentRepliesUserProfiles.add(OurUser.fromSnapshot(query));
       }
-      for (var query in querySnapshot.docs) {
-        commentReplies.add(OurPostComment.fromSnapshot(query));
+      for (int i = 0; i < querySnapshot.docs.length; i++) {
+        var comment = OurPostComment.fromSnapshot(querySnapshot.docs[i]);
+        bool isCommentNotDeleted = false;
+        for (var user in commentRepliesUserProfiles) {
+          if (user.uid == comment.userUid) isCommentNotDeleted = true;
+        }
+        if (isCommentNotDeleted) {
+          commentReplies.add(comment);
+        }
       }
     } catch (error) {
       print(error.toString());
@@ -1212,10 +1221,17 @@ class UserActionsRepository {
         for (var query in querySnapshot.docs) _users.doc(query.data()["user_uid"]).get(),
       ]);
       for (var query in queries) {
-        commentRepliesUserProfiles.add(OurUser.fromSnapshot(query));
+        if (query.data() != null) commentRepliesUserProfiles.add(OurUser.fromSnapshot(query));
       }
-      for (var query in querySnapshot.docs) {
-        commentReplies.add(OurPostComment.fromSnapshot(query));
+      for (int i = 0; i < querySnapshot.docs.length; i++) {
+        var comment = OurPostComment.fromSnapshot(querySnapshot.docs[i]);
+        bool isCommentNotDeleted = false;
+        for (var user in commentRepliesUserProfiles) {
+          if (user.uid == comment.userUid) isCommentNotDeleted = true;
+        }
+        if (isCommentNotDeleted) {
+          commentReplies.add(comment);
+        }
       }
     } catch (error) {
       print(error.toString());
@@ -1248,7 +1264,7 @@ class UserActionsRepository {
       ]);
       if (querySnapshot.docs.isNotEmpty) time = querySnapshot.docs.last.data()["timestamp"];
       for (var query in queries) {
-        postLikers.add(OurUser.fromSnapshot(query));
+        if (query.data() != null) postLikers.add(OurUser.fromSnapshot(query));
       }
     } catch (error) {
       print(error.toString());
@@ -1281,7 +1297,7 @@ class UserActionsRepository {
       ]);
       if (querySnapshot.docs.isNotEmpty) time = querySnapshot.docs.last.data()["timestamp"];
       for (var query in queries) {
-        postLikers.add(OurUser.fromSnapshot(query));
+        if (query.data() != null) postLikers.add(OurUser.fromSnapshot(query));
       }
     } catch (error) {
       print(error.toString());
@@ -1296,6 +1312,7 @@ class UserActionsRepository {
     List<OurPostComment> postComments = [];
     List<OurUser> postCommentsProfiles = [];
     Timestamp time = Timestamp.now();
+    //Number of likes needed, since comments are sorted by number of likes and timestamp
     num numberOfLikes = 0;
     try {
       var querySnapshot = await _posts
@@ -1317,10 +1334,17 @@ class UserActionsRepository {
         for (var query in querySnapshot.docs) _users.doc(query.data()["user_uid"]).get(),
       ]);
       for (var query in queries) {
-        postCommentsProfiles.add(OurUser.fromSnapshot(query));
+        if (query.data() != null) postCommentsProfiles.add(OurUser.fromSnapshot(query));
       }
-      for (var query in querySnapshot.docs) {
-        postComments.add(OurPostComment.fromSnapshot(query));
+      for (int i = 0; i < querySnapshot.docs.length; i++) {
+        var comment = OurPostComment.fromSnapshot(querySnapshot.docs[i]);
+        bool isCommentNotDeleted = false;
+        for (var user in postCommentsProfiles) {
+          if (user.uid == comment.userUid) isCommentNotDeleted = true;
+        }
+        if (isCommentNotDeleted) {
+          postComments.add(comment);
+        }
       }
     } catch (error) {
       print(error.toString());
@@ -1364,10 +1388,17 @@ class UserActionsRepository {
         for (var query in querySnapshot.docs) _users.doc(query.data()["user_uid"]).get(),
       ]);
       for (var query in queries) {
-        postCommentsProfiles.add(OurUser.fromSnapshot(query));
+        if (query.data() != null) postCommentsProfiles.add(OurUser.fromSnapshot(query));
       }
-      for (var query in querySnapshot.docs) {
-        postComments.add(OurPostComment.fromSnapshot(query));
+      for (int i = 0; i < querySnapshot.docs.length; i++) {
+        var comment = OurPostComment.fromSnapshot(querySnapshot.docs[i]);
+        bool isCommentNotDeleted = false;
+        for (var user in postCommentsProfiles) {
+          if (user.uid == comment.userUid) isCommentNotDeleted = true;
+        }
+        if (isCommentNotDeleted) {
+          postComments.add(comment);
+        }
       }
     } catch (error) {
       print(error.toString());
@@ -1404,7 +1435,7 @@ class UserActionsRepository {
       ]);
       if (querySnapshot.docs.isNotEmpty) time = querySnapshot.docs.last.data()["timestamp"];
       for (var query in queries) {
-        commentLikes.add(OurUser.fromSnapshot(query));
+        if (query.data() != null) commentLikes.add(OurUser.fromSnapshot(query));
       }
     } catch (error) {
       print(error.toString());
@@ -1440,7 +1471,7 @@ class UserActionsRepository {
       ]);
       if (querySnapshot.docs.isNotEmpty) time = querySnapshot.docs.last.data()["timestamp"];
       for (var query in queries) {
-        commentLikes.add(OurUser.fromSnapshot(query));
+        if (query.data() != null) commentLikes.add(OurUser.fromSnapshot(query));
       }
     } catch (error) {
       print(error.toString());
@@ -1467,7 +1498,7 @@ class UserActionsRepository {
           .doc("reviews")
           .collection("movie_reviews")
           .doc("movie_reviews")
-          .collection(movieTitle + "_" + movieId.toString())
+          .collection(movieTitle.replaceAll('/', ' ') + "_" + movieId.toString())
           .orderBy("post_creation_date", descending: true)
           .limit(15)
           .get();
@@ -1511,7 +1542,7 @@ class UserActionsRepository {
           .doc("reviews")
           .collection("movie_reviews")
           .doc("movie_reviews")
-          .collection(movieTitle + "_" + movieId.toString())
+          .collection(movieTitle.replaceAll('/', ' ') + "_" + movieId.toString())
           .orderBy("post_creation_date", descending: true)
           .limit(15)
           .startAfter([lastReviewTimestamp]).get();
@@ -1550,7 +1581,7 @@ class UserActionsRepository {
           .doc("reviews")
           .collection("tv_show_reviews")
           .doc("tv_show_reviews")
-          .collection(tvShowName + "_" + tvShowId.toString())
+          .collection(tvShowName.replaceAll('/', ' ') + "_" + tvShowId.toString())
           .orderBy("post_creation_date", descending: true)
           .limit(15)
           .get();
@@ -1593,7 +1624,7 @@ class UserActionsRepository {
           .doc("reviews")
           .collection("tv_show_reviews")
           .doc("tv_show_reviews")
-          .collection(tvShowName + "_" + tvShowId.toString())
+          .collection(tvShowName.replaceAll('/', ' ') + "_" + tvShowId.toString())
           .orderBy("post_creation_date", descending: true)
           .limit(15)
           .startAfter([lastReviewTimestamp]).get();
@@ -1631,7 +1662,7 @@ class UserActionsRepository {
           .doc("reviews")
           .collection("movie_reviews")
           .doc("movie_reviews")
-          .collection(movieTitle + "_" + movieId.toString())
+          .collection(movieTitle.replaceAll('/', ' ') + "_" + movieId.toString())
           .where("user_uid", isEqualTo: _auth.currentUser.uid)
           .limit(1)
           .get();
@@ -1681,7 +1712,7 @@ class UserActionsRepository {
           .doc("reviews")
           .collection("tv_show_reviews")
           .doc("tv_show_reviews")
-          .collection(tvShowName + "_" + tvShowId.toString())
+          .collection(tvShowName.replaceAll('/', ' ') + "_" + tvShowId.toString())
           .where("user_uid", isEqualTo: _auth.currentUser.uid)
           .limit(1)
           .get();
@@ -1785,7 +1816,7 @@ class UserActionsRepository {
     List<OurUserPost> reviews = [];
     Timestamp time = Timestamp.now();
     try {
-      var querySnapshot = await _globalNewsFeed.orderBy("post_creation_date", descending: true).limit(15).get();
+      var querySnapshot = await _globalNewsFeed.orderBy("post_creation_date", descending: true).limit(10).get();
 
       if (querySnapshot.docs.isNotEmpty) time = querySnapshot.docs.last.data()["post_creation_date"];
       for (var query in querySnapshot.docs)
@@ -1819,7 +1850,7 @@ class UserActionsRepository {
     Timestamp time = Timestamp.now();
     try {
       var querySnapshot =
-          await _globalNewsFeed.orderBy("post_creation_date", descending: true).limit(15).startAfter([lastReviewTimestamp]).get();
+          await _globalNewsFeed.orderBy("post_creation_date", descending: true).limit(10).startAfter([lastReviewTimestamp]).get();
 
       if (querySnapshot.docs.isNotEmpty) time = querySnapshot.docs.last.data()["post_creation_date"];
       for (var query in querySnapshot.docs)
@@ -1863,7 +1894,7 @@ class UserActionsRepository {
           .doc(_auth.currentUser.uid)
           .collection("feed")
           .orderBy("post_creation_date", descending: true)
-          .limit(15)
+          .limit(10)
           .get();
 
       if (querySnapshot.docs.isNotEmpty) time = querySnapshot.docs.last.data()["post_creation_date"];
@@ -1901,7 +1932,7 @@ class UserActionsRepository {
           .doc(_auth.currentUser.uid)
           .collection("feed")
           .orderBy("post_creation_date", descending: true)
-          .limit(15)
+          .limit(10)
           .startAfter([lastReviewTimestamp]).get();
 
       if (querySnapshot.docs.isNotEmpty) time = querySnapshot.docs.last.data()["post_creation_date"];
