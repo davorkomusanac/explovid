@@ -952,6 +952,10 @@ class _MovieReviewDialogState extends State<MovieReviewDialog> {
                   }),
               Expanded(
                 child: TextField(
+                  textCapitalization: TextCapitalization.sentences,
+                  keyboardType: TextInputType.multiline,
+                  enableSuggestions: true,
+                  autocorrect: true,
                   controller: _movieReviewController,
                   maxLines: 80,
                   maxLength: 1000,

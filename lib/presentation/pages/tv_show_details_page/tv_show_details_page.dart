@@ -947,6 +947,10 @@ class _TvShowReviewDialogState extends State<TvShowReviewDialog> {
                   }),
               Expanded(
                 child: TextField(
+                  textCapitalization: TextCapitalization.sentences,
+                  keyboardType: TextInputType.multiline,
+                  enableSuggestions: true,
+                  autocorrect: true,
                   controller: _tvShowReviewController,
                   maxLines: 80,
                   maxLength: 1000,

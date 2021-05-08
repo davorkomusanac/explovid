@@ -360,12 +360,15 @@ class _PostCommentsPageState extends State<PostCommentsPage> {
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 8.0),
                             child: TextField(
+                              textCapitalization: TextCapitalization.sentences,
+                              keyboardType: TextInputType.multiline,
+                              enableSuggestions: true,
+                              autocorrect: true,
                               minLines: 1,
                               maxLines: 3,
                               maxLength: 1000,
                               controller: _textEditingController,
                               focusNode: _focusNode,
-                              autocorrect: false,
                               autofocus: widget.isKeyboardFocused,
                               decoration: InputDecoration(
                                 counterText: "",
