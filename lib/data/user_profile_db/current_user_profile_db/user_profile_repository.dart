@@ -101,11 +101,12 @@ class UserProfileRepository {
     WriteBatch batch = FirebaseFirestore.instance.batch();
 
     try {
+      //Need RegExp to stop movie titles with special characters in title
       batch.set(
         _users
             .doc(_auth.currentUser.uid)
             .collection("movie_watchlist")
-            .doc(firestoreMovieDetails.title + "_" + firestoreMovieDetails.id.toString()),
+            .doc(firestoreMovieDetails.title.replaceAll('/', ' ') + "_" + firestoreMovieDetails.id.toString()),
         firestoreMovieDetails.toDocument(),
       );
 
@@ -115,7 +116,7 @@ class UserProfileRepository {
         _users.doc(_auth.currentUser.uid),
         {
           "movie_watchlist": FieldValue.arrayUnion([
-            firestoreMovieDetails.title + "_" + firestoreMovieDetails.id.toString(),
+            firestoreMovieDetails.title.replaceAll('/', ' ') + "_" + firestoreMovieDetails.id.toString(),
           ]),
           "watchlist_length": FieldValue.increment(1),
         },
@@ -169,14 +170,14 @@ class UserProfileRepository {
         _users
             .doc(_auth.currentUser.uid)
             .collection("movie_watched")
-            .doc(firestoreMovieDetails.title + "_" + firestoreMovieDetails.id.toString()),
+            .doc(firestoreMovieDetails.title.replaceAll('/', ' ') + "_" + firestoreMovieDetails.id.toString()),
         firestoreMovieDetails.toDocument(),
       );
       batch.set(
         _users.doc(_auth.currentUser.uid),
         {
           "movie_watched": FieldValue.arrayUnion([
-            firestoreMovieDetails.title + "_" + firestoreMovieDetails.id.toString(),
+            firestoreMovieDetails.title.replaceAll('/', ' ') + "_" + firestoreMovieDetails.id.toString(),
           ]),
           "watched_length": FieldValue.increment(1),
         },
@@ -192,7 +193,7 @@ class UserProfileRepository {
             .doc("reviews")
             .collection("movie_reviews")
             .doc("movie_reviews")
-            .collection(firestoreMovieDetails.title + "_" + firestoreMovieDetails.id.toString())
+            .collection(firestoreMovieDetails.title.replaceAll('/', ' ') + "_" + firestoreMovieDetails.id.toString())
             .doc(ourUserPost.postUid),
         {
           "user_uid": _auth.currentUser.uid,
@@ -234,12 +235,12 @@ class UserProfileRepository {
       batch.delete(_users
           .doc(_auth.currentUser.uid)
           .collection("movie_watchlist")
-          .doc(movieDetails.title + "_" + movieDetails.id.toString()));
+          .doc(movieDetails.title.replaceAll('/', ' ') + "_" + movieDetails.id.toString()));
       batch.set(
         _users.doc(_auth.currentUser.uid),
         {
           "movie_watchlist": FieldValue.arrayRemove([
-            movieDetails.title + "_" + movieDetails.id.toString(),
+            movieDetails.title.replaceAll('/', ' ') + "_" + movieDetails.id.toString(),
           ]),
           "watchlist_length": FieldValue.increment(-1),
         },
@@ -258,12 +259,15 @@ class UserProfileRepository {
     WriteBatch batch = FirebaseFirestore.instance.batch();
     String returnVal = "";
     try {
-      batch.delete(_users.doc(_auth.currentUser.uid).collection("movie_watched").doc(movieTitle + "_" + movieId.toString()));
+      batch.delete(_users
+          .doc(_auth.currentUser.uid)
+          .collection("movie_watched")
+          .doc(movieTitle.replaceAll('/', ' ') + "_" + movieId.toString()));
       batch.set(
         _users.doc(_auth.currentUser.uid),
         {
           "movie_watched": FieldValue.arrayRemove([
-            movieTitle + "_" + movieId.toString(),
+            movieTitle.replaceAll('/', ' ') + "_" + movieId.toString(),
           ]),
           "watched_length": FieldValue.increment(-1),
         },
@@ -278,7 +282,7 @@ class UserProfileRepository {
             .doc("reviews")
             .collection("movie_reviews")
             .doc("movie_reviews")
-            .collection(movieTitle + "_" + movieId.toString())
+            .collection(movieTitle.replaceAll('/', ' ') + "_" + movieId.toString())
             .doc(postUid),
       );
       //Remove from global news feed
@@ -311,7 +315,7 @@ class UserProfileRepository {
     try {
       batch.set(
         _users.doc(_auth.currentUser.uid).collection("movie_watched").doc(
-              movieTitle + "_" + movieId.toString(),
+              movieTitle.replaceAll('/', ' ') + "_" + movieId.toString(),
             ),
         {
           "review": review,
@@ -355,14 +359,14 @@ class UserProfileRepository {
         _users
             .doc(_auth.currentUser.uid)
             .collection("tv_show_watchlist")
-            .doc(firestoreTvShowWatchlistDetails.name + "_" + firestoreTvShowWatchlistDetails.id.toString()),
+            .doc(firestoreTvShowWatchlistDetails.name.replaceAll('/', ' ') + "_" + firestoreTvShowWatchlistDetails.id.toString()),
         firestoreTvShowWatchlistDetails.toDocument(),
       );
       batch.set(
         _users.doc(_auth.currentUser.uid),
         {
           "tv_show_watchlist": FieldValue.arrayUnion([
-            firestoreTvShowWatchlistDetails.name + "_" + firestoreTvShowWatchlistDetails.id.toString(),
+            firestoreTvShowWatchlistDetails.name.replaceAll('/', ' ') + "_" + firestoreTvShowWatchlistDetails.id.toString(),
           ]),
           "watchlist_length": FieldValue.increment(1),
         },
@@ -415,14 +419,14 @@ class UserProfileRepository {
         _users
             .doc(_auth.currentUser.uid)
             .collection("tv_show_watched")
-            .doc(firestoreTvShowWatchedDetails.name + "_" + firestoreTvShowWatchedDetails.id.toString()),
+            .doc(firestoreTvShowWatchedDetails.name.replaceAll('/', ' ') + "_" + firestoreTvShowWatchedDetails.id.toString()),
         firestoreTvShowWatchedDetails.toDocument(),
       );
       batch.set(
         _users.doc(_auth.currentUser.uid),
         {
           "tv_show_watched": FieldValue.arrayUnion([
-            firestoreTvShowWatchedDetails.name + "_" + firestoreTvShowWatchedDetails.id.toString(),
+            firestoreTvShowWatchedDetails.name.replaceAll('/', ' ') + "_" + firestoreTvShowWatchedDetails.id.toString(),
           ]),
           "watched_length": FieldValue.increment(1),
         },
@@ -438,7 +442,8 @@ class UserProfileRepository {
             .doc("reviews")
             .collection("tv_show_reviews")
             .doc("tv_show_reviews")
-            .collection(firestoreTvShowWatchedDetails.name + "_" + firestoreTvShowWatchedDetails.id.toString())
+            .collection(
+                firestoreTvShowWatchedDetails.name.replaceAll('/', ' ') + "_" + firestoreTvShowWatchedDetails.id.toString())
             .doc(ourUserPost.postUid),
         {
           "user_uid": _auth.currentUser.uid,
@@ -480,12 +485,12 @@ class UserProfileRepository {
       batch.delete(_users
           .doc(_auth.currentUser.uid)
           .collection("tv_show_watchlist")
-          .doc(tvShowDetails.name + "_" + tvShowDetails.id.toString()));
+          .doc(tvShowDetails.name.replaceAll('/', ' ') + "_" + tvShowDetails.id.toString()));
       batch.set(
         _users.doc(_auth.currentUser.uid),
         {
           "tv_show_watchlist": FieldValue.arrayRemove([
-            tvShowDetails.name + "_" + tvShowDetails.id.toString(),
+            tvShowDetails.name.replaceAll('/', ' ') + "_" + tvShowDetails.id.toString(),
           ]),
           "watchlist_length": FieldValue.increment(-1),
         },
@@ -504,12 +509,15 @@ class UserProfileRepository {
     String returnVal = "";
     WriteBatch batch = FirebaseFirestore.instance.batch();
     try {
-      batch.delete(_users.doc(_auth.currentUser.uid).collection("tv_show_watched").doc(tvShowTitle + "_" + tvShowId.toString()));
+      batch.delete(_users
+          .doc(_auth.currentUser.uid)
+          .collection("tv_show_watched")
+          .doc(tvShowTitle.replaceAll('/', ' ') + "_" + tvShowId.toString()));
       batch.set(
         _users.doc(_auth.currentUser.uid),
         {
           "tv_show_watched": FieldValue.arrayRemove([
-            tvShowTitle + "_" + tvShowId.toString(),
+            tvShowTitle.replaceAll('/', ' ') + "_" + tvShowId.toString(),
           ]),
           "watched_length": FieldValue.increment(-1),
         },
@@ -523,7 +531,7 @@ class UserProfileRepository {
             .doc("reviews")
             .collection("tv_show_reviews")
             .doc("tv_show_reviews")
-            .collection(tvShowTitle + "_" + tvShowId.toString())
+            .collection(tvShowTitle.replaceAll('/', ' ') + "_" + tvShowId.toString())
             .doc(postUid),
       );
       //Remove from global news feed
@@ -556,7 +564,7 @@ class UserProfileRepository {
     try {
       batch.set(
         _users.doc(_auth.currentUser.uid).collection("tv_show_watched").doc(
-              tvShowTitle + "_" + tvShowId.toString(),
+              tvShowTitle.replaceAll('/', ' ') + "_" + tvShowId.toString(),
             ),
         {
           "review": review,

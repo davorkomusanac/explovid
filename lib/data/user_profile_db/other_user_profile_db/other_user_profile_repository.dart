@@ -26,7 +26,7 @@ class OtherUserProfileRepository {
         watchedLength: 0,
         watchlistLength: 0,
       );
-      print(e.toString());
+      print("GET OTHER USER PROFILE ERROR: " + e.toString());
     }
     return user;
   }

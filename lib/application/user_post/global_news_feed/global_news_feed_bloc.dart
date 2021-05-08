@@ -32,7 +32,7 @@ class GlobalNewsFeedBloc extends Bloc<GlobalNewsFeedEvent, GlobalNewsFeedState> 
           isLoadingReviews: false,
           reviews: reviews,
           reviewLastInListTimestamp: time,
-          isThereMoreReviewsToLoad: reviews.length < 15 ? false : true,
+          isThereMoreReviewsToLoad: reviews.length < 10 ? false : true,
         );
       },
       loadReviewsPressedNextPage: (e) async* {
@@ -45,7 +45,7 @@ class GlobalNewsFeedBloc extends Bloc<GlobalNewsFeedEvent, GlobalNewsFeedState> 
           );
           List<OurUserPost> reviews = result[0];
           time = result[1];
-          isThereMore = reviews.length < 15 ? false : true;
+          isThereMore = reviews.length < 10 ? false : true;
 
           for (var review in reviews) state.reviews.add(review);
         }
@@ -69,7 +69,7 @@ class GlobalNewsFeedBloc extends Bloc<GlobalNewsFeedEvent, GlobalNewsFeedState> 
           isRefreshingReviews: false,
           reviews: reviews,
           reviewLastInListTimestamp: time,
-          isThereMoreReviewsToLoad: reviews.length < 15 ? false : true,
+          isThereMoreReviewsToLoad: reviews.length < 10 ? false : true,
         );
       },
     );
