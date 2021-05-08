@@ -108,7 +108,7 @@ class _CurrentUserFollowingPageState extends State<CurrentUserFollowingPage> {
             child: CircularProgressIndicator(),
           )
         : ElevatedButton(
-            style: kNotWatchedButton,
+            style: kWatchedButton,
             onPressed: () {
               showDialog(
                 context: context,
