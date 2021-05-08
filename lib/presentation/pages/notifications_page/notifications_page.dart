@@ -66,6 +66,7 @@ class _NotificationsPageState extends State<NotificationsPage> {
                           child: Text("Your notifications will show up here"),
                         )
                       : ListView.builder(
+                          cacheExtent: 5 * MediaQuery.of(context).size.height,
                           controller: _scrollController,
                           itemCount: _calculateNotificationsListLength(state),
                           itemBuilder: (context, index) {
@@ -144,59 +145,36 @@ class __BuildNotificationItemState extends State<_BuildNotificationItem> {
   Widget _buildLikePostNotification() {
     return BlocBuilder<OtherUserProfileInformationBloc, OtherUserProfileInformationState>(
       builder: (context, state) {
-        return state.isSearching
-            ? const Padding(
-                padding: EdgeInsets.symmetric(vertical: 32.0),
-                child: Center(
-                  child: CircularProgressIndicator(),
-                ),
-              )
-            : GestureDetector(
-                behavior: HitTestBehavior.opaque,
-                onTap: () {
-                  Navigator.of(context, rootNavigator: false).push(
-                    MaterialPageRoute(
-                      builder: (context) => PostPage(
-                        postOwnerUid: widget.notification.postOwnerUid,
-                        postUid: widget.notification.postUid,
-                      ),
-                    ),
-                  );
-                },
-                child: Row(
-                  children: [
-                    Expanded(
-                      flex: 3,
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                        child: GestureDetector(
-                          onTap: () {
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (context) => OtherUserProfilePage(
-                                  otherUserUid: widget.notification.senderUid,
-                                ),
-                              ),
-                            );
-                          },
-                          child: FittedBox(
-                            fit: BoxFit.cover,
-                            child: BuildProfilePhotoAvatar(
-                              profilePhotoUrl: state.ourUser.profilePhotoUrl,
-                              radius: 20,
-                            ),
-                          ),
+        if (state.isSearching) {
+          return const Padding(
+            padding: EdgeInsets.symmetric(vertical: 32.0),
+            child: Center(
+              child: CircularProgressIndicator(),
+            ),
+          );
+        } else {
+          return state.ourUser.uid.isEmpty
+              ? SizedBox(width: 0, height: 0)
+              : GestureDetector(
+                  behavior: HitTestBehavior.opaque,
+                  onTap: () {
+                    Navigator.of(context, rootNavigator: false).push(
+                      MaterialPageRoute(
+                        builder: (context) => PostPage(
+                          postOwnerUid: widget.notification.postOwnerUid,
+                          postUid: widget.notification.postUid,
                         ),
                       ),
-                    ),
-                    Expanded(
-                      flex: 10,
-                      child: RichText(
-                        maxLines: 4,
-                        text: TextSpan(
-                          text: state.ourUser.username,
-                          recognizer: TapGestureRecognizer()
-                            ..onTap = () {
+                    );
+                  },
+                  child: Row(
+                    children: [
+                      Expanded(
+                        flex: 3,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                          child: GestureDetector(
+                            onTap: () {
                               Navigator.of(context).push(
                                 MaterialPageRoute(
                                   builder: (context) => OtherUserProfilePage(
@@ -205,58 +183,85 @@ class __BuildNotificationItemState extends State<_BuildNotificationItem> {
                                 ),
                               );
                             },
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w700,
+                            child: FittedBox(
+                              fit: BoxFit.cover,
+                              child: BuildProfilePhotoAvatar(
+                                profilePhotoUrl: state.ourUser.profilePhotoUrl,
+                                radius: 20,
+                              ),
+                            ),
                           ),
-                          children: [
-                            TextSpan(
-                              text: " liked your review.",
-                              style: TextStyle(
-                                fontWeight: FontWeight.normal,
-                                fontSize: 14,
-                              ),
-                            ),
-                            TextSpan(
-                              text: "\n" + convertCommentCreationDate(widget.notification.notificationCreationDate),
-                              style: TextStyle(
-                                color: Colors.grey,
-                                fontSize: 12,
-                              ),
-                            ),
-                          ],
                         ),
                       ),
-                    ),
-                    Expanded(
-                      flex: 4,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: GestureDetector(
-                          onTap: () {
-                            Navigator.of(context, rootNavigator: false).push(
-                              MaterialPageRoute(
-                                builder: (context) => PostPage(
-                                  postOwnerUid: widget.notification.postOwnerUid,
-                                  postUid: widget.notification.postUid,
+                      Expanded(
+                        flex: 10,
+                        child: RichText(
+                          maxLines: 4,
+                          text: TextSpan(
+                            text: state.ourUser.username,
+                            recognizer: TapGestureRecognizer()
+                              ..onTap = () {
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (context) => OtherUserProfilePage(
+                                      otherUserUid: widget.notification.senderUid,
+                                    ),
+                                  ),
+                                );
+                              },
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w700,
+                            ),
+                            children: [
+                              TextSpan(
+                                text: " liked your review.",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.normal,
+                                  fontSize: 14,
                                 ),
                               ),
-                            );
-                          },
-                          child: AspectRatio(
-                            aspectRatio: 0.69,
-                            child: BuildPosterImage(
-                              height: MediaQuery.of(context).size.width * 0.7 * 1.5,
-                              width: MediaQuery.of(context).size.width * 0.7,
-                              imagePath: widget.notification.postPhotoUrl,
+                              TextSpan(
+                                text: "\n" + convertCommentCreationDate(widget.notification.notificationCreationDate),
+                                style: TextStyle(
+                                  color: Colors.grey,
+                                  fontSize: 12,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        flex: 4,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: GestureDetector(
+                            onTap: () {
+                              Navigator.of(context, rootNavigator: false).push(
+                                MaterialPageRoute(
+                                  builder: (context) => PostPage(
+                                    postOwnerUid: widget.notification.postOwnerUid,
+                                    postUid: widget.notification.postUid,
+                                  ),
+                                ),
+                              );
+                            },
+                            child: AspectRatio(
+                              aspectRatio: 0.69,
+                              child: BuildPosterImage(
+                                height: MediaQuery.of(context).size.width * 0.7 * 1.5,
+                                width: MediaQuery.of(context).size.width * 0.7,
+                                imagePath: widget.notification.postPhotoUrl,
+                              ),
                             ),
                           ),
                         ),
                       ),
-                    ),
-                  ],
-                ),
-              );
+                    ],
+                  ),
+                );
+        }
       },
     );
   }
@@ -264,59 +269,36 @@ class __BuildNotificationItemState extends State<_BuildNotificationItem> {
   Widget _buildLikeCommentNotification() {
     return BlocBuilder<OtherUserProfileInformationBloc, OtherUserProfileInformationState>(
       builder: (context, state) {
-        return state.isSearching
-            ? const Padding(
-                padding: EdgeInsets.symmetric(vertical: 32.0),
-                child: Center(
-                  child: CircularProgressIndicator(),
-                ),
-              )
-            : GestureDetector(
-                behavior: HitTestBehavior.opaque,
-                onTap: () {
-                  Navigator.of(context, rootNavigator: false).push(
-                    MaterialPageRoute(
-                      builder: (context) => PostPage(
-                        postOwnerUid: widget.notification.postOwnerUid,
-                        postUid: widget.notification.postUid,
-                      ),
-                    ),
-                  );
-                },
-                child: Row(
-                  children: [
-                    Expanded(
-                      flex: 3,
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                        child: GestureDetector(
-                          onTap: () {
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (context) => OtherUserProfilePage(
-                                  otherUserUid: widget.notification.senderUid,
-                                ),
-                              ),
-                            );
-                          },
-                          child: FittedBox(
-                            fit: BoxFit.cover,
-                            child: BuildProfilePhotoAvatar(
-                              profilePhotoUrl: state.ourUser.profilePhotoUrl,
-                              radius: 20,
-                            ),
-                          ),
+        if (state.isSearching) {
+          return const Padding(
+            padding: EdgeInsets.symmetric(vertical: 32.0),
+            child: Center(
+              child: CircularProgressIndicator(),
+            ),
+          );
+        } else {
+          return state.ourUser.uid.isEmpty
+              ? SizedBox(width: 0, height: 0)
+              : GestureDetector(
+                  behavior: HitTestBehavior.opaque,
+                  onTap: () {
+                    Navigator.of(context, rootNavigator: false).push(
+                      MaterialPageRoute(
+                        builder: (context) => PostPage(
+                          postOwnerUid: widget.notification.postOwnerUid,
+                          postUid: widget.notification.postUid,
                         ),
                       ),
-                    ),
-                    Expanded(
-                      flex: 10,
-                      child: RichText(
-                        maxLines: 4,
-                        text: TextSpan(
-                          text: state.ourUser.username,
-                          recognizer: TapGestureRecognizer()
-                            ..onTap = () {
+                    );
+                  },
+                  child: Row(
+                    children: [
+                      Expanded(
+                        flex: 3,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                          child: GestureDetector(
+                            onTap: () {
                               Navigator.of(context).push(
                                 MaterialPageRoute(
                                   builder: (context) => OtherUserProfilePage(
@@ -325,65 +307,92 @@ class __BuildNotificationItemState extends State<_BuildNotificationItem> {
                                 ),
                               );
                             },
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w700,
+                            child: FittedBox(
+                              fit: BoxFit.cover,
+                              child: BuildProfilePhotoAvatar(
+                                profilePhotoUrl: state.ourUser.profilePhotoUrl,
+                                radius: 20,
+                              ),
+                            ),
                           ),
-                          children: [
-                            TextSpan(
-                              text: " liked your comment:",
-                              style: TextStyle(
-                                fontWeight: FontWeight.normal,
-                                fontSize: 14,
-                              ),
-                            ),
-                            TextSpan(
-                              text: "\n" + widget.notification.notificationText,
-                              style: TextStyle(
-                                fontWeight: FontWeight.normal,
-                                fontSize: 14,
-                              ),
-                            ),
-                            TextSpan(
-                              text: "\n" + convertCommentCreationDate(widget.notification.notificationCreationDate),
-                              style: TextStyle(
-                                color: Colors.grey,
-                                fontSize: 12,
-                              ),
-                            ),
-                          ],
                         ),
                       ),
-                    ),
-                    Expanded(
-                      flex: 4,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: GestureDetector(
-                          onTap: () {
-                            Navigator.of(context, rootNavigator: false).push(
-                              MaterialPageRoute(
-                                builder: (context) => PostPage(
-                                  postOwnerUid: widget.notification.postOwnerUid,
-                                  postUid: widget.notification.postUid,
+                      Expanded(
+                        flex: 10,
+                        child: RichText(
+                          maxLines: 4,
+                          text: TextSpan(
+                            text: state.ourUser.username,
+                            recognizer: TapGestureRecognizer()
+                              ..onTap = () {
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (context) => OtherUserProfilePage(
+                                      otherUserUid: widget.notification.senderUid,
+                                    ),
+                                  ),
+                                );
+                              },
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w700,
+                            ),
+                            children: [
+                              TextSpan(
+                                text: " liked your comment:",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.normal,
+                                  fontSize: 14,
                                 ),
                               ),
-                            );
-                          },
-                          child: AspectRatio(
-                            aspectRatio: 0.69,
-                            child: BuildPosterImage(
-                              height: MediaQuery.of(context).size.width * 0.7 * 1.5,
-                              width: MediaQuery.of(context).size.width * 0.7,
-                              imagePath: widget.notification.postPhotoUrl,
+                              TextSpan(
+                                text: "\n" + widget.notification.notificationText,
+                                style: TextStyle(
+                                  fontWeight: FontWeight.normal,
+                                  fontSize: 14,
+                                ),
+                              ),
+                              TextSpan(
+                                text: "\n" + convertCommentCreationDate(widget.notification.notificationCreationDate),
+                                style: TextStyle(
+                                  color: Colors.grey,
+                                  fontSize: 12,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        flex: 4,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: GestureDetector(
+                            onTap: () {
+                              Navigator.of(context, rootNavigator: false).push(
+                                MaterialPageRoute(
+                                  builder: (context) => PostPage(
+                                    postOwnerUid: widget.notification.postOwnerUid,
+                                    postUid: widget.notification.postUid,
+                                  ),
+                                ),
+                              );
+                            },
+                            child: AspectRatio(
+                              aspectRatio: 0.69,
+                              child: BuildPosterImage(
+                                height: MediaQuery.of(context).size.width * 0.7 * 1.5,
+                                width: MediaQuery.of(context).size.width * 0.7,
+                                imagePath: widget.notification.postPhotoUrl,
+                              ),
                             ),
                           ),
                         ),
                       ),
-                    ),
-                  ],
-                ),
-              );
+                    ],
+                  ),
+                );
+        }
       },
     );
   }
@@ -391,59 +400,36 @@ class __BuildNotificationItemState extends State<_BuildNotificationItem> {
   Widget _buildCommentPostNotification() {
     return BlocBuilder<OtherUserProfileInformationBloc, OtherUserProfileInformationState>(
       builder: (context, state) {
-        return state.isSearching
-            ? const Padding(
-                padding: EdgeInsets.symmetric(vertical: 32.0),
-                child: Center(
-                  child: CircularProgressIndicator(),
-                ),
-              )
-            : GestureDetector(
-                behavior: HitTestBehavior.opaque,
-                onTap: () {
-                  Navigator.of(context, rootNavigator: false).push(
-                    MaterialPageRoute(
-                      builder: (context) => PostPage(
-                        postOwnerUid: widget.notification.postOwnerUid,
-                        postUid: widget.notification.postUid,
-                      ),
-                    ),
-                  );
-                },
-                child: Row(
-                  children: [
-                    Expanded(
-                      flex: 3,
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                        child: GestureDetector(
-                          onTap: () {
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (context) => OtherUserProfilePage(
-                                  otherUserUid: widget.notification.senderUid,
-                                ),
-                              ),
-                            );
-                          },
-                          child: FittedBox(
-                            fit: BoxFit.cover,
-                            child: BuildProfilePhotoAvatar(
-                              profilePhotoUrl: state.ourUser.profilePhotoUrl,
-                              radius: 20,
-                            ),
-                          ),
+        if (state.isSearching) {
+          return const Padding(
+            padding: EdgeInsets.symmetric(vertical: 32.0),
+            child: Center(
+              child: CircularProgressIndicator(),
+            ),
+          );
+        } else {
+          return state.ourUser.uid.isEmpty
+              ? SizedBox(width: 0, height: 0)
+              : GestureDetector(
+                  behavior: HitTestBehavior.opaque,
+                  onTap: () {
+                    Navigator.of(context, rootNavigator: false).push(
+                      MaterialPageRoute(
+                        builder: (context) => PostPage(
+                          postOwnerUid: widget.notification.postOwnerUid,
+                          postUid: widget.notification.postUid,
                         ),
                       ),
-                    ),
-                    Expanded(
-                      flex: 10,
-                      child: RichText(
-                        maxLines: 4,
-                        text: TextSpan(
-                          text: state.ourUser.username,
-                          recognizer: TapGestureRecognizer()
-                            ..onTap = () {
+                    );
+                  },
+                  child: Row(
+                    children: [
+                      Expanded(
+                        flex: 3,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                          child: GestureDetector(
+                            onTap: () {
                               Navigator.of(context).push(
                                 MaterialPageRoute(
                                   builder: (context) => OtherUserProfilePage(
@@ -452,65 +438,92 @@ class __BuildNotificationItemState extends State<_BuildNotificationItem> {
                                 ),
                               );
                             },
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w700,
+                            child: FittedBox(
+                              fit: BoxFit.cover,
+                              child: BuildProfilePhotoAvatar(
+                                profilePhotoUrl: state.ourUser.profilePhotoUrl,
+                                radius: 20,
+                              ),
+                            ),
                           ),
-                          children: [
-                            TextSpan(
-                              text: " commented your review:",
-                              style: TextStyle(
-                                fontWeight: FontWeight.normal,
-                                fontSize: 14,
-                              ),
-                            ),
-                            TextSpan(
-                              text: "\n" + widget.notification.notificationText,
-                              style: TextStyle(
-                                fontWeight: FontWeight.normal,
-                                fontSize: 14,
-                              ),
-                            ),
-                            TextSpan(
-                              text: "\n" + convertCommentCreationDate(widget.notification.notificationCreationDate),
-                              style: TextStyle(
-                                color: Colors.grey,
-                                fontSize: 12,
-                              ),
-                            ),
-                          ],
                         ),
                       ),
-                    ),
-                    Expanded(
-                      flex: 4,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: GestureDetector(
-                          onTap: () {
-                            Navigator.of(context, rootNavigator: false).push(
-                              MaterialPageRoute(
-                                builder: (context) => PostPage(
-                                  postOwnerUid: widget.notification.postOwnerUid,
-                                  postUid: widget.notification.postUid,
+                      Expanded(
+                        flex: 10,
+                        child: RichText(
+                          maxLines: 4,
+                          text: TextSpan(
+                            text: state.ourUser.username,
+                            recognizer: TapGestureRecognizer()
+                              ..onTap = () {
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (context) => OtherUserProfilePage(
+                                      otherUserUid: widget.notification.senderUid,
+                                    ),
+                                  ),
+                                );
+                              },
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w700,
+                            ),
+                            children: [
+                              TextSpan(
+                                text: " commented your review:",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.normal,
+                                  fontSize: 14,
                                 ),
                               ),
-                            );
-                          },
-                          child: AspectRatio(
-                            aspectRatio: 0.69,
-                            child: BuildPosterImage(
-                              height: MediaQuery.of(context).size.width * 0.7 * 1.5,
-                              width: MediaQuery.of(context).size.width * 0.7,
-                              imagePath: widget.notification.postPhotoUrl,
+                              TextSpan(
+                                text: "\n" + widget.notification.notificationText,
+                                style: TextStyle(
+                                  fontWeight: FontWeight.normal,
+                                  fontSize: 14,
+                                ),
+                              ),
+                              TextSpan(
+                                text: "\n" + convertCommentCreationDate(widget.notification.notificationCreationDate),
+                                style: TextStyle(
+                                  color: Colors.grey,
+                                  fontSize: 12,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        flex: 4,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: GestureDetector(
+                            onTap: () {
+                              Navigator.of(context, rootNavigator: false).push(
+                                MaterialPageRoute(
+                                  builder: (context) => PostPage(
+                                    postOwnerUid: widget.notification.postOwnerUid,
+                                    postUid: widget.notification.postUid,
+                                  ),
+                                ),
+                              );
+                            },
+                            child: AspectRatio(
+                              aspectRatio: 0.69,
+                              child: BuildPosterImage(
+                                height: MediaQuery.of(context).size.width * 0.7 * 1.5,
+                                width: MediaQuery.of(context).size.width * 0.7,
+                                imagePath: widget.notification.postPhotoUrl,
+                              ),
                             ),
                           ),
                         ),
                       ),
-                    ),
-                  ],
-                ),
-              );
+                    ],
+                  ),
+                );
+        }
       },
     );
   }
@@ -518,59 +531,36 @@ class __BuildNotificationItemState extends State<_BuildNotificationItem> {
   Widget _buildRepliedCommentNotification() {
     return BlocBuilder<OtherUserProfileInformationBloc, OtherUserProfileInformationState>(
       builder: (context, state) {
-        return state.isSearching
-            ? const Padding(
-                padding: EdgeInsets.symmetric(vertical: 32.0),
-                child: Center(
-                  child: CircularProgressIndicator(),
-                ),
-              )
-            : GestureDetector(
-                behavior: HitTestBehavior.opaque,
-                onTap: () {
-                  Navigator.of(context, rootNavigator: false).push(
-                    MaterialPageRoute(
-                      builder: (context) => PostPage(
-                        postOwnerUid: widget.notification.postOwnerUid,
-                        postUid: widget.notification.postUid,
-                      ),
-                    ),
-                  );
-                },
-                child: Row(
-                  children: [
-                    Expanded(
-                      flex: 3,
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                        child: GestureDetector(
-                          onTap: () {
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (context) => OtherUserProfilePage(
-                                  otherUserUid: widget.notification.senderUid,
-                                ),
-                              ),
-                            );
-                          },
-                          child: FittedBox(
-                            fit: BoxFit.cover,
-                            child: BuildProfilePhotoAvatar(
-                              profilePhotoUrl: state.ourUser.profilePhotoUrl,
-                              radius: 20,
-                            ),
-                          ),
+        if (state.isSearching) {
+          return const Padding(
+            padding: EdgeInsets.symmetric(vertical: 32.0),
+            child: Center(
+              child: CircularProgressIndicator(),
+            ),
+          );
+        } else {
+          return state.ourUser.uid.isEmpty
+              ? SizedBox(width: 0, height: 0)
+              : GestureDetector(
+                  behavior: HitTestBehavior.opaque,
+                  onTap: () {
+                    Navigator.of(context, rootNavigator: false).push(
+                      MaterialPageRoute(
+                        builder: (context) => PostPage(
+                          postOwnerUid: widget.notification.postOwnerUid,
+                          postUid: widget.notification.postUid,
                         ),
                       ),
-                    ),
-                    Expanded(
-                      flex: 10,
-                      child: RichText(
-                        maxLines: 4,
-                        text: TextSpan(
-                          text: state.ourUser.username,
-                          recognizer: TapGestureRecognizer()
-                            ..onTap = () {
+                    );
+                  },
+                  child: Row(
+                    children: [
+                      Expanded(
+                        flex: 3,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                          child: GestureDetector(
+                            onTap: () {
                               Navigator.of(context).push(
                                 MaterialPageRoute(
                                   builder: (context) => OtherUserProfilePage(
@@ -579,65 +569,92 @@ class __BuildNotificationItemState extends State<_BuildNotificationItem> {
                                 ),
                               );
                             },
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w700,
+                            child: FittedBox(
+                              fit: BoxFit.cover,
+                              child: BuildProfilePhotoAvatar(
+                                profilePhotoUrl: state.ourUser.profilePhotoUrl,
+                                radius: 20,
+                              ),
+                            ),
                           ),
-                          children: [
-                            TextSpan(
-                              text: " replied to your comment:",
-                              style: TextStyle(
-                                fontWeight: FontWeight.normal,
-                                fontSize: 14,
-                              ),
-                            ),
-                            TextSpan(
-                              text: "\n" + widget.notification.notificationText,
-                              style: TextStyle(
-                                fontWeight: FontWeight.normal,
-                                fontSize: 14,
-                              ),
-                            ),
-                            TextSpan(
-                              text: "\n" + convertCommentCreationDate(widget.notification.notificationCreationDate),
-                              style: TextStyle(
-                                color: Colors.grey,
-                                fontSize: 12,
-                              ),
-                            ),
-                          ],
                         ),
                       ),
-                    ),
-                    Expanded(
-                      flex: 4,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: GestureDetector(
-                          onTap: () {
-                            Navigator.of(context, rootNavigator: false).push(
-                              MaterialPageRoute(
-                                builder: (context) => PostPage(
-                                  postOwnerUid: widget.notification.postOwnerUid,
-                                  postUid: widget.notification.postUid,
+                      Expanded(
+                        flex: 10,
+                        child: RichText(
+                          maxLines: 5,
+                          text: TextSpan(
+                            text: state.ourUser.username,
+                            recognizer: TapGestureRecognizer()
+                              ..onTap = () {
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (context) => OtherUserProfilePage(
+                                      otherUserUid: widget.notification.senderUid,
+                                    ),
+                                  ),
+                                );
+                              },
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w700,
+                            ),
+                            children: [
+                              TextSpan(
+                                text: " replied to your comment:",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.normal,
+                                  fontSize: 14,
                                 ),
                               ),
-                            );
-                          },
-                          child: AspectRatio(
-                            aspectRatio: 0.69,
-                            child: BuildPosterImage(
-                              height: MediaQuery.of(context).size.width * 0.7 * 1.5,
-                              width: MediaQuery.of(context).size.width * 0.7,
-                              imagePath: widget.notification.postPhotoUrl,
+                              TextSpan(
+                                text: "\n" + widget.notification.notificationText,
+                                style: TextStyle(
+                                  fontWeight: FontWeight.normal,
+                                  fontSize: 14,
+                                ),
+                              ),
+                              TextSpan(
+                                text: "\n" + convertCommentCreationDate(widget.notification.notificationCreationDate),
+                                style: TextStyle(
+                                  color: Colors.grey,
+                                  fontSize: 12,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        flex: 4,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: GestureDetector(
+                            onTap: () {
+                              Navigator.of(context, rootNavigator: false).push(
+                                MaterialPageRoute(
+                                  builder: (context) => PostPage(
+                                    postOwnerUid: widget.notification.postOwnerUid,
+                                    postUid: widget.notification.postUid,
+                                  ),
+                                ),
+                              );
+                            },
+                            child: AspectRatio(
+                              aspectRatio: 0.69,
+                              child: BuildPosterImage(
+                                height: MediaQuery.of(context).size.width * 0.7 * 1.5,
+                                width: MediaQuery.of(context).size.width * 0.7,
+                                imagePath: widget.notification.postPhotoUrl,
+                              ),
                             ),
                           ),
                         ),
                       ),
-                    ),
-                  ],
-                ),
-              );
+                    ],
+                  ),
+                );
+        }
       },
     );
   }
@@ -645,58 +662,35 @@ class __BuildNotificationItemState extends State<_BuildNotificationItem> {
   Widget _buildFollowNotification() {
     return BlocBuilder<OtherUserProfileInformationBloc, OtherUserProfileInformationState>(
       builder: (context, state) {
-        return state.isSearching
-            ? const Padding(
-                padding: EdgeInsets.symmetric(vertical: 32.0),
-                child: Center(
-                  child: CircularProgressIndicator(),
-                ),
-              )
-            : GestureDetector(
-                behavior: HitTestBehavior.opaque,
-                onTap: () {
-                  Navigator.of(context, rootNavigator: false).push(
-                    MaterialPageRoute(
-                      builder: (context) => OtherUserProfilePage(
-                        otherUserUid: widget.notification.senderUid,
-                      ),
-                    ),
-                  );
-                },
-                child: Row(
-                  children: [
-                    Expanded(
-                      flex: 3,
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                        child: GestureDetector(
-                          onTap: () {
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (context) => OtherUserProfilePage(
-                                  otherUserUid: widget.notification.senderUid,
-                                ),
-                              ),
-                            );
-                          },
-                          child: FittedBox(
-                            fit: BoxFit.cover,
-                            child: BuildProfilePhotoAvatar(
-                              profilePhotoUrl: state.ourUser.profilePhotoUrl,
-                              radius: 20,
-                            ),
-                          ),
+        if (state.isSearching) {
+          return const Padding(
+            padding: EdgeInsets.symmetric(vertical: 32.0),
+            child: Center(
+              child: CircularProgressIndicator(),
+            ),
+          );
+        } else {
+          return state.ourUser.uid.isEmpty
+              ? SizedBox(width: 0, height: 0)
+              : GestureDetector(
+                  behavior: HitTestBehavior.opaque,
+                  onTap: () {
+                    Navigator.of(context, rootNavigator: false).push(
+                      MaterialPageRoute(
+                        builder: (context) => OtherUserProfilePage(
+                          otherUserUid: widget.notification.senderUid,
                         ),
                       ),
-                    ),
-                    Expanded(
-                      flex: 14,
-                      child: RichText(
-                        maxLines: 4,
-                        text: TextSpan(
-                          text: state.ourUser.username,
-                          recognizer: TapGestureRecognizer()
-                            ..onTap = () {
+                    );
+                  },
+                  child: Row(
+                    children: [
+                      Expanded(
+                        flex: 3,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                          child: GestureDetector(
+                            onTap: () {
                               Navigator.of(context).push(
                                 MaterialPageRoute(
                                   builder: (context) => OtherUserProfilePage(
@@ -705,32 +699,59 @@ class __BuildNotificationItemState extends State<_BuildNotificationItem> {
                                 ),
                               );
                             },
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w700,
+                            child: FittedBox(
+                              fit: BoxFit.cover,
+                              child: BuildProfilePhotoAvatar(
+                                profilePhotoUrl: state.ourUser.profilePhotoUrl,
+                                radius: 20,
+                              ),
+                            ),
                           ),
-                          children: [
-                            TextSpan(
-                              text: " started following you.",
-                              style: TextStyle(
-                                fontWeight: FontWeight.normal,
-                                fontSize: 14,
-                              ),
-                            ),
-                            TextSpan(
-                              text: "\n" + convertCommentCreationDate(widget.notification.notificationCreationDate),
-                              style: TextStyle(
-                                color: Colors.grey,
-                                fontSize: 12,
-                              ),
-                            ),
-                          ],
                         ),
                       ),
-                    ),
-                  ],
-                ),
-              );
+                      Expanded(
+                        flex: 14,
+                        child: RichText(
+                          maxLines: 4,
+                          text: TextSpan(
+                            text: state.ourUser.username,
+                            recognizer: TapGestureRecognizer()
+                              ..onTap = () {
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (context) => OtherUserProfilePage(
+                                      otherUserUid: widget.notification.senderUid,
+                                    ),
+                                  ),
+                                );
+                              },
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w700,
+                            ),
+                            children: [
+                              TextSpan(
+                                text: " started following you.",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.normal,
+                                  fontSize: 14,
+                                ),
+                              ),
+                              TextSpan(
+                                text: "\n" + convertCommentCreationDate(widget.notification.notificationCreationDate),
+                                style: TextStyle(
+                                  color: Colors.grey,
+                                  fontSize: 12,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+        }
       },
     );
   }
