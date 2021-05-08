@@ -511,38 +511,43 @@ class _OtherUserProfilePageState extends State<OtherUserProfilePage> with Ticker
                                   );
                                 }
                               },
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  BackButton(),
-                                  Text(
-                                    userInfoState.isSearching ? "" : userInfoState.ourUser.username,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.w700,
-                                    ),
-                                  ),
-                                  Spacer(),
-                                  IconButton(
-                                      icon: Icon(Icons.more_vert),
-                                      onPressed: () {
-                                        // ignore: close_sinks
-                                        final bloc = BlocProvider.of<ReportBloc>(context, listen: false);
-                                        // ignore: close_sinks
-                                        final blockUserBloc = BlocProvider.of<BlockUserBloc>(context, listen: false);
-                                        showDialog(
-                                          context: context,
-                                          builder: (context) {
-                                            return _reportUserDialogConfirmation(
-                                              otherUserUid: widget.otherUserUid,
-                                              bloc: bloc,
-                                              blockUserBloc: blockUserBloc,
-                                            );
-                                          },
-                                        );
-                                      }),
-                                ],
+                              child: BlocBuilder<CurrentUserProfileInformationBloc, CurrentUserProfileInformationState>(
+                                builder: (context, state) {
+                                  return Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      BackButton(),
+                                      Text(
+                                        userInfoState.isSearching ? "" : userInfoState.ourUser.username,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: TextStyle(
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.w700,
+                                        ),
+                                      ),
+                                      Spacer(),
+                                      if (state.ourUser.uid != widget.otherUserUid)
+                                        IconButton(
+                                            icon: Icon(Icons.more_vert),
+                                            onPressed: () {
+                                              // ignore: close_sinks
+                                              final bloc = BlocProvider.of<ReportBloc>(context, listen: false);
+                                              // ignore: close_sinks
+                                              final blockUserBloc = BlocProvider.of<BlockUserBloc>(context, listen: false);
+                                              showDialog(
+                                                context: context,
+                                                builder: (context) {
+                                                  return _reportUserDialogConfirmation(
+                                                    otherUserUid: widget.otherUserUid,
+                                                    bloc: bloc,
+                                                    blockUserBloc: blockUserBloc,
+                                                  );
+                                                },
+                                              );
+                                            }),
+                                    ],
+                                  );
+                                },
                               ),
                             ),
                           ),
