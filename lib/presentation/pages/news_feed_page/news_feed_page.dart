@@ -142,9 +142,11 @@ class _NewsFeedPageState extends State<NewsFeedPage> with TickerProviderStateMix
           }
         },
         builder: (context, state) {
+          //Have to give A Container with such size to stop bad scrolling inside the listview.builder
           return state.isLoadingReviews
-              ? Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 32.0),
+              ? Container(
+                  height: MediaQuery.of(context).size.width * 1.5,
+                  color: Colors.blueGrey[900],
                   child: const Center(
                     child: CircularProgressIndicator(),
                   ),
@@ -163,6 +165,7 @@ class _NewsFeedPageState extends State<NewsFeedPage> with TickerProviderStateMix
                           },
                         )
                       : ListView.builder(
+                          cacheExtent: 5 * MediaQuery.of(context).size.height,
                           physics: const AlwaysScrollableScrollPhysics(),
                           controller: _userNewsFeedScrollController,
                           itemCount: _calculateUserNewsFeedListLength(state),
@@ -228,8 +231,9 @@ class _NewsFeedPageState extends State<NewsFeedPage> with TickerProviderStateMix
         },
         builder: (context, state) {
           return state.isLoadingReviews
-              ? Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 32.0),
+              ? Container(
+                  height: MediaQuery.of(context).size.width * 1.5,
+                  color: Colors.blueGrey[900],
                   child: const Center(
                     child: CircularProgressIndicator(),
                   ),
@@ -241,6 +245,7 @@ class _NewsFeedPageState extends State<NewsFeedPage> with TickerProviderStateMix
                           child: Text("Other user's reviews will show up here"),
                         )
                       : ListView.builder(
+                          cacheExtent: 5 * MediaQuery.of(context).size.height,
                           physics: const AlwaysScrollableScrollPhysics(),
                           controller: _globalNewsFeedScrollController,
                           itemCount: _calculateGlobalNewsFeedListLength(state),
@@ -309,7 +314,7 @@ class _UserNewsFeedReview extends StatefulWidget {
   _UserNewsFeedReviewState createState() => _UserNewsFeedReviewState();
 }
 
-class _UserNewsFeedReviewState extends State<_UserNewsFeedReview> with TickerProviderStateMixin, AutomaticKeepAliveClientMixin {
+class _UserNewsFeedReviewState extends State<_UserNewsFeedReview> with TickerProviderStateMixin {
   bool isReviewExpanded = false;
   bool toggleHeartIconAnimation = false;
 
@@ -328,9 +333,6 @@ class _UserNewsFeedReviewState extends State<_UserNewsFeedReview> with TickerPro
           ),
         );
   }
-
-  @override
-  bool get wantKeepAlive => true;
 
   //Method to call when Navigator.pop is called, to update the page
   void sendEvent() {
@@ -523,11 +525,8 @@ class _UserNewsFeedReviewState extends State<_UserNewsFeedReview> with TickerPro
     );
   }
 
-  //TODO Check if post is empty (already delete) then just show Offstage?
   @override
   Widget build(BuildContext context) {
-    //Need to call mustCallSuper for automaticKeepAlive?
-    super.build(context);
     return BlocBuilder<OtherUserProfileInformationBloc, OtherUserProfileInformationState>(
       builder: (context, userState) {
         return BlocConsumer<UserPostBloc, UserPostState>(
@@ -543,15 +542,15 @@ class _UserNewsFeedReviewState extends State<_UserNewsFeedReview> with TickerPro
           },
           builder: (context, state) {
             if (state.isLoadingPost || userState.isSearching) {
-              return Padding(
-                padding: const EdgeInsets.symmetric(vertical: 32.0),
+              return Container(
+                height: MediaQuery.of(context).size.width * 1.5,
+                color: Colors.blueGrey[900],
                 child: const Center(
                   child: CircularProgressIndicator(),
                 ),
               );
             } else {
-              if (state.userPost.posterPath.isEmpty) {
-                //return Offstage();
+              if (state.userPost.posterPath.isEmpty || userState.ourUser.uid.isEmpty) {
                 return SizedBox(width: 0, height: 0);
               } else {
                 return Padding(
@@ -658,7 +657,7 @@ class _UserNewsFeedReviewState extends State<_UserNewsFeedReview> with TickerPro
                           alignment: AlignmentDirectional.center,
                           children: [
                             BuildPosterImage(
-                              resolution: "original",
+                              resolution: "w780",
                               height: MediaQuery.of(context).size.width * 0.7 * 1.5,
                               width: MediaQuery.of(context).size.width * 0.7,
                               imagePath: state.userPost.posterPath,
