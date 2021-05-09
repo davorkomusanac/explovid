@@ -36,34 +36,46 @@ class _$MovieListsUserProfileEventTearOff {
 
 // ignore: unused_element
   _AddMovieToWatchlistPressed addMovieToWatchlistPressed(
-      MovieDetails movieDetails) {
+      {@required int tmdbId,
+      @required String title,
+      @required String posterPath}) {
     return _AddMovieToWatchlistPressed(
-      movieDetails,
+      tmdbId: tmdbId,
+      title: title,
+      posterPath: posterPath,
     );
   }
 
 // ignore: unused_element
   _RemoveMovieFromWatchlistPressed removeMovieFromWatchlistPressed(
-      MovieDetails movieDetails) {
+      {@required int tmdbId, @required String title}) {
     return _RemoveMovieFromWatchlistPressed(
-      movieDetails,
+      tmdbId: tmdbId,
+      title: title,
     );
   }
 
 // ignore: unused_element
   _AddMovieToWatchedPressed addMovieToWatchedPressed(
-      MovieDetails movieDetails, String review, num rating, bool isSpoiler) {
+      {@required int tmdbId,
+      @required String title,
+      @required String posterPath,
+      @required String review,
+      @required num rating,
+      @required bool isSpoiler}) {
     return _AddMovieToWatchedPressed(
-      movieDetails,
-      review,
-      rating,
-      isSpoiler,
+      tmdbId: tmdbId,
+      title: title,
+      posterPath: posterPath,
+      review: review,
+      rating: rating,
+      isSpoiler: isSpoiler,
     );
   }
 
 // ignore: unused_element
   _RemoveMovieFromWatchedPressed removeMovieFromWatchedPressed(
-      {String movieTitle, int movieId}) {
+      {@required String movieTitle, @required int movieId}) {
     return _RemoveMovieFromWatchedPressed(
       movieTitle: movieTitle,
       movieId: movieId,
@@ -72,11 +84,11 @@ class _$MovieListsUserProfileEventTearOff {
 
 // ignore: unused_element
   _UpdateMovieWatchedReviewPressed updateMovieWatchedReviewPressed(
-      {String movieTitle,
-      int movieId,
-      String review,
-      num rating,
-      bool isSpoiler}) {
+      {@required String movieTitle,
+      @required int movieId,
+      @required String review,
+      @required num rating,
+      @required bool isSpoiler}) {
     return _UpdateMovieWatchedReviewPressed(
       movieTitle: movieTitle,
       movieId: movieId,
@@ -112,12 +124,13 @@ mixin _$MovieListsUserProfileEvent {
     @required
         TResult movieWatchedUpdated(
             List<FirestoreMovieWatchedDetails> moviesWatched),
-    @required TResult addMovieToWatchlistPressed(MovieDetails movieDetails),
     @required
-        TResult removeMovieFromWatchlistPressed(MovieDetails movieDetails),
+        TResult addMovieToWatchlistPressed(
+            int tmdbId, String title, String posterPath),
+    @required TResult removeMovieFromWatchlistPressed(int tmdbId, String title),
     @required
-        TResult addMovieToWatchedPressed(MovieDetails movieDetails,
-            String review, num rating, bool isSpoiler),
+        TResult addMovieToWatchedPressed(int tmdbId, String title,
+            String posterPath, String review, num rating, bool isSpoiler),
     @required
         TResult removeMovieFromWatchedPressed(String movieTitle, int movieId),
     @required
@@ -133,10 +146,11 @@ mixin _$MovieListsUserProfileEvent {
         List<FirestoreMovieWatchlistDetails> moviesWatchlist),
     TResult movieWatchedUpdated(
         List<FirestoreMovieWatchedDetails> moviesWatched),
-    TResult addMovieToWatchlistPressed(MovieDetails movieDetails),
-    TResult removeMovieFromWatchlistPressed(MovieDetails movieDetails),
-    TResult addMovieToWatchedPressed(
-        MovieDetails movieDetails, String review, num rating, bool isSpoiler),
+    TResult addMovieToWatchlistPressed(
+        int tmdbId, String title, String posterPath),
+    TResult removeMovieFromWatchlistPressed(int tmdbId, String title),
+    TResult addMovieToWatchedPressed(int tmdbId, String title,
+        String posterPath, String review, num rating, bool isSpoiler),
     TResult removeMovieFromWatchedPressed(String movieTitle, int movieId),
     TResult updateMovieWatchedReviewPressed(String movieTitle, int movieId,
         String review, num rating, bool isSpoiler),
@@ -248,12 +262,13 @@ class _$_LoadMovieToListInitial implements _LoadMovieToListInitial {
     @required
         TResult movieWatchedUpdated(
             List<FirestoreMovieWatchedDetails> moviesWatched),
-    @required TResult addMovieToWatchlistPressed(MovieDetails movieDetails),
     @required
-        TResult removeMovieFromWatchlistPressed(MovieDetails movieDetails),
+        TResult addMovieToWatchlistPressed(
+            int tmdbId, String title, String posterPath),
+    @required TResult removeMovieFromWatchlistPressed(int tmdbId, String title),
     @required
-        TResult addMovieToWatchedPressed(MovieDetails movieDetails,
-            String review, num rating, bool isSpoiler),
+        TResult addMovieToWatchedPressed(int tmdbId, String title,
+            String posterPath, String review, num rating, bool isSpoiler),
     @required
         TResult removeMovieFromWatchedPressed(String movieTitle, int movieId),
     @required
@@ -283,10 +298,11 @@ class _$_LoadMovieToListInitial implements _LoadMovieToListInitial {
         List<FirestoreMovieWatchlistDetails> moviesWatchlist),
     TResult movieWatchedUpdated(
         List<FirestoreMovieWatchedDetails> moviesWatched),
-    TResult addMovieToWatchlistPressed(MovieDetails movieDetails),
-    TResult removeMovieFromWatchlistPressed(MovieDetails movieDetails),
-    TResult addMovieToWatchedPressed(
-        MovieDetails movieDetails, String review, num rating, bool isSpoiler),
+    TResult addMovieToWatchlistPressed(
+        int tmdbId, String title, String posterPath),
+    TResult removeMovieFromWatchlistPressed(int tmdbId, String title),
+    TResult addMovieToWatchedPressed(int tmdbId, String title,
+        String posterPath, String review, num rating, bool isSpoiler),
     TResult removeMovieFromWatchedPressed(String movieTitle, int movieId),
     TResult updateMovieWatchedReviewPressed(String movieTitle, int movieId,
         String review, num rating, bool isSpoiler),
@@ -441,12 +457,13 @@ class _$_MovieWatchlistUpdated implements _MovieWatchlistUpdated {
     @required
         TResult movieWatchedUpdated(
             List<FirestoreMovieWatchedDetails> moviesWatched),
-    @required TResult addMovieToWatchlistPressed(MovieDetails movieDetails),
     @required
-        TResult removeMovieFromWatchlistPressed(MovieDetails movieDetails),
+        TResult addMovieToWatchlistPressed(
+            int tmdbId, String title, String posterPath),
+    @required TResult removeMovieFromWatchlistPressed(int tmdbId, String title),
     @required
-        TResult addMovieToWatchedPressed(MovieDetails movieDetails,
-            String review, num rating, bool isSpoiler),
+        TResult addMovieToWatchedPressed(int tmdbId, String title,
+            String posterPath, String review, num rating, bool isSpoiler),
     @required
         TResult removeMovieFromWatchedPressed(String movieTitle, int movieId),
     @required
@@ -476,10 +493,11 @@ class _$_MovieWatchlistUpdated implements _MovieWatchlistUpdated {
         List<FirestoreMovieWatchlistDetails> moviesWatchlist),
     TResult movieWatchedUpdated(
         List<FirestoreMovieWatchedDetails> moviesWatched),
-    TResult addMovieToWatchlistPressed(MovieDetails movieDetails),
-    TResult removeMovieFromWatchlistPressed(MovieDetails movieDetails),
-    TResult addMovieToWatchedPressed(
-        MovieDetails movieDetails, String review, num rating, bool isSpoiler),
+    TResult addMovieToWatchlistPressed(
+        int tmdbId, String title, String posterPath),
+    TResult removeMovieFromWatchlistPressed(int tmdbId, String title),
+    TResult addMovieToWatchedPressed(int tmdbId, String title,
+        String posterPath, String review, num rating, bool isSpoiler),
     TResult removeMovieFromWatchedPressed(String movieTitle, int movieId),
     TResult updateMovieWatchedReviewPressed(String movieTitle, int movieId,
         String review, num rating, bool isSpoiler),
@@ -639,12 +657,13 @@ class _$_MovieWatchedUpdated implements _MovieWatchedUpdated {
     @required
         TResult movieWatchedUpdated(
             List<FirestoreMovieWatchedDetails> moviesWatched),
-    @required TResult addMovieToWatchlistPressed(MovieDetails movieDetails),
     @required
-        TResult removeMovieFromWatchlistPressed(MovieDetails movieDetails),
+        TResult addMovieToWatchlistPressed(
+            int tmdbId, String title, String posterPath),
+    @required TResult removeMovieFromWatchlistPressed(int tmdbId, String title),
     @required
-        TResult addMovieToWatchedPressed(MovieDetails movieDetails,
-            String review, num rating, bool isSpoiler),
+        TResult addMovieToWatchedPressed(int tmdbId, String title,
+            String posterPath, String review, num rating, bool isSpoiler),
     @required
         TResult removeMovieFromWatchedPressed(String movieTitle, int movieId),
     @required
@@ -674,10 +693,11 @@ class _$_MovieWatchedUpdated implements _MovieWatchedUpdated {
         List<FirestoreMovieWatchlistDetails> moviesWatchlist),
     TResult movieWatchedUpdated(
         List<FirestoreMovieWatchedDetails> moviesWatched),
-    TResult addMovieToWatchlistPressed(MovieDetails movieDetails),
-    TResult removeMovieFromWatchlistPressed(MovieDetails movieDetails),
-    TResult addMovieToWatchedPressed(
-        MovieDetails movieDetails, String review, num rating, bool isSpoiler),
+    TResult addMovieToWatchlistPressed(
+        int tmdbId, String title, String posterPath),
+    TResult removeMovieFromWatchlistPressed(int tmdbId, String title),
+    TResult addMovieToWatchedPressed(int tmdbId, String title,
+        String posterPath, String review, num rating, bool isSpoiler),
     TResult removeMovieFromWatchedPressed(String movieTitle, int movieId),
     TResult updateMovieWatchedReviewPressed(String movieTitle, int movieId,
         String review, num rating, bool isSpoiler),
@@ -770,7 +790,7 @@ abstract class _$AddMovieToWatchlistPressedCopyWith<$Res> {
           _AddMovieToWatchlistPressed value,
           $Res Function(_AddMovieToWatchlistPressed) then) =
       __$AddMovieToWatchlistPressedCopyWithImpl<$Res>;
-  $Res call({MovieDetails movieDetails});
+  $Res call({int tmdbId, String title, String posterPath});
 }
 
 /// @nodoc
@@ -787,41 +807,58 @@ class __$AddMovieToWatchlistPressedCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object movieDetails = freezed,
+    Object tmdbId = freezed,
+    Object title = freezed,
+    Object posterPath = freezed,
   }) {
     return _then(_AddMovieToWatchlistPressed(
-      movieDetails == freezed
-          ? _value.movieDetails
-          : movieDetails as MovieDetails,
+      tmdbId: tmdbId == freezed ? _value.tmdbId : tmdbId as int,
+      title: title == freezed ? _value.title : title as String,
+      posterPath:
+          posterPath == freezed ? _value.posterPath : posterPath as String,
     ));
   }
 }
 
 /// @nodoc
 class _$_AddMovieToWatchlistPressed implements _AddMovieToWatchlistPressed {
-  const _$_AddMovieToWatchlistPressed(this.movieDetails)
-      : assert(movieDetails != null);
+  const _$_AddMovieToWatchlistPressed(
+      {@required this.tmdbId, @required this.title, @required this.posterPath})
+      : assert(tmdbId != null),
+        assert(title != null),
+        assert(posterPath != null);
 
   @override
-  final MovieDetails movieDetails;
+  final int tmdbId;
+  @override
+  final String title;
+  @override
+  final String posterPath;
 
   @override
   String toString() {
-    return 'MovieListsUserProfileEvent.addMovieToWatchlistPressed(movieDetails: $movieDetails)';
+    return 'MovieListsUserProfileEvent.addMovieToWatchlistPressed(tmdbId: $tmdbId, title: $title, posterPath: $posterPath)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is _AddMovieToWatchlistPressed &&
-            (identical(other.movieDetails, movieDetails) ||
+            (identical(other.tmdbId, tmdbId) ||
+                const DeepCollectionEquality().equals(other.tmdbId, tmdbId)) &&
+            (identical(other.title, title) ||
+                const DeepCollectionEquality().equals(other.title, title)) &&
+            (identical(other.posterPath, posterPath) ||
                 const DeepCollectionEquality()
-                    .equals(other.movieDetails, movieDetails)));
+                    .equals(other.posterPath, posterPath)));
   }
 
   @override
   int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(movieDetails);
+      runtimeType.hashCode ^
+      const DeepCollectionEquality().hash(tmdbId) ^
+      const DeepCollectionEquality().hash(title) ^
+      const DeepCollectionEquality().hash(posterPath);
 
   @JsonKey(ignore: true)
   @override
@@ -839,12 +876,13 @@ class _$_AddMovieToWatchlistPressed implements _AddMovieToWatchlistPressed {
     @required
         TResult movieWatchedUpdated(
             List<FirestoreMovieWatchedDetails> moviesWatched),
-    @required TResult addMovieToWatchlistPressed(MovieDetails movieDetails),
     @required
-        TResult removeMovieFromWatchlistPressed(MovieDetails movieDetails),
+        TResult addMovieToWatchlistPressed(
+            int tmdbId, String title, String posterPath),
+    @required TResult removeMovieFromWatchlistPressed(int tmdbId, String title),
     @required
-        TResult addMovieToWatchedPressed(MovieDetails movieDetails,
-            String review, num rating, bool isSpoiler),
+        TResult addMovieToWatchedPressed(int tmdbId, String title,
+            String posterPath, String review, num rating, bool isSpoiler),
     @required
         TResult removeMovieFromWatchedPressed(String movieTitle, int movieId),
     @required
@@ -863,7 +901,7 @@ class _$_AddMovieToWatchlistPressed implements _AddMovieToWatchlistPressed {
     assert(updateMovieWatchedReviewPressed != null);
     assert(nextMovieWatchlistPageCalled != null);
     assert(nextMovieWatchedPageCalled != null);
-    return addMovieToWatchlistPressed(movieDetails);
+    return addMovieToWatchlistPressed(tmdbId, title, posterPath);
   }
 
   @override
@@ -874,10 +912,11 @@ class _$_AddMovieToWatchlistPressed implements _AddMovieToWatchlistPressed {
         List<FirestoreMovieWatchlistDetails> moviesWatchlist),
     TResult movieWatchedUpdated(
         List<FirestoreMovieWatchedDetails> moviesWatched),
-    TResult addMovieToWatchlistPressed(MovieDetails movieDetails),
-    TResult removeMovieFromWatchlistPressed(MovieDetails movieDetails),
-    TResult addMovieToWatchedPressed(
-        MovieDetails movieDetails, String review, num rating, bool isSpoiler),
+    TResult addMovieToWatchlistPressed(
+        int tmdbId, String title, String posterPath),
+    TResult removeMovieFromWatchlistPressed(int tmdbId, String title),
+    TResult addMovieToWatchedPressed(int tmdbId, String title,
+        String posterPath, String review, num rating, bool isSpoiler),
     TResult removeMovieFromWatchedPressed(String movieTitle, int movieId),
     TResult updateMovieWatchedReviewPressed(String movieTitle, int movieId,
         String review, num rating, bool isSpoiler),
@@ -887,7 +926,7 @@ class _$_AddMovieToWatchlistPressed implements _AddMovieToWatchlistPressed {
   }) {
     assert(orElse != null);
     if (addMovieToWatchlistPressed != null) {
-      return addMovieToWatchlistPressed(movieDetails);
+      return addMovieToWatchlistPressed(tmdbId, title, posterPath);
     }
     return orElse();
   }
@@ -956,10 +995,14 @@ class _$_AddMovieToWatchlistPressed implements _AddMovieToWatchlistPressed {
 
 abstract class _AddMovieToWatchlistPressed
     implements MovieListsUserProfileEvent {
-  const factory _AddMovieToWatchlistPressed(MovieDetails movieDetails) =
-      _$_AddMovieToWatchlistPressed;
+  const factory _AddMovieToWatchlistPressed(
+      {@required int tmdbId,
+      @required String title,
+      @required String posterPath}) = _$_AddMovieToWatchlistPressed;
 
-  MovieDetails get movieDetails;
+  int get tmdbId;
+  String get title;
+  String get posterPath;
   @JsonKey(ignore: true)
   _$AddMovieToWatchlistPressedCopyWith<_AddMovieToWatchlistPressed>
       get copyWith;
@@ -971,7 +1014,7 @@ abstract class _$RemoveMovieFromWatchlistPressedCopyWith<$Res> {
           _RemoveMovieFromWatchlistPressed value,
           $Res Function(_RemoveMovieFromWatchlistPressed) then) =
       __$RemoveMovieFromWatchlistPressedCopyWithImpl<$Res>;
-  $Res call({MovieDetails movieDetails});
+  $Res call({int tmdbId, String title});
 }
 
 /// @nodoc
@@ -989,12 +1032,12 @@ class __$RemoveMovieFromWatchlistPressedCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object movieDetails = freezed,
+    Object tmdbId = freezed,
+    Object title = freezed,
   }) {
     return _then(_RemoveMovieFromWatchlistPressed(
-      movieDetails == freezed
-          ? _value.movieDetails
-          : movieDetails as MovieDetails,
+      tmdbId: tmdbId == freezed ? _value.tmdbId : tmdbId as int,
+      title: title == freezed ? _value.title : title as String,
     ));
   }
 }
@@ -1002,29 +1045,36 @@ class __$RemoveMovieFromWatchlistPressedCopyWithImpl<$Res>
 /// @nodoc
 class _$_RemoveMovieFromWatchlistPressed
     implements _RemoveMovieFromWatchlistPressed {
-  const _$_RemoveMovieFromWatchlistPressed(this.movieDetails)
-      : assert(movieDetails != null);
+  const _$_RemoveMovieFromWatchlistPressed(
+      {@required this.tmdbId, @required this.title})
+      : assert(tmdbId != null),
+        assert(title != null);
 
   @override
-  final MovieDetails movieDetails;
+  final int tmdbId;
+  @override
+  final String title;
 
   @override
   String toString() {
-    return 'MovieListsUserProfileEvent.removeMovieFromWatchlistPressed(movieDetails: $movieDetails)';
+    return 'MovieListsUserProfileEvent.removeMovieFromWatchlistPressed(tmdbId: $tmdbId, title: $title)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is _RemoveMovieFromWatchlistPressed &&
-            (identical(other.movieDetails, movieDetails) ||
-                const DeepCollectionEquality()
-                    .equals(other.movieDetails, movieDetails)));
+            (identical(other.tmdbId, tmdbId) ||
+                const DeepCollectionEquality().equals(other.tmdbId, tmdbId)) &&
+            (identical(other.title, title) ||
+                const DeepCollectionEquality().equals(other.title, title)));
   }
 
   @override
   int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(movieDetails);
+      runtimeType.hashCode ^
+      const DeepCollectionEquality().hash(tmdbId) ^
+      const DeepCollectionEquality().hash(title);
 
   @JsonKey(ignore: true)
   @override
@@ -1042,12 +1092,13 @@ class _$_RemoveMovieFromWatchlistPressed
     @required
         TResult movieWatchedUpdated(
             List<FirestoreMovieWatchedDetails> moviesWatched),
-    @required TResult addMovieToWatchlistPressed(MovieDetails movieDetails),
     @required
-        TResult removeMovieFromWatchlistPressed(MovieDetails movieDetails),
+        TResult addMovieToWatchlistPressed(
+            int tmdbId, String title, String posterPath),
+    @required TResult removeMovieFromWatchlistPressed(int tmdbId, String title),
     @required
-        TResult addMovieToWatchedPressed(MovieDetails movieDetails,
-            String review, num rating, bool isSpoiler),
+        TResult addMovieToWatchedPressed(int tmdbId, String title,
+            String posterPath, String review, num rating, bool isSpoiler),
     @required
         TResult removeMovieFromWatchedPressed(String movieTitle, int movieId),
     @required
@@ -1066,7 +1117,7 @@ class _$_RemoveMovieFromWatchlistPressed
     assert(updateMovieWatchedReviewPressed != null);
     assert(nextMovieWatchlistPageCalled != null);
     assert(nextMovieWatchedPageCalled != null);
-    return removeMovieFromWatchlistPressed(movieDetails);
+    return removeMovieFromWatchlistPressed(tmdbId, title);
   }
 
   @override
@@ -1077,10 +1128,11 @@ class _$_RemoveMovieFromWatchlistPressed
         List<FirestoreMovieWatchlistDetails> moviesWatchlist),
     TResult movieWatchedUpdated(
         List<FirestoreMovieWatchedDetails> moviesWatched),
-    TResult addMovieToWatchlistPressed(MovieDetails movieDetails),
-    TResult removeMovieFromWatchlistPressed(MovieDetails movieDetails),
-    TResult addMovieToWatchedPressed(
-        MovieDetails movieDetails, String review, num rating, bool isSpoiler),
+    TResult addMovieToWatchlistPressed(
+        int tmdbId, String title, String posterPath),
+    TResult removeMovieFromWatchlistPressed(int tmdbId, String title),
+    TResult addMovieToWatchedPressed(int tmdbId, String title,
+        String posterPath, String review, num rating, bool isSpoiler),
     TResult removeMovieFromWatchedPressed(String movieTitle, int movieId),
     TResult updateMovieWatchedReviewPressed(String movieTitle, int movieId,
         String review, num rating, bool isSpoiler),
@@ -1090,7 +1142,7 @@ class _$_RemoveMovieFromWatchlistPressed
   }) {
     assert(orElse != null);
     if (removeMovieFromWatchlistPressed != null) {
-      return removeMovieFromWatchlistPressed(movieDetails);
+      return removeMovieFromWatchlistPressed(tmdbId, title);
     }
     return orElse();
   }
@@ -1159,10 +1211,12 @@ class _$_RemoveMovieFromWatchlistPressed
 
 abstract class _RemoveMovieFromWatchlistPressed
     implements MovieListsUserProfileEvent {
-  const factory _RemoveMovieFromWatchlistPressed(MovieDetails movieDetails) =
-      _$_RemoveMovieFromWatchlistPressed;
+  const factory _RemoveMovieFromWatchlistPressed(
+      {@required int tmdbId,
+      @required String title}) = _$_RemoveMovieFromWatchlistPressed;
 
-  MovieDetails get movieDetails;
+  int get tmdbId;
+  String get title;
   @JsonKey(ignore: true)
   _$RemoveMovieFromWatchlistPressedCopyWith<_RemoveMovieFromWatchlistPressed>
       get copyWith;
@@ -1174,7 +1228,12 @@ abstract class _$AddMovieToWatchedPressedCopyWith<$Res> {
           $Res Function(_AddMovieToWatchedPressed) then) =
       __$AddMovieToWatchedPressedCopyWithImpl<$Res>;
   $Res call(
-      {MovieDetails movieDetails, String review, num rating, bool isSpoiler});
+      {int tmdbId,
+      String title,
+      String posterPath,
+      String review,
+      num rating,
+      bool isSpoiler});
 }
 
 /// @nodoc
@@ -1191,18 +1250,21 @@ class __$AddMovieToWatchedPressedCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object movieDetails = freezed,
+    Object tmdbId = freezed,
+    Object title = freezed,
+    Object posterPath = freezed,
     Object review = freezed,
     Object rating = freezed,
     Object isSpoiler = freezed,
   }) {
     return _then(_AddMovieToWatchedPressed(
-      movieDetails == freezed
-          ? _value.movieDetails
-          : movieDetails as MovieDetails,
-      review == freezed ? _value.review : review as String,
-      rating == freezed ? _value.rating : rating as num,
-      isSpoiler == freezed ? _value.isSpoiler : isSpoiler as bool,
+      tmdbId: tmdbId == freezed ? _value.tmdbId : tmdbId as int,
+      title: title == freezed ? _value.title : title as String,
+      posterPath:
+          posterPath == freezed ? _value.posterPath : posterPath as String,
+      review: review == freezed ? _value.review : review as String,
+      rating: rating == freezed ? _value.rating : rating as num,
+      isSpoiler: isSpoiler == freezed ? _value.isSpoiler : isSpoiler as bool,
     ));
   }
 }
@@ -1210,14 +1272,25 @@ class __$AddMovieToWatchedPressedCopyWithImpl<$Res>
 /// @nodoc
 class _$_AddMovieToWatchedPressed implements _AddMovieToWatchedPressed {
   const _$_AddMovieToWatchedPressed(
-      this.movieDetails, this.review, this.rating, this.isSpoiler)
-      : assert(movieDetails != null),
+      {@required this.tmdbId,
+      @required this.title,
+      @required this.posterPath,
+      @required this.review,
+      @required this.rating,
+      @required this.isSpoiler})
+      : assert(tmdbId != null),
+        assert(title != null),
+        assert(posterPath != null),
         assert(review != null),
         assert(rating != null),
         assert(isSpoiler != null);
 
   @override
-  final MovieDetails movieDetails;
+  final int tmdbId;
+  @override
+  final String title;
+  @override
+  final String posterPath;
   @override
   final String review;
   @override
@@ -1227,16 +1300,20 @@ class _$_AddMovieToWatchedPressed implements _AddMovieToWatchedPressed {
 
   @override
   String toString() {
-    return 'MovieListsUserProfileEvent.addMovieToWatchedPressed(movieDetails: $movieDetails, review: $review, rating: $rating, isSpoiler: $isSpoiler)';
+    return 'MovieListsUserProfileEvent.addMovieToWatchedPressed(tmdbId: $tmdbId, title: $title, posterPath: $posterPath, review: $review, rating: $rating, isSpoiler: $isSpoiler)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is _AddMovieToWatchedPressed &&
-            (identical(other.movieDetails, movieDetails) ||
+            (identical(other.tmdbId, tmdbId) ||
+                const DeepCollectionEquality().equals(other.tmdbId, tmdbId)) &&
+            (identical(other.title, title) ||
+                const DeepCollectionEquality().equals(other.title, title)) &&
+            (identical(other.posterPath, posterPath) ||
                 const DeepCollectionEquality()
-                    .equals(other.movieDetails, movieDetails)) &&
+                    .equals(other.posterPath, posterPath)) &&
             (identical(other.review, review) ||
                 const DeepCollectionEquality().equals(other.review, review)) &&
             (identical(other.rating, rating) ||
@@ -1249,7 +1326,9 @@ class _$_AddMovieToWatchedPressed implements _AddMovieToWatchedPressed {
   @override
   int get hashCode =>
       runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(movieDetails) ^
+      const DeepCollectionEquality().hash(tmdbId) ^
+      const DeepCollectionEquality().hash(title) ^
+      const DeepCollectionEquality().hash(posterPath) ^
       const DeepCollectionEquality().hash(review) ^
       const DeepCollectionEquality().hash(rating) ^
       const DeepCollectionEquality().hash(isSpoiler);
@@ -1270,12 +1349,13 @@ class _$_AddMovieToWatchedPressed implements _AddMovieToWatchedPressed {
     @required
         TResult movieWatchedUpdated(
             List<FirestoreMovieWatchedDetails> moviesWatched),
-    @required TResult addMovieToWatchlistPressed(MovieDetails movieDetails),
     @required
-        TResult removeMovieFromWatchlistPressed(MovieDetails movieDetails),
+        TResult addMovieToWatchlistPressed(
+            int tmdbId, String title, String posterPath),
+    @required TResult removeMovieFromWatchlistPressed(int tmdbId, String title),
     @required
-        TResult addMovieToWatchedPressed(MovieDetails movieDetails,
-            String review, num rating, bool isSpoiler),
+        TResult addMovieToWatchedPressed(int tmdbId, String title,
+            String posterPath, String review, num rating, bool isSpoiler),
     @required
         TResult removeMovieFromWatchedPressed(String movieTitle, int movieId),
     @required
@@ -1294,7 +1374,8 @@ class _$_AddMovieToWatchedPressed implements _AddMovieToWatchedPressed {
     assert(updateMovieWatchedReviewPressed != null);
     assert(nextMovieWatchlistPageCalled != null);
     assert(nextMovieWatchedPageCalled != null);
-    return addMovieToWatchedPressed(movieDetails, review, rating, isSpoiler);
+    return addMovieToWatchedPressed(
+        tmdbId, title, posterPath, review, rating, isSpoiler);
   }
 
   @override
@@ -1305,10 +1386,11 @@ class _$_AddMovieToWatchedPressed implements _AddMovieToWatchedPressed {
         List<FirestoreMovieWatchlistDetails> moviesWatchlist),
     TResult movieWatchedUpdated(
         List<FirestoreMovieWatchedDetails> moviesWatched),
-    TResult addMovieToWatchlistPressed(MovieDetails movieDetails),
-    TResult removeMovieFromWatchlistPressed(MovieDetails movieDetails),
-    TResult addMovieToWatchedPressed(
-        MovieDetails movieDetails, String review, num rating, bool isSpoiler),
+    TResult addMovieToWatchlistPressed(
+        int tmdbId, String title, String posterPath),
+    TResult removeMovieFromWatchlistPressed(int tmdbId, String title),
+    TResult addMovieToWatchedPressed(int tmdbId, String title,
+        String posterPath, String review, num rating, bool isSpoiler),
     TResult removeMovieFromWatchedPressed(String movieTitle, int movieId),
     TResult updateMovieWatchedReviewPressed(String movieTitle, int movieId,
         String review, num rating, bool isSpoiler),
@@ -1318,7 +1400,8 @@ class _$_AddMovieToWatchedPressed implements _AddMovieToWatchedPressed {
   }) {
     assert(orElse != null);
     if (addMovieToWatchedPressed != null) {
-      return addMovieToWatchedPressed(movieDetails, review, rating, isSpoiler);
+      return addMovieToWatchedPressed(
+          tmdbId, title, posterPath, review, rating, isSpoiler);
     }
     return orElse();
   }
@@ -1386,10 +1469,17 @@ class _$_AddMovieToWatchedPressed implements _AddMovieToWatchedPressed {
 }
 
 abstract class _AddMovieToWatchedPressed implements MovieListsUserProfileEvent {
-  const factory _AddMovieToWatchedPressed(MovieDetails movieDetails,
-      String review, num rating, bool isSpoiler) = _$_AddMovieToWatchedPressed;
+  const factory _AddMovieToWatchedPressed(
+      {@required int tmdbId,
+      @required String title,
+      @required String posterPath,
+      @required String review,
+      @required num rating,
+      @required bool isSpoiler}) = _$_AddMovieToWatchedPressed;
 
-  MovieDetails get movieDetails;
+  int get tmdbId;
+  String get title;
+  String get posterPath;
   String get review;
   num get rating;
   bool get isSpoiler;
@@ -1435,7 +1525,10 @@ class __$RemoveMovieFromWatchedPressedCopyWithImpl<$Res>
 /// @nodoc
 class _$_RemoveMovieFromWatchedPressed
     implements _RemoveMovieFromWatchedPressed {
-  const _$_RemoveMovieFromWatchedPressed({this.movieTitle, this.movieId});
+  const _$_RemoveMovieFromWatchedPressed(
+      {@required this.movieTitle, @required this.movieId})
+      : assert(movieTitle != null),
+        assert(movieId != null);
 
   @override
   final String movieTitle;
@@ -1480,12 +1573,13 @@ class _$_RemoveMovieFromWatchedPressed
     @required
         TResult movieWatchedUpdated(
             List<FirestoreMovieWatchedDetails> moviesWatched),
-    @required TResult addMovieToWatchlistPressed(MovieDetails movieDetails),
     @required
-        TResult removeMovieFromWatchlistPressed(MovieDetails movieDetails),
+        TResult addMovieToWatchlistPressed(
+            int tmdbId, String title, String posterPath),
+    @required TResult removeMovieFromWatchlistPressed(int tmdbId, String title),
     @required
-        TResult addMovieToWatchedPressed(MovieDetails movieDetails,
-            String review, num rating, bool isSpoiler),
+        TResult addMovieToWatchedPressed(int tmdbId, String title,
+            String posterPath, String review, num rating, bool isSpoiler),
     @required
         TResult removeMovieFromWatchedPressed(String movieTitle, int movieId),
     @required
@@ -1515,10 +1609,11 @@ class _$_RemoveMovieFromWatchedPressed
         List<FirestoreMovieWatchlistDetails> moviesWatchlist),
     TResult movieWatchedUpdated(
         List<FirestoreMovieWatchedDetails> moviesWatched),
-    TResult addMovieToWatchlistPressed(MovieDetails movieDetails),
-    TResult removeMovieFromWatchlistPressed(MovieDetails movieDetails),
-    TResult addMovieToWatchedPressed(
-        MovieDetails movieDetails, String review, num rating, bool isSpoiler),
+    TResult addMovieToWatchlistPressed(
+        int tmdbId, String title, String posterPath),
+    TResult removeMovieFromWatchlistPressed(int tmdbId, String title),
+    TResult addMovieToWatchedPressed(int tmdbId, String title,
+        String posterPath, String review, num rating, bool isSpoiler),
     TResult removeMovieFromWatchedPressed(String movieTitle, int movieId),
     TResult updateMovieWatchedReviewPressed(String movieTitle, int movieId,
         String review, num rating, bool isSpoiler),
@@ -1598,7 +1693,8 @@ class _$_RemoveMovieFromWatchedPressed
 abstract class _RemoveMovieFromWatchedPressed
     implements MovieListsUserProfileEvent {
   const factory _RemoveMovieFromWatchedPressed(
-      {String movieTitle, int movieId}) = _$_RemoveMovieFromWatchedPressed;
+      {@required String movieTitle,
+      @required int movieId}) = _$_RemoveMovieFromWatchedPressed;
 
   String get movieTitle;
   int get movieId;
@@ -1657,11 +1753,16 @@ class __$UpdateMovieWatchedReviewPressedCopyWithImpl<$Res>
 class _$_UpdateMovieWatchedReviewPressed
     implements _UpdateMovieWatchedReviewPressed {
   const _$_UpdateMovieWatchedReviewPressed(
-      {this.movieTitle,
-      this.movieId,
-      this.review,
-      this.rating,
-      this.isSpoiler});
+      {@required this.movieTitle,
+      @required this.movieId,
+      @required this.review,
+      @required this.rating,
+      @required this.isSpoiler})
+      : assert(movieTitle != null),
+        assert(movieId != null),
+        assert(review != null),
+        assert(rating != null),
+        assert(isSpoiler != null);
 
   @override
   final String movieTitle;
@@ -1723,12 +1824,13 @@ class _$_UpdateMovieWatchedReviewPressed
     @required
         TResult movieWatchedUpdated(
             List<FirestoreMovieWatchedDetails> moviesWatched),
-    @required TResult addMovieToWatchlistPressed(MovieDetails movieDetails),
     @required
-        TResult removeMovieFromWatchlistPressed(MovieDetails movieDetails),
+        TResult addMovieToWatchlistPressed(
+            int tmdbId, String title, String posterPath),
+    @required TResult removeMovieFromWatchlistPressed(int tmdbId, String title),
     @required
-        TResult addMovieToWatchedPressed(MovieDetails movieDetails,
-            String review, num rating, bool isSpoiler),
+        TResult addMovieToWatchedPressed(int tmdbId, String title,
+            String posterPath, String review, num rating, bool isSpoiler),
     @required
         TResult removeMovieFromWatchedPressed(String movieTitle, int movieId),
     @required
@@ -1759,10 +1861,11 @@ class _$_UpdateMovieWatchedReviewPressed
         List<FirestoreMovieWatchlistDetails> moviesWatchlist),
     TResult movieWatchedUpdated(
         List<FirestoreMovieWatchedDetails> moviesWatched),
-    TResult addMovieToWatchlistPressed(MovieDetails movieDetails),
-    TResult removeMovieFromWatchlistPressed(MovieDetails movieDetails),
-    TResult addMovieToWatchedPressed(
-        MovieDetails movieDetails, String review, num rating, bool isSpoiler),
+    TResult addMovieToWatchlistPressed(
+        int tmdbId, String title, String posterPath),
+    TResult removeMovieFromWatchlistPressed(int tmdbId, String title),
+    TResult addMovieToWatchedPressed(int tmdbId, String title,
+        String posterPath, String review, num rating, bool isSpoiler),
     TResult removeMovieFromWatchedPressed(String movieTitle, int movieId),
     TResult updateMovieWatchedReviewPressed(String movieTitle, int movieId,
         String review, num rating, bool isSpoiler),
@@ -1843,11 +1946,11 @@ class _$_UpdateMovieWatchedReviewPressed
 abstract class _UpdateMovieWatchedReviewPressed
     implements MovieListsUserProfileEvent {
   const factory _UpdateMovieWatchedReviewPressed(
-      {String movieTitle,
-      int movieId,
-      String review,
-      num rating,
-      bool isSpoiler}) = _$_UpdateMovieWatchedReviewPressed;
+      {@required String movieTitle,
+      @required int movieId,
+      @required String review,
+      @required num rating,
+      @required bool isSpoiler}) = _$_UpdateMovieWatchedReviewPressed;
 
   String get movieTitle;
   int get movieId;
@@ -1908,12 +2011,13 @@ class _$_NextMovieWatchlistPageCalled implements _NextMovieWatchlistPageCalled {
     @required
         TResult movieWatchedUpdated(
             List<FirestoreMovieWatchedDetails> moviesWatched),
-    @required TResult addMovieToWatchlistPressed(MovieDetails movieDetails),
     @required
-        TResult removeMovieFromWatchlistPressed(MovieDetails movieDetails),
+        TResult addMovieToWatchlistPressed(
+            int tmdbId, String title, String posterPath),
+    @required TResult removeMovieFromWatchlistPressed(int tmdbId, String title),
     @required
-        TResult addMovieToWatchedPressed(MovieDetails movieDetails,
-            String review, num rating, bool isSpoiler),
+        TResult addMovieToWatchedPressed(int tmdbId, String title,
+            String posterPath, String review, num rating, bool isSpoiler),
     @required
         TResult removeMovieFromWatchedPressed(String movieTitle, int movieId),
     @required
@@ -1943,10 +2047,11 @@ class _$_NextMovieWatchlistPageCalled implements _NextMovieWatchlistPageCalled {
         List<FirestoreMovieWatchlistDetails> moviesWatchlist),
     TResult movieWatchedUpdated(
         List<FirestoreMovieWatchedDetails> moviesWatched),
-    TResult addMovieToWatchlistPressed(MovieDetails movieDetails),
-    TResult removeMovieFromWatchlistPressed(MovieDetails movieDetails),
-    TResult addMovieToWatchedPressed(
-        MovieDetails movieDetails, String review, num rating, bool isSpoiler),
+    TResult addMovieToWatchlistPressed(
+        int tmdbId, String title, String posterPath),
+    TResult removeMovieFromWatchlistPressed(int tmdbId, String title),
+    TResult addMovieToWatchedPressed(int tmdbId, String title,
+        String posterPath, String review, num rating, bool isSpoiler),
     TResult removeMovieFromWatchedPressed(String movieTitle, int movieId),
     TResult updateMovieWatchedReviewPressed(String movieTitle, int movieId,
         String review, num rating, bool isSpoiler),
@@ -2077,12 +2182,13 @@ class _$_NextMovieWatchedPageCalled implements _NextMovieWatchedPageCalled {
     @required
         TResult movieWatchedUpdated(
             List<FirestoreMovieWatchedDetails> moviesWatched),
-    @required TResult addMovieToWatchlistPressed(MovieDetails movieDetails),
     @required
-        TResult removeMovieFromWatchlistPressed(MovieDetails movieDetails),
+        TResult addMovieToWatchlistPressed(
+            int tmdbId, String title, String posterPath),
+    @required TResult removeMovieFromWatchlistPressed(int tmdbId, String title),
     @required
-        TResult addMovieToWatchedPressed(MovieDetails movieDetails,
-            String review, num rating, bool isSpoiler),
+        TResult addMovieToWatchedPressed(int tmdbId, String title,
+            String posterPath, String review, num rating, bool isSpoiler),
     @required
         TResult removeMovieFromWatchedPressed(String movieTitle, int movieId),
     @required
@@ -2112,10 +2218,11 @@ class _$_NextMovieWatchedPageCalled implements _NextMovieWatchedPageCalled {
         List<FirestoreMovieWatchlistDetails> moviesWatchlist),
     TResult movieWatchedUpdated(
         List<FirestoreMovieWatchedDetails> moviesWatched),
-    TResult addMovieToWatchlistPressed(MovieDetails movieDetails),
-    TResult removeMovieFromWatchlistPressed(MovieDetails movieDetails),
-    TResult addMovieToWatchedPressed(
-        MovieDetails movieDetails, String review, num rating, bool isSpoiler),
+    TResult addMovieToWatchlistPressed(
+        int tmdbId, String title, String posterPath),
+    TResult removeMovieFromWatchlistPressed(int tmdbId, String title),
+    TResult addMovieToWatchedPressed(int tmdbId, String title,
+        String posterPath, String review, num rating, bool isSpoiler),
     TResult removeMovieFromWatchedPressed(String movieTitle, int movieId),
     TResult updateMovieWatchedReviewPressed(String movieTitle, int movieId,
         String review, num rating, bool isSpoiler),

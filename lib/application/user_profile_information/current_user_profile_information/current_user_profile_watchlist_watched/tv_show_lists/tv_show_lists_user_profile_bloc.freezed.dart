@@ -36,34 +36,46 @@ class _$TvShowListsUserProfileEventTearOff {
 
 // ignore: unused_element
   _AddTvShowToWatchlistPressed addTvShowToWatchlistPressed(
-      TvShowDetails tvShowDetails) {
+      {@required int tmdbId,
+      @required String title,
+      @required String posterPath}) {
     return _AddTvShowToWatchlistPressed(
-      tvShowDetails,
+      tmdbId: tmdbId,
+      title: title,
+      posterPath: posterPath,
     );
   }
 
 // ignore: unused_element
   _RemoveTvShowFromWatchlistPressed removeTvShowFromWatchlistPressed(
-      TvShowDetails tvShowDetails) {
+      {@required int tmdbId, @required String title}) {
     return _RemoveTvShowFromWatchlistPressed(
-      tvShowDetails,
+      tmdbId: tmdbId,
+      title: title,
     );
   }
 
 // ignore: unused_element
   _AddTvShowToWatchedPressed addTvShowToWatchedPressed(
-      TvShowDetails tvShowDetails, String review, num rating, bool isSpoiler) {
+      {@required int tmdbId,
+      @required String title,
+      @required String posterPath,
+      @required String review,
+      @required num rating,
+      @required bool isSpoiler}) {
     return _AddTvShowToWatchedPressed(
-      tvShowDetails,
-      review,
-      rating,
-      isSpoiler,
+      tmdbId: tmdbId,
+      title: title,
+      posterPath: posterPath,
+      review: review,
+      rating: rating,
+      isSpoiler: isSpoiler,
     );
   }
 
 // ignore: unused_element
   _RemoveTvShowFromWatchedPressed removeTvShowFromWatchedPressed(
-      {String tvShowTitle, int tvShowId}) {
+      {@required String tvShowTitle, @required int tvShowId}) {
     return _RemoveTvShowFromWatchedPressed(
       tvShowTitle: tvShowTitle,
       tvShowId: tvShowId,
@@ -72,11 +84,11 @@ class _$TvShowListsUserProfileEventTearOff {
 
 // ignore: unused_element
   _UpdateTvShowWatchedReviewPressed updateTvShowWatchedReviewPressed(
-      {String tvShowTitle,
-      int tvShowId,
-      String review,
-      num rating,
-      bool isSpoiler}) {
+      {@required String tvShowTitle,
+      @required int tvShowId,
+      @required String review,
+      @required num rating,
+      @required bool isSpoiler}) {
     return _UpdateTvShowWatchedReviewPressed(
       tvShowTitle: tvShowTitle,
       tvShowId: tvShowId,
@@ -112,12 +124,14 @@ mixin _$TvShowListsUserProfileEvent {
     @required
         TResult tvShowWatchedUpdated(
             List<FirestoreTvShowWatchedDetails> tvShowWatched),
-    @required TResult addTvShowToWatchlistPressed(TvShowDetails tvShowDetails),
     @required
-        TResult removeTvShowFromWatchlistPressed(TvShowDetails tvShowDetails),
+        TResult addTvShowToWatchlistPressed(
+            int tmdbId, String title, String posterPath),
     @required
-        TResult addTvShowToWatchedPressed(TvShowDetails tvShowDetails,
-            String review, num rating, bool isSpoiler),
+        TResult removeTvShowFromWatchlistPressed(int tmdbId, String title),
+    @required
+        TResult addTvShowToWatchedPressed(int tmdbId, String title,
+            String posterPath, String review, num rating, bool isSpoiler),
     @required
         TResult removeTvShowFromWatchedPressed(
             String tvShowTitle, int tvShowId),
@@ -134,10 +148,11 @@ mixin _$TvShowListsUserProfileEvent {
         List<FirestoreTvShowWatchlistDetails> tvShowWatchlist),
     TResult tvShowWatchedUpdated(
         List<FirestoreTvShowWatchedDetails> tvShowWatched),
-    TResult addTvShowToWatchlistPressed(TvShowDetails tvShowDetails),
-    TResult removeTvShowFromWatchlistPressed(TvShowDetails tvShowDetails),
-    TResult addTvShowToWatchedPressed(
-        TvShowDetails tvShowDetails, String review, num rating, bool isSpoiler),
+    TResult addTvShowToWatchlistPressed(
+        int tmdbId, String title, String posterPath),
+    TResult removeTvShowFromWatchlistPressed(int tmdbId, String title),
+    TResult addTvShowToWatchedPressed(int tmdbId, String title,
+        String posterPath, String review, num rating, bool isSpoiler),
     TResult removeTvShowFromWatchedPressed(String tvShowTitle, int tvShowId),
     TResult updateTvShowWatchedReviewPressed(String tvShowTitle, int tvShowId,
         String review, num rating, bool isSpoiler),
@@ -253,12 +268,14 @@ class _$_LoadTvShowToListInitial implements _LoadTvShowToListInitial {
     @required
         TResult tvShowWatchedUpdated(
             List<FirestoreTvShowWatchedDetails> tvShowWatched),
-    @required TResult addTvShowToWatchlistPressed(TvShowDetails tvShowDetails),
     @required
-        TResult removeTvShowFromWatchlistPressed(TvShowDetails tvShowDetails),
+        TResult addTvShowToWatchlistPressed(
+            int tmdbId, String title, String posterPath),
     @required
-        TResult addTvShowToWatchedPressed(TvShowDetails tvShowDetails,
-            String review, num rating, bool isSpoiler),
+        TResult removeTvShowFromWatchlistPressed(int tmdbId, String title),
+    @required
+        TResult addTvShowToWatchedPressed(int tmdbId, String title,
+            String posterPath, String review, num rating, bool isSpoiler),
     @required
         TResult removeTvShowFromWatchedPressed(
             String tvShowTitle, int tvShowId),
@@ -289,10 +306,11 @@ class _$_LoadTvShowToListInitial implements _LoadTvShowToListInitial {
         List<FirestoreTvShowWatchlistDetails> tvShowWatchlist),
     TResult tvShowWatchedUpdated(
         List<FirestoreTvShowWatchedDetails> tvShowWatched),
-    TResult addTvShowToWatchlistPressed(TvShowDetails tvShowDetails),
-    TResult removeTvShowFromWatchlistPressed(TvShowDetails tvShowDetails),
-    TResult addTvShowToWatchedPressed(
-        TvShowDetails tvShowDetails, String review, num rating, bool isSpoiler),
+    TResult addTvShowToWatchlistPressed(
+        int tmdbId, String title, String posterPath),
+    TResult removeTvShowFromWatchlistPressed(int tmdbId, String title),
+    TResult addTvShowToWatchedPressed(int tmdbId, String title,
+        String posterPath, String review, num rating, bool isSpoiler),
     TResult removeTvShowFromWatchedPressed(String tvShowTitle, int tvShowId),
     TResult updateTvShowWatchedReviewPressed(String tvShowTitle, int tvShowId,
         String review, num rating, bool isSpoiler),
@@ -449,12 +467,14 @@ class _$_TvShowWatchlistUpdated implements _TvShowWatchlistUpdated {
     @required
         TResult tvShowWatchedUpdated(
             List<FirestoreTvShowWatchedDetails> tvShowWatched),
-    @required TResult addTvShowToWatchlistPressed(TvShowDetails tvShowDetails),
     @required
-        TResult removeTvShowFromWatchlistPressed(TvShowDetails tvShowDetails),
+        TResult addTvShowToWatchlistPressed(
+            int tmdbId, String title, String posterPath),
     @required
-        TResult addTvShowToWatchedPressed(TvShowDetails tvShowDetails,
-            String review, num rating, bool isSpoiler),
+        TResult removeTvShowFromWatchlistPressed(int tmdbId, String title),
+    @required
+        TResult addTvShowToWatchedPressed(int tmdbId, String title,
+            String posterPath, String review, num rating, bool isSpoiler),
     @required
         TResult removeTvShowFromWatchedPressed(
             String tvShowTitle, int tvShowId),
@@ -485,10 +505,11 @@ class _$_TvShowWatchlistUpdated implements _TvShowWatchlistUpdated {
         List<FirestoreTvShowWatchlistDetails> tvShowWatchlist),
     TResult tvShowWatchedUpdated(
         List<FirestoreTvShowWatchedDetails> tvShowWatched),
-    TResult addTvShowToWatchlistPressed(TvShowDetails tvShowDetails),
-    TResult removeTvShowFromWatchlistPressed(TvShowDetails tvShowDetails),
-    TResult addTvShowToWatchedPressed(
-        TvShowDetails tvShowDetails, String review, num rating, bool isSpoiler),
+    TResult addTvShowToWatchlistPressed(
+        int tmdbId, String title, String posterPath),
+    TResult removeTvShowFromWatchlistPressed(int tmdbId, String title),
+    TResult addTvShowToWatchedPressed(int tmdbId, String title,
+        String posterPath, String review, num rating, bool isSpoiler),
     TResult removeTvShowFromWatchedPressed(String tvShowTitle, int tvShowId),
     TResult updateTvShowWatchedReviewPressed(String tvShowTitle, int tvShowId,
         String review, num rating, bool isSpoiler),
@@ -650,12 +671,14 @@ class _$_TvShowWatchedUpdated implements _TvShowWatchedUpdated {
     @required
         TResult tvShowWatchedUpdated(
             List<FirestoreTvShowWatchedDetails> tvShowWatched),
-    @required TResult addTvShowToWatchlistPressed(TvShowDetails tvShowDetails),
     @required
-        TResult removeTvShowFromWatchlistPressed(TvShowDetails tvShowDetails),
+        TResult addTvShowToWatchlistPressed(
+            int tmdbId, String title, String posterPath),
     @required
-        TResult addTvShowToWatchedPressed(TvShowDetails tvShowDetails,
-            String review, num rating, bool isSpoiler),
+        TResult removeTvShowFromWatchlistPressed(int tmdbId, String title),
+    @required
+        TResult addTvShowToWatchedPressed(int tmdbId, String title,
+            String posterPath, String review, num rating, bool isSpoiler),
     @required
         TResult removeTvShowFromWatchedPressed(
             String tvShowTitle, int tvShowId),
@@ -686,10 +709,11 @@ class _$_TvShowWatchedUpdated implements _TvShowWatchedUpdated {
         List<FirestoreTvShowWatchlistDetails> tvShowWatchlist),
     TResult tvShowWatchedUpdated(
         List<FirestoreTvShowWatchedDetails> tvShowWatched),
-    TResult addTvShowToWatchlistPressed(TvShowDetails tvShowDetails),
-    TResult removeTvShowFromWatchlistPressed(TvShowDetails tvShowDetails),
-    TResult addTvShowToWatchedPressed(
-        TvShowDetails tvShowDetails, String review, num rating, bool isSpoiler),
+    TResult addTvShowToWatchlistPressed(
+        int tmdbId, String title, String posterPath),
+    TResult removeTvShowFromWatchlistPressed(int tmdbId, String title),
+    TResult addTvShowToWatchedPressed(int tmdbId, String title,
+        String posterPath, String review, num rating, bool isSpoiler),
     TResult removeTvShowFromWatchedPressed(String tvShowTitle, int tvShowId),
     TResult updateTvShowWatchedReviewPressed(String tvShowTitle, int tvShowId,
         String review, num rating, bool isSpoiler),
@@ -784,7 +808,7 @@ abstract class _$AddTvShowToWatchlistPressedCopyWith<$Res> {
           _AddTvShowToWatchlistPressed value,
           $Res Function(_AddTvShowToWatchlistPressed) then) =
       __$AddTvShowToWatchlistPressedCopyWithImpl<$Res>;
-  $Res call({TvShowDetails tvShowDetails});
+  $Res call({int tmdbId, String title, String posterPath});
 }
 
 /// @nodoc
@@ -802,41 +826,58 @@ class __$AddTvShowToWatchlistPressedCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object tvShowDetails = freezed,
+    Object tmdbId = freezed,
+    Object title = freezed,
+    Object posterPath = freezed,
   }) {
     return _then(_AddTvShowToWatchlistPressed(
-      tvShowDetails == freezed
-          ? _value.tvShowDetails
-          : tvShowDetails as TvShowDetails,
+      tmdbId: tmdbId == freezed ? _value.tmdbId : tmdbId as int,
+      title: title == freezed ? _value.title : title as String,
+      posterPath:
+          posterPath == freezed ? _value.posterPath : posterPath as String,
     ));
   }
 }
 
 /// @nodoc
 class _$_AddTvShowToWatchlistPressed implements _AddTvShowToWatchlistPressed {
-  const _$_AddTvShowToWatchlistPressed(this.tvShowDetails)
-      : assert(tvShowDetails != null);
+  const _$_AddTvShowToWatchlistPressed(
+      {@required this.tmdbId, @required this.title, @required this.posterPath})
+      : assert(tmdbId != null),
+        assert(title != null),
+        assert(posterPath != null);
 
   @override
-  final TvShowDetails tvShowDetails;
+  final int tmdbId;
+  @override
+  final String title;
+  @override
+  final String posterPath;
 
   @override
   String toString() {
-    return 'TvShowListsUserProfileEvent.addTvShowToWatchlistPressed(tvShowDetails: $tvShowDetails)';
+    return 'TvShowListsUserProfileEvent.addTvShowToWatchlistPressed(tmdbId: $tmdbId, title: $title, posterPath: $posterPath)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is _AddTvShowToWatchlistPressed &&
-            (identical(other.tvShowDetails, tvShowDetails) ||
+            (identical(other.tmdbId, tmdbId) ||
+                const DeepCollectionEquality().equals(other.tmdbId, tmdbId)) &&
+            (identical(other.title, title) ||
+                const DeepCollectionEquality().equals(other.title, title)) &&
+            (identical(other.posterPath, posterPath) ||
                 const DeepCollectionEquality()
-                    .equals(other.tvShowDetails, tvShowDetails)));
+                    .equals(other.posterPath, posterPath)));
   }
 
   @override
   int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(tvShowDetails);
+      runtimeType.hashCode ^
+      const DeepCollectionEquality().hash(tmdbId) ^
+      const DeepCollectionEquality().hash(title) ^
+      const DeepCollectionEquality().hash(posterPath);
 
   @JsonKey(ignore: true)
   @override
@@ -854,12 +895,14 @@ class _$_AddTvShowToWatchlistPressed implements _AddTvShowToWatchlistPressed {
     @required
         TResult tvShowWatchedUpdated(
             List<FirestoreTvShowWatchedDetails> tvShowWatched),
-    @required TResult addTvShowToWatchlistPressed(TvShowDetails tvShowDetails),
     @required
-        TResult removeTvShowFromWatchlistPressed(TvShowDetails tvShowDetails),
+        TResult addTvShowToWatchlistPressed(
+            int tmdbId, String title, String posterPath),
     @required
-        TResult addTvShowToWatchedPressed(TvShowDetails tvShowDetails,
-            String review, num rating, bool isSpoiler),
+        TResult removeTvShowFromWatchlistPressed(int tmdbId, String title),
+    @required
+        TResult addTvShowToWatchedPressed(int tmdbId, String title,
+            String posterPath, String review, num rating, bool isSpoiler),
     @required
         TResult removeTvShowFromWatchedPressed(
             String tvShowTitle, int tvShowId),
@@ -879,7 +922,7 @@ class _$_AddTvShowToWatchlistPressed implements _AddTvShowToWatchlistPressed {
     assert(updateTvShowWatchedReviewPressed != null);
     assert(nextTvShowWatchlistPageCalled != null);
     assert(nextTvShowWatchedPageCalled != null);
-    return addTvShowToWatchlistPressed(tvShowDetails);
+    return addTvShowToWatchlistPressed(tmdbId, title, posterPath);
   }
 
   @override
@@ -890,10 +933,11 @@ class _$_AddTvShowToWatchlistPressed implements _AddTvShowToWatchlistPressed {
         List<FirestoreTvShowWatchlistDetails> tvShowWatchlist),
     TResult tvShowWatchedUpdated(
         List<FirestoreTvShowWatchedDetails> tvShowWatched),
-    TResult addTvShowToWatchlistPressed(TvShowDetails tvShowDetails),
-    TResult removeTvShowFromWatchlistPressed(TvShowDetails tvShowDetails),
-    TResult addTvShowToWatchedPressed(
-        TvShowDetails tvShowDetails, String review, num rating, bool isSpoiler),
+    TResult addTvShowToWatchlistPressed(
+        int tmdbId, String title, String posterPath),
+    TResult removeTvShowFromWatchlistPressed(int tmdbId, String title),
+    TResult addTvShowToWatchedPressed(int tmdbId, String title,
+        String posterPath, String review, num rating, bool isSpoiler),
     TResult removeTvShowFromWatchedPressed(String tvShowTitle, int tvShowId),
     TResult updateTvShowWatchedReviewPressed(String tvShowTitle, int tvShowId,
         String review, num rating, bool isSpoiler),
@@ -903,7 +947,7 @@ class _$_AddTvShowToWatchlistPressed implements _AddTvShowToWatchlistPressed {
   }) {
     assert(orElse != null);
     if (addTvShowToWatchlistPressed != null) {
-      return addTvShowToWatchlistPressed(tvShowDetails);
+      return addTvShowToWatchlistPressed(tmdbId, title, posterPath);
     }
     return orElse();
   }
@@ -974,10 +1018,14 @@ class _$_AddTvShowToWatchlistPressed implements _AddTvShowToWatchlistPressed {
 
 abstract class _AddTvShowToWatchlistPressed
     implements TvShowListsUserProfileEvent {
-  const factory _AddTvShowToWatchlistPressed(TvShowDetails tvShowDetails) =
-      _$_AddTvShowToWatchlistPressed;
+  const factory _AddTvShowToWatchlistPressed(
+      {@required int tmdbId,
+      @required String title,
+      @required String posterPath}) = _$_AddTvShowToWatchlistPressed;
 
-  TvShowDetails get tvShowDetails;
+  int get tmdbId;
+  String get title;
+  String get posterPath;
   @JsonKey(ignore: true)
   _$AddTvShowToWatchlistPressedCopyWith<_AddTvShowToWatchlistPressed>
       get copyWith;
@@ -989,7 +1037,7 @@ abstract class _$RemoveTvShowFromWatchlistPressedCopyWith<$Res> {
           _RemoveTvShowFromWatchlistPressed value,
           $Res Function(_RemoveTvShowFromWatchlistPressed) then) =
       __$RemoveTvShowFromWatchlistPressedCopyWithImpl<$Res>;
-  $Res call({TvShowDetails tvShowDetails});
+  $Res call({int tmdbId, String title});
 }
 
 /// @nodoc
@@ -1007,12 +1055,12 @@ class __$RemoveTvShowFromWatchlistPressedCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object tvShowDetails = freezed,
+    Object tmdbId = freezed,
+    Object title = freezed,
   }) {
     return _then(_RemoveTvShowFromWatchlistPressed(
-      tvShowDetails == freezed
-          ? _value.tvShowDetails
-          : tvShowDetails as TvShowDetails,
+      tmdbId: tmdbId == freezed ? _value.tmdbId : tmdbId as int,
+      title: title == freezed ? _value.title : title as String,
     ));
   }
 }
@@ -1020,29 +1068,36 @@ class __$RemoveTvShowFromWatchlistPressedCopyWithImpl<$Res>
 /// @nodoc
 class _$_RemoveTvShowFromWatchlistPressed
     implements _RemoveTvShowFromWatchlistPressed {
-  const _$_RemoveTvShowFromWatchlistPressed(this.tvShowDetails)
-      : assert(tvShowDetails != null);
+  const _$_RemoveTvShowFromWatchlistPressed(
+      {@required this.tmdbId, @required this.title})
+      : assert(tmdbId != null),
+        assert(title != null);
 
   @override
-  final TvShowDetails tvShowDetails;
+  final int tmdbId;
+  @override
+  final String title;
 
   @override
   String toString() {
-    return 'TvShowListsUserProfileEvent.removeTvShowFromWatchlistPressed(tvShowDetails: $tvShowDetails)';
+    return 'TvShowListsUserProfileEvent.removeTvShowFromWatchlistPressed(tmdbId: $tmdbId, title: $title)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is _RemoveTvShowFromWatchlistPressed &&
-            (identical(other.tvShowDetails, tvShowDetails) ||
-                const DeepCollectionEquality()
-                    .equals(other.tvShowDetails, tvShowDetails)));
+            (identical(other.tmdbId, tmdbId) ||
+                const DeepCollectionEquality().equals(other.tmdbId, tmdbId)) &&
+            (identical(other.title, title) ||
+                const DeepCollectionEquality().equals(other.title, title)));
   }
 
   @override
   int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(tvShowDetails);
+      runtimeType.hashCode ^
+      const DeepCollectionEquality().hash(tmdbId) ^
+      const DeepCollectionEquality().hash(title);
 
   @JsonKey(ignore: true)
   @override
@@ -1060,12 +1115,14 @@ class _$_RemoveTvShowFromWatchlistPressed
     @required
         TResult tvShowWatchedUpdated(
             List<FirestoreTvShowWatchedDetails> tvShowWatched),
-    @required TResult addTvShowToWatchlistPressed(TvShowDetails tvShowDetails),
     @required
-        TResult removeTvShowFromWatchlistPressed(TvShowDetails tvShowDetails),
+        TResult addTvShowToWatchlistPressed(
+            int tmdbId, String title, String posterPath),
     @required
-        TResult addTvShowToWatchedPressed(TvShowDetails tvShowDetails,
-            String review, num rating, bool isSpoiler),
+        TResult removeTvShowFromWatchlistPressed(int tmdbId, String title),
+    @required
+        TResult addTvShowToWatchedPressed(int tmdbId, String title,
+            String posterPath, String review, num rating, bool isSpoiler),
     @required
         TResult removeTvShowFromWatchedPressed(
             String tvShowTitle, int tvShowId),
@@ -1085,7 +1142,7 @@ class _$_RemoveTvShowFromWatchlistPressed
     assert(updateTvShowWatchedReviewPressed != null);
     assert(nextTvShowWatchlistPageCalled != null);
     assert(nextTvShowWatchedPageCalled != null);
-    return removeTvShowFromWatchlistPressed(tvShowDetails);
+    return removeTvShowFromWatchlistPressed(tmdbId, title);
   }
 
   @override
@@ -1096,10 +1153,11 @@ class _$_RemoveTvShowFromWatchlistPressed
         List<FirestoreTvShowWatchlistDetails> tvShowWatchlist),
     TResult tvShowWatchedUpdated(
         List<FirestoreTvShowWatchedDetails> tvShowWatched),
-    TResult addTvShowToWatchlistPressed(TvShowDetails tvShowDetails),
-    TResult removeTvShowFromWatchlistPressed(TvShowDetails tvShowDetails),
-    TResult addTvShowToWatchedPressed(
-        TvShowDetails tvShowDetails, String review, num rating, bool isSpoiler),
+    TResult addTvShowToWatchlistPressed(
+        int tmdbId, String title, String posterPath),
+    TResult removeTvShowFromWatchlistPressed(int tmdbId, String title),
+    TResult addTvShowToWatchedPressed(int tmdbId, String title,
+        String posterPath, String review, num rating, bool isSpoiler),
     TResult removeTvShowFromWatchedPressed(String tvShowTitle, int tvShowId),
     TResult updateTvShowWatchedReviewPressed(String tvShowTitle, int tvShowId,
         String review, num rating, bool isSpoiler),
@@ -1109,7 +1167,7 @@ class _$_RemoveTvShowFromWatchlistPressed
   }) {
     assert(orElse != null);
     if (removeTvShowFromWatchlistPressed != null) {
-      return removeTvShowFromWatchlistPressed(tvShowDetails);
+      return removeTvShowFromWatchlistPressed(tmdbId, title);
     }
     return orElse();
   }
@@ -1180,10 +1238,12 @@ class _$_RemoveTvShowFromWatchlistPressed
 
 abstract class _RemoveTvShowFromWatchlistPressed
     implements TvShowListsUserProfileEvent {
-  const factory _RemoveTvShowFromWatchlistPressed(TvShowDetails tvShowDetails) =
-      _$_RemoveTvShowFromWatchlistPressed;
+  const factory _RemoveTvShowFromWatchlistPressed(
+      {@required int tmdbId,
+      @required String title}) = _$_RemoveTvShowFromWatchlistPressed;
 
-  TvShowDetails get tvShowDetails;
+  int get tmdbId;
+  String get title;
   @JsonKey(ignore: true)
   _$RemoveTvShowFromWatchlistPressedCopyWith<_RemoveTvShowFromWatchlistPressed>
       get copyWith;
@@ -1195,7 +1255,12 @@ abstract class _$AddTvShowToWatchedPressedCopyWith<$Res> {
           $Res Function(_AddTvShowToWatchedPressed) then) =
       __$AddTvShowToWatchedPressedCopyWithImpl<$Res>;
   $Res call(
-      {TvShowDetails tvShowDetails, String review, num rating, bool isSpoiler});
+      {int tmdbId,
+      String title,
+      String posterPath,
+      String review,
+      num rating,
+      bool isSpoiler});
 }
 
 /// @nodoc
@@ -1212,18 +1277,21 @@ class __$AddTvShowToWatchedPressedCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object tvShowDetails = freezed,
+    Object tmdbId = freezed,
+    Object title = freezed,
+    Object posterPath = freezed,
     Object review = freezed,
     Object rating = freezed,
     Object isSpoiler = freezed,
   }) {
     return _then(_AddTvShowToWatchedPressed(
-      tvShowDetails == freezed
-          ? _value.tvShowDetails
-          : tvShowDetails as TvShowDetails,
-      review == freezed ? _value.review : review as String,
-      rating == freezed ? _value.rating : rating as num,
-      isSpoiler == freezed ? _value.isSpoiler : isSpoiler as bool,
+      tmdbId: tmdbId == freezed ? _value.tmdbId : tmdbId as int,
+      title: title == freezed ? _value.title : title as String,
+      posterPath:
+          posterPath == freezed ? _value.posterPath : posterPath as String,
+      review: review == freezed ? _value.review : review as String,
+      rating: rating == freezed ? _value.rating : rating as num,
+      isSpoiler: isSpoiler == freezed ? _value.isSpoiler : isSpoiler as bool,
     ));
   }
 }
@@ -1231,14 +1299,25 @@ class __$AddTvShowToWatchedPressedCopyWithImpl<$Res>
 /// @nodoc
 class _$_AddTvShowToWatchedPressed implements _AddTvShowToWatchedPressed {
   const _$_AddTvShowToWatchedPressed(
-      this.tvShowDetails, this.review, this.rating, this.isSpoiler)
-      : assert(tvShowDetails != null),
+      {@required this.tmdbId,
+      @required this.title,
+      @required this.posterPath,
+      @required this.review,
+      @required this.rating,
+      @required this.isSpoiler})
+      : assert(tmdbId != null),
+        assert(title != null),
+        assert(posterPath != null),
         assert(review != null),
         assert(rating != null),
         assert(isSpoiler != null);
 
   @override
-  final TvShowDetails tvShowDetails;
+  final int tmdbId;
+  @override
+  final String title;
+  @override
+  final String posterPath;
   @override
   final String review;
   @override
@@ -1248,16 +1327,20 @@ class _$_AddTvShowToWatchedPressed implements _AddTvShowToWatchedPressed {
 
   @override
   String toString() {
-    return 'TvShowListsUserProfileEvent.addTvShowToWatchedPressed(tvShowDetails: $tvShowDetails, review: $review, rating: $rating, isSpoiler: $isSpoiler)';
+    return 'TvShowListsUserProfileEvent.addTvShowToWatchedPressed(tmdbId: $tmdbId, title: $title, posterPath: $posterPath, review: $review, rating: $rating, isSpoiler: $isSpoiler)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is _AddTvShowToWatchedPressed &&
-            (identical(other.tvShowDetails, tvShowDetails) ||
+            (identical(other.tmdbId, tmdbId) ||
+                const DeepCollectionEquality().equals(other.tmdbId, tmdbId)) &&
+            (identical(other.title, title) ||
+                const DeepCollectionEquality().equals(other.title, title)) &&
+            (identical(other.posterPath, posterPath) ||
                 const DeepCollectionEquality()
-                    .equals(other.tvShowDetails, tvShowDetails)) &&
+                    .equals(other.posterPath, posterPath)) &&
             (identical(other.review, review) ||
                 const DeepCollectionEquality().equals(other.review, review)) &&
             (identical(other.rating, rating) ||
@@ -1270,7 +1353,9 @@ class _$_AddTvShowToWatchedPressed implements _AddTvShowToWatchedPressed {
   @override
   int get hashCode =>
       runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(tvShowDetails) ^
+      const DeepCollectionEquality().hash(tmdbId) ^
+      const DeepCollectionEquality().hash(title) ^
+      const DeepCollectionEquality().hash(posterPath) ^
       const DeepCollectionEquality().hash(review) ^
       const DeepCollectionEquality().hash(rating) ^
       const DeepCollectionEquality().hash(isSpoiler);
@@ -1292,12 +1377,14 @@ class _$_AddTvShowToWatchedPressed implements _AddTvShowToWatchedPressed {
     @required
         TResult tvShowWatchedUpdated(
             List<FirestoreTvShowWatchedDetails> tvShowWatched),
-    @required TResult addTvShowToWatchlistPressed(TvShowDetails tvShowDetails),
     @required
-        TResult removeTvShowFromWatchlistPressed(TvShowDetails tvShowDetails),
+        TResult addTvShowToWatchlistPressed(
+            int tmdbId, String title, String posterPath),
     @required
-        TResult addTvShowToWatchedPressed(TvShowDetails tvShowDetails,
-            String review, num rating, bool isSpoiler),
+        TResult removeTvShowFromWatchlistPressed(int tmdbId, String title),
+    @required
+        TResult addTvShowToWatchedPressed(int tmdbId, String title,
+            String posterPath, String review, num rating, bool isSpoiler),
     @required
         TResult removeTvShowFromWatchedPressed(
             String tvShowTitle, int tvShowId),
@@ -1317,7 +1404,8 @@ class _$_AddTvShowToWatchedPressed implements _AddTvShowToWatchedPressed {
     assert(updateTvShowWatchedReviewPressed != null);
     assert(nextTvShowWatchlistPageCalled != null);
     assert(nextTvShowWatchedPageCalled != null);
-    return addTvShowToWatchedPressed(tvShowDetails, review, rating, isSpoiler);
+    return addTvShowToWatchedPressed(
+        tmdbId, title, posterPath, review, rating, isSpoiler);
   }
 
   @override
@@ -1328,10 +1416,11 @@ class _$_AddTvShowToWatchedPressed implements _AddTvShowToWatchedPressed {
         List<FirestoreTvShowWatchlistDetails> tvShowWatchlist),
     TResult tvShowWatchedUpdated(
         List<FirestoreTvShowWatchedDetails> tvShowWatched),
-    TResult addTvShowToWatchlistPressed(TvShowDetails tvShowDetails),
-    TResult removeTvShowFromWatchlistPressed(TvShowDetails tvShowDetails),
-    TResult addTvShowToWatchedPressed(
-        TvShowDetails tvShowDetails, String review, num rating, bool isSpoiler),
+    TResult addTvShowToWatchlistPressed(
+        int tmdbId, String title, String posterPath),
+    TResult removeTvShowFromWatchlistPressed(int tmdbId, String title),
+    TResult addTvShowToWatchedPressed(int tmdbId, String title,
+        String posterPath, String review, num rating, bool isSpoiler),
     TResult removeTvShowFromWatchedPressed(String tvShowTitle, int tvShowId),
     TResult updateTvShowWatchedReviewPressed(String tvShowTitle, int tvShowId,
         String review, num rating, bool isSpoiler),
@@ -1342,7 +1431,7 @@ class _$_AddTvShowToWatchedPressed implements _AddTvShowToWatchedPressed {
     assert(orElse != null);
     if (addTvShowToWatchedPressed != null) {
       return addTvShowToWatchedPressed(
-          tvShowDetails, review, rating, isSpoiler);
+          tmdbId, title, posterPath, review, rating, isSpoiler);
     }
     return orElse();
   }
@@ -1413,10 +1502,17 @@ class _$_AddTvShowToWatchedPressed implements _AddTvShowToWatchedPressed {
 
 abstract class _AddTvShowToWatchedPressed
     implements TvShowListsUserProfileEvent {
-  const factory _AddTvShowToWatchedPressed(TvShowDetails tvShowDetails,
-      String review, num rating, bool isSpoiler) = _$_AddTvShowToWatchedPressed;
+  const factory _AddTvShowToWatchedPressed(
+      {@required int tmdbId,
+      @required String title,
+      @required String posterPath,
+      @required String review,
+      @required num rating,
+      @required bool isSpoiler}) = _$_AddTvShowToWatchedPressed;
 
-  TvShowDetails get tvShowDetails;
+  int get tmdbId;
+  String get title;
+  String get posterPath;
   String get review;
   num get rating;
   bool get isSpoiler;
@@ -1462,7 +1558,10 @@ class __$RemoveTvShowFromWatchedPressedCopyWithImpl<$Res>
 /// @nodoc
 class _$_RemoveTvShowFromWatchedPressed
     implements _RemoveTvShowFromWatchedPressed {
-  const _$_RemoveTvShowFromWatchedPressed({this.tvShowTitle, this.tvShowId});
+  const _$_RemoveTvShowFromWatchedPressed(
+      {@required this.tvShowTitle, @required this.tvShowId})
+      : assert(tvShowTitle != null),
+        assert(tvShowId != null);
 
   @override
   final String tvShowTitle;
@@ -1508,12 +1607,14 @@ class _$_RemoveTvShowFromWatchedPressed
     @required
         TResult tvShowWatchedUpdated(
             List<FirestoreTvShowWatchedDetails> tvShowWatched),
-    @required TResult addTvShowToWatchlistPressed(TvShowDetails tvShowDetails),
     @required
-        TResult removeTvShowFromWatchlistPressed(TvShowDetails tvShowDetails),
+        TResult addTvShowToWatchlistPressed(
+            int tmdbId, String title, String posterPath),
     @required
-        TResult addTvShowToWatchedPressed(TvShowDetails tvShowDetails,
-            String review, num rating, bool isSpoiler),
+        TResult removeTvShowFromWatchlistPressed(int tmdbId, String title),
+    @required
+        TResult addTvShowToWatchedPressed(int tmdbId, String title,
+            String posterPath, String review, num rating, bool isSpoiler),
     @required
         TResult removeTvShowFromWatchedPressed(
             String tvShowTitle, int tvShowId),
@@ -1544,10 +1645,11 @@ class _$_RemoveTvShowFromWatchedPressed
         List<FirestoreTvShowWatchlistDetails> tvShowWatchlist),
     TResult tvShowWatchedUpdated(
         List<FirestoreTvShowWatchedDetails> tvShowWatched),
-    TResult addTvShowToWatchlistPressed(TvShowDetails tvShowDetails),
-    TResult removeTvShowFromWatchlistPressed(TvShowDetails tvShowDetails),
-    TResult addTvShowToWatchedPressed(
-        TvShowDetails tvShowDetails, String review, num rating, bool isSpoiler),
+    TResult addTvShowToWatchlistPressed(
+        int tmdbId, String title, String posterPath),
+    TResult removeTvShowFromWatchlistPressed(int tmdbId, String title),
+    TResult addTvShowToWatchedPressed(int tmdbId, String title,
+        String posterPath, String review, num rating, bool isSpoiler),
     TResult removeTvShowFromWatchedPressed(String tvShowTitle, int tvShowId),
     TResult updateTvShowWatchedReviewPressed(String tvShowTitle, int tvShowId,
         String review, num rating, bool isSpoiler),
@@ -1629,7 +1731,8 @@ class _$_RemoveTvShowFromWatchedPressed
 abstract class _RemoveTvShowFromWatchedPressed
     implements TvShowListsUserProfileEvent {
   const factory _RemoveTvShowFromWatchedPressed(
-      {String tvShowTitle, int tvShowId}) = _$_RemoveTvShowFromWatchedPressed;
+      {@required String tvShowTitle,
+      @required int tvShowId}) = _$_RemoveTvShowFromWatchedPressed;
 
   String get tvShowTitle;
   int get tvShowId;
@@ -1688,11 +1791,16 @@ class __$UpdateTvShowWatchedReviewPressedCopyWithImpl<$Res>
 class _$_UpdateTvShowWatchedReviewPressed
     implements _UpdateTvShowWatchedReviewPressed {
   const _$_UpdateTvShowWatchedReviewPressed(
-      {this.tvShowTitle,
-      this.tvShowId,
-      this.review,
-      this.rating,
-      this.isSpoiler});
+      {@required this.tvShowTitle,
+      @required this.tvShowId,
+      @required this.review,
+      @required this.rating,
+      @required this.isSpoiler})
+      : assert(tvShowTitle != null),
+        assert(tvShowId != null),
+        assert(review != null),
+        assert(rating != null),
+        assert(isSpoiler != null);
 
   @override
   final String tvShowTitle;
@@ -1754,12 +1862,14 @@ class _$_UpdateTvShowWatchedReviewPressed
     @required
         TResult tvShowWatchedUpdated(
             List<FirestoreTvShowWatchedDetails> tvShowWatched),
-    @required TResult addTvShowToWatchlistPressed(TvShowDetails tvShowDetails),
     @required
-        TResult removeTvShowFromWatchlistPressed(TvShowDetails tvShowDetails),
+        TResult addTvShowToWatchlistPressed(
+            int tmdbId, String title, String posterPath),
     @required
-        TResult addTvShowToWatchedPressed(TvShowDetails tvShowDetails,
-            String review, num rating, bool isSpoiler),
+        TResult removeTvShowFromWatchlistPressed(int tmdbId, String title),
+    @required
+        TResult addTvShowToWatchedPressed(int tmdbId, String title,
+            String posterPath, String review, num rating, bool isSpoiler),
     @required
         TResult removeTvShowFromWatchedPressed(
             String tvShowTitle, int tvShowId),
@@ -1791,10 +1901,11 @@ class _$_UpdateTvShowWatchedReviewPressed
         List<FirestoreTvShowWatchlistDetails> tvShowWatchlist),
     TResult tvShowWatchedUpdated(
         List<FirestoreTvShowWatchedDetails> tvShowWatched),
-    TResult addTvShowToWatchlistPressed(TvShowDetails tvShowDetails),
-    TResult removeTvShowFromWatchlistPressed(TvShowDetails tvShowDetails),
-    TResult addTvShowToWatchedPressed(
-        TvShowDetails tvShowDetails, String review, num rating, bool isSpoiler),
+    TResult addTvShowToWatchlistPressed(
+        int tmdbId, String title, String posterPath),
+    TResult removeTvShowFromWatchlistPressed(int tmdbId, String title),
+    TResult addTvShowToWatchedPressed(int tmdbId, String title,
+        String posterPath, String review, num rating, bool isSpoiler),
     TResult removeTvShowFromWatchedPressed(String tvShowTitle, int tvShowId),
     TResult updateTvShowWatchedReviewPressed(String tvShowTitle, int tvShowId,
         String review, num rating, bool isSpoiler),
@@ -1877,11 +1988,11 @@ class _$_UpdateTvShowWatchedReviewPressed
 abstract class _UpdateTvShowWatchedReviewPressed
     implements TvShowListsUserProfileEvent {
   const factory _UpdateTvShowWatchedReviewPressed(
-      {String tvShowTitle,
-      int tvShowId,
-      String review,
-      num rating,
-      bool isSpoiler}) = _$_UpdateTvShowWatchedReviewPressed;
+      {@required String tvShowTitle,
+      @required int tvShowId,
+      @required String review,
+      @required num rating,
+      @required bool isSpoiler}) = _$_UpdateTvShowWatchedReviewPressed;
 
   String get tvShowTitle;
   int get tvShowId;
@@ -1943,12 +2054,14 @@ class _$_NextTvShowWatchlistPageCalled
     @required
         TResult tvShowWatchedUpdated(
             List<FirestoreTvShowWatchedDetails> tvShowWatched),
-    @required TResult addTvShowToWatchlistPressed(TvShowDetails tvShowDetails),
     @required
-        TResult removeTvShowFromWatchlistPressed(TvShowDetails tvShowDetails),
+        TResult addTvShowToWatchlistPressed(
+            int tmdbId, String title, String posterPath),
     @required
-        TResult addTvShowToWatchedPressed(TvShowDetails tvShowDetails,
-            String review, num rating, bool isSpoiler),
+        TResult removeTvShowFromWatchlistPressed(int tmdbId, String title),
+    @required
+        TResult addTvShowToWatchedPressed(int tmdbId, String title,
+            String posterPath, String review, num rating, bool isSpoiler),
     @required
         TResult removeTvShowFromWatchedPressed(
             String tvShowTitle, int tvShowId),
@@ -1979,10 +2092,11 @@ class _$_NextTvShowWatchlistPageCalled
         List<FirestoreTvShowWatchlistDetails> tvShowWatchlist),
     TResult tvShowWatchedUpdated(
         List<FirestoreTvShowWatchedDetails> tvShowWatched),
-    TResult addTvShowToWatchlistPressed(TvShowDetails tvShowDetails),
-    TResult removeTvShowFromWatchlistPressed(TvShowDetails tvShowDetails),
-    TResult addTvShowToWatchedPressed(
-        TvShowDetails tvShowDetails, String review, num rating, bool isSpoiler),
+    TResult addTvShowToWatchlistPressed(
+        int tmdbId, String title, String posterPath),
+    TResult removeTvShowFromWatchlistPressed(int tmdbId, String title),
+    TResult addTvShowToWatchedPressed(int tmdbId, String title,
+        String posterPath, String review, num rating, bool isSpoiler),
     TResult removeTvShowFromWatchedPressed(String tvShowTitle, int tvShowId),
     TResult updateTvShowWatchedReviewPressed(String tvShowTitle, int tvShowId,
         String review, num rating, bool isSpoiler),
@@ -2116,12 +2230,14 @@ class _$_NextTvShowWatchedPageCalled implements _NextTvShowWatchedPageCalled {
     @required
         TResult tvShowWatchedUpdated(
             List<FirestoreTvShowWatchedDetails> tvShowWatched),
-    @required TResult addTvShowToWatchlistPressed(TvShowDetails tvShowDetails),
     @required
-        TResult removeTvShowFromWatchlistPressed(TvShowDetails tvShowDetails),
+        TResult addTvShowToWatchlistPressed(
+            int tmdbId, String title, String posterPath),
     @required
-        TResult addTvShowToWatchedPressed(TvShowDetails tvShowDetails,
-            String review, num rating, bool isSpoiler),
+        TResult removeTvShowFromWatchlistPressed(int tmdbId, String title),
+    @required
+        TResult addTvShowToWatchedPressed(int tmdbId, String title,
+            String posterPath, String review, num rating, bool isSpoiler),
     @required
         TResult removeTvShowFromWatchedPressed(
             String tvShowTitle, int tvShowId),
@@ -2152,10 +2268,11 @@ class _$_NextTvShowWatchedPageCalled implements _NextTvShowWatchedPageCalled {
         List<FirestoreTvShowWatchlistDetails> tvShowWatchlist),
     TResult tvShowWatchedUpdated(
         List<FirestoreTvShowWatchedDetails> tvShowWatched),
-    TResult addTvShowToWatchlistPressed(TvShowDetails tvShowDetails),
-    TResult removeTvShowFromWatchlistPressed(TvShowDetails tvShowDetails),
-    TResult addTvShowToWatchedPressed(
-        TvShowDetails tvShowDetails, String review, num rating, bool isSpoiler),
+    TResult addTvShowToWatchlistPressed(
+        int tmdbId, String title, String posterPath),
+    TResult removeTvShowFromWatchlistPressed(int tmdbId, String title),
+    TResult addTvShowToWatchedPressed(int tmdbId, String title,
+        String posterPath, String review, num rating, bool isSpoiler),
     TResult removeTvShowFromWatchedPressed(String tvShowTitle, int tvShowId),
     TResult updateTvShowWatchedReviewPressed(String tvShowTitle, int tvShowId,
         String review, num rating, bool isSpoiler),

@@ -338,12 +338,19 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
                                                   showDialog(
                                                     context: context,
                                                     builder: (context) {
-                                                      return MovieRemoveWatchlistDialog(movieDetails: state.movieDetails);
+                                                      return MovieRemoveWatchlistDialog(
+                                                        tmdbId: state.movieDetails.id,
+                                                        title: state.movieDetails.title,
+                                                      );
                                                     },
                                                   );
                                                 } else {
                                                   context.read<MovieListsUserProfileBloc>().add(
-                                                        MovieListsUserProfileEvent.addMovieToWatchlistPressed(state.movieDetails),
+                                                        MovieListsUserProfileEvent.addMovieToWatchlistPressed(
+                                                          tmdbId: state.movieDetails.id,
+                                                          title: state.movieDetails.title,
+                                                          posterPath: state.movieDetails.posterPath,
+                                                        ),
                                                       );
                                                 }
                                               },
@@ -363,7 +370,10 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
                                                   showDialog(
                                                     context: context,
                                                     builder: (context) {
-                                                      return MovieRemoveReviewDialog(movieDetails: state.movieDetails);
+                                                      return MovieRemoveReviewDialog(
+                                                        tmdbId: state.movieDetails.id,
+                                                        title: state.movieDetails.title,
+                                                      );
                                                     },
                                                   );
                                                 } else {
@@ -371,7 +381,9 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
                                                     context: context,
                                                     builder: (context) {
                                                       return MovieReviewDialog(
-                                                        movieDetails: state.movieDetails,
+                                                        tmdbId: state.movieDetails.id,
+                                                        title: state.movieDetails.title,
+                                                        posterPath: state.movieDetails.posterPath,
                                                         isInWatchlist: isInWatchlist,
                                                       );
                                                     },
@@ -798,9 +810,13 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
 }
 
 class MovieRemoveWatchlistDialog extends StatefulWidget {
-  final MovieDetails movieDetails;
+  final int tmdbId;
+  final String title;
 
-  MovieRemoveWatchlistDialog({this.movieDetails});
+  MovieRemoveWatchlistDialog({
+    @required this.tmdbId,
+    @required this.title,
+  });
 
   @override
   _MovieRemoveWatchlistDialogState createState() => _MovieRemoveWatchlistDialogState();
@@ -824,7 +840,10 @@ class _MovieRemoveWatchlistDialogState extends State<MovieRemoveWatchlistDialog>
         TextButton(
           onPressed: () {
             context.read<MovieListsUserProfileBloc>().add(
-                  MovieListsUserProfileEvent.removeMovieFromWatchlistPressed(widget.movieDetails),
+                  MovieListsUserProfileEvent.removeMovieFromWatchlistPressed(
+                    tmdbId: widget.tmdbId,
+                    title: widget.title,
+                  ),
                 );
             Navigator.of(context, rootNavigator: true).pop();
           },
@@ -839,9 +858,13 @@ class _MovieRemoveWatchlistDialogState extends State<MovieRemoveWatchlistDialog>
 }
 
 class MovieRemoveReviewDialog extends StatefulWidget {
-  final MovieDetails movieDetails;
+  final int tmdbId;
+  final String title;
 
-  MovieRemoveReviewDialog({this.movieDetails});
+  MovieRemoveReviewDialog({
+    @required this.tmdbId,
+    @required this.title,
+  });
 
   @override
   _MovieRemoveReviewDialogState createState() => _MovieRemoveReviewDialogState();
@@ -872,8 +895,8 @@ class _MovieRemoveReviewDialogState extends State<MovieRemoveReviewDialog> {
           onPressed: () {
             context.read<MovieListsUserProfileBloc>().add(
                   MovieListsUserProfileEvent.removeMovieFromWatchedPressed(
-                    movieTitle: widget.movieDetails.title,
-                    movieId: widget.movieDetails.id,
+                    movieTitle: widget.title,
+                    movieId: widget.tmdbId,
                   ),
                 );
             Navigator.of(context, rootNavigator: true).pop();
@@ -889,10 +912,17 @@ class _MovieRemoveReviewDialogState extends State<MovieRemoveReviewDialog> {
 }
 
 class MovieReviewDialog extends StatefulWidget {
-  final MovieDetails movieDetails;
+  final int tmdbId;
+  final String title;
+  final String posterPath;
   final bool isInWatchlist;
 
-  MovieReviewDialog({this.movieDetails, this.isInWatchlist});
+  MovieReviewDialog({
+    @required this.tmdbId,
+    @required this.title,
+    @required this.posterPath,
+    @required this.isInWatchlist,
+  });
 
   @override
   _MovieReviewDialogState createState() => _MovieReviewDialogState();
@@ -902,6 +932,7 @@ class _MovieReviewDialogState extends State<MovieReviewDialog> {
   double rating = 6.0;
   bool isSpoiler = false;
   TextEditingController _movieReviewController;
+
   @override
   void initState() {
     super.initState();
@@ -992,13 +1023,20 @@ class _MovieReviewDialogState extends State<MovieReviewDialog> {
           ),
           ElevatedButton(
             onPressed: () {
-              context.read<MovieListsUserProfileBloc>().add(
-                    MovieListsUserProfileEvent.addMovieToWatchedPressed(
-                        widget.movieDetails, _movieReviewController.text, rating, isSpoiler),
-                  );
+              context.read<MovieListsUserProfileBloc>().add(MovieListsUserProfileEvent.addMovieToWatchedPressed(
+                    tmdbId: widget.tmdbId,
+                    title: widget.title,
+                    posterPath: widget.posterPath,
+                    review: _movieReviewController.text,
+                    rating: rating,
+                    isSpoiler: isSpoiler,
+                  ));
               if (widget.isInWatchlist)
                 context.read<MovieListsUserProfileBloc>().add(
-                      MovieListsUserProfileEvent.removeMovieFromWatchlistPressed(widget.movieDetails),
+                      MovieListsUserProfileEvent.removeMovieFromWatchlistPressed(
+                        tmdbId: widget.tmdbId,
+                        title: widget.title,
+                      ),
                     );
               Navigator.of(context, rootNavigator: true).pop();
             },

@@ -406,7 +406,7 @@ class _OtherUserReviewState extends State<OtherUserReview> with TickerProviderSt
                                       child: ExpandableText(
                                         state.userPost.review,
                                         expandText: "more",
-                                        collapseText: "...collapse",
+                                        collapseText: "",
                                         maxLines: 3,
                                         expanded: isReviewExpanded,
                                         key: UniqueKey(),

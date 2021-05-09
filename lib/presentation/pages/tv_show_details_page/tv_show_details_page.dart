@@ -332,13 +332,19 @@ class _TvShowDetailsPageState extends State<TvShowDetailsPage> {
                                                   showDialog(
                                                     context: context,
                                                     builder: (context) {
-                                                      return TvShowRemoveWatchlistDialog(tvShowDetails: state.tvShowDetails);
+                                                      return TvShowRemoveWatchlistDialog(
+                                                        tmdbId: state.tvShowDetails.id,
+                                                        title: state.tvShowDetails.name,
+                                                      );
                                                     },
                                                   );
                                                 } else {
                                                   context.read<TvShowListsUserProfileBloc>().add(
                                                         TvShowListsUserProfileEvent.addTvShowToWatchlistPressed(
-                                                            state.tvShowDetails),
+                                                          tmdbId: state.tvShowDetails.id,
+                                                          title: state.tvShowDetails.name,
+                                                          posterPath: state.tvShowDetails.posterPath,
+                                                        ),
                                                       );
                                                 }
                                               },
@@ -358,7 +364,10 @@ class _TvShowDetailsPageState extends State<TvShowDetailsPage> {
                                                   showDialog(
                                                     context: context,
                                                     builder: (context) {
-                                                      return TvShowRemoveReviewDialog(tvShowDetails: state.tvShowDetails);
+                                                      return TvShowRemoveReviewDialog(
+                                                        tmdbId: state.tvShowDetails.id,
+                                                        title: state.tvShowDetails.name,
+                                                      );
                                                     },
                                                   );
                                                 } else {
@@ -366,7 +375,9 @@ class _TvShowDetailsPageState extends State<TvShowDetailsPage> {
                                                     context: context,
                                                     builder: (context) {
                                                       return TvShowReviewDialog(
-                                                        tvShowDetails: state.tvShowDetails,
+                                                        tmdbId: state.tvShowDetails.id,
+                                                        title: state.tvShowDetails.name,
+                                                        posterPath: state.tvShowDetails.posterPath,
                                                         isInWatchlist: isInWatchlist,
                                                       );
                                                     },
@@ -793,9 +804,13 @@ class _TvShowDetailsPageState extends State<TvShowDetailsPage> {
 }
 
 class TvShowRemoveWatchlistDialog extends StatefulWidget {
-  final TvShowDetails tvShowDetails;
+  final int tmdbId;
+  final String title;
 
-  TvShowRemoveWatchlistDialog({this.tvShowDetails});
+  TvShowRemoveWatchlistDialog({
+    @required this.tmdbId,
+    @required this.title,
+  });
 
   @override
   _TvShowRemoveWatchlistDialogState createState() => _TvShowRemoveWatchlistDialogState();
@@ -819,7 +834,10 @@ class _TvShowRemoveWatchlistDialogState extends State<TvShowRemoveWatchlistDialo
         TextButton(
           onPressed: () {
             context.read<TvShowListsUserProfileBloc>().add(
-                  TvShowListsUserProfileEvent.removeTvShowFromWatchlistPressed(widget.tvShowDetails),
+                  TvShowListsUserProfileEvent.removeTvShowFromWatchlistPressed(
+                    tmdbId: widget.tmdbId,
+                    title: widget.title,
+                  ),
                 );
             Navigator.of(context, rootNavigator: true).pop();
           },
@@ -834,9 +852,13 @@ class _TvShowRemoveWatchlistDialogState extends State<TvShowRemoveWatchlistDialo
 }
 
 class TvShowRemoveReviewDialog extends StatefulWidget {
-  final TvShowDetails tvShowDetails;
+  final int tmdbId;
+  final String title;
 
-  TvShowRemoveReviewDialog({this.tvShowDetails});
+  TvShowRemoveReviewDialog({
+    @required this.tmdbId,
+    @required this.title,
+  });
 
   @override
   _TvShowRemoveReviewDialogState createState() => _TvShowRemoveReviewDialogState();
@@ -867,8 +889,8 @@ class _TvShowRemoveReviewDialogState extends State<TvShowRemoveReviewDialog> {
           onPressed: () {
             context.read<TvShowListsUserProfileBloc>().add(
                   TvShowListsUserProfileEvent.removeTvShowFromWatchedPressed(
-                    tvShowTitle: widget.tvShowDetails.name,
-                    tvShowId: widget.tvShowDetails.id,
+                    tvShowTitle: widget.title,
+                    tvShowId: widget.tmdbId,
                   ),
                 );
             Navigator.of(context, rootNavigator: true).pop();
@@ -884,10 +906,17 @@ class _TvShowRemoveReviewDialogState extends State<TvShowRemoveReviewDialog> {
 }
 
 class TvShowReviewDialog extends StatefulWidget {
-  final TvShowDetails tvShowDetails;
+  final int tmdbId;
+  final String title;
+  final String posterPath;
   final bool isInWatchlist;
 
-  TvShowReviewDialog({this.tvShowDetails, this.isInWatchlist});
+  TvShowReviewDialog({
+    @required this.tmdbId,
+    @required this.title,
+    @required this.posterPath,
+    @required this.isInWatchlist,
+  });
 
   @override
   _TvShowReviewDialogState createState() => _TvShowReviewDialogState();
@@ -897,6 +926,7 @@ class _TvShowReviewDialogState extends State<TvShowReviewDialog> {
   double rating = 6.0;
   bool isSpoiler = false;
   TextEditingController _tvShowReviewController;
+
   @override
   void initState() {
     super.initState();
@@ -989,11 +1019,20 @@ class _TvShowReviewDialogState extends State<TvShowReviewDialog> {
             onPressed: () {
               context.read<TvShowListsUserProfileBloc>().add(
                     TvShowListsUserProfileEvent.addTvShowToWatchedPressed(
-                        widget.tvShowDetails, _tvShowReviewController.text, rating, isSpoiler),
+                      tmdbId: widget.tmdbId,
+                      title: widget.title,
+                      posterPath: widget.posterPath,
+                      review: _tvShowReviewController.text,
+                      rating: rating,
+                      isSpoiler: isSpoiler,
+                    ),
                   );
               if (widget.isInWatchlist)
                 context.read<TvShowListsUserProfileBloc>().add(
-                      TvShowListsUserProfileEvent.removeTvShowFromWatchlistPressed(widget.tvShowDetails),
+                      TvShowListsUserProfileEvent.removeTvShowFromWatchlistPressed(
+                        tmdbId: widget.tmdbId,
+                        title: widget.title,
+                      ),
                     );
               Navigator.of(context, rootNavigator: true).pop();
             },

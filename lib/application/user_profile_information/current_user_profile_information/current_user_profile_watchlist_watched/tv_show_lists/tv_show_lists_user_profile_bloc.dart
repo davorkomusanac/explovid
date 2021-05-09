@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:explovid/data/models/firestore_models/firestore_tv_show_watched_details.dart';
 import 'package:explovid/data/models/firestore_models/firestore_tv_show_watchlist_details.dart';
-import 'package:explovid/data/models/tv_show_details/tv_show_details.dart';
 import 'package:explovid/data/user_profile_db/current_user_profile_db/user_profile_repository.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:meta/meta.dart';
@@ -64,10 +63,14 @@ class TvShowListsUserProfileBloc extends Bloc<TvShowListsUserProfileEvent, TvSho
       addTvShowToWatchlistPressed: (e) async* {
         yield state.copyWith(
           isSubmittingWatchlist: true,
+          errorMessage: '',
         );
-        String returnVal = await _userProfileRepository.addTvShowToWatchlist(e.tvShowDetails);
-        if (returnVal.isEmpty)
-          state.tvShowWatchlistArrayTitlesOnly.add(e.tvShowDetails.name + "_" + e.tvShowDetails.id.toString());
+        String returnVal = await _userProfileRepository.addTvShowToWatchlist(
+          title: e.title,
+          tmdbId: e.tmdbId,
+          posterPath: e.posterPath,
+        );
+        if (returnVal.isEmpty) state.tvShowWatchlistArrayTitlesOnly.add(e.title.replaceAll('/', ' ') + "_" + e.tmdbId.toString());
         //forcing State to update (nextPage has no other function)
         yield state.copyWith(
           nextPage: state.nextPage + 1,
@@ -78,16 +81,20 @@ class TvShowListsUserProfileBloc extends Bloc<TvShowListsUserProfileEvent, TvSho
       removeTvShowFromWatchlistPressed: (e) async* {
         yield state.copyWith(
           isSubmittingWatchlist: true,
+          errorMessage: '',
         );
         int indexNumberOfTvShow;
-        String returnVal = await _userProfileRepository.removeTvShowFromWatchlist(e.tvShowDetails);
+        String returnVal = await _userProfileRepository.removeTvShowFromWatchlist(
+          tmdbId: e.tmdbId,
+          title: e.title,
+        );
         if (returnVal.isEmpty) {
           for (int i = 0; i < state.tvShowWatchlist.length; i++) {
-            if (state.tvShowWatchlist[i].name == e.tvShowDetails.name && state.tvShowWatchlist[i].id == e.tvShowDetails.id)
+            if (state.tvShowWatchlist[i].name == e.title.replaceAll('/', ' ') && state.tvShowWatchlist[i].id == e.tmdbId)
               indexNumberOfTvShow = i;
           }
           if (indexNumberOfTvShow != null) state.tvShowWatchlist.removeAt(indexNumberOfTvShow);
-          state.tvShowWatchlistArrayTitlesOnly.remove(e.tvShowDetails.name + "_" + e.tvShowDetails.id.toString());
+          state.tvShowWatchlistArrayTitlesOnly.remove(e.title.replaceAll('/', ' ') + "_" + e.tmdbId.toString());
         }
         yield state.copyWith(
           nextPage: state.nextPage + 1,
@@ -98,9 +105,17 @@ class TvShowListsUserProfileBloc extends Bloc<TvShowListsUserProfileEvent, TvSho
       addTvShowToWatchedPressed: (e) async* {
         yield state.copyWith(
           isSubmittingWatched: true,
+          errorMessage: '',
         );
-        String returnVal = await _userProfileRepository.addTvShowToWatched(e.tvShowDetails, e.review, e.rating, e.isSpoiler);
-        if (returnVal.isEmpty) state.tvShowWatchedArrayTitlesOnly.add(e.tvShowDetails.name + "_" + e.tvShowDetails.id.toString());
+        String returnVal = await _userProfileRepository.addTvShowToWatched(
+          tmdbId: e.tmdbId,
+          title: e.title,
+          posterPath: e.posterPath,
+          review: e.review,
+          rating: e.rating,
+          isSpoiler: e.isSpoiler,
+        );
+        if (returnVal.isEmpty) state.tvShowWatchedArrayTitlesOnly.add(e.title.replaceAll('/', ' ') + "_" + e.tmdbId.toString());
         yield state.copyWith(
           nextPage: state.nextPage + 1,
           isSubmittingWatched: false,
@@ -110,6 +125,7 @@ class TvShowListsUserProfileBloc extends Bloc<TvShowListsUserProfileEvent, TvSho
       removeTvShowFromWatchedPressed: (e) async* {
         yield state.copyWith(
           isSubmittingWatched: true,
+          errorMessage: '',
         );
         int indexNumberOfTvShow;
         String returnVal = "";
@@ -125,7 +141,7 @@ class TvShowListsUserProfileBloc extends Bloc<TvShowListsUserProfileEvent, TvSho
           );
           if (returnVal.isEmpty) {
             state.tvShowWatched.removeAt(indexNumberOfTvShow);
-            state.tvShowWatchedArrayTitlesOnly.remove(e.tvShowTitle + "_" + e.tvShowId.toString());
+            state.tvShowWatchedArrayTitlesOnly.remove(e.tvShowTitle.replaceAll('/', ' ') + "_" + e.tvShowId.toString());
           }
         }
         yield state.copyWith(

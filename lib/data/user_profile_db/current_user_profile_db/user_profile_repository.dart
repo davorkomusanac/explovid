@@ -5,10 +5,8 @@ import 'package:explovid/data/models/firestore_models/firestore_movie_watched_de
 import 'package:explovid/data/models/firestore_models/firestore_movie_watchlist_details.dart';
 import 'package:explovid/data/models/firestore_models/firestore_tv_show_watched_details.dart';
 import 'package:explovid/data/models/firestore_models/firestore_tv_show_watchlist_details.dart';
-import 'package:explovid/data/models/movie_details/movie_details.dart';
 import 'package:explovid/data/models/our_user/our_user.dart';
 import 'package:explovid/data/models/our_user_post/our_user_post.dart';
-import 'package:explovid/data/models/tv_show_details/tv_show_details.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -87,15 +85,19 @@ class UserProfileRepository {
     return returnValue;
   }
 
-  Future<String> addMovieToWatchlist(MovieDetails movieDetails) async {
+  Future<String> addMovieToWatchlist({
+    @required int tmdbId,
+    @required String title,
+    @required String posterPath,
+  }) async {
     String returnVal = "";
     FirestoreMovieWatchlistDetails firestoreMovieDetails = FirestoreMovieWatchlistDetails(
-      id: movieDetails.id,
-      title: movieDetails.title,
-      posterPath: movieDetails.posterPath,
-      popularity: movieDetails.popularity,
-      voteAverage: movieDetails.voteAverage,
-      releaseDate: movieDetails.releaseDate,
+      id: tmdbId,
+      title: title,
+      posterPath: posterPath,
+      popularity: 0,
+      voteAverage: 0,
+      releaseDate: "",
       timestampAddedToFirestore: Timestamp.now(),
     );
     WriteBatch batch = FirebaseFirestore.instance.batch();
@@ -131,17 +133,24 @@ class UserProfileRepository {
     return returnVal;
   }
 
-  Future<String> addMovieToWatched(MovieDetails movieDetails, String review, num rating, bool isSpoiler) async {
+  Future<String> addMovieToWatched({
+    @required int tmdbId,
+    @required String title,
+    @required String posterPath,
+    @required String review,
+    @required num rating,
+    @required bool isSpoiler,
+  }) async {
     String returnVal = "";
     String postUid = Uuid().v4();
     Timestamp timestamp = Timestamp.now();
     FirestoreMovieWatchedDetails firestoreMovieDetails = FirestoreMovieWatchedDetails(
-      id: movieDetails.id,
-      title: movieDetails.title,
-      posterPath: movieDetails.posterPath,
-      popularity: movieDetails.popularity,
-      voteAverage: movieDetails.voteAverage,
-      releaseDate: movieDetails.releaseDate,
+      id: tmdbId,
+      title: title,
+      posterPath: posterPath,
+      popularity: 0,
+      voteAverage: 0,
+      releaseDate: "",
       timestampAddedToFirestore: timestamp,
       review: review,
       rating: rating,
@@ -150,9 +159,9 @@ class UserProfileRepository {
     );
     //Creating Post model for newsFeed
     OurUserPost ourUserPost = OurUserPost(
-      tmdbId: movieDetails.id,
-      title: movieDetails.title,
-      posterPath: movieDetails.posterPath,
+      tmdbId: tmdbId,
+      title: title,
+      posterPath: posterPath,
       isOfTypeMovie: true,
       isSpoiler: isSpoiler,
       review: review,
@@ -228,19 +237,22 @@ class UserProfileRepository {
     return returnVal;
   }
 
-  Future<String> removeMovieFromWatchlist(MovieDetails movieDetails) async {
+  Future<String> removeMovieFromWatchlist({
+    @required int tmdbId,
+    @required String title,
+  }) async {
     WriteBatch batch = FirebaseFirestore.instance.batch();
     String returnVal = "";
     try {
       batch.delete(_users
           .doc(_auth.currentUser.uid)
           .collection("movie_watchlist")
-          .doc(movieDetails.title.replaceAll('/', ' ') + "_" + movieDetails.id.toString()));
+          .doc(title.replaceAll('/', ' ') + "_" + tmdbId.toString()));
       batch.set(
         _users.doc(_auth.currentUser.uid),
         {
           "movie_watchlist": FieldValue.arrayRemove([
-            movieDetails.title.replaceAll('/', ' ') + "_" + movieDetails.id.toString(),
+            title.replaceAll('/', ' ') + "_" + tmdbId.toString(),
           ]),
           "watchlist_length": FieldValue.increment(-1),
         },
@@ -342,15 +354,19 @@ class UserProfileRepository {
     return returnVal;
   }
 
-  Future<String> addTvShowToWatchlist(TvShowDetails tvShowDetails) async {
+  Future<String> addTvShowToWatchlist({
+    @required int tmdbId,
+    @required String title,
+    @required String posterPath,
+  }) async {
     String returnVal = "";
     FirestoreTvShowWatchlistDetails firestoreTvShowWatchlistDetails = FirestoreTvShowWatchlistDetails(
-      id: tvShowDetails.id,
-      name: tvShowDetails.name,
-      posterPath: tvShowDetails.posterPath,
-      popularity: tvShowDetails.popularity,
-      voteAverage: tvShowDetails.voteAverage,
-      firstAirDate: tvShowDetails.firstAirDate,
+      id: tmdbId,
+      name: title,
+      posterPath: posterPath,
+      popularity: 0,
+      voteAverage: 0,
+      firstAirDate: "",
       timestampAddedToFirestore: Timestamp.now(),
     );
     WriteBatch batch = FirebaseFirestore.instance.batch();
@@ -381,17 +397,24 @@ class UserProfileRepository {
     return returnVal;
   }
 
-  Future<String> addTvShowToWatched(TvShowDetails tvShowDetails, String review, num rating, bool isSpoiler) async {
+  Future<String> addTvShowToWatched({
+    @required int tmdbId,
+    @required String title,
+    @required String posterPath,
+    @required String review,
+    @required num rating,
+    @required bool isSpoiler,
+  }) async {
     String returnVal = "";
     String postUid = Uuid().v4();
     Timestamp timestamp = Timestamp.now();
     FirestoreTvShowWatchedDetails firestoreTvShowWatchedDetails = FirestoreTvShowWatchedDetails(
-      id: tvShowDetails.id,
-      name: tvShowDetails.name,
-      posterPath: tvShowDetails.posterPath,
-      popularity: tvShowDetails.popularity,
-      voteAverage: tvShowDetails.voteAverage,
-      firstAirDate: tvShowDetails.firstAirDate,
+      id: tmdbId,
+      name: title,
+      posterPath: posterPath,
+      popularity: 0,
+      voteAverage: 0,
+      firstAirDate: "",
       timestampAddedToFirestore: timestamp,
       review: review,
       rating: rating,
@@ -399,9 +422,9 @@ class UserProfileRepository {
       postUid: postUid,
     );
     OurUserPost ourUserPost = OurUserPost(
-      tmdbId: tvShowDetails.id,
-      title: tvShowDetails.name,
-      posterPath: tvShowDetails.posterPath,
+      tmdbId: tmdbId,
+      title: title,
+      posterPath: posterPath,
       isOfTypeMovie: false,
       isSpoiler: isSpoiler,
       review: review,
@@ -478,19 +501,22 @@ class UserProfileRepository {
     return returnVal;
   }
 
-  Future<String> removeTvShowFromWatchlist(TvShowDetails tvShowDetails) async {
+  Future<String> removeTvShowFromWatchlist({
+    @required int tmdbId,
+    @required String title,
+  }) async {
     String returnVal = "";
     WriteBatch batch = FirebaseFirestore.instance.batch();
     try {
       batch.delete(_users
           .doc(_auth.currentUser.uid)
           .collection("tv_show_watchlist")
-          .doc(tvShowDetails.name.replaceAll('/', ' ') + "_" + tvShowDetails.id.toString()));
+          .doc(title.replaceAll('/', ' ') + "_" + tmdbId.toString()));
       batch.set(
         _users.doc(_auth.currentUser.uid),
         {
           "tv_show_watchlist": FieldValue.arrayRemove([
-            tvShowDetails.name.replaceAll('/', ' ') + "_" + tvShowDetails.id.toString(),
+            title.replaceAll('/', ' ') + "_" + tmdbId.toString(),
           ]),
           "watchlist_length": FieldValue.increment(-1),
         },

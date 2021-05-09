@@ -216,7 +216,7 @@ class _PostCommentsPageState extends State<PostCommentsPage> {
                           child: ExpandableText(
                             widget.postOwnerReview,
                             expandText: "more",
-                            collapseText: "...collapse",
+                            collapseText: "",
                             maxLines: 3,
                             expanded: isReviewExpanded,
                             key: UniqueKey(),
@@ -1260,7 +1260,7 @@ class __BuildCommentTextState extends State<_BuildCommentText> {
       child: ExpandableText(
         widget.commentText,
         expandText: "more",
-        collapseText: "...collapse",
+        collapseText: "",
         maxLines: 3,
         expanded: isCommentExpanded,
         key: UniqueKey(),

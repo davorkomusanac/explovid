@@ -10,17 +10,35 @@ abstract class TvShowListsUserProfileEvent with _$TvShowListsUserProfileEvent {
     List<FirestoreTvShowWatchedDetails> tvShowWatched,
   ) = _TvShowWatchedUpdated;
   //watchlist
-  const factory TvShowListsUserProfileEvent.addTvShowToWatchlistPressed(TvShowDetails tvShowDetails) =
-      _AddTvShowToWatchlistPressed;
-  const factory TvShowListsUserProfileEvent.removeTvShowFromWatchlistPressed(TvShowDetails tvShowDetails) =
-      _RemoveTvShowFromWatchlistPressed;
+  const factory TvShowListsUserProfileEvent.addTvShowToWatchlistPressed({
+    @required int tmdbId,
+    @required String title,
+    @required String posterPath,
+  }) = _AddTvShowToWatchlistPressed;
+  const factory TvShowListsUserProfileEvent.removeTvShowFromWatchlistPressed({
+    @required int tmdbId,
+    @required String title,
+  }) = _RemoveTvShowFromWatchlistPressed;
   //watched
-  const factory TvShowListsUserProfileEvent.addTvShowToWatchedPressed(
-      TvShowDetails tvShowDetails, String review, num rating, bool isSpoiler) = _AddTvShowToWatchedPressed;
-  const factory TvShowListsUserProfileEvent.removeTvShowFromWatchedPressed({String tvShowTitle, int tvShowId}) =
-      _RemoveTvShowFromWatchedPressed;
-  const factory TvShowListsUserProfileEvent.updateTvShowWatchedReviewPressed(
-      {String tvShowTitle, int tvShowId, String review, num rating, bool isSpoiler}) = _UpdateTvShowWatchedReviewPressed;
+  const factory TvShowListsUserProfileEvent.addTvShowToWatchedPressed({
+    @required int tmdbId,
+    @required String title,
+    @required String posterPath,
+    @required String review,
+    @required num rating,
+    @required bool isSpoiler,
+  }) = _AddTvShowToWatchedPressed;
+  const factory TvShowListsUserProfileEvent.removeTvShowFromWatchedPressed({
+    @required String tvShowTitle,
+    @required int tvShowId,
+  }) = _RemoveTvShowFromWatchedPressed;
+  const factory TvShowListsUserProfileEvent.updateTvShowWatchedReviewPressed({
+    @required String tvShowTitle,
+    @required int tvShowId,
+    @required String review,
+    @required num rating,
+    @required bool isSpoiler,
+  }) = _UpdateTvShowWatchedReviewPressed;
   //pagination
   const factory TvShowListsUserProfileEvent.nextTvShowWatchlistPageCalled() = _NextTvShowWatchlistPageCalled;
   const factory TvShowListsUserProfileEvent.nextTvShowWatchedPageCalled() = _NextTvShowWatchedPageCalled;

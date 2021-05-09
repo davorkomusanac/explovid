@@ -98,20 +98,44 @@ class _NewsFeedPageState extends State<NewsFeedPage> with TickerProviderStateMix
               );
             }
           },
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              TabBar(
-                controller: _tabController,
-                tabs: _tabs,
+          child: BlocListener<MovieListsUserProfileBloc, MovieListsUserProfileState>(
+            listener: (context, movieListState) {
+              if (movieListState.errorMessage.isNotEmpty) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(movieListState.errorMessage),
+                    duration: Duration(seconds: 1),
+                  ),
+                );
+              }
+            },
+            child: BlocListener<TvShowListsUserProfileBloc, TvShowListsUserProfileState>(
+              listener: (context, tvShowListState) {
+                if (tvShowListState.errorMessage.isNotEmpty) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(tvShowListState.errorMessage),
+                      duration: Duration(seconds: 1),
+                    ),
+                  );
+                }
+              },
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  TabBar(
+                    controller: _tabController,
+                    tabs: _tabs,
+                  ),
+                  Expanded(
+                    child: TabBarView(
+                      controller: _tabController,
+                      children: _tabViews(context),
+                    ),
+                  ),
+                ],
               ),
-              Expanded(
-                child: TabBarView(
-                  controller: _tabController,
-                  children: _tabViews(context),
-                ),
-              ),
-            ],
+            ),
           ),
         ),
       ),
@@ -857,6 +881,193 @@ class _UserNewsFeedReviewState extends State<_UserNewsFeedReview> with TickerPro
                           ),
                         ],
                       ),
+
+                      /// //////////////////////////////////////////////////////////
+                      /// Show Add to watchlist and Rate it Buttons inside News feed
+                      /// //////////////////////////////////////////////////////////
+                      state.userPost.isOfTypeMovie
+                          ? BlocBuilder<MovieListsUserProfileBloc, MovieListsUserProfileState>(
+                              builder: (context, movieListState) {
+                                //Check if movie is watchList so that buttons can be updated correctly
+                                bool isInWatchlist = false;
+                                bool isInWatched = false;
+                                String compare =
+                                    state.userPost.title.replaceAll('/', ' ') + "_" + state.userPost.tmdbId.toString();
+                                for (var movie in movieListState.movieWatchlistArrayTitlesOnly) {
+                                  if (movie == compare) {
+                                    isInWatchlist = true;
+                                  }
+                                }
+                                for (var movie in movieListState.movieWatchedArrayTitlesOnly) {
+                                  if (movie == compare) {
+                                    isInWatched = true;
+                                  }
+                                }
+                                return Row(
+                                  children: [
+                                    Expanded(
+                                      child: Padding(
+                                        padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                                        child: movieListState.isSubmittingWatchlist
+                                            ? Center(child: CircularProgressIndicator())
+                                            : ElevatedButton(
+                                                style: isInWatchlist ? kWatchedButton : kNotWatchedButton,
+                                                onPressed: () {
+                                                  if (isInWatchlist) {
+                                                    showDialog(
+                                                      context: context,
+                                                      builder: (context) {
+                                                        return MovieRemoveWatchlistDialog(
+                                                          title: state.userPost.title,
+                                                          tmdbId: state.userPost.tmdbId,
+                                                        );
+                                                      },
+                                                    );
+                                                  } else {
+                                                    context.read<MovieListsUserProfileBloc>().add(
+                                                          MovieListsUserProfileEvent.addMovieToWatchlistPressed(
+                                                            tmdbId: state.userPost.tmdbId,
+                                                            title: state.userPost.title,
+                                                            posterPath: state.userPost.posterPath,
+                                                          ),
+                                                        );
+                                                  }
+                                                },
+                                                child: Text(isInWatchlist ? "In Watchlist" : "Add to Watchlist"),
+                                              ),
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: Padding(
+                                        padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                                        child: movieListState.isSubmittingWatched
+                                            ? Center(child: CircularProgressIndicator())
+                                            : ElevatedButton(
+                                                style: isInWatched ? kWatchedButton : kNotWatchedButton,
+                                                onPressed: () {
+                                                  if (isInWatched) {
+                                                    showDialog(
+                                                      context: context,
+                                                      builder: (context) {
+                                                        return MovieRemoveReviewDialog(
+                                                          tmdbId: state.userPost.tmdbId,
+                                                          title: state.userPost.title,
+                                                        );
+                                                      },
+                                                    );
+                                                  } else {
+                                                    showDialog(
+                                                      context: context,
+                                                      builder: (context) {
+                                                        return MovieReviewDialog(
+                                                          tmdbId: state.userPost.tmdbId,
+                                                          title: state.userPost.title,
+                                                          posterPath: state.userPost.posterPath,
+                                                          isInWatchlist: isInWatchlist,
+                                                        );
+                                                      },
+                                                    );
+                                                  }
+                                                },
+                                                child: Text(isInWatched ? "Watched" : "Rate it"),
+                                              ),
+                                      ),
+                                    ),
+                                  ],
+                                );
+                              },
+                            )
+                          : BlocBuilder<TvShowListsUserProfileBloc, TvShowListsUserProfileState>(
+                              builder: (context, tvShowListState) {
+                                //Check if tvShow is watchList so that buttons can be updated correctly
+                                bool isInWatchlist = false;
+                                bool isInWatched = false;
+                                String compare =
+                                    state.userPost.title.replaceAll('/', ' ') + "_" + state.userPost.tmdbId.toString();
+                                for (var tvShow in tvShowListState.tvShowWatchlistArrayTitlesOnly) {
+                                  if (tvShow == compare) {
+                                    isInWatchlist = true;
+                                  }
+                                }
+                                for (var tvShow in tvShowListState.tvShowWatchedArrayTitlesOnly) {
+                                  if (tvShow == compare) {
+                                    isInWatched = true;
+                                  }
+                                }
+                                return Row(
+                                  children: [
+                                    Expanded(
+                                      child: Padding(
+                                        padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                                        child: tvShowListState.isSubmittingWatchlist
+                                            ? Center(child: CircularProgressIndicator())
+                                            : ElevatedButton(
+                                                style: isInWatchlist ? kWatchedButton : kNotWatchedButton,
+                                                onPressed: () {
+                                                  if (isInWatchlist) {
+                                                    showDialog(
+                                                      context: context,
+                                                      builder: (context) {
+                                                        return TvShowRemoveWatchlistDialog(
+                                                          title: state.userPost.title,
+                                                          tmdbId: state.userPost.tmdbId,
+                                                        );
+                                                      },
+                                                    );
+                                                  } else {
+                                                    context.read<TvShowListsUserProfileBloc>().add(
+                                                          TvShowListsUserProfileEvent.addTvShowToWatchlistPressed(
+                                                            tmdbId: state.userPost.tmdbId,
+                                                            title: state.userPost.title,
+                                                            posterPath: state.userPost.posterPath,
+                                                          ),
+                                                        );
+                                                  }
+                                                },
+                                                child: Text(isInWatchlist ? "In Watchlist" : "Add to Watchlist"),
+                                              ),
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: Padding(
+                                        padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                                        child: tvShowListState.isSubmittingWatched
+                                            ? Center(child: CircularProgressIndicator())
+                                            : ElevatedButton(
+                                                style: isInWatched ? kWatchedButton : kNotWatchedButton,
+                                                onPressed: () {
+                                                  if (isInWatched) {
+                                                    showDialog(
+                                                      context: context,
+                                                      builder: (context) {
+                                                        return TvShowRemoveReviewDialog(
+                                                          tmdbId: state.userPost.tmdbId,
+                                                          title: state.userPost.title,
+                                                        );
+                                                      },
+                                                    );
+                                                  } else {
+                                                    showDialog(
+                                                      context: context,
+                                                      builder: (context) {
+                                                        return TvShowReviewDialog(
+                                                          tmdbId: state.userPost.tmdbId,
+                                                          title: state.userPost.title,
+                                                          posterPath: state.userPost.posterPath,
+                                                          isInWatchlist: isInWatchlist,
+                                                        );
+                                                      },
+                                                    );
+                                                  }
+                                                },
+                                                child: Text(isInWatched ? "Watched" : "Rate it"),
+                                              ),
+                                      ),
+                                    ),
+                                  ],
+                                );
+                              },
+                            ),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 8.0),
                         child: Align(
@@ -945,7 +1156,7 @@ class _UserNewsFeedReviewState extends State<_UserNewsFeedReview> with TickerPro
                                   child: ExpandableText(
                                     state.userPost.review,
                                     expandText: "more",
-                                    collapseText: "...collapse",
+                                    collapseText: "",
                                     maxLines: 3,
                                     expanded: isReviewExpanded,
                                     key: UniqueKey(),

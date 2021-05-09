@@ -366,7 +366,7 @@ class _CurrentUserReviewState extends State<CurrentUserReview> with TickerProvid
                               child: ExpandableText(
                                 state.userPost.review,
                                 expandText: "more",
-                                collapseText: "...collapse",
+                                collapseText: "",
                                 maxLines: 3,
                                 expanded: isReviewExpanded,
                                 key: UniqueKey(),

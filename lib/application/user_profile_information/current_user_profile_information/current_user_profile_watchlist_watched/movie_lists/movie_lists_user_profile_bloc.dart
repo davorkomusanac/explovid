@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:explovid/data/models/firestore_models/firestore_movie_watched_details.dart';
 import 'package:explovid/data/models/firestore_models/firestore_movie_watchlist_details.dart';
-import 'package:explovid/data/models/movie_details/movie_details.dart';
 import 'package:explovid/data/user_profile_db/current_user_profile_db/user_profile_repository.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:meta/meta.dart';
@@ -64,9 +63,14 @@ class MovieListsUserProfileBloc extends Bloc<MovieListsUserProfileEvent, MovieLi
       addMovieToWatchlistPressed: (e) async* {
         yield state.copyWith(
           isSubmittingWatchlist: true,
+          errorMessage: '',
         );
-        String returnVal = await _userProfileRepository.addMovieToWatchlist(e.movieDetails);
-        if (returnVal.isEmpty) state.movieWatchlistArrayTitlesOnly.add(e.movieDetails.title + "_" + e.movieDetails.id.toString());
+        String returnVal = await _userProfileRepository.addMovieToWatchlist(
+          title: e.title,
+          tmdbId: e.tmdbId,
+          posterPath: e.posterPath,
+        );
+        if (returnVal.isEmpty) state.movieWatchlistArrayTitlesOnly.add(e.title.replaceAll('/', ' ') + "_" + e.tmdbId.toString());
         //forcing State to update (nextPage has no other function)
         yield state.copyWith(
           nextPage: state.nextPage + 1,
@@ -77,16 +81,20 @@ class MovieListsUserProfileBloc extends Bloc<MovieListsUserProfileEvent, MovieLi
       removeMovieFromWatchlistPressed: (e) async* {
         yield state.copyWith(
           isSubmittingWatchlist: true,
+          errorMessage: '',
         );
         int indexNumberOfMovie;
-        String returnVal = await _userProfileRepository.removeMovieFromWatchlist(e.movieDetails);
+        String returnVal = await _userProfileRepository.removeMovieFromWatchlist(
+          tmdbId: e.tmdbId,
+          title: e.title,
+        );
         if (returnVal.isEmpty) {
           for (int i = 0; i < state.movieWatchlist.length; i++) {
-            if (state.movieWatchlist[i].title == e.movieDetails.title && state.movieWatchlist[i].id == e.movieDetails.id)
+            if (state.movieWatchlist[i].title == e.title.replaceAll('/', ' ') && state.movieWatchlist[i].id == e.tmdbId)
               indexNumberOfMovie = i;
           }
           if (indexNumberOfMovie != null) state.movieWatchlist.removeAt(indexNumberOfMovie);
-          state.movieWatchlistArrayTitlesOnly.remove(e.movieDetails.title + "_" + e.movieDetails.id.toString());
+          state.movieWatchlistArrayTitlesOnly.remove(e.title.replaceAll('/', ' ') + "_" + e.tmdbId.toString());
         }
         yield state.copyWith(
           nextPage: state.nextPage + 1,
@@ -97,9 +105,17 @@ class MovieListsUserProfileBloc extends Bloc<MovieListsUserProfileEvent, MovieLi
       addMovieToWatchedPressed: (e) async* {
         yield state.copyWith(
           isSubmittingWatched: true,
+          errorMessage: '',
         );
-        String returnVal = await _userProfileRepository.addMovieToWatched(e.movieDetails, e.review, e.rating, e.isSpoiler);
-        if (returnVal.isEmpty) state.movieWatchedArrayTitlesOnly.add(e.movieDetails.title + "_" + e.movieDetails.id.toString());
+        String returnVal = await _userProfileRepository.addMovieToWatched(
+          tmdbId: e.tmdbId,
+          title: e.title,
+          posterPath: e.posterPath,
+          review: e.review,
+          rating: e.rating,
+          isSpoiler: e.isSpoiler,
+        );
+        if (returnVal.isEmpty) state.movieWatchedArrayTitlesOnly.add(e.title.replaceAll('/', ' ') + "_" + e.tmdbId.toString());
         yield state.copyWith(
           nextPage: state.nextPage + 1,
           isSubmittingWatched: false,
@@ -109,6 +125,7 @@ class MovieListsUserProfileBloc extends Bloc<MovieListsUserProfileEvent, MovieLi
       removeMovieFromWatchedPressed: (e) async* {
         yield state.copyWith(
           isSubmittingWatched: true,
+          errorMessage: '',
         );
         int indexNumberOfMovie;
         String returnVal = "";
@@ -124,7 +141,7 @@ class MovieListsUserProfileBloc extends Bloc<MovieListsUserProfileEvent, MovieLi
           );
           if (returnVal.isEmpty) {
             state.movieWatched.removeAt(indexNumberOfMovie);
-            state.movieWatchedArrayTitlesOnly.remove(e.movieTitle + "_" + e.movieId.toString());
+            state.movieWatchedArrayTitlesOnly.remove(e.movieTitle.replaceAll('/', ' ') + "_" + e.movieId.toString());
           }
         }
         yield state.copyWith(
