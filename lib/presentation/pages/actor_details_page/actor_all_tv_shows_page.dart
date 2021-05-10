@@ -139,13 +139,27 @@ class _ActorAllTvShowsPageState extends State<ActorAllTvShowsPage> with TickerPr
             Padding(
               padding: const EdgeInsets.only(top: 8.0, bottom: 4.0),
               child: Text(
-                isCast ? tvShowRating + widget.tvCredits.cast[index].character : tvShowRating + widget.tvCredits.crew[index].job,
+                isCast
+                    ? tvShowRating + widget.tvCredits.cast[index].tvShowSummary.name
+                    : tvShowRating + widget.tvCredits.crew[index].tvShowSummary.name,
                 overflow: TextOverflow.ellipsis,
                 textAlign: TextAlign.center,
                 maxLines: 2,
                 style: TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.w500,
+                ),
+              ),
+            ),
+            Expanded(
+              child: Text(
+                isCast ? widget.tvCredits.cast[index].character : widget.tvCredits.crew[index].job,
+                overflow: TextOverflow.ellipsis,
+                textAlign: TextAlign.center,
+                maxLines: 2,
+                style: TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w300,
                 ),
               ),
             ),

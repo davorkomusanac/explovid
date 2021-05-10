@@ -933,7 +933,7 @@ class _UserNewsFeedReviewState extends State<_UserNewsFeedReview> with TickerPro
                                                         );
                                                   }
                                                 },
-                                                child: Text(isInWatchlist ? "In Watchlist" : "Add to Watchlist"),
+                                                child: Text(isInWatchlist ? "In Watchlist" : "Add Watchlist"),
                                               ),
                                       ),
                                     ),
@@ -1024,7 +1024,7 @@ class _UserNewsFeedReviewState extends State<_UserNewsFeedReview> with TickerPro
                                                         );
                                                   }
                                                 },
-                                                child: Text(isInWatchlist ? "In Watchlist" : "Add to Watchlist"),
+                                                child: Text(isInWatchlist ? "In Watchlist" : "Add Watchlist"),
                                               ),
                                       ),
                                     ),

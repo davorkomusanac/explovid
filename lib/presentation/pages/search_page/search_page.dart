@@ -557,19 +557,21 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
                                           imagePath: state.popularTvShows.tvShowSummaries[index].posterPath,
                                         ),
                                       ),
-                                      Padding(
-                                        padding: const EdgeInsets.only(top: 8.0, bottom: 4.0),
-                                        child: Text(
-                                          state.popularTvShows.tvShowSummaries[index].voteCount > 100 &&
-                                                  state.popularTvShows.tvShowSummaries[index].voteAverage != 0
-                                              ? "⭐ " + state.popularTvShows.tvShowSummaries[index].voteAverage.toString()
-                                              : "⭐ N/A",
-                                          overflow: TextOverflow.ellipsis,
-                                          textAlign: TextAlign.center,
-                                          maxLines: 2,
-                                          style: TextStyle(
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w500,
+                                      Expanded(
+                                        child: Padding(
+                                          padding: const EdgeInsets.only(top: 8.0, bottom: 4.0),
+                                          child: Text(
+                                            state.popularTvShows.tvShowSummaries[index].voteCount > 100 &&
+                                                    state.popularTvShows.tvShowSummaries[index].voteAverage != 0
+                                                ? "⭐ " + state.popularTvShows.tvShowSummaries[index].voteAverage.toString()
+                                                : "⭐ N/A",
+                                            overflow: TextOverflow.ellipsis,
+                                            textAlign: TextAlign.center,
+                                            maxLines: 2,
+                                            style: TextStyle(
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w500,
+                                            ),
                                           ),
                                         ),
                                       ),
@@ -741,19 +743,21 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
                                           imagePath: state.popularMovies.movieSummaries[index].posterPath,
                                         ),
                                       ),
-                                      Padding(
-                                        padding: const EdgeInsets.only(top: 8.0, bottom: 4.0),
-                                        child: Text(
-                                          state.popularMovies.movieSummaries[index].voteCount > 100 &&
-                                                  state.popularMovies.movieSummaries[index].voteAverage != 0
-                                              ? "⭐ " + state.popularMovies.movieSummaries[index].voteAverage.toString()
-                                              : "⭐ N/A",
-                                          overflow: TextOverflow.ellipsis,
-                                          textAlign: TextAlign.center,
-                                          maxLines: 2,
-                                          style: TextStyle(
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w500,
+                                      Expanded(
+                                        child: Padding(
+                                          padding: const EdgeInsets.only(top: 8.0, bottom: 4.0),
+                                          child: Text(
+                                            state.popularMovies.movieSummaries[index].voteCount > 100 &&
+                                                    state.popularMovies.movieSummaries[index].voteAverage != 0
+                                                ? "⭐ " + state.popularMovies.movieSummaries[index].voteAverage.toString()
+                                                : "⭐ N/A",
+                                            overflow: TextOverflow.ellipsis,
+                                            textAlign: TextAlign.center,
+                                            maxLines: 2,
+                                            style: TextStyle(
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w500,
+                                            ),
                                           ),
                                         ),
                                       ),

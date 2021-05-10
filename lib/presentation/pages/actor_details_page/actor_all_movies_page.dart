@@ -140,14 +140,26 @@ class _ActorAllMoviesPageState extends State<ActorAllMoviesPage> with TickerProv
               padding: const EdgeInsets.only(top: 8.0, bottom: 4.0),
               child: Text(
                 isCast
-                    ? movieRating + widget.movieCredits.cast[index].character
-                    : movieRating + widget.movieCredits.crew[index].job,
+                    ? movieRating + widget.movieCredits.cast[index].movieSummary.title
+                    : movieRating + widget.movieCredits.crew[index].movieSummary.title,
                 overflow: TextOverflow.ellipsis,
                 textAlign: TextAlign.center,
                 maxLines: 2,
                 style: TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.w500,
+                ),
+              ),
+            ),
+            Expanded(
+              child: Text(
+                isCast ? widget.movieCredits.cast[index].character : widget.movieCredits.crew[index].job,
+                overflow: TextOverflow.ellipsis,
+                textAlign: TextAlign.center,
+                maxLines: 2,
+                style: TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w300,
                 ),
               ),
             ),

@@ -155,7 +155,7 @@ class _ActorDetailsPageState extends State<ActorDetailsPage> {
                               ),
                             if (state.actorDetails.movieCredits.cast.isNotEmpty)
                               Container(
-                                height: 190,
+                                height: 230,
                                 padding: const EdgeInsets.only(right: 8.0),
                                 child: ListView.builder(
                                   shrinkWrap: true,
@@ -198,14 +198,28 @@ class _ActorDetailsPageState extends State<ActorDetailsPage> {
                                                 width: 90,
                                                 imagePath: state.actorDetails.movieCredits.cast[index].movieSummary.posterPath,
                                               ),
+                                              Padding(
+                                                padding: const EdgeInsets.only(top: 8.0, bottom: 4.0),
+                                                child: Text(
+                                                  state.actorDetails.movieCredits.cast[index].movieSummary.title,
+                                                  overflow: TextOverflow.ellipsis,
+                                                  textAlign: TextAlign.center,
+                                                  maxLines: 2,
+                                                  style: TextStyle(
+                                                    fontSize: 14,
+                                                    fontWeight: FontWeight.w500,
+                                                  ),
+                                                ),
+                                              ),
                                               Expanded(
-                                                child: Padding(
-                                                  padding: const EdgeInsets.only(top: 8.0, bottom: 4.0),
-                                                  child: Text(
-                                                    state.actorDetails.movieCredits.cast[index].character,
-                                                    overflow: TextOverflow.ellipsis,
-                                                    textAlign: TextAlign.center,
-                                                    maxLines: 2,
+                                                child: Text(
+                                                  state.actorDetails.movieCredits.cast[index].character,
+                                                  overflow: TextOverflow.ellipsis,
+                                                  textAlign: TextAlign.center,
+                                                  maxLines: 2,
+                                                  style: TextStyle(
+                                                    fontSize: 12,
+                                                    fontWeight: FontWeight.w300,
                                                   ),
                                                 ),
                                               ),
@@ -228,7 +242,7 @@ class _ActorDetailsPageState extends State<ActorDetailsPage> {
                               ),
                             if (state.actorDetails.movieCredits.crew.isNotEmpty)
                               Container(
-                                height: 190,
+                                height: 230,
                                 padding: const EdgeInsets.only(right: 8.0),
                                 child: ListView.builder(
                                   shrinkWrap: true,
@@ -271,14 +285,28 @@ class _ActorDetailsPageState extends State<ActorDetailsPage> {
                                                 width: 90,
                                                 imagePath: state.actorDetails.movieCredits.crew[index].movieSummary.posterPath,
                                               ),
+                                              Padding(
+                                                padding: const EdgeInsets.only(top: 8.0, bottom: 4.0),
+                                                child: Text(
+                                                  state.actorDetails.movieCredits.crew[index].movieSummary.title,
+                                                  overflow: TextOverflow.ellipsis,
+                                                  textAlign: TextAlign.center,
+                                                  maxLines: 2,
+                                                  style: TextStyle(
+                                                    fontSize: 14,
+                                                    fontWeight: FontWeight.w500,
+                                                  ),
+                                                ),
+                                              ),
                                               Expanded(
-                                                child: Padding(
-                                                  padding: const EdgeInsets.only(top: 8.0, bottom: 4.0),
-                                                  child: Text(
-                                                    state.actorDetails.movieCredits.crew[index].job,
-                                                    overflow: TextOverflow.ellipsis,
-                                                    textAlign: TextAlign.center,
-                                                    maxLines: 2,
+                                                child: Text(
+                                                  state.actorDetails.movieCredits.crew[index].job,
+                                                  overflow: TextOverflow.ellipsis,
+                                                  textAlign: TextAlign.center,
+                                                  maxLines: 2,
+                                                  style: TextStyle(
+                                                    fontSize: 12,
+                                                    fontWeight: FontWeight.w300,
                                                   ),
                                                 ),
                                               ),
@@ -339,7 +367,7 @@ class _ActorDetailsPageState extends State<ActorDetailsPage> {
                               ),
                             if (state.actorDetails.tvCredits.cast.isNotEmpty)
                               Container(
-                                height: 190,
+                                height: 230,
                                 padding: const EdgeInsets.only(right: 8.0),
                                 child: ListView.builder(
                                   shrinkWrap: true,
@@ -382,14 +410,28 @@ class _ActorDetailsPageState extends State<ActorDetailsPage> {
                                                 width: 90,
                                                 imagePath: state.actorDetails.tvCredits.cast[index].tvShowSummary.posterPath,
                                               ),
+                                              Padding(
+                                                padding: const EdgeInsets.only(top: 8.0, bottom: 4.0),
+                                                child: Text(
+                                                  state.actorDetails.tvCredits.cast[index].tvShowSummary.name,
+                                                  overflow: TextOverflow.ellipsis,
+                                                  textAlign: TextAlign.center,
+                                                  maxLines: 2,
+                                                  style: TextStyle(
+                                                    fontSize: 14,
+                                                    fontWeight: FontWeight.w500,
+                                                  ),
+                                                ),
+                                              ),
                                               Expanded(
-                                                child: Padding(
-                                                  padding: const EdgeInsets.only(top: 8.0, bottom: 4.0),
-                                                  child: Text(
-                                                    state.actorDetails.tvCredits.cast[index].character,
-                                                    overflow: TextOverflow.ellipsis,
-                                                    textAlign: TextAlign.center,
-                                                    maxLines: 2,
+                                                child: Text(
+                                                  state.actorDetails.tvCredits.cast[index].character,
+                                                  overflow: TextOverflow.ellipsis,
+                                                  textAlign: TextAlign.center,
+                                                  maxLines: 2,
+                                                  style: TextStyle(
+                                                    fontSize: 12,
+                                                    fontWeight: FontWeight.w300,
                                                   ),
                                                 ),
                                               ),
@@ -411,7 +453,7 @@ class _ActorDetailsPageState extends State<ActorDetailsPage> {
                               ),
                             if (state.actorDetails.tvCredits.crew.isNotEmpty)
                               Container(
-                                height: 190,
+                                height: 230,
                                 padding: const EdgeInsets.only(right: 8.0),
                                 child: ListView.builder(
                                   shrinkWrap: true,
@@ -454,14 +496,28 @@ class _ActorDetailsPageState extends State<ActorDetailsPage> {
                                                 width: 90,
                                                 imagePath: state.actorDetails.tvCredits.crew[index].tvShowSummary.posterPath,
                                               ),
+                                              Padding(
+                                                padding: const EdgeInsets.only(top: 8.0, bottom: 4.0),
+                                                child: Text(
+                                                  state.actorDetails.tvCredits.crew[index].tvShowSummary.name,
+                                                  overflow: TextOverflow.ellipsis,
+                                                  textAlign: TextAlign.center,
+                                                  maxLines: 2,
+                                                  style: TextStyle(
+                                                    fontSize: 14,
+                                                    fontWeight: FontWeight.w500,
+                                                  ),
+                                                ),
+                                              ),
                                               Expanded(
-                                                child: Padding(
-                                                  padding: const EdgeInsets.only(top: 8.0, bottom: 4.0),
-                                                  child: Text(
-                                                    state.actorDetails.tvCredits.crew[index].job,
-                                                    overflow: TextOverflow.ellipsis,
-                                                    textAlign: TextAlign.center,
-                                                    maxLines: 2,
+                                                child: Text(
+                                                  state.actorDetails.tvCredits.crew[index].job,
+                                                  overflow: TextOverflow.ellipsis,
+                                                  textAlign: TextAlign.center,
+                                                  maxLines: 2,
+                                                  style: TextStyle(
+                                                    fontSize: 12,
+                                                    fontWeight: FontWeight.w300,
                                                   ),
                                                 ),
                                               ),
