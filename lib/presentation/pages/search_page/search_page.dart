@@ -286,7 +286,7 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
             if (!state.isSearching && state.errorMessage.isEmpty && !state.isSearchCompleted)
               Expanded(
                 child: Center(
-                  child: Text("Start typing to search users"),
+                  child: Text("Start typing to search other users"),
                 ),
               ),
             if (state.isSearching) BuildSearchProgressIndicator(),

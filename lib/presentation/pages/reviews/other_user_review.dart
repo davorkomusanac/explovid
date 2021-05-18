@@ -242,7 +242,10 @@ class _OtherUserReviewState extends State<OtherUserReview> with TickerProviderSt
           },
           builder: (context, state) {
             if (state.isLoadingPost || userState.isSearching) {
-              return Center(child: CircularProgressIndicator());
+              return Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Center(child: CircularProgressIndicator()),
+              );
             } else {
               return userState.ourUser.uid.isEmpty
                   ? SizedBox(width: 0, height: 0)

@@ -439,6 +439,20 @@ class BuildProfilePhotoAvatar extends StatelessWidget {
   }
 }
 
+class BuildNoCastOrSimilarMoviesFoundWidget extends StatelessWidget {
+  const BuildNoCastOrSimilarMoviesFoundWidget({Key key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return const Center(
+      child: OutlinedButton(
+        onPressed: null,
+        child: Text("Currently unavailable"),
+      ),
+    );
+  }
+}
+
 var kWatchedButton = ElevatedButton.styleFrom(
   primary: Colors.blueGrey[800],
   onPrimary: Colors.tealAccent[700],
