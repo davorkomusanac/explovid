@@ -11,6 +11,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:ntp/ntp.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:uuid/uuid.dart';
 
@@ -90,6 +91,14 @@ class UserProfileRepository {
     @required String title,
     @required String posterPath,
   }) async {
+    DateTime time;
+    try {
+      time = await NTP.now();
+    } catch (e) {
+      print(e.toString());
+      time = DateTime.now();
+    }
+
     String returnVal = "";
     FirestoreMovieWatchlistDetails firestoreMovieDetails = FirestoreMovieWatchlistDetails(
       id: tmdbId,
@@ -98,7 +107,7 @@ class UserProfileRepository {
       popularity: 0,
       voteAverage: 0,
       releaseDate: "",
-      timestampAddedToFirestore: Timestamp.now(),
+      timestampAddedToFirestore: Timestamp.fromDate(time),
     );
     WriteBatch batch = FirebaseFirestore.instance.batch();
 
@@ -141,9 +150,17 @@ class UserProfileRepository {
     @required num rating,
     @required bool isSpoiler,
   }) async {
+    DateTime time;
+    try {
+      time = await NTP.now();
+    } catch (e) {
+      print(e.toString());
+      time = DateTime.now();
+    }
+
     String returnVal = "";
     String postUid = Uuid().v4();
-    Timestamp timestamp = Timestamp.now();
+    Timestamp timestamp = Timestamp.fromDate(time);
     FirestoreMovieWatchedDetails firestoreMovieDetails = FirestoreMovieWatchedDetails(
       id: tmdbId,
       title: title,
@@ -175,6 +192,7 @@ class UserProfileRepository {
     WriteBatch batch = FirebaseFirestore.instance.batch();
 
     try {
+      //Add movie to list of arrays for that specific user for easier tracking
       batch.set(
         _users
             .doc(_auth.currentUser.uid)
@@ -210,15 +228,18 @@ class UserProfileRepository {
           "post_creation_date": ourUserPost.postCreationDate,
         },
       );
-      //Add movie review to global news feed collection
-      batch.set(
-        _globalNewsFeed.doc(ourUserPost.postUid),
-        {
-          "user_uid": _auth.currentUser.uid,
-          "post_uid": ourUserPost.postUid,
-          "post_creation_date": ourUserPost.postCreationDate,
-        },
-      );
+      //If review is empty (only a rating is given, then don't add this user's review to news feeds
+      if (review.isNotEmpty) {
+        //Add movie review to global news feed collection
+        batch.set(
+          _globalNewsFeed.doc(ourUserPost.postUid),
+          {
+            "user_uid": _auth.currentUser.uid,
+            "post_uid": ourUserPost.postUid,
+            "post_creation_date": ourUserPost.postCreationDate,
+          },
+        );
+      }
       //Add movie review to current user's own user news feed
       batch.set(
         _userNewsFeed.doc(_auth.currentUser.uid).collection("feed").doc(ourUserPost.postUid),
@@ -359,6 +380,14 @@ class UserProfileRepository {
     @required String title,
     @required String posterPath,
   }) async {
+    DateTime time;
+    try {
+      time = await NTP.now();
+    } catch (e) {
+      print(e.toString());
+      time = DateTime.now();
+    }
+
     String returnVal = "";
     FirestoreTvShowWatchlistDetails firestoreTvShowWatchlistDetails = FirestoreTvShowWatchlistDetails(
       id: tmdbId,
@@ -367,7 +396,7 @@ class UserProfileRepository {
       popularity: 0,
       voteAverage: 0,
       firstAirDate: "",
-      timestampAddedToFirestore: Timestamp.now(),
+      timestampAddedToFirestore: Timestamp.fromDate(time),
     );
     WriteBatch batch = FirebaseFirestore.instance.batch();
     try {
@@ -405,9 +434,17 @@ class UserProfileRepository {
     @required num rating,
     @required bool isSpoiler,
   }) async {
+    DateTime time;
+    try {
+      time = await NTP.now();
+    } catch (e) {
+      print(e.toString());
+      time = DateTime.now();
+    }
+
     String returnVal = "";
     String postUid = Uuid().v4();
-    Timestamp timestamp = Timestamp.now();
+    Timestamp timestamp = Timestamp.fromDate(time);
     FirestoreTvShowWatchedDetails firestoreTvShowWatchedDetails = FirestoreTvShowWatchedDetails(
       id: tmdbId,
       name: title,
@@ -438,6 +475,7 @@ class UserProfileRepository {
     WriteBatch batch = FirebaseFirestore.instance.batch();
 
     try {
+      //Add tv show to list of arrays for that specific user for easier tracking
       batch.set(
         _users
             .doc(_auth.currentUser.uid)
@@ -474,15 +512,18 @@ class UserProfileRepository {
           "post_creation_date": ourUserPost.postCreationDate,
         },
       );
-      //Add tv show review to global news feed
-      batch.set(
-        _globalNewsFeed.doc(ourUserPost.postUid),
-        {
-          "user_uid": _auth.currentUser.uid,
-          "post_uid": ourUserPost.postUid,
-          "post_creation_date": ourUserPost.postCreationDate,
-        },
-      );
+      //If review is empty (only a rating is given, then don't add this user's review to news feeds
+      if (review.isNotEmpty) {
+        //Add tv show review to global news feed
+        batch.set(
+          _globalNewsFeed.doc(ourUserPost.postUid),
+          {
+            "user_uid": _auth.currentUser.uid,
+            "post_uid": ourUserPost.postUid,
+            "post_creation_date": ourUserPost.postCreationDate,
+          },
+        );
+      }
       //Add tv show review to current user's own user news feed
       batch.set(
         _userNewsFeed.doc(_auth.currentUser.uid).collection("feed").doc(ourUserPost.postUid),
