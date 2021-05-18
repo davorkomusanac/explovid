@@ -521,82 +521,84 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
                             ],
                           ),
                           Container(
-                            height: 230,
+                            height: state.movieDetails.credits.cast.isEmpty ? 80 : 230,
                             padding: const EdgeInsets.only(
                               left: 8.0,
                               right: 8.0,
                             ),
-                            child: ListView.builder(
-                              shrinkWrap: true,
-                              scrollDirection: Axis.horizontal,
-                              itemCount: state.movieDetails.credits.cast.length,
-                              itemBuilder: (context, index) {
-                                return Padding(
-                                  padding: const EdgeInsets.only(
-                                    left: 8.0,
-                                    right: 8.0,
-                                  ),
-                                  child: InkWell(
-                                    onTap: () {
-                                      //Had to add .then and call setState, so that the first page is refreshed if it is popped back, from the second page where the Navigator
-                                      //is going to push right now (otherwise each page will have the identical MovieDetails)
-                                      Navigator.of(context, rootNavigator: false)
-                                          .push(
-                                            MaterialPageRoute(
-                                              builder: (context) => ActorDetailsPage(
-                                                state.movieDetails.credits.cast[index].id,
-                                              ),
-                                            ),
-                                          )
-                                          .then(
-                                            (value) => setState(
-                                              () {
-                                                sendEvent();
-                                              },
-                                            ),
-                                          );
-                                    },
-                                    child: Container(
-                                      width: 90,
-                                      child: Column(
-                                        children: [
-                                          BuildPosterImage(
-                                            height: 135,
+                            child: state.movieDetails.credits.cast.isEmpty
+                                ? const BuildNoCastOrSimilarMoviesFoundWidget()
+                                : ListView.builder(
+                                    shrinkWrap: true,
+                                    scrollDirection: Axis.horizontal,
+                                    itemCount: state.movieDetails.credits.cast.length,
+                                    itemBuilder: (context, index) {
+                                      return Padding(
+                                        padding: const EdgeInsets.only(
+                                          left: 8.0,
+                                          right: 8.0,
+                                        ),
+                                        child: InkWell(
+                                          onTap: () {
+                                            //Had to add .then and call setState, so that the first page is refreshed if it is popped back, from the second page where the Navigator
+                                            //is going to push right now (otherwise each page will have the identical MovieDetails)
+                                            Navigator.of(context, rootNavigator: false)
+                                                .push(
+                                                  MaterialPageRoute(
+                                                    builder: (context) => ActorDetailsPage(
+                                                      state.movieDetails.credits.cast[index].id,
+                                                    ),
+                                                  ),
+                                                )
+                                                .then(
+                                                  (value) => setState(
+                                                    () {
+                                                      sendEvent();
+                                                    },
+                                                  ),
+                                                );
+                                          },
+                                          child: Container(
                                             width: 90,
-                                            imagePath: state.movieDetails.credits.cast[index].profilePath,
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsets.only(top: 8.0, bottom: 4.0),
-                                            child: Text(
-                                              state.movieDetails.credits.cast[index].name,
-                                              overflow: TextOverflow.ellipsis,
-                                              textAlign: TextAlign.center,
-                                              maxLines: 2,
-                                              style: TextStyle(
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.w500,
-                                              ),
+                                            child: Column(
+                                              children: [
+                                                BuildPosterImage(
+                                                  height: 135,
+                                                  width: 90,
+                                                  imagePath: state.movieDetails.credits.cast[index].profilePath,
+                                                ),
+                                                Padding(
+                                                  padding: const EdgeInsets.only(top: 8.0, bottom: 4.0),
+                                                  child: Text(
+                                                    state.movieDetails.credits.cast[index].name,
+                                                    overflow: TextOverflow.ellipsis,
+                                                    textAlign: TextAlign.center,
+                                                    maxLines: 2,
+                                                    style: TextStyle(
+                                                      fontSize: 14,
+                                                      fontWeight: FontWeight.w500,
+                                                    ),
+                                                  ),
+                                                ),
+                                                Expanded(
+                                                  child: Text(
+                                                    state.movieDetails.credits.cast[index].character,
+                                                    overflow: TextOverflow.ellipsis,
+                                                    textAlign: TextAlign.center,
+                                                    maxLines: 2,
+                                                    style: TextStyle(
+                                                      fontSize: 12,
+                                                      fontWeight: FontWeight.w300,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
                                             ),
                                           ),
-                                          Expanded(
-                                            child: Text(
-                                              state.movieDetails.credits.cast[index].character,
-                                              overflow: TextOverflow.ellipsis,
-                                              textAlign: TextAlign.center,
-                                              maxLines: 2,
-                                              style: TextStyle(
-                                                fontSize: 12,
-                                                fontWeight: FontWeight.w300,
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
+                                        ),
+                                      );
+                                    },
                                   ),
-                                );
-                              },
-                            ),
                           ),
                           Padding(
                             padding: const EdgeInsets.only(
@@ -613,87 +615,94 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
                             ),
                           ),
                           Container(
-                            height: 220,
+                            height: state.movieDetails.movieSearchResults.movieSummaries.isEmpty ? 70 : 220,
                             padding: const EdgeInsets.only(
                               left: 8.0,
                               bottom: 8.0,
                               right: 8.0,
                             ),
-                            child: ListView.builder(
-                              shrinkWrap: true,
-                              scrollDirection: Axis.horizontal,
-                              itemCount: state.movieDetails.movieSearchResults.movieSummaries.length,
-                              itemBuilder: (context, index) {
-                                return Padding(
-                                  padding: const EdgeInsets.only(
-                                    left: 8.0,
-                                    bottom: 8.0,
-                                    right: 8.0,
-                                  ),
-                                  child: InkWell(
-                                    onTap: () {
-                                      //Had to add .then and call setState, so that the first page is refreshed if it is popped back, from the second page where the Navigator
-                                      //is going to push right now (otherwise each page will have the identical MovieDetails)
-                                      Navigator.of(context, rootNavigator: false)
-                                          .push(
-                                            MaterialPageRoute(
-                                              builder: (context) => MovieDetailsPage(
-                                                movieId: state.movieDetails.movieSearchResults.movieSummaries[index].id,
-                                                movieTitle: state.movieDetails.movieSearchResults.movieSummaries[index].title,
-                                              ),
-                                            ),
-                                          )
-                                          .then(
-                                            (value) => setState(
-                                              () {
-                                                sendEvent();
-                                              },
-                                            ),
-                                          );
-                                    },
-                                    child: Container(
-                                      width: 90,
-                                      child: Column(
-                                        children: [
-                                          BuildPosterImage(
-                                            height: 135,
+                            child: state.movieDetails.movieSearchResults.movieSummaries.isEmpty
+                                ? const BuildNoCastOrSimilarMoviesFoundWidget()
+                                : ListView.builder(
+                                    shrinkWrap: true,
+                                    scrollDirection: Axis.horizontal,
+                                    itemCount: state.movieDetails.movieSearchResults.movieSummaries.length,
+                                    itemBuilder: (context, index) {
+                                      return Padding(
+                                        padding: const EdgeInsets.only(
+                                          left: 8.0,
+                                          bottom: 8.0,
+                                          right: 8.0,
+                                        ),
+                                        child: InkWell(
+                                          onTap: () {
+                                            //Had to add .then and call setState, so that the first page is refreshed if it is popped back, from the second page where the Navigator
+                                            //is going to push right now (otherwise each page will have the identical MovieDetails)
+                                            Navigator.of(context, rootNavigator: false)
+                                                .push(
+                                                  MaterialPageRoute(
+                                                    builder: (context) => MovieDetailsPage(
+                                                      movieId: state.movieDetails.movieSearchResults.movieSummaries[index].id,
+                                                      movieTitle:
+                                                          state.movieDetails.movieSearchResults.movieSummaries[index].title,
+                                                    ),
+                                                  ),
+                                                )
+                                                .then(
+                                                  (value) => setState(
+                                                    () {
+                                                      sendEvent();
+                                                    },
+                                                  ),
+                                                );
+                                          },
+                                          child: Container(
                                             width: 90,
-                                            imagePath: state.movieDetails.movieSearchResults.movieSummaries[index].posterPath,
-                                          ),
-                                          Expanded(
-                                            child: Padding(
-                                              padding: const EdgeInsets.only(
-                                                top: 8.0,
-                                                bottom: 4.0,
-                                              ),
-                                              child: Text(
-                                                state.movieDetails.movieSearchResults.movieSummaries[index].voteAverage != 0 &&
-                                                        state.movieDetails.movieSearchResults.movieSummaries[index].voteCount >
-                                                            100
-                                                    ? "⭐" +
-                                                        state.movieDetails.movieSearchResults.movieSummaries[index].voteAverage
-                                                            .toStringAsFixed(1) +
-                                                        " " +
-                                                        state.movieDetails.movieSearchResults.movieSummaries[index].title
-                                                    : "⭐ N/A " +
-                                                        state.movieDetails.movieSearchResults.movieSummaries[index].title,
-                                                overflow: TextOverflow.ellipsis,
-                                                textAlign: TextAlign.center,
-                                                maxLines: 2,
-                                                style: TextStyle(
-                                                  fontSize: 14,
-                                                  fontWeight: FontWeight.w500,
+                                            child: Column(
+                                              children: [
+                                                BuildPosterImage(
+                                                  height: 135,
+                                                  width: 90,
+                                                  imagePath:
+                                                      state.movieDetails.movieSearchResults.movieSummaries[index].posterPath,
                                                 ),
-                                              ),
+                                                Expanded(
+                                                  child: Padding(
+                                                    padding: const EdgeInsets.only(
+                                                      top: 8.0,
+                                                      bottom: 4.0,
+                                                    ),
+                                                    child: Text(
+                                                      state.movieDetails.movieSearchResults.movieSummaries[index].voteAverage !=
+                                                                  0 &&
+                                                              state.movieDetails.movieSearchResults.movieSummaries[index]
+                                                                      .voteCount >
+                                                                  100
+                                                          ? "⭐" +
+                                                              state.movieDetails.movieSearchResults.movieSummaries[index]
+                                                                  .voteAverage
+                                                                  .toStringAsFixed(1) +
+                                                              " " +
+                                                              state.movieDetails.movieSearchResults.movieSummaries[index].title
+                                                          : "⭐ N/A " +
+                                                              state.movieDetails.movieSearchResults.movieSummaries[index].title,
+                                                      overflow: TextOverflow.ellipsis,
+                                                      textAlign: TextAlign.center,
+                                                      maxLines: 2,
+                                                      style: TextStyle(
+                                                        fontSize: 14,
+                                                        fontWeight: FontWeight.w500,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
                                             ),
                                           ),
-                                        ],
-                                      ),
-                                    ),
+                                        ),
+                                      );
+                                    },
                                   ),
-                                );
-                              },
-                            ),
                           ),
 
                           /// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

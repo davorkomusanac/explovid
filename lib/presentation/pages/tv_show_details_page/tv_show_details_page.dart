@@ -515,82 +515,84 @@ class _TvShowDetailsPageState extends State<TvShowDetailsPage> {
                             ],
                           ),
                           Container(
-                            height: 230,
+                            height: state.tvShowDetails.aggregateCredits.cast.isEmpty ? 80 : 230,
                             padding: const EdgeInsets.only(
                               left: 8.0,
                               right: 8.0,
                             ),
-                            child: ListView.builder(
-                              shrinkWrap: true,
-                              scrollDirection: Axis.horizontal,
-                              itemCount: state.tvShowDetails.aggregateCredits.cast.length,
-                              itemBuilder: (context, index) {
-                                return Padding(
-                                  padding: const EdgeInsets.only(
-                                    left: 8.0,
-                                    right: 8.0,
-                                  ),
-                                  child: InkWell(
-                                    onTap: () {
-                                      Navigator.of(context, rootNavigator: false)
-                                          .push(
-                                            MaterialPageRoute(
-                                              builder: (context) => ActorDetailsPage(
-                                                state.tvShowDetails.aggregateCredits.cast[index].id,
-                                              ),
-                                            ),
-                                          )
-                                          .then(
-                                            (value) => setState(
-                                              () {
-                                                sendEvent();
-                                              },
-                                            ),
-                                          );
-                                    },
-                                    child: Container(
-                                      width: 90,
-                                      child: Column(
-                                        children: [
-                                          BuildPosterImage(
-                                            height: 135,
+                            child: state.tvShowDetails.aggregateCredits.cast.isEmpty
+                                ? const BuildNoCastOrSimilarMoviesFoundWidget()
+                                : ListView.builder(
+                                    shrinkWrap: true,
+                                    scrollDirection: Axis.horizontal,
+                                    itemCount: state.tvShowDetails.aggregateCredits.cast.length,
+                                    itemBuilder: (context, index) {
+                                      return Padding(
+                                        padding: const EdgeInsets.only(
+                                          left: 8.0,
+                                          right: 8.0,
+                                        ),
+                                        child: InkWell(
+                                          onTap: () {
+                                            Navigator.of(context, rootNavigator: false)
+                                                .push(
+                                                  MaterialPageRoute(
+                                                    builder: (context) => ActorDetailsPage(
+                                                      state.tvShowDetails.aggregateCredits.cast[index].id,
+                                                    ),
+                                                  ),
+                                                )
+                                                .then(
+                                                  (value) => setState(
+                                                    () {
+                                                      sendEvent();
+                                                    },
+                                                  ),
+                                                );
+                                          },
+                                          child: Container(
                                             width: 90,
-                                            imagePath: state.tvShowDetails.aggregateCredits.cast[index].profilePath,
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsets.only(top: 8.0, bottom: 4.0),
-                                            child: Text(
-                                              state.tvShowDetails.aggregateCredits.cast[index].name,
-                                              overflow: TextOverflow.ellipsis,
-                                              textAlign: TextAlign.center,
-                                              maxLines: 2,
-                                              style: TextStyle(
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.w500,
-                                              ),
+                                            child: Column(
+                                              children: [
+                                                BuildPosterImage(
+                                                  height: 135,
+                                                  width: 90,
+                                                  imagePath: state.tvShowDetails.aggregateCredits.cast[index].profilePath,
+                                                ),
+                                                Padding(
+                                                  padding: const EdgeInsets.only(top: 8.0, bottom: 4.0),
+                                                  child: Text(
+                                                    state.tvShowDetails.aggregateCredits.cast[index].name,
+                                                    overflow: TextOverflow.ellipsis,
+                                                    textAlign: TextAlign.center,
+                                                    maxLines: 2,
+                                                    style: TextStyle(
+                                                      fontSize: 14,
+                                                      fontWeight: FontWeight.w500,
+                                                    ),
+                                                  ),
+                                                ),
+                                                Expanded(
+                                                  child: Text(
+                                                    state.tvShowDetails.aggregateCredits.cast[index].roles.isNotEmpty
+                                                        ? state.tvShowDetails.aggregateCredits.cast[index].roles[0].character
+                                                        : "",
+                                                    overflow: TextOverflow.ellipsis,
+                                                    textAlign: TextAlign.center,
+                                                    maxLines: 2,
+                                                    style: TextStyle(
+                                                      fontSize: 12,
+                                                      fontWeight: FontWeight.w300,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
                                             ),
                                           ),
-                                          Expanded(
-                                            child: Text(
-                                              state.tvShowDetails.aggregateCredits.cast[index].roles.isNotEmpty
-                                                  ? state.tvShowDetails.aggregateCredits.cast[index].roles[0].character
-                                                  : "",
-                                              overflow: TextOverflow.ellipsis,
-                                              textAlign: TextAlign.center,
-                                              maxLines: 2,
-                                              style: TextStyle(
-                                                fontSize: 12,
-                                                fontWeight: FontWeight.w300,
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
+                                        ),
+                                      );
+                                    },
                                   ),
-                                );
-                              },
-                            ),
                           ),
                           Padding(
                             padding: const EdgeInsets.only(
@@ -607,87 +609,95 @@ class _TvShowDetailsPageState extends State<TvShowDetailsPage> {
                             ),
                           ),
                           Container(
-                            height: 220,
+                            height: state.tvShowDetails.tvShowSearchResults.tvShowSummaries.isEmpty ? 70 : 220,
                             padding: const EdgeInsets.only(
                               left: 8.0,
                               bottom: 8.0,
                               right: 8.0,
                             ),
-                            child: ListView.builder(
-                              shrinkWrap: true,
-                              scrollDirection: Axis.horizontal,
-                              itemCount: state.tvShowDetails.tvShowSearchResults.tvShowSummaries.length,
-                              itemBuilder: (context, index) {
-                                return Padding(
-                                  padding: const EdgeInsets.only(
-                                    left: 8.0,
-                                    bottom: 8.0,
-                                    right: 8.0,
-                                  ),
-                                  child: InkWell(
-                                    onTap: () {
-                                      //Had to add .then and call setState, so that the first page is refreshed if it is popped back, from the second page where the Navigator
-                                      //is going to push right now (otherwise each page will have the identical TvShowDetails)
-                                      Navigator.of(context, rootNavigator: false)
-                                          .push(
-                                            MaterialPageRoute(
-                                              builder: (context) => TvShowDetailsPage(
-                                                tvShowName: state.tvShowDetails.tvShowSearchResults.tvShowSummaries[index].name,
-                                                tvShowId: state.tvShowDetails.tvShowSearchResults.tvShowSummaries[index].id,
-                                              ),
-                                            ),
-                                          )
-                                          .then(
-                                            (value) => setState(
-                                              () {
-                                                sendEvent();
-                                              },
-                                            ),
-                                          );
-                                    },
-                                    child: Container(
-                                      width: 90,
-                                      child: Column(
-                                        children: [
-                                          BuildPosterImage(
-                                            height: 135,
+                            child: state.tvShowDetails.tvShowSearchResults.tvShowSummaries.isEmpty
+                                ? const BuildNoCastOrSimilarMoviesFoundWidget()
+                                : ListView.builder(
+                                    shrinkWrap: true,
+                                    scrollDirection: Axis.horizontal,
+                                    itemCount: state.tvShowDetails.tvShowSearchResults.tvShowSummaries.length,
+                                    itemBuilder: (context, index) {
+                                      return Padding(
+                                        padding: const EdgeInsets.only(
+                                          left: 8.0,
+                                          bottom: 8.0,
+                                          right: 8.0,
+                                        ),
+                                        child: InkWell(
+                                          onTap: () {
+                                            //Had to add .then and call setState, so that the first page is refreshed if it is popped back, from the second page where the Navigator
+                                            //is going to push right now (otherwise each page will have the identical TvShowDetails)
+                                            Navigator.of(context, rootNavigator: false)
+                                                .push(
+                                                  MaterialPageRoute(
+                                                    builder: (context) => TvShowDetailsPage(
+                                                      tvShowName:
+                                                          state.tvShowDetails.tvShowSearchResults.tvShowSummaries[index].name,
+                                                      tvShowId: state.tvShowDetails.tvShowSearchResults.tvShowSummaries[index].id,
+                                                    ),
+                                                  ),
+                                                )
+                                                .then(
+                                                  (value) => setState(
+                                                    () {
+                                                      sendEvent();
+                                                    },
+                                                  ),
+                                                );
+                                          },
+                                          child: Container(
                                             width: 90,
-                                            imagePath: state.tvShowDetails.tvShowSearchResults.tvShowSummaries[index].posterPath,
-                                          ),
-                                          Expanded(
-                                            child: Padding(
-                                              padding: const EdgeInsets.only(
-                                                top: 8.0,
-                                                bottom: 4.0,
-                                              ),
-                                              child: Text(
-                                                state.tvShowDetails.tvShowSearchResults.tvShowSummaries[index].voteAverage != 0 &&
-                                                        state.tvShowDetails.tvShowSearchResults.tvShowSummaries[index].voteCount >
-                                                            100
-                                                    ? "⭐" +
-                                                        state.tvShowDetails.tvShowSearchResults.tvShowSummaries[index].voteAverage
-                                                            .toStringAsFixed(1) +
-                                                        " " +
-                                                        state.tvShowDetails.tvShowSearchResults.tvShowSummaries[index].name
-                                                    : "⭐ N/A " +
-                                                        state.tvShowDetails.tvShowSearchResults.tvShowSummaries[index].name,
-                                                overflow: TextOverflow.ellipsis,
-                                                textAlign: TextAlign.center,
-                                                maxLines: 2,
-                                                style: TextStyle(
-                                                  fontSize: 14,
-                                                  fontWeight: FontWeight.w500,
+                                            child: Column(
+                                              children: [
+                                                BuildPosterImage(
+                                                  height: 135,
+                                                  width: 90,
+                                                  imagePath:
+                                                      state.tvShowDetails.tvShowSearchResults.tvShowSummaries[index].posterPath,
                                                 ),
-                                              ),
+                                                Expanded(
+                                                  child: Padding(
+                                                    padding: const EdgeInsets.only(
+                                                      top: 8.0,
+                                                      bottom: 4.0,
+                                                    ),
+                                                    child: Text(
+                                                      state.tvShowDetails.tvShowSearchResults.tvShowSummaries[index]
+                                                                      .voteAverage !=
+                                                                  0 &&
+                                                              state.tvShowDetails.tvShowSearchResults.tvShowSummaries[index]
+                                                                      .voteCount >
+                                                                  100
+                                                          ? "⭐" +
+                                                              state.tvShowDetails.tvShowSearchResults.tvShowSummaries[index]
+                                                                  .voteAverage
+                                                                  .toStringAsFixed(1) +
+                                                              " " +
+                                                              state.tvShowDetails.tvShowSearchResults.tvShowSummaries[index].name
+                                                          : "⭐ N/A " +
+                                                              state.tvShowDetails.tvShowSearchResults.tvShowSummaries[index].name,
+                                                      overflow: TextOverflow.ellipsis,
+                                                      textAlign: TextAlign.center,
+                                                      maxLines: 2,
+                                                      style: TextStyle(
+                                                        fontSize: 14,
+                                                        fontWeight: FontWeight.w500,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
                                             ),
                                           ),
-                                        ],
-                                      ),
-                                    ),
+                                        ),
+                                      );
+                                    },
                                   ),
-                                );
-                              },
-                            ),
                           ),
 
                           /// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
