@@ -2,6 +2,9 @@
 
 Discuss with friends what you are watching
 
+- Android: https://play.google.com/store/apps/details?id=com.rocket.dev22.explovid
+- iOS:  https://apps.apple.com/us/app/explovid/id1565347244
+
 ## Instagram for movies
 
 Explovid is a mobile app made in Flutter where you can search for movies, tv shows and other users on the app. 
