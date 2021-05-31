@@ -2,15 +2,17 @@
 
 Discuss with friends what you are watching
 
-## Getting Started
+## Instagram for movies
 
-This project is a starting point for a Flutter application.
+Explovid is a mobile app made in Flutter where you can search for movies, tv shows and other users on the app. 
+It is basically Instagram for movies and shows. 
+You have your own profile page, notification feed, search page, and news feed where you can see what other people are watching and reviewing.
 
-A few resources to get you started if this is your first Flutter project:
+Firebase was used for backend, notably I used Firebase Auth, Cloud Firestore, Firebase Storage and Cloud Functions.
+To fetch the movie, tv shows and actors data I connected to TMDB and used their API.
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+BLoC was used for design pattern (data, application and presentation layers) and together with Freezed (to reduce boilerplate) for state management.
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+The user can register in the app with email and password, Google Sign In or Apple Sign In. 
+
+![](video.gif)
