@@ -7,6 +7,22 @@
          FlutterApplication and put your custom class here. -->
     <uses-permission android:name="android.permission.INTERNET"/>
 
+    <!-- Nest within the manifest element, not the application element-->
+    <queries>
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:scheme="https" />
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.DIAL" />
+            <data android:scheme="tel" />
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.SEND" />
+            <data android:mimeType="*/*" />
+        </intent>
+    </queries>
+
     <application
         android:name="io.flutter.app.FlutterApplication"
         android:label="Explovid"
