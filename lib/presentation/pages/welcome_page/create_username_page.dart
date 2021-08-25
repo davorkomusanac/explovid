@@ -59,7 +59,8 @@ class _CreateUsernamePageState extends State<CreateUsernamePage> {
               ),
             );
           }
-          if (state.usernameErrorMessage != "Success" && state.usernameErrorMessage.isNotEmpty) {
+          if (state.usernameErrorMessage != "Success" &&
+              state.usernameErrorMessage.isNotEmpty) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 content: Text(state.usernameErrorMessage),
@@ -77,10 +78,12 @@ class _CreateUsernamePageState extends State<CreateUsernamePage> {
               Padding(
                 padding: const EdgeInsets.only(left: 25, right: 25, top: 125),
                 child: TextFormField(
-                  inputFormatters: [
-                    FilteringTextInputFormatter.deny(RegExp(r'[ ]')),
-                    LengthLimitingTextInputFormatter(30),
-                  ],
+                    inputFormatters: [
+                      FilteringTextInputFormatter.allow(
+                        RegExp("[0-9a-zA-Z]"),
+                      ),
+                      LengthLimitingTextInputFormatter(30),
+                    ],
                     decoration: InputDecoration(
                       prefixIcon: Icon(
                         Icons.person,
@@ -120,7 +123,8 @@ class _CreateUsernamePageState extends State<CreateUsernamePage> {
                     } else {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
-                          content: Text('Invalid username, try a different one'),
+                          content:
+                              Text('Invalid username, try a different one'),
                           duration: Duration(seconds: 2),
                         ),
                       );

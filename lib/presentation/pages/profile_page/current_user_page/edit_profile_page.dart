@@ -136,8 +136,10 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                 onPressed: () {
                                   if (isChecked)
                                     context.read<EditProfileBloc>().add(
-                                          EditProfileEvent.confirmEditProfilePressed(
-                                            fullName: _fullNameController.text.trim(),
+                                          EditProfileEvent
+                                              .confirmEditProfilePressed(
+                                            fullName:
+                                                _fullNameController.text.trim(),
                                             bio: _bioController.text.trim(),
                                             username: _usernameController.text,
                                             isUsernameAvailable: checkUsername(
@@ -152,12 +154,14 @@ class _EditProfilePageState extends State<EditProfilePage> {
                       ],
                     ),
                   ),
-                  BlocBuilder<CurrentUserProfileInformationBloc, CurrentUserProfileInformationState>(
+                  BlocBuilder<CurrentUserProfileInformationBloc,
+                      CurrentUserProfileInformationState>(
                     builder: (context, currentUserState) {
                       return GestureDetector(
                         onTap: () {
                           context.read<CurrentUserProfileInformationBloc>().add(
-                                CurrentUserProfileInformationEvent.uploadProfilePhotoPressed(),
+                                CurrentUserProfileInformationEvent
+                                    .uploadProfilePhotoPressed(),
                               );
                         },
                         child: _profilePhoto(currentUserState),
@@ -167,10 +171,12 @@ class _EditProfilePageState extends State<EditProfilePage> {
                   TextButton(
                     onPressed: () {
                       context.read<CurrentUserProfileInformationBloc>().add(
-                            CurrentUserProfileInformationEvent.uploadProfilePhotoPressed(),
+                            CurrentUserProfileInformationEvent
+                                .uploadProfilePhotoPressed(),
                           );
                     },
-                    style: TextButton.styleFrom(primary: Colors.tealAccent[700]),
+                    style:
+                        TextButton.styleFrom(primary: Colors.tealAccent[700]),
                     child: Text("Change Profile Photo"),
                   ),
                   if (state.isSubmitting) LinearProgressIndicator(),
@@ -190,7 +196,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
                         padding: const EdgeInsets.all(16.0),
                         child: TextFormField(
                           inputFormatters: [
-                            FilteringTextInputFormatter.deny(RegExp(r'[ ]')),
+                            FilteringTextInputFormatter.allow(
+                              RegExp("[0-9a-zA-Z]"),
+                            ),
                             LengthLimitingTextInputFormatter(30),
                           ],
                           autocorrect: false,
